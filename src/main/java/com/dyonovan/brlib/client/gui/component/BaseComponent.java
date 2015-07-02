@@ -1,5 +1,6 @@
 package com.dyonovan.brlib.client.gui.component;
 
+import com.dyonovan.brlib.client.gui.component.listeners.IMouseEventListener;
 import net.minecraft.client.gui.Gui;
 
 public abstract class BaseComponent extends Gui {
