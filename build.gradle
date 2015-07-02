@@ -42,14 +42,6 @@ minecraft {
     runDir = "eclipse"
 }
 
-dependencies {
-    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
-}
-
-repositories {
-    mavenCentral()
-}
-
 processResources
 {
     // this will ensure that this task is redone when the versions change.
@@ -84,6 +76,14 @@ artifacts {
 
 configurations {
     deployerJars
+}
+
+dependencies {
+    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
+}
+
+repositories {
+    mavenCentral()
 }
 
 uploadArchives {
