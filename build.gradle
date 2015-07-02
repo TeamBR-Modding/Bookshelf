@@ -26,7 +26,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = "${config.minecraft_version}-${config.mod_version}"
+version = "${config.minecraft_version}-${config.mod_version}-B" + System.getenv("BUILD_NUMBER")
 group= "com.dyonovan.brlib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "BR-Lib"
 
@@ -43,7 +43,7 @@ minecraft {
 }
 
 dependencies {
-
+    deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
 }
 
 processResources
@@ -99,15 +99,15 @@ uploadArchives {
                     name project.archivesBaseName
                     packaging 'jar'
                     description 'BRLib'
-                    url 'https://github.com/TeamBR-Modding/TeamBR-Core/'
+                    url 'https://github.com/TeamBR-Modding/BRLib'
                     scm {
-                        url 'https://github.com/TeamBR-Modding/TeamBR-Core/'
-                        connection 'scm:git:git://github.com/TeamBR-Modding/TeamBR-Core.git'
-                        developerConnection 'scm:git:git@github.com/TeamBR-Modding/TeamBR-Core.git'
+                        url 'https://github.com/TeamBR-Modding/BRLib'
+                        connection 'scm:git:git@github.com:TeamBR-Modding/BRLib.git'
+                        developerConnection 'scm:git:git@github.com:TeamBR-Modding/BRLib.git'
                     }
                     issueManagement {
                         system 'github'
-                        url 'https://github.com/TeamBR-Modding/TeamBR-Core/issues'
+                        url 'https://github.com/TeamBR-Modding/BRLib/issues'
                     }
                     licenses {
                         license {
