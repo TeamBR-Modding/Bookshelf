@@ -8,7 +8,8 @@ Adding to Project
 
 Add the following code to build.gradle.
 
-'repositories {
+```
+repositories {
     maven {
         url "http://www.beyondrealitypack.com/maven2/"
     }
@@ -16,4 +17,5 @@ Add the following code to build.gradle.
 
 dependencies {
     compile group: "com.dyonovan.brlib", name: "BR-Lib", version: "+", classifier: "dev"
-}'
+}
+```
