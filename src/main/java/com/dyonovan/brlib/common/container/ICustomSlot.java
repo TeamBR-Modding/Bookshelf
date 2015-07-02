@@ -1,6 +1,6 @@
 package com.dyonovan.brlib.common.container;
 
-import com.dyonovan.brlib.lib.Couplet;
+import com.dyonovan.brlib.collections.Couplet;
 
 public interface ICustomSlot {
     public enum SLOT_SIZE {

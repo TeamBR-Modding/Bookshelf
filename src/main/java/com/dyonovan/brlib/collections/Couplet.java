@@ -1,4 +1,4 @@
-package com.dyonovan.brlib.lib;
+package com.dyonovan.brlib.collections;
 
 public class Couplet<A, B> {
     protected A first;
