@@ -1,0 +1,16 @@
+[
+{
+  "modid": "brlib",
+  "name": "BRLib",
+  "description": "Library of useful functions used by TeamBR",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Dyonovan", "PaulJoda"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
