@@ -1,4 +1,4 @@
-package com.dyonovan.brlib.util;
+package com.dyonovan.brlib.collections;
 
 import net.minecraft.nbt.NBTTagCompound;
 

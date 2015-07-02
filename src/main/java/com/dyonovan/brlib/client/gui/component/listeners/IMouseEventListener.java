@@ -1,4 +1,6 @@
-package com.dyonovan.brlib.client.gui.component;
+package com.dyonovan.brlib.client.gui.component.listeners;
+
+import com.dyonovan.brlib.client.gui.component.BaseComponent;
 
 public interface IMouseEventListener {
 
