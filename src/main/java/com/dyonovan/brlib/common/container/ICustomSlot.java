@@ -3,12 +3,12 @@ package com.dyonovan.brlib.common.container;
 import com.dyonovan.brlib.collections.Couplet;
 
 public interface ICustomSlot {
-    public enum SLOT_SIZE {
+    enum SLOT_SIZE {
         STANDARD,
         LARGE
     }
 
-    public SLOT_SIZE getSlotSize();
+    SLOT_SIZE getSlotSize();
 
-    public Couplet<Integer, Integer> getPoint();
+    Couplet<Integer, Integer> getPoint();
 }

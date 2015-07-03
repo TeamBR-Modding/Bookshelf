@@ -18,7 +18,7 @@ public interface IOpensGui {
      * @param z Z Pos
      * @return The container to open
      */
-    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z);
+    Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z);
 
     /**
      * Return the gui for this tile
@@ -30,5 +30,5 @@ public interface IOpensGui {
      * @param z Z Pos
      * @return The gui to open
      */
-    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z);
+    Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z);
 }
