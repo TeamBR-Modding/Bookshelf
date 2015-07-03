@@ -17,6 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 apply plugin: 'maven'
+apply plugin: 'java'
 
 ext.configFile = file "build.properties"
 
@@ -68,6 +69,10 @@ task devJar(type: Jar, dependsOn: 'classes') {
     }
     extension = 'jar'
     classifier = 'dev'
+}
+
+task myJavadocs(type: Javadoc) {
+    source = sourceSets.main.allJava
 }
 
 artifacts {
