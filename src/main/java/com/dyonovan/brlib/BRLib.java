@@ -25,7 +25,7 @@ public class BRLib {
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-
+        proxy.init();
     }
 
     @EventHandler
