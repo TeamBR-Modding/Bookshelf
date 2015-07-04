@@ -211,6 +211,46 @@ public class Location {
     }
 
     /**
+     * Returns a list off all blocks in between these two
+     *
+     * Creates a cube with these two being opposite corners
+     *
+     * @param loc The opposite corner of the cube
+     * @param includeInner Set to true to include inside, otherwise it will be hollow
+     * @return A list that contains all Locations in between inclusive
+     */
+    public List<Location> getAllWithinBounds(Location loc, boolean includeInner) {
+        List<Location> locations = new ArrayList<>();
+
+        int xDirMultiplier = Integer.signum(loc.x - x);
+        int yDirMultiplier = Integer.signum(loc.y - y);
+        int zDirMultiplier = Integer.signum(loc.z - z);
+
+        int horizMax = Math.abs(loc.x - x);
+        int vertMax  = Math.abs(loc.y - y);
+        int depthMax = Math.abs(loc.z - z);
+
+        for(int horiz = 0; horiz <= horizMax; horiz++) {
+            for(int vert = 0; vert <= vertMax; vert++) {
+                for(int depth = 0; depth <= depthMax; depth++) {
+                    int xa = this.x + (xDirMultiplier * horiz);
+                    int ya = this.y + (yDirMultiplier * vert);
+                    int za = this.z + (zDirMultiplier * depth);
+
+                    //Outer Block
+                    if (horiz == 0 || horiz == horizMax ||
+                            vert == 0 || vert == vertMax ||
+                            depth == 0 || depth == depthMax)
+                        locations.add(new Location(xa, ya, za));
+                    else if(includeInner)
+                        locations.add(new Location(xa, ya, za));
+                }
+            }
+        }
+        return locations;
+    }
+
+    /**
      * Are we above this location
      * @param pos The position to check if this is above
      * @return True if is above
