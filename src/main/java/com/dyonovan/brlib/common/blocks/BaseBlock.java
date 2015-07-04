@@ -1,5 +1,6 @@
 package com.dyonovan.brlib.common.blocks;
 
+import com.dyonovan.brlib.BRLib;
 import com.dyonovan.brlib.client.ClientProxy;
 import com.dyonovan.brlib.client.renderer.BasicBlockRenderer;
 import com.dyonovan.brlib.collections.BlockTextures;
@@ -12,6 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
@@ -54,6 +56,18 @@ public class BaseBlock extends BlockContainer {
      */
     protected CreativeTabs getCreativeTab() {
         return null;
+    }
+
+    /**
+     * Called when the block is activated. We are using it to open our GUI
+     */
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
+        if(!player.isSneaking()) {
+            player.openGui(BRLib.instance, 0, world, x, y, z);
+            return true;
+        }
+        return false;
     }
 
     @Override
