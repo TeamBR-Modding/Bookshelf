@@ -67,7 +67,7 @@ public class BaseBlock extends BlockContainer {
             player.openGui(BRLib.instance, 0, world, x, y, z);
             return true;
         }
-        return false;
+        return true;
     }
 
     @Override

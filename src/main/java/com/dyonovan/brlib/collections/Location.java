@@ -217,9 +217,10 @@ public class Location {
      *
      * @param loc The opposite corner of the cube
      * @param includeInner Set to true to include inside, otherwise it will be hollow
+     * @param includeOuter Set to true to include the outside shell
      * @return A list that contains all Locations in between inclusive
      */
-    public List<Location> getAllWithinBounds(Location loc, boolean includeInner) {
+    public List<Location> getAllWithinBounds(Location loc, boolean includeInner, boolean includeOuter) {
         List<Location> locations = new ArrayList<>();
 
         int xDirMultiplier = Integer.signum(loc.x - x);
@@ -238,9 +239,9 @@ public class Location {
                     int za = this.z + (zDirMultiplier * depth);
 
                     //Outer Block
-                    if (horiz == 0 || horiz == horizMax ||
+                    if (includeOuter &&(horiz == 0 || horiz == horizMax ||
                             vert == 0 || vert == vertMax ||
-                            depth == 0 || depth == depthMax)
+                            depth == 0 || depth == depthMax))
                         locations.add(new Location(xa, ya, za));
                     else if(includeInner)
                         locations.add(new Location(xa, ya, za));
