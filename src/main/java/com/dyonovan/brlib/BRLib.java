@@ -3,6 +3,7 @@ package com.dyonovan.brlib;
 
 import com.dyonovan.brlib.common.CommonProxy;
 import com.dyonovan.brlib.lib.Constants;
+import com.dyonovan.brlib.manager.GuiManager;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -10,6 +11,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 @SuppressWarnings("unused")
 @Mod(name = Constants.MODNAME, modid = Constants.MODID, version = Constants.VERSION, dependencies = Constants.DEPENDENCIES)
@@ -26,6 +28,8 @@ public class BRLib {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.init();
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager());
     }
 
     @EventHandler
