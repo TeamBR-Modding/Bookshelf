@@ -27,12 +27,12 @@ public class BaseBlock extends BlockContainer {
     /**
      * Used as a common class for all blocks. Makes things a bit easier
      * @param mat What material the block should be
-     * @param name The unlocalized name of the block
+     * @param name The unlocalized name of the block : Must be format "MODID:name"
      * @param tile Should the block have a tile, pass the class
      */
     protected BaseBlock(Material mat, String name, Class<? extends TileEntity> tile) {
         super(mat);
-        blockName = name;
+        blockName = name.split(":")[1];
         tileEntity = tile;
 
         this.setBlockName(blockName);
