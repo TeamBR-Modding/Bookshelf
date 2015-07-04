@@ -156,7 +156,7 @@ public class BaseBlock extends BlockContainer {
 
     @Override
     public int getRenderBlockPass() {
-        return 1;
+        return getBlockTextures().getOverlay() != null ? 1 : 0;
     }
 
     @Override
