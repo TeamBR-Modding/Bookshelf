@@ -34,7 +34,7 @@ public class BaseBlock extends BlockContainer {
      */
     protected BaseBlock(Material mat, String name, Class<? extends TileEntity> tile) {
         super(mat);
-        blockName = name.split(":")[1];
+        blockName = name;
         tileEntity = tile;
 
         this.setBlockName(blockName);
