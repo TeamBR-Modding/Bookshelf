@@ -26,7 +26,7 @@ public class BasicBlockRenderer implements ISimpleBlockRenderingHandler {
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
         if(ClientProxy.renderPass == 0)
             return renderer.renderStandardBlock(block, x, y, z);
-        else if(((BaseBlock)block).getBlockTextures().getOverlay() != null)
+        else if(ClientProxy.renderPass == 1 && ((BaseBlock) block).getBlockTextures().getOverlay() != null)
             renderer.renderBlockUsingTexture(Blocks.cobblestone, x, y, z, ((BaseBlock)block).getBlockTextures().getOverlay());
         return true;
     }
