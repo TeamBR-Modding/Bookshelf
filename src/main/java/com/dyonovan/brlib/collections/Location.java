@@ -1,18 +1,26 @@
 package com.dyonovan.brlib.collections;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.ChunkPosition;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Used to navigate location in a better way (hopefully)
  */
 public class Location {
     public int x, y, z;
+    private static final int INVALID = Integer.MIN_VALUE;
 
     /**
-     * Default constructor, sets all to -100
+     * Default constructor, sets all to INVALID
      */
     public Location() {
-        this(-100, -100, -100);
+        this(INVALID, INVALID, INVALID);
     }
 
     /**
@@ -26,6 +34,39 @@ public class Location {
         y = yPos;
         z = zPos;
     }
+
+    /**
+     * Used to generate a location from a {@link TileEntity}
+     * @param tile The {@link TileEntity} to extract from
+     */
+    public Location(TileEntity tile) {
+        x = tile.xCoord;
+        y = tile.yCoord;
+        z = tile.zCoord;
+    }
+
+    /**
+     * Used to generate a location from double values
+     * @param xPos X Coord
+     * @param yPos Y Coord
+     * @param zPos Z Coord
+     */
+    public Location(double xPos, double yPos, double zPos) {
+        x = MathHelper.floor_double(xPos);
+        y = MathHelper.floor_double(yPos);
+        z = MathHelper.floor_double(zPos);
+    }
+
+    /**
+     * Used to generate a location from a ChunkPosition
+     * @param pos {@link ChunkPosition} to extract from
+     */
+    public Location(ChunkPosition pos) {
+        this.x = pos.chunkPosX;
+        this.y = pos.chunkPosY;
+        this.z = pos.chunkPosZ;
+    }
+
 
     /**
      * Used to shallow copy from another location
@@ -50,6 +91,207 @@ public class Location {
     }
 
     /**
+     * Used to move the location in a direction
+     * @param dir {@link ForgeDirection} to travel
+     */
+    public void travel(ForgeDirection dir) {
+        x += dir.offsetX;
+        y += dir.offsetY;
+        z += dir.offsetZ;
+    }
+
+    /**
+     * Add another Location to this one
+     * @param loc The location to add
+     */
+    public void add(Location loc) {
+        x += loc.x;
+        y += loc.y;
+        z += loc.z;
+    }
+
+    /**
+     * Gets the location that is the sum of the object and another
+     * @param loc The location to add
+     * @return A new instance of a location that is the sum of the two
+     */
+    public Location getSum(Location loc) {
+        return new Location(x + loc.x, y + loc.y, z + loc.z);
+    }
+
+    /**
+     * Subtract another location from this one
+     * @param loc The Location to subtract
+     */
+    public void subtract(Location loc) {
+        x -= loc.x;
+        y -= loc.y;
+        z -= loc.z;
+    }
+
+    /**
+     * Gets the location that is the difference of the object and another
+     * @param loc The location to subtract
+     * @return A new instance of a location that is the difference of the two
+     */
+    public Location getDifference(Location loc) {
+        return new Location(x - loc.x, y - loc.y, z - loc.z);
+    }
+
+    /**
+     * Shorthand to get location adjacent
+     * @param dir Which direction to go
+     * @return The adjacent location
+     */
+    public Location getAdjacentLocation(ForgeDirection dir) {
+        return getLocationInDirection(dir, 1);
+    }
+
+    /**
+     * Get the location in the direction for the given distance
+     * @param dir What direction to travel
+     * @param distance How many units to travel
+     * @return A new instance that is the location at that point
+     */
+    public Location getLocationInDirection(ForgeDirection dir, int distance) {
+        return new Location(x + (dir.offsetX * distance), y + (dir.offsetY * distance), z + (dir.offsetZ * distance));
+    }
+
+    public List<Location> getTouchingLocations() {
+        return getAllAdjacentLocations(false);
+    }
+
+    public List<Location> getAllAdjacentLocations(boolean includeCorners) {
+        List<Location> locations = new ArrayList<>();
+
+        //Get all touching
+        for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS)
+            locations.add(getAdjacentLocation(dir));
+
+        //Leave if that is all
+        if(!includeCorners)
+            return locations;
+
+        //Top layer
+        //XXX
+        //X X
+        //XXX
+        locations.add(new Location(x - 1, y + 1, z - 1));
+        locations.add(new Location(x - 1, y + 1, z + 1));
+        locations.add(new Location(x + 1, y + 1, z + 1));
+        locations.add(new Location(x + 1, y + 1, z - 1));
+        locations.add(new Location(    x, y + 1, z - 1));
+        locations.add(new Location(    x, y + 1, z + 1));
+        locations.add(new Location(x + 1, y + 1,     z));
+        locations.add(new Location(x - 1, y + 1,     z));
+
+        //Middle Layer
+        //X X
+        // L   ('L' is us)
+        //X X
+        locations.add(new Location(x - 1, y, z - 1));
+        locations.add(new Location(x - 1, y, z + 1));
+        locations.add(new Location(x + 1, y, z + 1));
+        locations.add(new Location(x + 1, y, z - 1));
+
+        //Lower Layer
+        //XXX
+        //X X
+        //XXX
+        locations.add(new Location(x - 1, y - 1, z - 1));
+        locations.add(new Location(x - 1, y - 1, z + 1));
+        locations.add(new Location(x + 1, y - 1, z + 1));
+        locations.add(new Location(x + 1, y - 1, z - 1));
+        locations.add(new Location(    x, y - 1, z - 1));
+        locations.add(new Location(    x, y - 1, z + 1));
+        locations.add(new Location(x + 1, y - 1,     z));
+        locations.add(new Location(x - 1, y - 1,     z));
+
+        return locations;
+    }
+
+    /**
+     * Are we above this location
+     * @param pos The position to check if this is above
+     * @return True if is above
+     */
+    public boolean isAbove(Location pos) {
+        return pos != null && y > pos.y;
+    }
+
+    /**
+     * Is this location below the passed
+     * @param pos The position to check if we are below
+     * @return True if this is below
+     */
+    public boolean isBelow(Location pos) {
+        return pos != null && y < pos.y;
+    }
+
+    /**
+     * Is this location North of the passed
+     * @param pos The position to check against
+     * @return True if this is north of pos
+     */
+    public boolean isNorthOf(Location pos) {
+        return pos != null && z < pos.z;
+    }
+
+    /**
+     * Is this location South of the passed
+     * @param pos The position to check against
+     * @return True if this is south of pos
+     */
+    public boolean isSouthOf(Location pos) {
+        return pos != null && z > pos.z;
+    }
+
+    /**
+     * Is this location East of the passed
+     * @param pos The position to check against
+     * @return True if this is east of pos
+     */
+    public boolean isEastOf(Location pos) {
+        return pos != null && x > pos.x;
+    }
+
+    /**
+     * Is this location West of the passed
+     * @param pos The position to check against
+     * @return True if this is west of pos
+     */
+    public boolean isWestOf(Location pos) {
+        return pos != null && x < pos.x;
+    }
+
+    /**
+     * Are the two on the same X Axis
+     * @param pos The other Location
+     * @return True if on the same X axis
+     */
+    public boolean isXAligned(Location pos) {
+        return pos != null && x == pos.x;
+    }
+
+    /**
+     * Are the two locations on the same Y axis
+     * @param pos The other location
+     * @return True if on the same Y axis
+     */
+    public boolean isYAligned(Location pos) {
+        return pos != null && y == pos.y;
+    }
+
+    /**
+     * Are the two locations on the same Z axis
+     * @param pos The other location
+     * @return True is on the same Z axis
+     */
+    public boolean isZAligned(Location pos) {
+        return pos != null && z == pos.z;
+    }
+
+    /**
      * Used to return a new instance of this with same values
      * @return A shallow copy of this
      */
@@ -62,14 +304,14 @@ public class Location {
      * @return True if valid
      */
     public boolean isValid() {
-        return x != -100 && y != -100 && z != -100;
+        return x != INVALID && y != INVALID && z != INVALID;
     }
 
     /**
      * Sets the location to an unreachable location
      */
     public void reset() {
-        x = y = z = -100;
+        x = y = z = INVALID;
     }
 
     /**
@@ -122,13 +364,32 @@ public class Location {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(!(obj instanceof Location)) return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        //Self Check
-        if(this == obj) return true;
+        Location location = (Location) o;
 
-        Location loc = (Location)obj;
-        return this.x == loc.x && this.y == loc.y && this.z == loc.z;
+        if (x != location.x) return false;
+        if (y != location.y) return false;
+        return z == location.z;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = x;
+        result = 31 * result + y;
+        result = 31 * result + z;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
     }
 }
