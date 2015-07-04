@@ -6,6 +6,7 @@ import com.dyonovan.brlib.common.container.ICustomSlot;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
@@ -85,7 +86,10 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
                     this.drawTexturedModalRect(x + slot.getPoint().getFirst(), y + slot.getPoint().getSecond(), 0, 20, 18, 18);
             } else if(obj instanceof Slot) {
                 Slot slot = (Slot)obj;
-                this.drawTexturedModalRect(x + slot.xDisplayPosition - 1, y + slot.yDisplayPosition - 1, 0, 20, 18, 18);
+                if(isSlotLarge(slot))
+                    this.drawTexturedModalRect(x + slot.xDisplayPosition - 5, y + slot.yDisplayPosition - 5, 0, 38, 26, 26);
+                else
+                    this.drawTexturedModalRect(x + slot.xDisplayPosition - 1, y + slot.yDisplayPosition - 1, 0, 20, 18, 18);
             }
         }
 
@@ -93,5 +97,9 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
         for(BaseComponent component : components) {
             component.render(guiLeft, guiTop);
         }
+    }
+
+    private boolean isSlotLarge(Slot slot) {
+        return slot instanceof SlotFurnace;
     }
 }
