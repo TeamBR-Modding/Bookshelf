@@ -11,7 +11,7 @@ import net.minecraft.util.IIcon;
  */
 @SideOnly(Side.CLIENT)
 public class BlockTextures {
-    protected IIcon front, back, left, right, up, down;
+    protected IIcon front, back, left, right, up, down, overlay;
 
     /**
      * Used to register and store icons for blocks that have no specific differences
@@ -212,5 +212,13 @@ public class BlockTextures {
 
     public void setBottom(IIcon icon) {
         down = icon;
+    }
+
+    public IIcon getOverlay() {
+        return overlay;
+    }
+
+    public void setOverlay(IIcon icon) {
+        overlay = icon;
     }
 }

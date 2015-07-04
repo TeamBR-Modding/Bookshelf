@@ -17,15 +17,17 @@ public class BasicBlockRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-        RenderUtils.render3DInventory((BaseBlock) block, metadata, modelId, renderer);
+        RenderUtils.render3DInventory((BaseBlock) block, renderer);
+        if(((BaseBlock)block).getBlockTextures().getOverlay() != null)
+            RenderUtils.render3DInventory((BaseBlock) block, ((BaseBlock)block).getBlockTextures().getOverlay(), renderer);
     }
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
         if(ClientProxy.renderPass == 0)
             return renderer.renderStandardBlock(block, x, y, z);
-        else
-            renderer.renderBlockUsingTexture(Blocks.cobblestone, x, y, z, Blocks.hopper.getIcon(1, 0));
+        else if(((BaseBlock)block).getBlockTextures().getOverlay() != null)
+            renderer.renderBlockUsingTexture(Blocks.cobblestone, x, y, z, ((BaseBlock)block).getBlockTextures().getOverlay());
         return true;
     }
 

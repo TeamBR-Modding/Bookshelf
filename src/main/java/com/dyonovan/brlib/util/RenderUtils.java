@@ -5,6 +5,7 @@ import com.dyonovan.brlib.lib.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -33,11 +34,9 @@ public class RenderUtils {
     /**
      * Used to render a block in an inventory
      * @param block {@link BaseBlock} to render
-     * @param metadata Block metadata
-     * @param modelID Model id. Not really needed at the moment
      * @param renderer RenderBlocks object
      */
-    public static void render3DInventory(BaseBlock block, int metadata, int modelID, RenderBlocks renderer) {
+    public static void render3DInventory(BaseBlock block, RenderBlocks renderer) {
         Tessellator tessellator = Tessellator.instance;
 
         block.setBlockBoundsForItemRender();
@@ -71,6 +70,51 @@ public class RenderUtils {
         tessellator.startDrawingQuads();
         tessellator.setNormal(1.0F, 0.0F, 0.0F);
         renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getBlockTextures().getFront());
+        tessellator.draw();
+
+        GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+    }
+
+    /**
+     * Used to render a block in an inventory
+     * @param block {@link BaseBlock} to render
+     * @param icon The icon to render instead
+     * @param renderer RenderBlocks object
+     */
+    public static void render3DInventory(BaseBlock block, IIcon icon, RenderBlocks renderer) {
+        Tessellator tessellator = Tessellator.instance;
+
+        block.setBlockBoundsForItemRender();
+        GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, -1F, 0.0F);
+        renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, icon);
+        tessellator.draw();
+
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 1.0F, 0.0F);
+        renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, icon);
+        tessellator.draw();
+
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 0.0F, -1F);
+        renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, icon);
+        tessellator.draw();
+
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 0.0F, 1.0F);
+        renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, icon);
+        tessellator.draw();
+
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(-1F, 0.0F, 0.0F);
+        renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, icon);
+        tessellator.draw();
+
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(1.0F, 0.0F, 0.0F);
+        renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, icon);
         tessellator.draw();
 
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
