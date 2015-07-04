@@ -1,5 +1,7 @@
 package com.dyonovan.brlib.common.blocks;
 
+import com.dyonovan.brlib.client.ClientProxy;
+import com.dyonovan.brlib.client.renderer.BasicBlockRenderer;
 import com.dyonovan.brlib.collections.BlockTextures;
 import com.dyonovan.brlib.common.blocks.rotation.IRotation;
 import com.dyonovan.brlib.common.blocks.rotation.NoRotation;
@@ -25,16 +27,16 @@ public class BaseBlock extends BlockContainer {
     /**
      * Used as a common class for all blocks. Makes things a bit easier
      * @param mat What material the block should be
-     * @param name The unlocalized name of the block, include mod name
+     * @param name The unlocalized name of the block
      * @param tile Should the block have a tile, pass the class
      */
-    public BaseBlock(Material mat, String name, Class<? extends TileEntity> tile) {
+    protected BaseBlock(Material mat, String name, Class<? extends TileEntity> tile) {
         super(mat);
         blockName = name;
         tileEntity = tile;
 
         this.setBlockName(blockName);
-        this.setCreativeTab(getCreativeTabToDisplayOn());
+        this.setCreativeTab(getCreativeTab());
         this.setHardness(getHardness());
     }
 
@@ -51,12 +53,21 @@ public class BaseBlock extends BlockContainer {
      * @return Null if none, defaults to the main Modular Systems Tab
      */
     protected CreativeTabs getCreativeTab() {
-        return CreativeTabs.tabBlock;
+        return null;
     }
 
     @Override
     public void registerBlockIcons(IIconRegister iconRegister) {
         generateDefaultTextures(iconRegister);
+    }
+
+    /**
+     * Used to get the block textures object
+     * @return {@link BlockTextures} object for this block
+     */
+    @SideOnly(Side.CLIENT)
+    public BlockTextures getBlockTextures() {
+        return textures;
     }
 
     /**
@@ -71,12 +82,17 @@ public class BaseBlock extends BlockContainer {
     }
 
     /**
-     * Used to get the block textures object
-     * @return {@link BlockTextures} object for this block
+     * Used to set the values needed for the block's rotation on placement
+     * @return The rotation class needed, none by default
      */
-    @SideOnly(Side.CLIENT)
-    public BlockTextures getBlockTextures() {
-        return textures;
+    public IRotation getDefaultRotation() {
+        return new NoRotation();
+    }
+
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase livingBase, ItemStack itemStack) {
+        //Calls upon the default rotation to set the meta
+        world.setBlockMetadataWithNotify(x, y, z, getDefaultRotation().getMetaFromEntity(livingBase), 2);
     }
 
     //The sides are: Bottom (0), Top (1), North (2), South (3), West (4), East (5).
@@ -101,18 +117,32 @@ public class BaseBlock extends BlockContainer {
         }
     }
 
-    /**
-     * Used to set the values needed for the block's rotation on placement
-     * @return The rotation class needed, none by default
-     */
-    protected IRotation getDefaultRotation() {
-        return new NoRotation();
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase livingBase, ItemStack itemStack) {
-        //Calls upon the default rotation to set the meta
-        world.setBlockMetadataWithNotify(x, y, z, getDefaultRotation().getMetaFromEntity(livingBase), 2);
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public int getRenderType() {
+        return BasicBlockRenderer.renderID;
+    }
+
+    @Override
+    public boolean canRenderInPass(int pass) {
+        //Set the static var in the client proxy
+        ClientProxy.renderPass = pass;
+        //the block can render in both passes, so return true always
+        return true;
+    }
+
+    @Override
+    public int getRenderBlockPass() {
+        return 1;
     }
 
     @Override
