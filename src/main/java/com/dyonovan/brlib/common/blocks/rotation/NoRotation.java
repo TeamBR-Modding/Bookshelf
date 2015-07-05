@@ -6,7 +6,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class NoRotation implements IRotation {
     @Override
     public ForgeDirection convertMetaToDirection(int meta) {
-        return null;
+        return ForgeDirection.UNKNOWN;
     }
 
     @Override
