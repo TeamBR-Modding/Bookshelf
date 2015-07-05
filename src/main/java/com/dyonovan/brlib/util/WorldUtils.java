@@ -9,7 +9,7 @@ public class WorldUtils {
      * @param toTurn Starting point
      * @return The direction turned 90 left
      */
-    public ForgeDirection rotateLeft(ForgeDirection toTurn) {
+    public static ForgeDirection rotateLeft(ForgeDirection toTurn) {
         switch(toTurn) {
             case NORTH :
                 return ForgeDirection.WEST;
@@ -31,7 +31,7 @@ public class WorldUtils {
      * @param toTurn Starting point
      * @return The direction turned 90 right
      */
-    public ForgeDirection rotateRight(ForgeDirection toTurn) {
+    public static ForgeDirection rotateRight(ForgeDirection toTurn) {
         switch(toTurn) {
             case NORTH :
                 return ForgeDirection.EAST;
