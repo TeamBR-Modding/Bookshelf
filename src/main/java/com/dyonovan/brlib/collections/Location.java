@@ -238,11 +238,12 @@ public class Location {
                     int ya = this.y + (yDirMultiplier * vert);
                     int za = this.z + (zDirMultiplier * depth);
 
-                    //Outer Block
-                    if (includeOuter &&(horiz == 0 || horiz == horizMax ||
+                    if (horiz == 0 || horiz == horizMax ||
                             vert == 0 || vert == vertMax ||
-                            depth == 0 || depth == depthMax))
-                        locations.add(new Location(xa, ya, za));
+                            depth == 0 || depth == depthMax) {
+                        if(includeOuter)
+                            locations.add(new Location(xa, ya, za));
+                    }
                     else if(includeInner)
                         locations.add(new Location(xa, ya, za));
                 }
