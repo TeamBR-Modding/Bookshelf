@@ -1,5 +1,6 @@
 package com.dyonovan.brlib.util;
 
+import com.dyonovan.brlib.helpers.LogHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
