@@ -40,10 +40,18 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
      */
     public abstract void addComponents();
 
+    /**
+     * Used to get the guiLeft
+     * @return Where the gui starts
+     */
     public int getGuiLeft() {
         return guiLeft;
     }
 
+    /**
+     * Used to get guiTop
+     * @return Where the gui starts
+     */
     public int getGuiTop() {
         return guiTop;
     }
