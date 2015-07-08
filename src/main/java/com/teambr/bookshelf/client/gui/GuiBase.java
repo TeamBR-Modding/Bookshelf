@@ -42,7 +42,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
 
     /**
      * Used to get the guiLeft
-     * @return Where the gui starts 
+     * @return Where the gui starts
      */
     public int getGuiLeft() {
         return guiLeft;
