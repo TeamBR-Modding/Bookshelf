@@ -107,7 +107,7 @@ uploadArchives {
                 pom.project {
                     name project.archivesBaseName
                     packaging 'jar'
-                    description 'BRLib'
+                    description 'Bookshelf'
                     url 'https://github.com/TeamBR-Modding/BRLib'
                     scm {
                         url 'https://github.com/TeamBR-Modding/BRLib'
