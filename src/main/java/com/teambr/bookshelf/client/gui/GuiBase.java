@@ -40,6 +40,14 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
      */
     public abstract void addComponents();
 
+    public int getGuiLeft() {
+        return guiLeft;
+    }
+
+    public int getGuiTop() {
+        return guiTop;
+    }
+
     @Override
     protected void mouseClicked(int x, int y, int button) {
         super.mouseClicked(x, y, button);
