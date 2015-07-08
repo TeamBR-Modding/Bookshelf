@@ -28,8 +28,8 @@ configFile.withReader {
 }
 
 version = "${config.minecraft_version}-${config.mod_version}-B" + System.getenv("BUILD_NUMBER")
-group= "com.dyonovan.brlib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "BR-Lib"
+group= "com.teambr.bookshelf" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "Bookshelf"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7

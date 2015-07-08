@@ -1,13 +1,13 @@
 [
 {
-  "modid": "brlib",
-  "name": "BRLib",
+  "modid": "bookshelf",
+  "name": "Bookshelf",
   "description": "Library of useful functions used by TeamBR",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["Dyonovan", "PaulJoda"],
+  "authorList": ["Dyonovan", "pauljoda"],
   "credits": "",
   "logoFile": "",
   "screenshots": [],
