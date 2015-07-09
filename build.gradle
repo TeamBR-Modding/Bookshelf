@@ -76,8 +76,8 @@ task devJar(type: Jar, dependsOn: 'classes') {
 //}
 
 task javadocJar(type: Zip, dependsOn: javadoc) {
+    from 'build/docs/javadoc'
     classifier = 'javadoc'
-    into 'build/libs'
 }
 
 task sourceJar(type: Zip, dependsOn: "sourceMainJava") {
