@@ -21,8 +21,12 @@ public class GuiTabCollection extends BaseComponent {
         parent = gui;
     }
 
-    public void addTab(List<BaseComponent> components, int maxWidth, int maxHeight, Color color, ItemStack stack) {
-        final GuiTab tab = new GuiTab(parent, this.xPos - 5, this.yPos + (this.yPos + (tabs.size() * 24)), maxWidth, maxHeight, color, stack);
+    public void addTab(List<BaseComponent> components, int maxWidth, int maxHeight, Color color, ItemStack stack, boolean reverse) {
+        final GuiTab tab;
+        if(reverse)
+            tab = new GuiReverseTab(parent, this.xPos, this.yPos + (this.yPos + (tabs.size() * 24)), maxWidth, maxHeight, color, stack);
+        else
+            tab = new GuiTab(parent, this.xPos - 5, this.yPos + (this.yPos + (tabs.size() * 24)), maxWidth, maxHeight, color, stack);
         for(BaseComponent c : components)
             tab.addChild(c);
         tab.setMouseEventListener(new IMouseEventListener() {
