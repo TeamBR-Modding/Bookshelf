@@ -50,9 +50,10 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
 
         rightTabs = new GuiTabCollection(this, xSize);
         leftTabs = new GuiTabCollection(this, 0);
-
         addRightTabs(rightTabs);
         addLeftTabs(leftTabs);
+        components.add(rightTabs);
+        components.add(leftTabs);
     }
 
     /**
