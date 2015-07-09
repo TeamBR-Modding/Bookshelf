@@ -52,7 +52,7 @@ public class GuiReverseTab extends GuiTab {
             RenderHelper.enableGUIStandardItemLighting();
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             itemRenderer.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), icon,
-                    parent.getGuiLeft() + xPos + 4, parent.getGuiTop() + yPos + 3);
+                    parent.getGuiLeft() + xPos - 24, parent.getGuiTop() + yPos + 3);
             GL11.glColor3f(1, 1, 1);
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             GL11.glDisable(GL11.GL_LIGHTING);
@@ -60,7 +60,15 @@ public class GuiReverseTab extends GuiTab {
 
         if(areChildrenActive()) {
             for (BaseComponent component : children)
-                component.render(parent.getGuiLeft() + xPos, parent.getGuiTop() + yPos);
+                component.render(parent.getGuiLeft() + xPos - currentWidth, parent.getGuiTop() + yPos);
+        }
+    }
+
+    @Override
+    public void renderOverlay(int i, int i1) {
+        if(areChildrenActive()) {
+            for (BaseComponent component : children)
+                component.renderOverlay(i - currentWidth, i1);
         }
     }
 
