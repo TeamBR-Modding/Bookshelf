@@ -85,10 +85,22 @@ configurations {
 
 dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
+    compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.ccc_version}:dev"
+    compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
+    compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.NEI_version}:dev"
+    compile "mcp.mobius.waila:Waila:${config.WAILA_version}_${config.minecraft_version}:dev"
 }
 
 repositories {
     mavenCentral()
+    maven { // the repo from which to get NEI and stuff
+        name "CB Repo"
+        url "http://chickenbones.net/maven/"
+    }
+    maven { // The repo from which to get waila
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
 }
 
 uploadArchives {
@@ -108,15 +120,15 @@ uploadArchives {
                     name project.archivesBaseName
                     packaging 'jar'
                     description 'Bookshelf'
-                    url 'https://github.com/TeamBR-Modding/BRLib'
+                    url 'https://github.com/TeamBR-Modding/Bookshelf'
                     scm {
-                        url 'https://github.com/TeamBR-Modding/BRLib'
-                        connection 'scm:git:git@github.com:TeamBR-Modding/BRLib.git'
-                        developerConnection 'scm:git:git@github.com:TeamBR-Modding/BRLib.git'
+                        url 'https://github.com/TeamBR-Modding/Bookshelf'
+                        connection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
+                        developerConnection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
                     }
                     issueManagement {
                         system 'github'
-                        url 'https://github.com/TeamBR-Modding/BRLib/issues'
+                        url 'https://github.com/TeamBR-Modding/Bookshelf/issues'
                     }
                     licenses {
                         license {
