@@ -1,21 +1,35 @@
 package com.teambr.bookshelf.client.gui;
 
+import codechicken.nei.VisiblityData;
+import codechicken.nei.api.INEIGuiHandler;
+import codechicken.nei.api.TaggedInventoryArea;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.client.gui.component.NinePatchRenderer;
+import com.teambr.bookshelf.client.gui.component.display.GuiReverseTab;
+import com.teambr.bookshelf.client.gui.component.display.GuiTab;
+import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
 import com.teambr.bookshelf.common.container.ICustomSlot;
+import cpw.mods.fml.common.Optional;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class GuiBase<T extends Container> extends GuiContainer {
+@Optional.InterfaceList({
+        @Optional.Interface(iface = "codechicken.nei.api.INEIGuiHandler", modid = "NotEnoughItems")
+})
+public abstract class GuiBase<T extends Container> extends GuiContainer implements INEIGuiHandler {
     protected String title;
     protected T inventory;
     protected NinePatchRenderer background = new NinePatchRenderer();
     protected ArrayList<BaseComponent> components;
+    protected GuiTabCollection rightTabs;
+    protected GuiTabCollection leftTabs;
 
     /**
      * Constructor for All Guis
@@ -33,7 +47,25 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
 
         components = new ArrayList<>();
         addComponents();
+
+        rightTabs = new GuiTabCollection(this, xSize);
+        leftTabs = new GuiTabCollection(this, 0);
+
+        addRightTabs(rightTabs);
+        addLeftTabs(leftTabs);
     }
+
+    /**
+     * Adds the tabs to the right. Overwrite this if you want tabs on your GUI
+     * @param tabs List of tabs, put GuiTabs in
+     */
+    public void addRightTabs(GuiTabCollection tabs) {}
+
+    /**
+     * Add the tabs to the left. Overwrite this if you want tabs on your GUI
+     * @param tabs List of tabs, put GuiReverseTabs in
+     */
+    public void addLeftTabs(GuiTabCollection tabs) {}
 
     /**
      * This will be called after the GUI has been initialized and should be where you add all components.
@@ -117,5 +149,51 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
 
     private boolean isSlotLarge(Slot slot) {
         return slot instanceof SlotFurnace;
+    }
+
+    /*******************************************************************************************************************
+     ********************************************** NEI ****************************************************************
+     *******************************************************************************************************************/
+
+    @Override
+    public VisiblityData modifyVisiblity(GuiContainer guiContainer, VisiblityData visiblityData) {
+        return null;
+    }
+
+    @Override
+    public Iterable<Integer> getItemSpawnSlots(GuiContainer guiContainer, ItemStack itemStack) {
+        return null;
+    }
+
+    @Override
+    public List<TaggedInventoryArea> getInventoryAreas(GuiContainer guiContainer) {
+        return null;
+    }
+
+    @Override
+    public boolean handleDragNDrop(GuiContainer guiContainer, int i, int i1, ItemStack itemStack, int i2) {
+        return false;
+    }
+
+    @Override
+    @Optional.Method(modid = "NotEnoughItems")
+    public boolean hideItemPanelSlot(GuiContainer gc, int x, int y, int w, int h) {
+        int xMin = guiLeft + xSize;
+        int yMin = guiTop;
+        int xMax = xMin;
+        int yMax = yMin;
+
+        for(GuiTab tab : rightTabs.getTabs()) {
+            if(tab instanceof GuiReverseTab)
+                continue;
+            else {
+                if(tab.getWidth() > 24) {
+                    xMax += tab.getWidth() + 10;
+                    yMax += tab.getHeight() + 20;
+                } else
+                    yMax += 24;
+            }
+        }
+        return ((x+w) > xMin && (x+w) < xMax && (y+h) > yMin && (y+h) < yMax) || ((x+w) < xMin + 30 && (x+w) > xMin);
     }
 }
