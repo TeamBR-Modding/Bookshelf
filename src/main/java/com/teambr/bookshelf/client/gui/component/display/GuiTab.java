@@ -19,12 +19,12 @@ import java.util.List;
 
 public class GuiTab extends BaseComponent {
     protected boolean active;
-    private int currentWidth;
-    private int currentHeight;
-    private static final int FOLDED_WIDTH = 24;
-    private static final int FOLDED_HEIGHT = 24;
-    private double dWidth = FOLDED_WIDTH;
-    private double dHeight = FOLDED_HEIGHT;
+    protected int currentWidth;
+    protected int currentHeight;
+    protected static final int FOLDED_WIDTH = 24;
+    protected static final int FOLDED_HEIGHT = 24;
+    protected double dWidth = FOLDED_WIDTH;
+    protected double dHeight = FOLDED_HEIGHT;
     protected final int expandedWidth;
     protected final int expandedHeight;
     protected Color color;
@@ -119,10 +119,6 @@ public class GuiTab extends BaseComponent {
     @Override
     public int getHeight() {
         return currentHeight;
-    }
-
-    public boolean isOrigin(int x, int y) {
-        return x < FOLDED_WIDTH && y < FOLDED_WIDTH;
     }
 
     public void setActive(boolean b) {

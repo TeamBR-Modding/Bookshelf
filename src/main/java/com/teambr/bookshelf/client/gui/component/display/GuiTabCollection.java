@@ -10,17 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuiTabCollection extends BaseComponent {
-
-    public enum TAB_SIDE {
-        LEFT,
-        RIGHT
-    }
-
     protected List<GuiTab> tabs;
     protected GuiTab activeTab;
     protected GuiBase parent;
 
-    public GuiTabCollection(GuiBase gui, int x, TAB_SIDE side) {
+    public GuiTabCollection(GuiBase gui, int x) {
         super(x, 2);
         tabs = new ArrayList<>();
         setMouseEventListener(new TabMouseListener());
@@ -58,10 +52,12 @@ public class GuiTabCollection extends BaseComponent {
         tabs.add(tab);
     }
 
-    @Override
-    public void initialize() {
-
+    public List<GuiTab> getTabs() {
+        return tabs;
     }
+
+    @Override
+    public void initialize() {}
 
     @Override
     public void render(int i, int i1) {
@@ -78,30 +74,17 @@ public class GuiTabCollection extends BaseComponent {
         }
     }
 
-    public void onTabClicked(GuiTab tab) {
-        if (tab != activeTab) {
-            if (activeTab != null) {
-                activeTab.setActive(false);
-            }
-            tab.setActive(true);
-            activeTab = tab;
-        } else {
-            tab.setActive(false);
-            activeTab = null;
-        }
-    }
-
     @Override
     public void renderOverlay(int i, int i1) {}
 
     @Override
     public int getWidth() {
-        return 0;
+        return 24;
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return 5 + (tabs.size() * 24);
     }
 
     @Override
@@ -120,7 +103,6 @@ public class GuiTabCollection extends BaseComponent {
             for(GuiTab tab : tabs) {
                 if(tab.isMouseOver(x, y)) {
                     tab.mouseDown(x, y, i2);
-                    //onTabClicked(tab);
                     return;
                 }
             }
