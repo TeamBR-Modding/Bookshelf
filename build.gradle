@@ -71,12 +71,24 @@ task devJar(type: Jar, dependsOn: 'classes') {
     classifier = 'dev'
 }
 
-task myJavadocs(type: Javadoc) {
-    source = sourceSets.main.allJava
+//task myJavadocs(type: Javadoc) {
+//    source = sourceSets.main.allJava
+//}
+
+task javadocJar(type: Zip, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    into 'build/libs'
+}
+
+task sourceJar(type: Zip, dependsOn: "sourceMainJava") {
+    from 'build/sources/java'
+    classifier = 'sources'
 }
 
 artifacts {
     archives devJar
+    archives javadocJar
+    archives sourceJar
 }
 
 configurations {
