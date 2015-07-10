@@ -11,9 +11,5 @@ public class ClientProxy extends CommonProxy {
     public void init() {
         BasicBlockRenderer.renderID = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(new BasicBlockRenderer());
-
-        //Register with Waila
-        FMLInterModComms.sendMessage("Waila", "register",
-                "com.teambr.bookshelf.api.waila.WailaDataProvider.callbackRegister");
     }
 }
