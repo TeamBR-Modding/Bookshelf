@@ -3,7 +3,7 @@
  * http://www.teamcofh.com
  */
 @API(apiVersion = CoFHAPIProps.VERSION, owner = "CoFHLib", provides = "CoFHAPI")
-package api;
+package cofh.api;
 
 import cpw.mods.fml.common.API;
 

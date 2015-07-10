@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Optional.InterfaceList({
-        @Optional.Interface(iface = "codechicken.nei.api.INEIGuiHandler", modid = "NotEnoughItems")
+        @Optional.Interface(iface = "codechicken.nei.cofh.api.INEIGuiHandler", modid = "NotEnoughItems")
 })
 public abstract class GuiBase<T extends Container> extends GuiContainer implements INEIGuiHandler {
     protected String title;

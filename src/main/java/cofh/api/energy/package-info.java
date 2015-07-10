@@ -3,7 +3,8 @@
  * http://www.teamcofh.com
  */
 @API(apiVersion = CoFHAPIProps.VERSION, owner = "CoFHAPI", provides = "CoFHAPI|energy")
-package api.energy;
+package cofh.api.energy;
 
+import cofh.api.CoFHAPIProps;
 import cpw.mods.fml.common.API;
 
