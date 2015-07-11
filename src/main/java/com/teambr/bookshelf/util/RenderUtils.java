@@ -9,6 +9,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
+
 public class RenderUtils {
 
     public static final ResourceLocation GUI_COMPONENTS = new ResourceLocation(Constants.MODID, "textures/gui/guiComponents.png");
@@ -29,6 +31,10 @@ public class RenderUtils {
 
     public static void bindGuiComponentsSheet() {
         bindTexture(GUI_COMPONENTS);
+    }
+
+    public static void setColor(Color color) {
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
     }
 
     /**
