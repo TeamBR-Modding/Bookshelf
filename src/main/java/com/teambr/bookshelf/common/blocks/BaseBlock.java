@@ -180,6 +180,7 @@ public class BaseBlock extends BlockContainer {
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int par6) {
         dropItems(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, par6);
     }
 
     /**
