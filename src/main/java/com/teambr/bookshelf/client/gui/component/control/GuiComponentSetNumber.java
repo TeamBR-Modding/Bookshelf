@@ -89,7 +89,7 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
         drawTexturedModalRect(width - 10, 8, downSelected ? 67 : 56, 8, 10, 8);
 
         textField.drawTextBox();
-        
+
         GL11.glPopMatrix();
     }
 
