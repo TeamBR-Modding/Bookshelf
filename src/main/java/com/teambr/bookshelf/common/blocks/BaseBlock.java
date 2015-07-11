@@ -190,7 +190,7 @@ public class BaseBlock extends BlockContainer {
      * @param y Y-Coord in world
      * @param z Z-Coord in world
      */
-    private void dropItems(World world, int x, int y, int z) {
+    public void dropItems(World world, int x, int y, int z) {
         Random rand = new Random();
 
         TileEntity tileEntity = world.getTileEntity(x, y, z);
