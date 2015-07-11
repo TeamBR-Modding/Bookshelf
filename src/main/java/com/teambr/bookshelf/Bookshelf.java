@@ -4,6 +4,7 @@ package com.teambr.bookshelf;
 import com.teambr.bookshelf.common.CommonProxy;
 import com.teambr.bookshelf.lib.Constants;
 import com.teambr.bookshelf.manager.GuiManager;
+import com.teambr.bookshelf.manager.PacketManager;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -25,7 +26,6 @@ public class Bookshelf {
             serverSide = "com.teambr.bookshelf.common.CommonProxy")
     public static CommonProxy proxy;
 
-    public static final PacketPipeline packetPipeline = new PacketPipeline();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -36,11 +36,10 @@ public class Bookshelf {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        packetPipeline.initalise();
+        PacketManager.initPackets();
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        packetPipeline.postInitialise();
     }
 }
