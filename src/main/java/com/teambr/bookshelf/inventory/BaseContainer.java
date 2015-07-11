@@ -93,8 +93,11 @@ public abstract class BaseContainer extends Container {
             while (stackToMerge.stackSize > 0 && ((!reverse && slotId < stop) || (reverse && slotId >= start))) {
                 Slot slot = slots.get(slotId);
 
-                if(!slot.isItemValid(stackToMerge)) continue;
-                
+                if(!slot.isItemValid(stackToMerge)) {
+                    slotId++;
+                    continue;
+                }
+
                 ItemStack stackInSlot = slot.getStack();
                 if (InventoryUtils.tryMergeStacks(stackToMerge, stackInSlot)) {
                     slot.onSlotChanged();
