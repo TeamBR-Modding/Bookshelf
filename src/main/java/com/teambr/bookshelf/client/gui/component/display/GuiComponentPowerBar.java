@@ -59,7 +59,7 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
         GL11.glTranslated(1, height - getEnergyPercent(height), 0);
         GL11.glScaled(width - 2, height - 2 - getEnergyPercent(height), 1);
         RenderUtils.setColor(barColor);
-        drawTexturedModalRect(0, 0, 8, 88, 1, 1);
+        drawTexturedModalRect(0, 0, 6, 86, 1, 1);
         GL11.glPopMatrix();
 
         GL11.glPopMatrix();

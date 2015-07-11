@@ -65,47 +65,47 @@ public class NinePatchRenderer {
     }
 
     protected void renderTopRightCorner(Gui gui, int width) {
-        gui.drawTexturedModalRect(width - cellSize, 0, u + (cellSize * 2), v, cellSize, cellSize);
+        gui.drawTexturedModalRect(width - cellSize, 0, u + cellSize + 1, v, cellSize, cellSize);
     }
 
     protected void renderBottomLeftCorner(Gui gui, int height) {
-        gui.drawTexturedModalRect(0, height - (cellSize * 2), u, v + (cellSize * 2), cellSize, cellSize);
+        gui.drawTexturedModalRect(0, height - cellSize, u, v + cellSize + 1, cellSize, cellSize);
     }
 
     protected void renderBottomRightCorner(Gui gui, int width, int height) {
-        gui.drawTexturedModalRect(width - (cellSize * 2), height - (cellSize * 2), u + (cellSize * 2), v + (cellSize * 2), cellSize, cellSize);
+        gui.drawTexturedModalRect(width - cellSize, height - cellSize, u + cellSize + 1, v + cellSize + 1, cellSize, cellSize);
     }
 
     //Edges
     protected void renderTopEdge(Gui gui, int width) {
         GL11.glPushMatrix();
         GL11.glTranslatef(cellSize, 0, 0);
-        GL11.glScalef((width - (cellSize * 2)) / cellSize, 1, 0);
-        gui.drawTexturedModalRect(0, 0, u + cellSize, v, cellSize, cellSize);
+        GL11.glScalef(width - (cellSize * 2), 1, 0);
+        gui.drawTexturedModalRect(0, 0, u + cellSize, v, 1, cellSize);
         GL11.glPopMatrix();
     }
 
     protected void renderBottomEdge(Gui gui, int width, int height) {
         GL11.glPushMatrix();
-        GL11.glTranslatef(cellSize, height - (cellSize * 2), 0);
-        GL11.glScalef((width - (cellSize * 2)) / cellSize, 1, 0);
-        gui.drawTexturedModalRect(0, 0, u + cellSize, v + (cellSize * 2), cellSize, cellSize);
+        GL11.glTranslatef(cellSize, height - cellSize, 0);
+        GL11.glScalef(width - (cellSize * 2), 1, 0);
+        gui.drawTexturedModalRect(0, 0, u + cellSize, v + cellSize + 1, 1, cellSize);
         GL11.glPopMatrix();
     }
 
     protected void renderLeftEdge(Gui gui, int height) {
         GL11.glPushMatrix();
         GL11.glTranslatef(0, cellSize, 0);
-        GL11.glScalef(1, (height - (cellSize * 2)) / cellSize, 0);
-        gui.drawTexturedModalRect(0, 0, u, v + cellSize, cellSize, cellSize);
+        GL11.glScalef(1, height - (cellSize * 2), 0);
+        gui.drawTexturedModalRect(0, 0, u, v + cellSize, cellSize, 1);
         GL11.glPopMatrix();
     }
 
     protected void renderRightEdge(Gui gui, int width, int height) {
         GL11.glPushMatrix();
-        GL11.glTranslatef(width - (cellSize * 2), cellSize, 0);
-        GL11.glScalef(1, (height - (cellSize * 2)) / cellSize, 0);
-        gui.drawTexturedModalRect(0, 0, u + (cellSize * 2), v + cellSize, cellSize, cellSize);
+        GL11.glTranslatef(width - cellSize, cellSize, 0);
+        GL11.glScalef(1, height - (cellSize * 2), 0);
+        gui.drawTexturedModalRect(0, 0, u + cellSize + 1, v + cellSize, cellSize, 1);
         GL11.glPopMatrix();
     }
 
@@ -113,8 +113,8 @@ public class NinePatchRenderer {
     protected void renderBackground(Gui gui, int width, int height) {
         GL11.glPushMatrix();
         GL11.glTranslatef(cellSize, cellSize, 0);
-        GL11.glScalef((width - (cellSize * 2)) / cellSize, (height - (cellSize * 2)) / cellSize, 0);
-        gui.drawTexturedModalRect(0, 0, u + cellSize, v + cellSize, cellSize, cellSize);
+        GL11.glScalef(width - (cellSize * 2), height - (cellSize * 2), 0);
+        gui.drawTexturedModalRect(0, 0, u + cellSize, v + cellSize, 1, 1);
         GL11.glPopMatrix();
     }
 
