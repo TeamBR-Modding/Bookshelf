@@ -30,6 +30,8 @@ public class ClientTileUpdate implements IMessageHandler<ClientTileUpdate.Messag
         int x, y, z;
         protected NBTTagCompound tag;
 
+        public Message() {}
+
         public Message(int xCoord, int yCoord, int zCoord, NBTTagCompound nbt) {
             x = xCoord;
             y = yCoord;
