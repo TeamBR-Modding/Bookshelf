@@ -2,10 +2,8 @@ package com.teambr.bookshelf.client.gui.component.display;
 
 import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
-import com.teambr.bookshelf.client.gui.component.NinePatchRenderer;
 import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
@@ -14,17 +12,6 @@ import org.lwjgl.opengl.GL12;
 import java.awt.*;
 
 public class GuiReverseTab extends GuiTab {
-
-    protected NinePatchRenderer boxRenderer = new NinePatchRenderer() {
-        @Override
-        protected void renderTopRightCorner(Gui gui, int width) {}
-
-        @Override
-        protected void renderBottomRightCorner(Gui gui, int width, int height) {}
-
-        @Override
-        protected void renderRightEdge(Gui gui, int width, int height) {}
-    };
 
     public GuiReverseTab(GuiBase gui, int x, int y, int maxWidth, int maxHeight, Color c, ItemStack stack) {
         super(gui, x, y, maxWidth, maxHeight, c, stack);
@@ -45,7 +32,10 @@ public class GuiReverseTab extends GuiTab {
         currentHeight = (int)Math.round(dHeight);
 
         RenderUtils.bindGuiComponentsSheet();
-        boxRenderer.render(this, parent.getGuiLeft() + xPos - currentWidth, parent.getGuiTop() + yPos, currentWidth, currentHeight, color);
+        GL11.glScalef(-1, 1, 1);
+        GL11.glTranslatef(-currentWidth, 0, 0);
+        GL11.glCullFace(GL11.GL_BACK);
+        boxRenderer.render(this, parent.getGuiLeft() + xPos, parent.getGuiTop() + yPos, currentWidth, currentHeight, color);
 
         GL11.glColor4f(1, 1, 1, 1);
         if(icon != null) {
