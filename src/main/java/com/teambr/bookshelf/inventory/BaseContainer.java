@@ -94,7 +94,9 @@ public abstract class BaseContainer extends Container {
                 Slot slot = slots.get(slotId);
 
                 if(!slot.isItemValid(stackToMerge)) {
-                    slotId++;
+                    if(slotId < stop - 1) //Found the end and nothing yet, leave
+                        slotId++;
+                    else return false;
                     continue;
                 }
 

@@ -13,10 +13,10 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
     private boolean upSelected = false;
     private boolean downSelected = false;
 
-    public GuiComponentSetNumber(int x, int y, int w, int h, int startingValue) {
+    public GuiComponentSetNumber(int x, int y, int w, int startingValue) {
         super(x, y);
         width = w;
-        height = h;
+        height = 16;
         value = startingValue;
         textField = new GuiTextField(Minecraft.getMinecraft().fontRenderer, x, y, width - 10, height);
         textField.setText(String.valueOf(startingValue));
