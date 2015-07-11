@@ -132,4 +132,6 @@ public class GuiTab extends BaseComponent {
     public void setY(int y) {
         this.yPos = y;
     }
+
+    public void setIcon(ItemStack icon) { this.icon = icon; }
 }
