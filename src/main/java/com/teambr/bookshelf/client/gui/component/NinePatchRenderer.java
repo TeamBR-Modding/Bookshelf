@@ -21,12 +21,14 @@ public class NinePatchRenderer {
     private ResourceLocation patchLocation;
 
     /**
-     * Default Constructor
+     * Default Constructor, used for GUIs
      */
     public NinePatchRenderer() {
-        u = 0;
-        v = 0;
-        cellSize = 4;
+        this(null, 0, 0, 4);
+    }
+
+    public NinePatchRenderer(int U, int V, int cellWidth) {
+        this(null, U, V, cellWidth);
     }
 
     /**
@@ -35,9 +37,11 @@ public class NinePatchRenderer {
      * @param resourceU Resource U
      * @param resourceV Resource V
      */
-    public NinePatchRenderer(ResourceLocation resource, int resourceU, int resourceV) {
+    public NinePatchRenderer(ResourceLocation resource, int resourceU, int resourceV, int cellWitdh) {
         u = resourceU;
         v = resourceV;
+
+        cellSize = cellWitdh;
 
         patchLocation = resource;
     }
@@ -63,7 +67,7 @@ public class NinePatchRenderer {
     }
 
     protected void renderBottomRightCorner(Gui gui, int width, int height) {
-        gui.drawTexturedModalRect(width - cellSize, height - cellSize, u + (cellSize * 2), v +  (cellSize * 2), cellSize, cellSize);
+        gui.drawTexturedModalRect(width - cellSize, height - cellSize, u + (cellSize * 2), v + (cellSize * 2), cellSize, cellSize);
     }
 
     //Edges

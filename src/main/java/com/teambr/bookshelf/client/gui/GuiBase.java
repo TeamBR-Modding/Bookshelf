@@ -117,7 +117,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
         for(BaseComponent component : components)
             component.renderOverlay(guiLeft, guiTop);
         for(BaseComponent component : components)
-            if(component.isMouseOver(x - this.guiLeft, y - this.guiTop)) component.renderToolTip(Mouse.getX(), Mouse.getY());
+            if(component.isMouseOver(x, y)) component.renderToolTip(Mouse.getX(), Mouse.getY());
     }
 
     @Override
