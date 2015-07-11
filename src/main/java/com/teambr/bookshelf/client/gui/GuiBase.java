@@ -16,7 +16,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,9 +115,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
         fontRendererObj.drawString(StatCollector.translateToLocal(title), xSize / 2 - fontRendererObj.getStringWidth(StatCollector.translateToLocal(title)) / 2, 6, 4210752);
         for(BaseComponent component : components)
             component.renderOverlay(guiLeft, guiTop);
-        for(BaseComponent component : components)
-            if(component.isMouseOver(x, y)) component.renderToolTip(Mouse.getEventX() * this.width / this.mc.displayWidth, this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1);
-    }
+      }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
@@ -149,6 +146,13 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
         for(BaseComponent component : components) {
             component.render(guiLeft, guiTop);
         }
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float par3) {
+        for(BaseComponent component : components)
+            if(component.isMouseOver(mouseX - guiLeft, mouseY - guiTop)) component.renderToolTip(mouseX, mouseY);
+
     }
 
     private boolean isSlotLarge(Slot slot) {
