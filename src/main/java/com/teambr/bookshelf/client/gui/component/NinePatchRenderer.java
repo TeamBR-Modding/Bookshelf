@@ -69,11 +69,11 @@ public class NinePatchRenderer {
     }
 
     protected void renderBottomLeftCorner(Gui gui, int height) {
-        gui.drawTexturedModalRect(0, height - cellSize, u, v + (cellSize * 2), cellSize, cellSize);
+        gui.drawTexturedModalRect(0, height - (cellSize * 2), u, v + (cellSize * 2), cellSize, cellSize);
     }
 
     protected void renderBottomRightCorner(Gui gui, int width, int height) {
-        gui.drawTexturedModalRect(width - cellSize, height - cellSize, u + (cellSize * 2), v + (cellSize * 2), cellSize, cellSize);
+        gui.drawTexturedModalRect(width - (cellSize * 2), height - (cellSize * 2), u + (cellSize * 2), v + (cellSize * 2), cellSize, cellSize);
     }
 
     //Edges
