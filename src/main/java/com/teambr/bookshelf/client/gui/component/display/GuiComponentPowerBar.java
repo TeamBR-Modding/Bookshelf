@@ -28,7 +28,7 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
         RenderUtils.bindGuiComponentsSheet();
 
         drawTexturedModalRect(0, 0, u, v, getWidth(), getHeight());
-        drawTexturedModalRect(0, 72 - getEnergyPercent(), u + getWidth(), v + 72 - getEnergyPercent(), getWidth(), getEnergyPercent() + 1);
+        drawTexturedModalRect(0, 74 - getEnergyPercent(), u + getWidth(), v + 74 - getEnergyPercent(), getWidth(), getEnergyPercent() + 1);
 
         GL11.glPopMatrix();
 
