@@ -87,7 +87,7 @@ public class NinePatchRenderer {
 
     protected void renderBottomEdge(Gui gui, int width, int height) {
         GL11.glPushMatrix();
-        GL11.glTranslatef(cellSize, height - cellSize, 0);
+        GL11.glTranslatef(cellSize, height - (cellSize * 2), 0);
         GL11.glScalef((width - (cellSize * 2)) / cellSize, 1, 0);
         gui.drawTexturedModalRect(0, 0, u + cellSize, v + (cellSize * 2), cellSize, cellSize);
         GL11.glPopMatrix();
@@ -103,7 +103,7 @@ public class NinePatchRenderer {
 
     protected void renderRightEdge(Gui gui, int width, int height) {
         GL11.glPushMatrix();
-        GL11.glTranslatef(width - (cellSize), cellSize, 0);
+        GL11.glTranslatef(width - (cellSize * 2), cellSize, 0);
         GL11.glScalef(1, (height - (cellSize * 2)) / cellSize, 0);
         gui.drawTexturedModalRect(0, 0, u + (cellSize * 2), v + cellSize, cellSize, cellSize);
         GL11.glPopMatrix();
