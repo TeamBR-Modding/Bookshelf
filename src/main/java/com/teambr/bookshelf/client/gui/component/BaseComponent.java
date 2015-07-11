@@ -1,5 +1,6 @@
 package com.teambr.bookshelf.client.gui.component;
 
+import com.teambr.bookshelf.client.gui.component.listeners.IKeyBoardListener;
 import com.teambr.bookshelf.client.gui.component.listeners.IMouseEventListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -19,6 +20,7 @@ public abstract class BaseComponent extends Gui {
     protected List<String> toolTip;
 
     protected IMouseEventListener mouseEventListener;
+    protected IKeyBoardListener keyBoardListener;
 
     public BaseComponent(int x, int y) {
         xPos = x;
@@ -60,6 +62,14 @@ public abstract class BaseComponent extends Gui {
      */
     public void setMouseEventListener(IMouseEventListener listener) {
         mouseEventListener = listener;
+    }
+
+    /**
+     * Set the handler for the keyboard input
+     * @param listener The keyboard listener
+     */
+    public void setKeyBoardListener(IKeyBoardListener listener) {
+        keyBoardListener = listener;
     }
 
     /**
@@ -125,6 +135,24 @@ public abstract class BaseComponent extends Gui {
         return mouseX >= xPos && mouseX < xPos + getWidth() && mouseY >= yPos && mouseY < yPos + getHeight();
     }
 
+    /**
+     * Used when a key is pressed
+     * @param letter The letter
+     * @param keyCode The code
+     */
+    public void keyTyped(char letter, int keyCode) {
+        if(keyBoardListener != null) keyBoardListener.keyTyped(this, letter, keyCode);
+    }
+
+
+    /**
+     * Used to draw a tooltip over this component
+     * @param tip The list of strings to render
+     * @param mouseX The mouse x Position
+     * @param mouseY The mouse Y position
+     * @param parent The parent GUI
+     * @param font The font renderer
+     */
     protected void drawHoveringText(List tip, int mouseX, int mouseY, GuiScreen parent, FontRenderer font) {
         if (!tip.isEmpty()) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);

@@ -110,12 +110,18 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
             if(component.isMouseOver(x - this.guiLeft, y - this.guiTop)) component.mouseDrag(x - this.guiLeft, y - this.guiTop, button, time);
     }
 
+    protected void keyTyped(char letter, int code) {
+        super.keyTyped(letter, code);
+        for(BaseComponent component : components)
+            component.keyTyped(letter, code);
+    }
+
     @Override
     protected void drawGuiContainerForegroundLayer(int x, int y) {
         fontRendererObj.drawString(StatCollector.translateToLocal(title), xSize / 2 - fontRendererObj.getStringWidth(StatCollector.translateToLocal(title)) / 2, 6, 4210752);
         for(BaseComponent component : components)
             component.renderOverlay(guiLeft, guiTop);
-      }
+    }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {

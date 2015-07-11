@@ -1,7 +1,6 @@
 package com.teambr.bookshelf.client.gui.component.control;
 
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
-import com.teambr.bookshelf.client.gui.component.listeners.IMouseEventListener;
 import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -10,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Slider<V> extends BaseComponent {
+public class GuiComponendSlider<V> extends BaseComponent {
     protected int width;
     protected int boxX;
     protected boolean isDragging;
@@ -23,7 +22,7 @@ public class Slider<V> extends BaseComponent {
     private static final int BOX_U = 32;
     private static final int BOX_V = 3;
 
-    public Slider(int x, int y, int length, List<V> data) {
+    public GuiComponendSlider(int x, int y, int length, List<V> data) {
         super(x, y);
         width = length;
         boxX = xPos + 1;
@@ -33,27 +32,40 @@ public class Slider<V> extends BaseComponent {
     }
 
     @Override
-    public void initialize() {
-        setMouseEventListener(new IMouseEventListener() {
-                                  @Override
-                                  public void onMouseDown(BaseComponent component, int mouseX, int mouseY, int button) {
-                                      isDragging = true;
-                                      boxX = mouseX;
-                                      updateCurrentSelection();
-                                  }
+    public void initialize() {}
 
-                                  @Override
-                                  public void onMouseUp(BaseComponent component, int mouseX, int mouseY, int button) {
-                                      isDragging = false;
-                                  }
+    /**
+     * Called when the mouse is pressed
+     * @param x Mouse X Position
+     * @param y Mouse Y Position
+     * @param button Mouse Button
+     */
+    public void mouseDown(int x, int y, int button) {
+        isDragging = true;
+        boxX = x;
+        updateCurrentSelection();
+    }
 
-                                  @Override
-                                  public void onMouseDrag(BaseComponent component, int mouseX, int mouseY, int button, long time) {
-                                      boxX = mouseX;
-                                      updateCurrentSelection();
-                                  }
-                              }
-        );
+    /**
+     * Called when the mouse button is over the component and released
+     * @param x Mouse X Position
+     * @param y Mouse Y Position
+     * @param button Mouse Button
+     */
+    public void mouseUp(int x, int y, int button) {
+        isDragging = false;
+    }
+
+    /**
+     * Called when the user drags the component
+     * @param x Mouse X Position
+     * @param y Mouse Y Position
+     * @param button Mouse Button
+     * @param time How long
+     */
+    public void mouseDrag(int x, int y, int button, long time) {
+        boxX = x;
+        updateCurrentSelection();
     }
 
     @Override
