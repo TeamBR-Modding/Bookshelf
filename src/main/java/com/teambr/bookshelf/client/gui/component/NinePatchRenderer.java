@@ -43,11 +43,11 @@ public class NinePatchRenderer {
      * @param resourceU Resource U
      * @param resourceV Resource V
      */
-    public NinePatchRenderer(ResourceLocation resource, int resourceU, int resourceV, int cellWitdh) {
+    public NinePatchRenderer(ResourceLocation resource, int resourceU, int resourceV, int cellWidth) {
         u = resourceU;
         v = resourceV;
 
-        cellSize = cellWitdh;
+        cellSize = cellWidth;
 
         patchLocation = resource;
     }

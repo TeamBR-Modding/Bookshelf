@@ -41,7 +41,7 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
         this.barColor = color;
     }
 
-    public abstract int getEnergyPercent();
+    public abstract int getEnergyPercent(int scale);
 
     @Override
     public void initialize() {}
@@ -56,8 +56,8 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
         renderer.render(this, 0, 0, width, height);
 
         GL11.glPushMatrix();
-        GL11.glTranslated(1, 1, 0);
-        GL11.glScaled(width - 2, height - 2, 1);
+        GL11.glTranslated(1, height - getEnergyPercent(height), 0);
+        GL11.glScaled(width - 2, height - 2 - getEnergyPercent(height), 1);
         RenderUtils.setColor(barColor);
         drawTexturedModalRect(0, 0, 8, 88, 1, 1);
         GL11.glPopMatrix();
