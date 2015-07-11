@@ -183,7 +183,13 @@ public class BaseBlock extends BlockContainer {
         super.breakBlock(world, x, y, z, block, par6);
     }
 
-    //Drop blocks from inventory on block break
+    /**
+     * Enmpty Contents of an Inventory into world on Block Break
+     * @param world
+     * @param x X-Coord in world
+     * @param y Y-Coord in world
+     * @param z Z-Coord in world
+     */
     private void dropItems(World world, int x, int y, int z) {
         Random rand = new Random();
 
