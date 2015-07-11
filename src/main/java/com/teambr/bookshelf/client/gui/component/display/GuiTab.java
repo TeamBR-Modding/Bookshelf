@@ -117,15 +117,15 @@ public class GuiTab extends BaseComponent {
      * @param y Mouse Y Position
      * @param button Mouse Button
      */
-    public void mouseDown(int x, int y, int button) {
+    public boolean mouseDownActivated(int x, int y, int button) {
         if(areChildrenActive()) {
             for (BaseComponent component : children)
                 if(component.isMouseOver(x, y)) {
                     component.mouseDown(x, y, button);
-                    return;
+                    return true;
                 }
         }
-        if(mouseEventListener != null) mouseEventListener.onMouseDown(this, x, y, button);
+        return false;
     }
 
     /**
@@ -134,15 +134,15 @@ public class GuiTab extends BaseComponent {
      * @param y Mouse Y Position
      * @param button Mouse Button
      */
-    public void mouseUp(int x, int y, int button) {
+    public boolean mouseUpActivated(int x, int y, int button) {
         if(areChildrenActive()) {
             for (BaseComponent component : children)
                 if(component.isMouseOver(x, y)) {
                     component.mouseUp(x, y, button);
-                    return;
+                    return true;
                 }
         }
-        if(mouseEventListener != null) mouseEventListener.onMouseUp(this, x, y, button);
+        return false;
     }
 
     /**
@@ -152,15 +152,15 @@ public class GuiTab extends BaseComponent {
      * @param button Mouse Button
      * @param time How long
      */
-    public void mouseDrag(int x, int y, int button, long time) {
+    public boolean mouseDragActivated(int x, int y, int button, long time) {
         if(areChildrenActive()) {
             for (BaseComponent component : children)
                 if(component.isMouseOver(x, y)) {
                     component.mouseDrag(x, y, button, time);
-                    return;
+                    return true;
                 }
         }
-        if(mouseEventListener != null) mouseEventListener.onMouseDrag(this, x, y, button, time);
+        return false;
     }
 
     @Override
