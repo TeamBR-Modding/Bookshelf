@@ -16,6 +16,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,10 +112,12 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    protected void drawGuiContainerForegroundLayer(int x, int y) {
         fontRendererObj.drawString(StatCollector.translateToLocal(title), xSize / 2 - fontRendererObj.getStringWidth(StatCollector.translateToLocal(title)) / 2, 6, 4210752);
         for(BaseComponent component : components)
             component.renderOverlay(guiLeft, guiTop);
+        for(BaseComponent component : components)
+            if(component.isMouseOver(x - this.guiLeft, y - this.guiTop)) component.renderToolTip(Mouse.getX(), Mouse.getY());
     }
 
     @Override
