@@ -112,13 +112,23 @@ public class GuiTabCollection extends BaseComponent {
         }
 
         @Override
-        public void onMouseUp(BaseComponent baseComponent, int i, int i1, int i2) {
-            ((GuiTab) baseComponent).mouseDownActivated(i, i1, i2);
+        public void onMouseUp(BaseComponent baseComponent, int x, int y, int i2) {
+            for(GuiTab tab : tabs) {
+                if(tab.isMouseOver(x, y)) {
+                    tab.mouseUpActivated(x, y, i2);
+                    return;
+                }
+            }
         }
 
         @Override
-        public void onMouseDrag(BaseComponent baseComponent, int i, int i1, int i2, long l) {
-            ((GuiTab) baseComponent).mouseDragActivated(i, i1, i2, l);
+        public void onMouseDrag(BaseComponent baseComponent, int x, int y, int i2, long l) {
+            for(GuiTab tab : tabs) {
+                if(tab.isMouseOver(x, y)) {
+                    tab.mouseDragActivated(x, y, i2, l);
+                    return;
+                }
+            }
         }
     }
 }
