@@ -32,7 +32,6 @@ public class GuiTabCollection extends BaseComponent {
         tab.setMouseEventListener(new IMouseEventListener() {
             @Override
             public void onMouseDown(BaseComponent baseComponent, int x, int y, int i2) {
-                if(((GuiTab) baseComponent).mouseDownActivated(x, y, i2)) return;
                 if (activeTab != tab) {
                     if (activeTab != null)
                         activeTab.setActive(false);
@@ -46,12 +45,10 @@ public class GuiTabCollection extends BaseComponent {
 
             @Override
             public void onMouseUp(BaseComponent baseComponent, int i, int i1, int i2) {
-                ((GuiTab) baseComponent).mouseDownActivated(i, i1, i2);
             }
 
             @Override
             public void onMouseDrag(BaseComponent baseComponent, int i, int i1, int i2, long l) {
-                ((GuiTab) baseComponent).mouseDragActivated(i, i1, i2, l);
             }
         });
         tabs.add(tab);
@@ -107,16 +104,21 @@ public class GuiTabCollection extends BaseComponent {
         public void onMouseDown(BaseComponent baseComponent, int x, int y, int i2) {
             for(GuiTab tab : tabs) {
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseDown(x, y, i2);
+                    if(!tab.mouseDownActivated(x, y, i2))
+                        tab.mouseDown(x, y, i2);
                     return;
                 }
             }
         }
 
         @Override
-        public void onMouseUp(BaseComponent baseComponent, int i, int i1, int i2) {}
+        public void onMouseUp(BaseComponent baseComponent, int i, int i1, int i2) {
+            ((GuiTab) baseComponent).mouseDownActivated(i, i1, i2);
+        }
 
         @Override
-        public void onMouseDrag(BaseComponent baseComponent, int i, int i1, int i2, long l) {}
+        public void onMouseDrag(BaseComponent baseComponent, int i, int i1, int i2, long l) {
+            ((GuiTab) baseComponent).mouseDragActivated(i, i1, i2, l);
+        }
     }
 }

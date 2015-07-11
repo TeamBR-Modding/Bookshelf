@@ -36,6 +36,7 @@ public class GuiReverseTab extends GuiTab {
 
     @Override
     public void render(int x, int y) {
+        GL11.glPushMatrix();
         double targetWidth = active? expandedWidth : FOLDED_WIDTH;
         double targetHeight = active? expandedHeight : FOLDED_HEIGHT;
         if (currentWidth != targetWidth) dWidth += (targetWidth - dWidth) / 4;
@@ -62,6 +63,7 @@ public class GuiReverseTab extends GuiTab {
             for (BaseComponent component : children)
                 component.render(parent.getGuiLeft() + xPos - currentWidth, parent.getGuiTop() + yPos);
         }
+        GL11.glPopMatrix();
     }
 
     @Override

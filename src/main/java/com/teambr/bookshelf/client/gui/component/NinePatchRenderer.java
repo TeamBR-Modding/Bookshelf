@@ -112,7 +112,7 @@ public class NinePatchRenderer {
     //Background
     protected void renderBackground(Gui gui, int width, int height) {
         GL11.glPushMatrix();
-        GL11.glTranslatef(cellSize, cellSize, 0);
+        GL11.glTranslatef(cellSize - 1, cellSize - 1, 0);
         GL11.glScalef(width - (cellSize * 2), height - (cellSize * 2), 0);
         gui.drawTexturedModalRect(0, 0, u + cellSize, v + cellSize, 1, 1);
         GL11.glPopMatrix();

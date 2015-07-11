@@ -74,6 +74,7 @@ public class GuiTab extends BaseComponent {
 
     @Override
     public void render(int x, int y) {
+        GL11.glPushMatrix();
         double targetWidth = active? expandedWidth : FOLDED_WIDTH;
         double targetHeight = active? expandedHeight : FOLDED_HEIGHT;
         if (currentWidth != targetWidth) dWidth += (targetWidth - dWidth) / 4;
@@ -100,7 +101,7 @@ public class GuiTab extends BaseComponent {
             for (BaseComponent component : children)
                 component.render(parent.getGuiLeft() + xPos, parent.getGuiTop() + yPos);
         }
-
+        GL11.glPopMatrix();
     }
 
     @Override

@@ -85,8 +85,8 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
         GL11.glTranslated(xPos + guiLeft, yPos + guiTop, 0);
         RenderUtils.bindGuiComponentsSheet();
 
-        drawTexturedModalRect(width - 10, 0, upSelected ? 67 : 56, 0, 10, 8);
-        drawTexturedModalRect(width - 10, 8, downSelected ? 67 : 56, 8, 10, 8);
+        drawTexturedModalRect(width - 8, 0, upSelected ? 67 : 56, 0, 11, 8);
+        drawTexturedModalRect(width - 8, 8, downSelected ? 67 : 56, 8, 11, 8);
 
         GL11.glPopMatrix();
 
