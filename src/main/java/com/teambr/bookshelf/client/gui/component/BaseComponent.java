@@ -4,6 +4,7 @@ import com.teambr.bookshelf.client.gui.component.listeners.IMouseEventListener;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -74,9 +75,9 @@ public abstract class BaseComponent extends Gui {
      * @param mouseX Mouse X
      * @param mouseY Mouse Y
      */
-    public void renderToolTip(int mouseX, int mouseY) {
+    public void renderToolTip(int mouseX, int mouseY, GuiScreen parent) {
         if(toolTip != null && !toolTip.isEmpty()) {
-            drawHoveringText(toolTip, mouseX, mouseY, Minecraft.getMinecraft().fontRenderer);
+            drawHoveringText(toolTip, mouseX, mouseY, parent, Minecraft.getMinecraft().fontRenderer);
         }
     }
 
@@ -124,7 +125,7 @@ public abstract class BaseComponent extends Gui {
         return mouseX >= xPos && mouseX < xPos + getWidth() && mouseY >= yPos && mouseY < yPos + getHeight();
     }
 
-    protected void drawHoveringText(List tip, int mouseX, int mouseY, FontRenderer font) {
+    protected void drawHoveringText(List tip, int mouseX, int mouseY, GuiScreen parent, FontRenderer font) {
         if (!tip.isEmpty()) {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             RenderHelper.disableStandardItemLighting();
@@ -149,11 +150,11 @@ public abstract class BaseComponent extends Gui {
                 i1 += 2 + (tip.size() - 1) * 10;
             }
 
-            if (j2 + k > this.getWidth()) {
+            if (j2 + k > parent.width) {
                 j2 -= 28 + k;
             }
 
-            if (k2 + i1 + 6 > this.getHeight()) {
+            if (k2 + i1 + 6 > parent.height) {
                 k2 = this.getHeight() - i1 - 6;
             }
 
