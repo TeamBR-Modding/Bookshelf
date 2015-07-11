@@ -152,7 +152,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
     public void drawScreen(int mouseX, int mouseY, float par3) {
         super.drawScreen(mouseX, mouseY, par3);
         for(BaseComponent component : components)
-            if(component.isMouseOver(mouseX - guiLeft, mouseY - guiTop)) component.renderToolTip(mouseX - guiLeft, mouseY - guiTop, this);
+            if(component.isMouseOver(mouseX - guiLeft, mouseY - guiTop)) component.renderToolTip(mouseX, mouseY, this);
 
     }
 
