@@ -43,6 +43,9 @@ public class ClientTileUpdate implements IMessageHandler<ClientTileUpdate.Messag
         public void fromBytes(ByteBuf buffer) {
             try {
                 tag = new PacketBuffer(buffer).readNBTTagCompoundFromBuffer();
+                x = buffer.readInt();
+                y = buffer.readInt();
+                z = buffer.readInt();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -52,6 +55,9 @@ public class ClientTileUpdate implements IMessageHandler<ClientTileUpdate.Messag
         public void toBytes(ByteBuf buffer) {
             try {
                 new PacketBuffer(buffer).writeNBTTagCompoundToBuffer(tag);
+                buffer.writeInt(x);
+                buffer.writeInt(y);
+                buffer.writeInt(z);
             } catch (IOException e) {
                 e.printStackTrace();
             }
