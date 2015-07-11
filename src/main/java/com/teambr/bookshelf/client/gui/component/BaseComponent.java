@@ -75,7 +75,7 @@ public abstract class BaseComponent extends Gui {
      * @param mouseY Mouse Y
      */
     public void renderToolTip(int mouseX, int mouseY) {
-        if(toolTip != null && toolTip.isEmpty()) {
+        if(toolTip != null && !toolTip.isEmpty()) {
             drawHoveringText(toolTip, mouseX, mouseY, Minecraft.getMinecraft().fontRenderer);
         }
     }
