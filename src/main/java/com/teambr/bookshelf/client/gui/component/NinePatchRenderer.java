@@ -27,6 +27,12 @@ public class NinePatchRenderer {
         this(null, 0, 0, 4);
     }
 
+    /**
+     * Other constructor
+     * @param U Pixel X
+     * @param V Pixel Y
+     * @param cellWidth Cell size
+     */
     public NinePatchRenderer(int U, int V, int cellWidth) {
         this(null, U, V, cellWidth);
     }

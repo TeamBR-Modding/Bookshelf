@@ -17,7 +17,7 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
 
     protected Color barColor;
 
-    NinePatchRenderer renderer = new NinePatchRenderer();
+    NinePatchRenderer renderer = new NinePatchRenderer(u, v, 3);
 
     /**
      * Default Constructor using x and y coords
@@ -53,26 +53,28 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
         GL11.glTranslated(guiLeft + xPos, guiTop + yPos, 0);
         RenderUtils.bindGuiComponentsSheet();
 
-        drawTexturedModalRect(0, 0, u, v, getWidth(), getHeight());
-        drawTexturedModalRect(0, 74 - getEnergyPercent(), u + getWidth(), v + 74 - getEnergyPercent(), getWidth(), getEnergyPercent() + 1);
+        renderer.render(this, 0, 0, width, height);
 
+        GL11.glPushMatrix();
+        GL11.glTranslated(1, 1, 0);
+        GL11.glScaled(width - 2, height - 2, 1);
+        RenderUtils.setColor(barColor);
+        drawTexturedModalRect(0, 0, 8, 88, 1, 1);
         GL11.glPopMatrix();
 
-
+        GL11.glPopMatrix();
     }
 
     @Override
-    public void renderOverlay(int i, int i1) {
-
-    }
+    public void renderOverlay(int i, int i1) {}
 
     @Override
     public int getWidth() {
-        return 18;
+        return width;
     }
 
     @Override
     public int getHeight() {
-        return 74;
+        return height;
     }
 }
