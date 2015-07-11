@@ -33,7 +33,9 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
      * @param y Mouse Y Position
      * @param button Mouse Button
      */
-    public void mouseDown(int x, int y, int button) {}
+    public void mouseDown(int x, int y, int button) {
+
+    }
 
     /**
      * Called when the mouse button is over the component and released
@@ -42,7 +44,7 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
      * @param button Mouse Button
      */
     public void mouseUp(int x, int y, int button) {
-        if(mouseEventListener != null) mouseEventListener.onMouseUp(this, x, y, button);
+
     }
 
     @Override

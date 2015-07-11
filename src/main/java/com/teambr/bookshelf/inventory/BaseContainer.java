@@ -93,17 +93,12 @@ public abstract class BaseContainer extends Container {
             while (stackToMerge.stackSize > 0 && ((!reverse && slotId < stop) || (reverse && slotId >= start))) {
                 Slot slot = slots.get(slotId);
 
-                if(!slot.isItemValid(stackToMerge)) {
-                    if(slotId < stop) //Found the end and nothing yet, leave
-                        slotId++;
-                    else return false;
-                    continue;
-                }
-
-                ItemStack stackInSlot = slot.getStack();
-                if (InventoryUtils.tryMergeStacks(stackToMerge, stackInSlot)) {
-                    slot.onSlotChanged();
-                    inventoryChanged = true;
+                if(slot.isItemValid(stackToMerge)) {
+                    ItemStack stackInSlot = slot.getStack();
+                    if (InventoryUtils.tryMergeStacks(stackToMerge, stackInSlot)) {
+                        slot.onSlotChanged();
+                        inventoryChanged = true;
+                    }
                 }
                 slotId += delta;
             }
@@ -111,18 +106,17 @@ public abstract class BaseContainer extends Container {
 
         if (stackToMerge.stackSize > 0) {
             int slotId = reverse? stop - 1 : start;
-
             while ((!reverse && slotId < stop) || (reverse && slotId >= start)) {
                 Slot slot = slots.get(slotId);
-                ItemStack stackInSlot = slot.getStack();
-
-                if (stackInSlot == null) {
-                    slot.putStack(stackToMerge.copy());
-                    slot.onSlotChanged();
-                    stackToMerge.stackSize = 0;
-                    return true;
+                if(slot.isItemValid(stackToMerge)) {
+                    ItemStack stackInSlot = slot.getStack();
+                    if (stackInSlot == null) {
+                        slot.putStack(stackToMerge.copy());
+                        slot.onSlotChanged();
+                        stackToMerge.stackSize = 0;
+                        return true;
+                    }
                 }
-
                 slotId += delta;
             }
         }
