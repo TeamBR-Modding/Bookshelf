@@ -3,11 +3,12 @@ package com.teambr.bookshelf.network;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.io.ByteStreams;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -17,55 +18,64 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class ClientTileUpdate extends AbstractPacket {
-
-    int x, y, z;
-    protected NBTTagCompound tag;
-
-    public ClientTileUpdate() {}
-
-    public ClientTileUpdate(int xCoord, int yCoord, int zCoord, NBTTagCompound nbt) {
-        x = xCoord;
-        y = yCoord;
-        z = zCoord;
-        tag = nbt;
-    }
+public class ClientTileUpdate implements IMessageHandler<ClientTileUpdate.Message, IMessage> {
 
     @Override
-    public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) throws IOException {
-        ByteBufInputStream stream = new ByteBufInputStream(buffer);
-        int length = readVLI(stream);
-        if (length > 0) {
-            tag = CompressedStreamTools.readCompressed(ByteStreams.limit(stream, length));
-        } else {
-            tag = null;
+    public IMessage onMessage(Message message, MessageContext ctx) {
+        if (ctx.side.isServer()) {
+            if(message.tag != null) {
+                World world = ctx.getServerHandler().playerEntity.worldObj;
+                if(world.getTileEntity(message.x, message.y, message.z) != null) {
+                    world.getTileEntity(message.x, message.y, message.z).readFromNBT(message.tag);
+                }
+            }
         }
+        return null;
     }
 
-    @Override
-    public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) throws IOException {
-        ByteBufOutputStream stream = new ByteBufOutputStream(buffer);
-        if (tag != null) {
-            ByteArrayOutputStream buff = new ByteArrayOutputStream();
-            CompressedStreamTools.writeCompressed(tag, buff);
+    public static class Message implements IMessage {
 
-            byte[] bytes = buff.toByteArray();
-            writeVLI(stream, bytes.length);
-            stream.write(bytes);
-        } else {
-            stream.writeByte(0);
+        int x, y, z;
+        protected NBTTagCompound tag;
+
+        public Message(int xCoord, int yCoord, int zCoord, NBTTagCompound nbt) {
+            x = xCoord;
+            y = yCoord;
+            z = zCoord;
+            tag = nbt;
         }
-    }
 
-    @Override
-    public void handleClientSide(EntityPlayer player) {}
+        @Override
+        public void fromBytes(ByteBuf buffer) {
+            ByteBufInputStream stream = new ByteBufInputStream(buffer);
+            int length = readVLI(stream);
+            try {
+                if (length > 0) {
+                    tag = CompressedStreamTools.readCompressed(ByteStreams.limit(stream, length));
+                } else {
+                    tag = null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-    @Override
-    public void handleServerSide(EntityPlayer player) {
-        if(tag != null) {
-            World world = player.getEntityWorld();
-            if(world.getTileEntity(x, y, z) != null) {
-                world.getTileEntity(x, y, z).readFromNBT(tag);
+        @Override
+        public void toBytes(ByteBuf buffer) {
+            ByteBufOutputStream stream = new ByteBufOutputStream(buffer);
+            try {
+                if (tag != null) {
+                    ByteArrayOutputStream buff = new ByteArrayOutputStream();
+                    CompressedStreamTools.writeCompressed(tag, buff);
+
+                    byte[] bytes = buff.toByteArray();
+                    writeVLI(stream, bytes.length);
+                    stream.write(bytes);
+                } else {
+                    stream.writeByte(0);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

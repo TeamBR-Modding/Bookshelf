@@ -4,7 +4,6 @@ package com.teambr.bookshelf;
 import com.teambr.bookshelf.common.CommonProxy;
 import com.teambr.bookshelf.lib.Constants;
 import com.teambr.bookshelf.manager.GuiManager;
-import com.teambr.bookshelf.network.PacketPipeline;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
