@@ -20,6 +20,7 @@ import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,7 +156,11 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
         //Render Components
         for(BaseComponent component : components) {
             GL11.glPushMatrix();
-            RenderHelper.enableGUIStandardItemLighting();
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+            RenderHelper.disableStandardItemLighting();
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
             component.render(guiLeft, guiTop);
             GL11.glPopMatrix();
         }
