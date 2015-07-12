@@ -10,6 +10,7 @@ import com.teambr.bookshelf.common.tiles.TileTestBlock;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import scala.actors.threadpool.Arrays;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -40,6 +41,29 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
         });
         priorityTab.add(new GuiComponentText("Fuel Priority", 22, 7));
         tabs.addTab(priorityTab, 95, 100, new Color(255, 68, 51), new ItemStack(Blocks.anvil));
+
+        //Priority Tab
+        List<BaseComponent> a = new ArrayList<>();
+        a.add(new GuiComponentSetNumber(26, 25, 40, 0, 0, 100) {
+            @Override
+            public void setValue(int value) {
+
+            }
+        });
+        a.add(new GuiComponentText("Fuel Priority", 22, 7));
+        tabs.addTab(a, 95, 100, new Color(255, 68, 51), new ItemStack(Blocks.anvil));
+
+        //Priority Tab
+        List<BaseComponent> v = new ArrayList<>();
+        v.add(new GuiComponentSetNumber(26, 25, 40, 0, 0, 100) {
+            @Override
+            public void setValue(int value) {
+
+            }
+        });
+        v.add(new GuiComponentText("Fuel Priority", 22, 7));
+        tabs.addTab(v, 95, 100, new Color(255, 68, 51), new ItemStack(Blocks.anvil));
+        tabs.getTabs().get(1).setToolTip(Arrays.asList(new String[] {"Hello", "Testing"}));
     }
 
     @Override
@@ -52,5 +76,6 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
             }
         });
         tabs.addReverseTab(testTab, 95, 100, new Color(255, 0, 0), new ItemStack(Blocks.furnace));
+        tabs.getTabs().get(0).setToolTip(Arrays.asList(new String[]{"Hello", "Testing"}));
     }
 }

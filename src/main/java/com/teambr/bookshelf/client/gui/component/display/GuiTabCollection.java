@@ -4,6 +4,7 @@ import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.client.gui.component.listeners.IMouseEventListener;
 import com.teambr.bookshelf.util.RenderUtils;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
@@ -101,8 +102,19 @@ public class GuiTabCollection extends BaseComponent {
             tab.renderOverlay(0, 0);
             RenderUtils.restoreRenderState();
             GL11.glPopMatrix();
+        }
+    }
 
-            if(tab.isMouseOver(mouseX - tab.getXPos(), mouseY - tab.getYPos())) tab.renderToolTip(mouseX, mouseY, parent);
+    /**
+     * Render the tooltip if you can
+     * @param mouseX Mouse X
+     * @param mouseY Mouse Y
+     */
+    public void renderToolTip(int mouseX, int mouseY, GuiScreen parent) {
+        for(GuiTab tab : tabs) {
+            if(tab.isMouseOver(mouseX - this.parent.getGuiLeft(), mouseY - this.parent.getGuiTop()) && tab.getWidth() == 24) {
+                tab.renderToolTip(mouseX, mouseY, parent);
+            }
         }
     }
 

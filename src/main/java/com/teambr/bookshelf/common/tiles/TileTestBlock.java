@@ -62,7 +62,7 @@ public class TileTestBlock extends BaseTile implements IOpensGui, IInventory {
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_) {
-        return false;
+        return true;
     }
 
     @Override
