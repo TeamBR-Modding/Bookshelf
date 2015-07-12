@@ -124,46 +124,44 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
 
     @Override
     protected void drawGuiContainerForegroundLayer(int x, int y) {
+        System.out.println(x);
         for(BaseComponent component : components)
             component.renderOverlay(guiLeft, guiTop);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
-
+    protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
+        GL11.glPushMatrix();
+        GL11.glTranslated(guiLeft, guiTop, 0);
+        prepareRenderState();
         //Render the Background
-        background.render(this, x, y, xSize, ySize);
+        background.render(this, 0, 0, xSize, ySize);
+        //Render Components
+        for(BaseComponent component : components) {
+            prepareRenderState();
+            component.render(0, 0);
+            restoreRenderState();
+        }
 
         //Render Slots for inventory
         for(Object obj : inventory.inventorySlots) {
             if(obj instanceof ICustomSlot) {
                 ICustomSlot slot = (ICustomSlot)obj;
                 if(slot.getSlotSize() == ICustomSlot.SLOT_SIZE.LARGE)
-                    this.drawTexturedModalRect(x + slot.getPoint().getFirst(), y + slot.getPoint().getSecond(), 0, 38, 26, 26);
+                    this.drawTexturedModalRect(slot.getPoint().getFirst(), slot.getPoint().getSecond(), 0, 38, 26, 26);
                 else
-                    this.drawTexturedModalRect(x + slot.getPoint().getFirst(), y + slot.getPoint().getSecond(), 0, 20, 18, 18);
+                    this.drawTexturedModalRect(slot.getPoint().getFirst(), slot.getPoint().getSecond(), 0, 20, 18, 18);
             } else if(obj instanceof Slot) {
                 Slot slot = (Slot)obj;
                 if(isSlotLarge(slot))
-                    this.drawTexturedModalRect(x + slot.xDisplayPosition - 5, y + slot.yDisplayPosition - 5, 0, 38, 26, 26);
+                    this.drawTexturedModalRect(slot.xDisplayPosition - 5, slot.yDisplayPosition - 5, 0, 38, 26, 26);
                 else
-                    this.drawTexturedModalRect(x + slot.xDisplayPosition - 1, y + slot.yDisplayPosition - 1, 0, 20, 18, 18);
+                    this.drawTexturedModalRect(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1, 0, 20, 18, 18);
             }
         }
 
-        //Render Components
-        for(BaseComponent component : components) {
-            GL11.glPushMatrix();
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-            RenderHelper.disableStandardItemLighting();
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_DEPTH_TEST);
-            component.render(guiLeft, guiTop);
-            GL11.glPopMatrix();
-        }
+        restoreRenderState();
+        GL11.glPopMatrix();
     }
 
     @Override
@@ -176,6 +174,20 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
 
     private boolean isSlotLarge(Slot slot) {
         return slot instanceof SlotFurnace;
+    }
+
+    protected void prepareRenderState() {
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        RenderHelper.disableStandardItemLighting();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+    }
+
+    protected void restoreRenderState() {
+        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        RenderHelper.enableStandardItemLighting();
     }
 
     /*******************************************************************************************************************

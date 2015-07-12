@@ -75,8 +75,8 @@ public class GuiTab extends BaseComponent {
     @Override
     public void render(int x, int y) {
         GL11.glPushMatrix();
-        double targetWidth = active? expandedWidth : FOLDED_WIDTH;
-        double targetHeight = active? expandedHeight : FOLDED_HEIGHT;
+        double targetWidth = active ? expandedWidth : FOLDED_WIDTH;
+        double targetHeight = active ? expandedHeight : FOLDED_HEIGHT;
         if (currentWidth != targetWidth) dWidth += (targetWidth - dWidth) / 4;
         if (currentHeight != targetHeight) dHeight += (targetHeight - dHeight) / 4;
 
