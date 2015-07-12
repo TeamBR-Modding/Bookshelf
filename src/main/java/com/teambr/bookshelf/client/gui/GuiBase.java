@@ -132,6 +132,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
             if(component.isMouseOver(x - this.guiLeft, y - this.guiTop)) component.mouseDrag(x - this.guiLeft, y - this.guiTop, button, time);
     }
 
+    @Override
     protected void keyTyped(char letter, int code) {
         super.keyTyped(letter, code);
         for(BaseComponent component : components)

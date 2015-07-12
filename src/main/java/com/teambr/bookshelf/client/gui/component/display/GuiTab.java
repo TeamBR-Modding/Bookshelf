@@ -193,6 +193,16 @@ public class GuiTab extends BaseComponent {
         return false;
     }
 
+    /**
+     * Used when a key is pressed
+     * @param letter The letter
+     * @param keyCode The code
+     */
+    public void keyTyped(char letter, int keyCode) {
+        for(BaseComponent component : children)
+            component.keyTyped(letter, keyCode);
+    }
+
     @Override
     public int getWidth() {
         return currentWidth;

@@ -127,6 +127,6 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
 
     @Override
     public int getHeight() {
-        return height;
+        return height + 1;
     }
 }
