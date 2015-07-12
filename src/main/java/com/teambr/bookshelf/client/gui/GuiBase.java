@@ -11,6 +11,7 @@ import com.teambr.bookshelf.client.gui.component.display.GuiTab;
 import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
 import com.teambr.bookshelf.common.container.ICustomSlot;
 import cpw.mods.fml.common.Optional;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -44,7 +45,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
         this.inventory = container;
         this.xSize = width;
         this.ySize = height;
-        this.title = new GuiComponentText(StatCollector.translateToLocal(name), xSize / 2 - fontRendererObj.getStringWidth(StatCollector.translateToLocal(name)) / 2, 6);
+        this.title = new GuiComponentText(StatCollector.translateToLocal(name), xSize / 2 - Minecraft.getMinecraft().fontRenderer.getStringWidth(StatCollector.translateToLocal(name)) / 2, 6);
 
         components = new ArrayList<>();
         addComponents();
