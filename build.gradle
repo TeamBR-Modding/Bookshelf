@@ -43,6 +43,10 @@ minecraft {
     runDir = "eclipse"
 }
 
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+}
+
 processResources
 {
     // this will ensure that this task is redone when the versions change.
