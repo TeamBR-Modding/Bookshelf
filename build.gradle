@@ -84,7 +84,7 @@ task javadocJar(type: Zip, dependsOn: javadoc) {
     classifier = 'javadoc'
 }
 
-task sourceJar(type: Zip, dependsOn: "sourceMainJava") {
+task sourceJar(type: Jar, dependsOn: "sourceMainJava") {
     from 'build/sources/java'
     classifier = 'sources'
 }
