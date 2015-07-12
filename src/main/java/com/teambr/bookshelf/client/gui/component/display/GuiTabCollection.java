@@ -79,7 +79,7 @@ public class GuiTabCollection extends BaseComponent {
     @Override
     public void renderOverlay(int i, int i1) {
         for(GuiTab tab : tabs)
-            tab.render(i, i1);
+            tab.renderOverlay(i, i1);
     }
 
     @Override
