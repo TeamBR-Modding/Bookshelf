@@ -54,18 +54,13 @@ public abstract class GuiComponentCheckBox extends BaseComponent {
         GL11.glTranslated(50, 0, 0);
         drawTexturedModalRect(0, 0, isSelected ? 48 : 40, 0, 8, 8);
         GL11.glPopMatrix();
+        Minecraft.getMinecraft().fontRenderer.drawString(text, 0, 0, 0x000000);
 
         GL11.glPopMatrix();
     }
 
     @Override
-    public void renderOverlay(int guiLeft, int guiTop) {
-        GL11.glPushMatrix();
-        GL11.glTranslated(guiLeft + xPos, guiTop + yPos, 0);
-        //Draw Text
-        Minecraft.getMinecraft().fontRenderer.drawString(text, 0, 0, 0x000000);
-        GL11.glPopMatrix();
-    }
+    public void renderOverlay(int guiLeft, int guiTop) {}
 
     @Override
     public int getWidth() {
