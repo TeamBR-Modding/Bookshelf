@@ -93,7 +93,7 @@ public class GuiTabCollection extends BaseComponent {
     }
 
     @Override
-    public void renderOverlay(int x, int i1) {
+    public void renderOverlay(int mouseX, int mouseY) {
         for(GuiTab tab : tabs) {
             GL11.glPushMatrix();
             RenderUtils.prepareRenderState();
@@ -101,8 +101,11 @@ public class GuiTabCollection extends BaseComponent {
             tab.renderOverlay(0, 0);
             RenderUtils.restoreRenderState();
             GL11.glPopMatrix();
+
+            if(tab.isMouseOver(mouseX - tab.getXPos(), mouseY - tab.getYPos())) tab.renderToolTip(mouseX, mouseY, parent);
         }
     }
+
 
     @Override
     public int getWidth() {
