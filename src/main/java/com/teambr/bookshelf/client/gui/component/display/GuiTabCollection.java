@@ -69,7 +69,6 @@ public class GuiTabCollection extends BaseComponent {
         realignTabsVertically();
         for(GuiTab tab : tabs) {
             GL11.glPushMatrix();
-            GL11.glPushMatrix();
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             RenderHelper.disableStandardItemLighting();
