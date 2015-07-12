@@ -3,7 +3,10 @@ package com.teambr.bookshelf.client.gui.component.display;
 import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.client.gui.component.listeners.IMouseEventListener;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -64,8 +67,17 @@ public class GuiTabCollection extends BaseComponent {
     @Override
     public void render(int i, int i1) {
         realignTabsVertically();
-        for(GuiTab tab : tabs)
+        for(GuiTab tab : tabs) {
+            GL11.glPushMatrix();
+            GL11.glPushMatrix();
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+            RenderHelper.disableStandardItemLighting();
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
             tab.render(i, i1);
+            GL11.glPopMatrix();
+        }
     }
 
     private void realignTabsVertically() {
@@ -78,8 +90,10 @@ public class GuiTabCollection extends BaseComponent {
 
     @Override
     public void renderOverlay(int x, int i1) {
-        for(GuiTab tab : tabs)
-            tab.renderOverlay(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, i1);
+        for (int i = 0; i < tabs.size(); i++) {
+            GuiTab tab = tabs.get(i);
+            tab.renderOverlay(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, i1 + (i * 24));
+        }
     }
 
     @Override
@@ -105,9 +119,10 @@ public class GuiTabCollection extends BaseComponent {
 
         @Override
         public void onMouseDown(BaseComponent baseComponent, int x, int y, int i2) {
-            for(GuiTab tab : tabs) {
+            for(int i = 0; i < tabs.size(); i++) {
+                GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    if(!tab.mouseDownActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, y, i2))
+                    if(!tab.mouseDownActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, y + (i * 24), i2))
                         tab.mouseDown(x, y, i2);
                     return;
                 }
@@ -116,9 +131,10 @@ public class GuiTabCollection extends BaseComponent {
 
         @Override
         public void onMouseUp(BaseComponent baseComponent, int x, int y, int i2) {
-            for(GuiTab tab : tabs) {
+            for(int i = 0; i < tabs.size(); i++) {
+                GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseUpActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5: x - parent.width - 5, y, i2);
+                    tab.mouseUpActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5: x - parent.width - 5, y + (i * 24), i2);
                     return;
                 }
             }
@@ -126,9 +142,10 @@ public class GuiTabCollection extends BaseComponent {
 
         @Override
         public void onMouseDrag(BaseComponent baseComponent, int x, int y, int i2, long l) {
-            for(GuiTab tab : tabs) {
+            for(int i = 0; i < tabs.size(); i++) {
+                GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseDragActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, y, i2, l);
+                    tab.mouseDragActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, y + (i * 24), i2, l);
                     return;
                 }
             }
