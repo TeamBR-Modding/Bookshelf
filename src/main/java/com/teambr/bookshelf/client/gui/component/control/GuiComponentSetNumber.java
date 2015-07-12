@@ -41,17 +41,19 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
      * @param button Mouse Button
      */
     public void mouseDown(int x, int y, int button) {
-        if(GuiHelper.isInBounds(x, y, xPos + width - 10, yPos, xPos + width, yPos + 8)) {
+        if(GuiHelper.isInBounds(x, y, xPos + width - 10, yPos - 1, xPos + width, yPos + 7)) {
             upSelected = true;
             if(value <= ceiling)
                 value++;
             setValue(value);
+            textField.setText(String.valueOf(value));
         }
-        else if(GuiHelper.isInBounds(x, y, x + width - 10, yPos + 8, xPos + width, yPos + 16)) {
+        else if(GuiHelper.isInBounds(x, y, xPos + width - 10, yPos + 9, xPos + width, yPos + 17)) {
             downSelected = true;
             if(value >= floor)
                 value--;
             setValue(value);
+            textField.setText(String.valueOf(value));
         } else
             textField.mouseClicked(x, y, button);
     }
@@ -72,7 +74,7 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
      * @param keyCode The code
      */
     public void keyTyped(char letter, int keyCode) {
-        if(Character.getNumericValue(letter) == -1) return;
+        if(Character.getNumericValue(letter) == -1 || (keyCode != 8 && keyCode != 109)) return;
         if(!textField.getText().equals("") && keyCode == 109) return;
         textField.textboxKeyTyped(letter, keyCode);
         setValue(Integer.valueOf(textField.getText()));
@@ -85,8 +87,8 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
         GL11.glTranslated(xPos + guiLeft, yPos + guiTop, 0);
         RenderUtils.bindGuiComponentsSheet();
 
-        drawTexturedModalRect(width - 8, 0, upSelected ? 67 : 56, 0, 11, 8);
-        drawTexturedModalRect(width - 8, 8, downSelected ? 67 : 56, 8, 11, 8);
+        drawTexturedModalRect(width - 8, -1, upSelected ? 67 : 56, 0, 11, 8);
+        drawTexturedModalRect(width - 8, 9, downSelected ? 67 : 56, 8, 11, 8);
 
         GL11.glPopMatrix();
 
