@@ -43,14 +43,14 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
     public void mouseDown(int x, int y, int button) {
         if(GuiHelper.isInBounds(x, y, xPos + width - 10, yPos - 1, xPos + width, yPos + 7)) {
             upSelected = true;
-            if(value <= ceiling)
+            if(value < ceiling)
                 value++;
             setValue(value);
             textField.setText(String.valueOf(value));
         }
         else if(GuiHelper.isInBounds(x, y, xPos + width - 10, yPos + 9, xPos + width, yPos + 17)) {
             downSelected = true;
-            if(value >= floor)
+            if(value > floor)
                 value--;
             setValue(value);
             textField.setText(String.valueOf(value));
@@ -74,9 +74,13 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
      * @param keyCode The code
      */
     public void keyTyped(char letter, int keyCode) {
-        if(Character.getNumericValue(letter) == -1 || (keyCode != 8 && keyCode != 109)) return;
+        if(Character.isLetter(letter) || (keyCode != 8 && keyCode != 109)) return;
         if(!textField.getText().equals("") && keyCode == 109) return;
         textField.textboxKeyTyped(letter, keyCode);
+        if(Integer.valueOf(textField.getText()) > ceiling)
+            textField.setText(String.valueOf(ceiling));
+        else if(Integer.valueOf(textField.getText()) < floor)
+            textField.setText(String.valueOf(floor));
         setValue(Integer.valueOf(textField.getText()));
     }
 
@@ -95,6 +99,7 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
         GL11.glPushMatrix();
 
         GL11.glTranslated(guiLeft, guiTop, 0);
+
         textField.drawTextBox();
 
         GL11.glPopMatrix();

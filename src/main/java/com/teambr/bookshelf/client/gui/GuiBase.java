@@ -13,11 +13,13 @@ import com.teambr.bookshelf.common.container.ICustomSlot;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +154,10 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
 
         //Render Components
         for(BaseComponent component : components) {
+            GL11.glPushMatrix();
+            RenderHelper.enableGUIStandardItemLighting();
             component.render(guiLeft, guiTop);
+            GL11.glPopMatrix();
         }
     }
 
