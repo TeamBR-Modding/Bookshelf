@@ -78,7 +78,7 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
         if(textField.getText().equals("") && keyCode != 109) return;
         textField.textboxKeyTyped(letter, keyCode);
         if(textField.getText() == null || textField.getText().equals("") || !isNumeric(textField.getText()))
-            textField.setText(String.valueOf(0));
+            return;
         if(Integer.valueOf(textField.getText()) > ceiling)
             textField.setText(String.valueOf(ceiling));
         else if(Integer.valueOf(textField.getText()) < floor)
