@@ -41,6 +41,11 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
         this.barColor = color;
     }
 
+    /**
+     * Used to get the level full
+     * @param scale The height, or what we want to scale the completeness to
+     * @return How full, scaled to {@param scale}
+     */
     public abstract int getEnergyPercent(int scale);
 
     @Override
@@ -50,7 +55,7 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
     public void render(int guiLeft, int guiTop) {
         GL11.glPushMatrix();
 
-        GL11.glTranslated(guiLeft + xPos, guiTop + yPos, 0);
+        GL11.glTranslated(xPos, yPos, 0);
         RenderUtils.bindGuiComponentsSheet();
 
         renderer.render(this, 0, 0, width, height);

@@ -10,6 +10,7 @@ import com.teambr.bookshelf.client.gui.component.display.GuiReverseTab;
 import com.teambr.bookshelf.client.gui.component.display.GuiTab;
 import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
 import com.teambr.bookshelf.common.container.ICustomSlot;
+import com.teambr.bookshelf.util.RenderUtils;
 import cpw.mods.fml.common.Optional;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -20,7 +21,6 @@ import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +95,22 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
         return guiTop;
     }
 
+    /**
+     * For some reason this isn't in vanilla
+     * @return The size of the gui
+     */
+    public int getXSize() {
+        return xSize;
+    }
+
+    /**
+     * For some reason this isn't in vanilla
+     * @return The size of the gui
+     */
+    public int getYSize() {
+        return ySize;
+    }
+
     @Override
     protected void mouseClicked(int x, int y, int button) {
         super.mouseClicked(x, y, button);
@@ -124,24 +140,34 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
 
     @Override
     protected void drawGuiContainerForegroundLayer(int x, int y) {
-        System.out.println(x);
-        for(BaseComponent component : components)
-            component.renderOverlay(guiLeft, guiTop);
+        GL11.glPushMatrix();
+        RenderUtils.prepareRenderState();
+
+        for(BaseComponent component : components) {
+            RenderUtils.prepareRenderState();
+            component.renderOverlay(0, 0);
+            RenderUtils.restoreRenderState();
+        }
+
+        RenderUtils.restoreRenderState();
+        RenderHelper.enableGUIStandardItemLighting();
+        GL11.glPopMatrix();
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int mouseX, int mouseY) {
         GL11.glPushMatrix();
         GL11.glTranslated(guiLeft, guiTop, 0);
-        prepareRenderState();
+        RenderUtils.prepareRenderState();
         //Render the Background
         background.render(this, 0, 0, xSize, ySize);
         //Render Components
         for(BaseComponent component : components) {
-            prepareRenderState();
+            RenderUtils.prepareRenderState();
             component.render(0, 0);
-            restoreRenderState();
+            RenderUtils.restoreRenderState();
         }
+        RenderUtils.restoreRenderState();
 
         //Render Slots for inventory
         for(Object obj : inventory.inventorySlots) {
@@ -160,7 +186,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
             }
         }
 
-        restoreRenderState();
+        RenderUtils.restoreRenderState();
         GL11.glPopMatrix();
     }
 
@@ -174,20 +200,6 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
 
     private boolean isSlotLarge(Slot slot) {
         return slot instanceof SlotFurnace;
-    }
-
-    protected void prepareRenderState() {
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        RenderHelper.disableStandardItemLighting();
-        GL11.glDisable(GL11.GL_LIGHTING);
-        GL11.glDisable(GL11.GL_DEPTH_TEST);
-    }
-
-    protected void restoreRenderState() {
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        RenderHelper.enableStandardItemLighting();
     }
 
     /*******************************************************************************************************************

@@ -73,14 +73,6 @@ public abstract class BaseComponent extends Gui {
     }
 
     /**
-     * Set the tooltip to be rendered. If you don't call this it won't have one
-     * @param list The list of strings to display
-     */
-    public void setToolTip(List<String> list) {
-        toolTip = list;
-    }
-
-    /**
      * Render the tooltip if you can
      * @param mouseX Mouse X
      * @param mouseY Mouse Y
@@ -144,6 +136,53 @@ public abstract class BaseComponent extends Gui {
         if(keyBoardListener != null) keyBoardListener.keyTyped(this, letter, keyCode);
     }
 
+    /**
+     * Get the X Position
+     * @return X Position
+     */
+    public int getXPos() {
+        return xPos;
+    }
+
+    /**
+     * Set the X Position
+     * @param xPos Position
+     */
+    public void setXPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    /**
+     * Returns the Y Position of this component
+     * @return Y Position
+     */
+    public int getYPos() {
+        return yPos;
+    }
+
+    /**
+     * Set the Y Position
+     * @param yPos Position
+     */
+    public void setYPos(int yPos) {
+        this.yPos = yPos;
+    }
+
+    /**
+     * Get the Tool Tip for this component
+     * @return A list of strings that is the tooltip
+     */
+    public List<String> getToolTip() {
+        return toolTip;
+    }
+
+    /**
+     * Set the tooltip to the given list
+     * @param tip The new tooltip
+     */
+    public void setToolTip(List<String> tip) {
+        toolTip = tip;
+    }
 
     /**
      * Used to draw a tooltip over this component

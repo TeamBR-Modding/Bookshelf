@@ -3,16 +3,16 @@ package com.teambr.bookshelf.client.gui.component.display;
 import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.client.gui.component.listeners.IMouseEventListener;
-import net.minecraft.client.renderer.RenderHelper;
+import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GuiTabCollection extends BaseComponent {
+
     protected List<GuiTab> tabs;
     protected GuiTab activeTab;
     protected GuiBase parent;
@@ -24,39 +24,43 @@ public class GuiTabCollection extends BaseComponent {
         parent = gui;
     }
 
-    public void addTab(List<BaseComponent> components, int maxWidth, int maxHeight, Color color, ItemStack stack, boolean reverse) {
-        final GuiTab tab;
-        if(reverse)
-            tab = new GuiReverseTab(parent, this.xPos + 5, this.yPos + (this.yPos + (tabs.size() * 24)), maxWidth, maxHeight, color, stack);
-        else
-            tab = new GuiTab(parent, this.xPos - 5, this.yPos + (this.yPos + (tabs.size() * 24)), maxWidth, maxHeight, color, stack);
+    /**
+     * Add a standard tab to this wrapper
+     * @param components The components to add to the tab
+     * @param maxWidth The max width of the tab
+     * @param maxHeight The max height of the tab
+     * @param color The color of the tab
+     * @param stack What tab to display on the tab
+     */
+    public void addTab(List<BaseComponent> components, int maxWidth, int maxHeight, Color color, ItemStack stack) {
+        GuiTab tab;
+        tab = new GuiTab(parent, this.xPos - 5, this.yPos + (this.yPos + (tabs.size() * 24)), maxWidth, maxHeight, color, stack);
         for(BaseComponent c : components)
             tab.addChild(c);
-        tab.setMouseEventListener(new IMouseEventListener() {
-            @Override
-            public void onMouseDown(BaseComponent baseComponent, int x, int y, int i2) {
-                if (activeTab != tab) {
-                    if (activeTab != null)
-                        activeTab.setActive(false);
-                    activeTab = tab;
-                    activeTab.setActive(true);
-                } else if (tab.isMouseOver(x, y)) {
-                    tab.setActive(false);
-                    activeTab = null;
-                }
-            }
-
-            @Override
-            public void onMouseUp(BaseComponent baseComponent, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onMouseDrag(BaseComponent baseComponent, int i, int i1, int i2, long l) {
-            }
-        });
         tabs.add(tab);
     }
 
+    /**
+     * Add a reverse tab to this wrapper
+     * @param components The components to add to the tab
+     * @param maxWidth The max width of the tab
+     * @param maxHeight The max height of the tab
+     * @param color The color of the tab
+     * @param stack What tab to display on the tab
+     */
+    public void addReverseTab(List<BaseComponent> components, int maxWidth, int maxHeight, Color color, ItemStack stack) {
+        GuiTab tab;
+        tab = new GuiReverseTab(parent, this.xPos + 5, this.yPos + (this.yPos + (tabs.size() * 24)), maxWidth, maxHeight, color, stack);
+        for(BaseComponent c : components) {
+            tab.addChild(c);
+        }
+        tabs.add(tab);
+    }
+
+    /**
+     * Get the list of tabs in this wrapper
+     * @return
+     */
     public List<GuiTab> getTabs() {
         return tabs;
     }
@@ -69,29 +73,34 @@ public class GuiTabCollection extends BaseComponent {
         realignTabsVertically();
         for(GuiTab tab : tabs) {
             GL11.glPushMatrix();
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-            RenderHelper.disableStandardItemLighting();
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_DEPTH_TEST);
-            tab.render(i, i1);
+            RenderUtils.prepareRenderState();
+            GL11.glTranslated(tab.getXPos(), tab.getYPos(), 0);
+            tab.render(0, 0);
+            RenderUtils.restoreRenderState();
             GL11.glPopMatrix();
         }
     }
 
+    /**
+     * Move the tabs to fit the expansion of one
+     */
     private void realignTabsVertically() {
         int y = this.yPos;
         for(GuiTab tab : tabs) {
-            tab.setY(y);
+            tab.setYPos(y);
             y += tab.getHeight();
         }
     }
 
     @Override
     public void renderOverlay(int x, int i1) {
-        for (int i = 0; i < tabs.size(); i++) {
-            GuiTab tab = tabs.get(i);
-            tab.renderOverlay(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, i1 + (i * 24));
+        for(GuiTab tab : tabs) {
+            GL11.glPushMatrix();
+            RenderUtils.prepareRenderState();
+            GL11.glTranslated(tab.getXPos(), tab.getYPos(), 0);
+            tab.renderOverlay(0, 0);
+            RenderUtils.restoreRenderState();
+            GL11.glPopMatrix();
         }
     }
 
@@ -121,8 +130,17 @@ public class GuiTabCollection extends BaseComponent {
             for(int i = 0; i < tabs.size(); i++) {
                 GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    if(!tab.mouseDownActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, y + (i * 24), i2))
-                        tab.mouseDown(x, y, i2);
+                    if(!tab.mouseDownActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.getXSize() + 5, y - (i * 24), i2)) {
+                        if (activeTab != tab) {
+                            if (activeTab != null)
+                                activeTab.setActive(false);
+                            activeTab = tab;
+                            activeTab.setActive(true);
+                        } else if (tab.isMouseOver(x, y)) {
+                            tab.setActive(false);
+                            activeTab = null;
+                        }
+                    }
                     return;
                 }
             }
@@ -133,7 +151,7 @@ public class GuiTabCollection extends BaseComponent {
             for(int i = 0; i < tabs.size(); i++) {
                 GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseUpActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5: x - parent.width - 5, y + (i * 24), i2);
+                    tab.mouseUpActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5: x - parent.getXSize() + 5, y + (i * 24), i2);
                     return;
                 }
             }
@@ -144,7 +162,7 @@ public class GuiTabCollection extends BaseComponent {
             for(int i = 0; i < tabs.size(); i++) {
                 GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseDragActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, y + (i * 24), i2, l);
+                    tab.mouseDragActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.getXSize() + 5, y + (i * 24), i2, l);
                     return;
                 }
             }

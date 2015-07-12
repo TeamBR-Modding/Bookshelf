@@ -72,7 +72,7 @@ public class GuiComponendSlider<V> extends BaseComponent {
     public void render(int guiLeft, int guiTop) {
         GL11.glPushMatrix();
 
-        GL11.glTranslated(guiLeft + xPos, guiTop + yPos, 0);
+        GL11.glTranslated(xPos, yPos, 0);
         RenderUtils.bindGuiComponentsSheet();
 
         //Start the bar

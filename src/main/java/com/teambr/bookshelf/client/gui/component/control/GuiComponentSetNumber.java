@@ -100,7 +100,7 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
     public void render(int guiLeft, int guiTop) {
         GL11.glPushMatrix();
 
-        GL11.glTranslated(xPos + guiLeft, yPos + guiTop, 0);
+        GL11.glTranslated(xPos, yPos, 0);
         RenderUtils.bindGuiComponentsSheet();
 
         drawTexturedModalRect(width - 8, -1, upSelected ? 67 : 56, 0, 11, 8);

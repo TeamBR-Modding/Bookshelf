@@ -45,6 +45,16 @@ public class GuiTab extends BaseComponent {
         protected void renderLeftEdge(Gui gui, int height) {}
     };
 
+    /**
+     * GuiTab constructor
+     * @param gui The gui this is attached to
+     * @param x The x Position
+     * @param y The y position
+     * @param maxWidth The max width, when expanded
+     * @param maxHeight The max height, when expanded
+     * @param c The color of the tab
+     * @param stack The stack to display on the tab
+     */
     public GuiTab(GuiBase gui, int x, int y, int maxWidth, int maxHeight, Color c, ItemStack stack) {
         super(x, y);
         expandedWidth = maxWidth;
@@ -57,14 +67,25 @@ public class GuiTab extends BaseComponent {
         icon = stack;
     }
 
+    /**
+     * Used when you don't want to display a stack
+     */
     public GuiTab(GuiBase gui, int x, int y, int maxWidth, int maxHeight, Color c) {
         this(gui, x, y, maxWidth, maxHeight, c, null);
     }
 
+    /**
+     * Can the tab render the children
+     * @return True if expanded and can render
+     */
     protected boolean areChildrenActive() {
         return active && currentWidth == expandedWidth && currentHeight == expandedHeight;
     }
 
+    /**
+     * Add a component to render
+     * @param component What to add
+     */
     protected void addChild(BaseComponent component) {
         children.add(component);
     }
@@ -84,22 +105,25 @@ public class GuiTab extends BaseComponent {
         currentHeight = (int)Math.round(dHeight);
 
         RenderUtils.bindGuiComponentsSheet();
-        boxRenderer.render(this, parent.getGuiLeft() + xPos, parent.getGuiTop() + yPos, currentWidth, currentHeight, color);
+        boxRenderer.render(this, 0, 0, currentWidth, currentHeight, color);
 
         GL11.glColor4f(1, 1, 1, 1);
         if(icon != null) {
             RenderHelper.enableGUIStandardItemLighting();
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             itemRenderer.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), icon,
-                    parent.getGuiLeft() + xPos + 4, parent.getGuiTop() + yPos + 3);
+                    4, 3);
             GL11.glColor3f(1, 1, 1);
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             GL11.glDisable(GL11.GL_LIGHTING);
         }
 
         if(areChildrenActive()) {
-            for (BaseComponent component : children)
-                component.render(parent.getGuiLeft() + xPos, parent.getGuiTop() + yPos);
+            RenderUtils.prepareRenderState();
+            for (BaseComponent component : children) {
+                component.render(0, 0);
+                RenderUtils.restoreRenderState();
+            }
         }
         GL11.glPopMatrix();
     }
@@ -107,8 +131,11 @@ public class GuiTab extends BaseComponent {
     @Override
     public void renderOverlay(int i, int i1) {
         if(areChildrenActive()) {
-            for (BaseComponent component : children)
-                component.renderOverlay(i, i1);
+            RenderUtils.prepareRenderState();
+            for (BaseComponent component : children) {
+                component.renderOverlay(0, 0);
+                RenderUtils.restoreRenderState();
+            }
         }
     }
 
@@ -176,14 +203,6 @@ public class GuiTab extends BaseComponent {
 
     public void setActive(boolean b) {
         this.active = b;
-    }
-
-    public void setX(int x) {
-        this.xPos = x;
-    }
-
-    public void setY(int y) {
-        this.yPos = y;
     }
 
     public void setIcon(ItemStack icon) { this.icon = icon; }

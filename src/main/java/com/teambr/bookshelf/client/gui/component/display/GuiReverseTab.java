@@ -46,22 +46,26 @@ public class GuiReverseTab extends GuiTab {
         currentHeight = (int)Math.round(dHeight);
 
         RenderUtils.bindGuiComponentsSheet();
-        boxRenderer.render(this, parent.getGuiLeft() + xPos - currentWidth, parent.getGuiTop() + yPos, currentWidth, currentHeight, color);
+        boxRenderer.render(this, -currentWidth, 0, currentWidth, currentHeight, color);
 
         GL11.glColor4f(1, 1, 1, 1);
         if(icon != null) {
             RenderHelper.enableGUIStandardItemLighting();
             GL11.glEnable(GL12.GL_RESCALE_NORMAL);
             itemRenderer.renderItemAndEffectIntoGUI(Minecraft.getMinecraft().fontRenderer, Minecraft.getMinecraft().getTextureManager(), icon,
-                    parent.getGuiLeft() + xPos - 21, parent.getGuiTop() + yPos + 3);
+                    -21, 3);
             GL11.glColor3f(1, 1, 1);
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             GL11.glDisable(GL11.GL_LIGHTING);
         }
 
         if(areChildrenActive()) {
-            for (BaseComponent component : children)
-                component.render(parent.getGuiLeft() + xPos - currentWidth, parent.getGuiTop() + yPos);
+            RenderUtils.prepareRenderState();
+            GL11.glTranslated(-expandedWidth, 0, 0);
+            for (BaseComponent component : children) {
+                component.render(-expandedWidth, 0);
+                RenderUtils.restoreRenderState();
+            }
         }
         GL11.glPopMatrix();
     }
@@ -69,8 +73,12 @@ public class GuiReverseTab extends GuiTab {
     @Override
     public void renderOverlay(int i, int i1) {
         if(areChildrenActive()) {
-            for (BaseComponent component : children)
-                component.renderOverlay(i - currentWidth, i1);
+            RenderUtils.prepareRenderState();
+            GL11.glTranslated(-expandedWidth, 0, 0);
+            for (BaseComponent component : children) {
+                component.renderOverlay(-expandedWidth, 0);
+                RenderUtils.restoreRenderState();
+            }
         }
     }
 
