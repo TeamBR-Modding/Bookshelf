@@ -77,9 +77,9 @@ public class GuiTabCollection extends BaseComponent {
     }
 
     @Override
-    public void renderOverlay(int i, int i1) {
+    public void renderOverlay(int x, int i1) {
         for(GuiTab tab : tabs)
-            tab.renderOverlay(i, i1);
+            tab.renderOverlay(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.width - 5, i1);
     }
 
     @Override
