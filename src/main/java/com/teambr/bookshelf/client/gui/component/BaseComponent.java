@@ -65,11 +65,27 @@ public abstract class BaseComponent extends Gui {
     }
 
     /**
+     * Get the Mouse Listener
+     * @return The listener, null if none is assigned
+     */
+    public IMouseEventListener getMouseEventListener() {
+        return mouseEventListener;
+    }
+
+    /**
      * Set the handler for the keyboard input
      * @param listener The keyboard listener
      */
     public void setKeyBoardListener(IKeyBoardListener listener) {
         keyBoardListener = listener;
+    }
+
+    /**
+     * Get the keyboard listener
+     * @return Keyboard listener, null if none is assigned
+     */
+    public IKeyBoardListener getKeyBoardListener() {
+        return keyBoardListener;
     }
 
     /**
