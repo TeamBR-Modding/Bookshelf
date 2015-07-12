@@ -5,6 +5,7 @@ import codechicken.nei.api.INEIGuiHandler;
 import codechicken.nei.api.TaggedInventoryArea;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.client.gui.component.NinePatchRenderer;
+import com.teambr.bookshelf.client.gui.component.display.GuiComponentText;
 import com.teambr.bookshelf.client.gui.component.display.GuiReverseTab;
 import com.teambr.bookshelf.client.gui.component.display.GuiTab;
 import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
@@ -24,7 +25,7 @@ import java.util.List;
         @Optional.Interface(iface = "codechicken.nei.cofh.api.INEIGuiHandler", modid = "NotEnoughItems")
 })
 public abstract class GuiBase<T extends Container> extends GuiContainer implements INEIGuiHandler {
-    protected String title;
+    protected GuiComponentText title;
     protected T inventory;
     protected NinePatchRenderer background = new NinePatchRenderer();
     protected ArrayList<BaseComponent> components;
@@ -43,7 +44,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
         this.inventory = container;
         this.xSize = width;
         this.ySize = height;
-        this.title = name;
+        this.title = new GuiComponentText(StatCollector.translateToLocal(name), xSize / 2 - fontRendererObj.getStringWidth(StatCollector.translateToLocal(name)) / 2, 6);
 
         components = new ArrayList<>();
         addComponents();
@@ -118,7 +119,6 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
 
     @Override
     protected void drawGuiContainerForegroundLayer(int x, int y) {
-        fontRendererObj.drawString(StatCollector.translateToLocal(title), xSize / 2 - fontRendererObj.getStringWidth(StatCollector.translateToLocal(title)) / 2, 6, 4210752);
         for(BaseComponent component : components)
             component.renderOverlay(guiLeft, guiTop);
     }

@@ -104,7 +104,7 @@ public class GuiTabCollection extends BaseComponent {
         public void onMouseDown(BaseComponent baseComponent, int x, int y, int i2) {
             for(GuiTab tab : tabs) {
                 if(tab.isMouseOver(x, y)) {
-                    if(!tab.mouseDownActivated(x, y, i2))
+                    if(!tab.mouseDownActivated(parent.getGuiLeft() - x, parent.getGuiTop() - y, i2))
                         tab.mouseDown(x, y, i2);
                     return;
                 }
@@ -115,7 +115,7 @@ public class GuiTabCollection extends BaseComponent {
         public void onMouseUp(BaseComponent baseComponent, int x, int y, int i2) {
             for(GuiTab tab : tabs) {
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseUpActivated(x, y, i2);
+                    tab.mouseUpActivated(parent.getGuiLeft() - x, parent.getGuiTop() - y, i2);
                     return;
                 }
             }
@@ -125,7 +125,7 @@ public class GuiTabCollection extends BaseComponent {
         public void onMouseDrag(BaseComponent baseComponent, int x, int y, int i2, long l) {
             for(GuiTab tab : tabs) {
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseDragActivated(x, y, i2, l);
+                    tab.mouseDragActivated(parent.getGuiLeft() - x, parent.getGuiTop() - y, i2, l);
                     return;
                 }
             }
