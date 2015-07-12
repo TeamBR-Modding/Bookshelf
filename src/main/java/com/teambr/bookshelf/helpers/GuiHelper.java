@@ -77,8 +77,7 @@ public class GuiHelper {
      * @param d Rectangle point d
      * @return
      */
-    public static boolean isInBounds(int x, int y, int a, int b, int c, int d)
-    {
+    public static boolean isInBounds(int x, int y, int a, int b, int c, int d) {
         return (x >= a && x <= c && y >= b && y <=d);
     }
 

@@ -41,14 +41,14 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
      * @param button Mouse Button
      */
     public void mouseDown(int x, int y, int button) {
-        if(GuiHelper.isInBounds(x, y, xPos + width - 8, yPos - 1, xPos + width + 2, yPos + 7)) {
+        if(GuiHelper.isInBounds(x, y, xPos + width - 8, yPos - 1, xPos + width + 6, yPos + 7)) {
             upSelected = true;
             if(value < ceiling)
                 value++;
             setValue(value);
             textField.setText(String.valueOf(value));
         }
-        else if(GuiHelper.isInBounds(x, y, xPos + width - 8, yPos + 9, xPos + width + 2, yPos + 17)) {
+        else if(GuiHelper.isInBounds(x, y, xPos + width - 8, yPos + 9, xPos + width + 6, yPos + 17)) {
             downSelected = true;
             if(value > floor)
                 value--;
@@ -82,7 +82,8 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
             textField.setText(String.valueOf(ceiling));
         else if(Integer.valueOf(textField.getText()) < floor)
             textField.setText(String.valueOf(floor));
-        setValue(Integer.valueOf(textField.getText()));
+        value = Integer.valueOf(textField.getText());
+        setValue(value);
     }
 
     public static boolean isNumeric(String str) {
