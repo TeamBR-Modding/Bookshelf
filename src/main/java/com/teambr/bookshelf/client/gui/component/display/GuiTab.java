@@ -149,9 +149,8 @@ public class GuiTab extends BaseComponent {
         if(areChildrenActive()) {
             for (BaseComponent component : children)
                 if(component.isMouseOver(x, y)) {
-                    if(component.getMouseEventListener() != null) {
-                        component.mouseDown(x, y, button);
-                    }
+                    component.mouseDown(x, y, button);
+
                     return true;
                 }
         }
@@ -168,9 +167,8 @@ public class GuiTab extends BaseComponent {
         if(areChildrenActive()) {
             for (BaseComponent component : children)
                 if(component.isMouseOver(x, y)) {
-                    if(component.getMouseEventListener() != null) {
-                        component.mouseUp(x, y, button);
-                    }
+                    component.mouseUp(x, y, button);
+
                     return true;
                 }
         }
@@ -188,9 +186,7 @@ public class GuiTab extends BaseComponent {
         if(areChildrenActive()) {
             for (BaseComponent component : children)
                 if(component.isMouseOver(x, y)) {
-                    if(component.getMouseEventListener() != null) {
-                        component.mouseDrag(x, y, button, time);
-                    }
+                    component.mouseDrag(x, y, button, time);
                     return true;
                 }
         }

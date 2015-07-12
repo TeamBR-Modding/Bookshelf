@@ -143,4 +143,72 @@ public class RenderUtils {
 
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
+
+    public static void renderCube(Tessellator tes, double x1, double y1, double z1, double x2, double y2, double z2) {
+        tes.startDrawingQuads();
+        tes.addVertex(x1, y1, z1);
+        tes.addVertex(x1, y2, z1);
+        tes.addVertex(x2, y2, z1);
+        tes.addVertex(x2, y1, z1);
+
+        tes.addVertex(x1, y1, z2);
+        tes.addVertex(x2, y1, z2);
+        tes.addVertex(x2, y2, z2);
+        tes.addVertex(x1, y2, z2);
+
+        tes.addVertex(x1, y1, z1);
+        tes.addVertex(x1, y1, z2);
+        tes.addVertex(x1, y2, z2);
+        tes.addVertex(x1, y2, z1);
+
+        tes.addVertex(x2, y1, z1);
+        tes.addVertex(x2, y2, z1);
+        tes.addVertex(x2, y2, z2);
+        tes.addVertex(x2, y1, z2);
+
+        tes.addVertex(x1, y1, z1);
+        tes.addVertex(x2, y1, z1);
+        tes.addVertex(x2, y1, z2);
+        tes.addVertex(x1, y1, z2);
+
+        tes.addVertex(x1, y2, z1);
+        tes.addVertex(x1, y2, z2);
+        tes.addVertex(x2, y2, z2);
+        tes.addVertex(x2, y2, z1);
+        tes.draw();
+    }
+
+    public static void renderCubeWithUV(Tessellator tes, double x1, double y1, double z1, double x2, double y2, double z2, float u1, float v1, float u2, float v2) {
+        tes.startDrawingQuads();
+        tes.addVertexWithUV(x1, y1, z1, u1, v1);
+        tes.addVertexWithUV(x1, y2, z1, u1, v2);
+        tes.addVertexWithUV(x2, y2, z1, u2, v2);
+        tes.addVertexWithUV(x2, y1, z1, u2, v1);
+
+        tes.addVertexWithUV(x1, y1, z2, u1, v1);
+        tes.addVertexWithUV(x2, y1, z2, u1, v2);
+        tes.addVertexWithUV(x2, y2, z2, u2, v2);
+        tes.addVertexWithUV(x1, y2, z2, u2, v1);
+
+        tes.addVertexWithUV(x1, y1, z1, u1, v1);
+        tes.addVertexWithUV(x1, y1, z2, u1, v2);
+        tes.addVertexWithUV(x1, y2, z2, u2, v2);
+        tes.addVertexWithUV(x1, y2, z1, u2, v1);
+
+        tes.addVertexWithUV(x2, y1, z1, u1, v1);
+        tes.addVertexWithUV(x2, y2, z1, u1, v2);
+        tes.addVertexWithUV(x2, y2, z2, u2, v2);
+        tes.addVertexWithUV(x2, y1, z2, u2, v1);
+
+        tes.addVertexWithUV(x1, y1, z1, u1, v1);
+        tes.addVertexWithUV(x2, y1, z1, u1, v2);
+        tes.addVertexWithUV(x2, y1, z2, u2, v2);
+        tes.addVertexWithUV(x1, y1, z2, u2, v1);
+
+        tes.addVertexWithUV(x1, y2, z1, u1, v1);
+        tes.addVertexWithUV(x1, y2, z2, u1, v2);
+        tes.addVertexWithUV(x2, y2, z2, u2, v2);
+        tes.addVertexWithUV(x2, y2, z1, u2, v1);
+        tes.draw();
+    }
 }
