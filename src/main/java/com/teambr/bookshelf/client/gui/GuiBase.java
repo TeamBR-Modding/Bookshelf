@@ -168,6 +168,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
             RenderUtils.restoreRenderState();
         }
         RenderUtils.restoreRenderState();
+        RenderUtils.bindGuiComponentsSheet();
 
         //Render Slots for inventory
         for(Object obj : inventory.inventorySlots) {
