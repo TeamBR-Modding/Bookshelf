@@ -130,8 +130,8 @@ public class GuiTabCollection extends BaseComponent {
             for(int i = 0; i < tabs.size(); i++) {
                 GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    if(!tab.mouseDownActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.getXSize() + 5, y - (i * 24), i2)) {
-                        if (tab.getMouseEventListener() == null) {
+                    if (tab.getMouseEventListener() == null) {
+                        if(!tab.mouseDownActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.getXSize() + 5, y - (i * 24), i2)) {
                             if (activeTab != tab) {
                                 if (activeTab != null)
                                     activeTab.setActive(false);
