@@ -143,7 +143,7 @@ public class GuiTabCollection extends BaseComponent {
                 GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
                     if (tab.getMouseEventListener() == null) {
-                        if(!tab.mouseDownActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.getXSize() + 5, y - (i * 24) + 2, i2)) {
+                        if(!tab.mouseDownActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.getXSize() + 5, y - (i * 24) - 2, i2)) {
                             if (activeTab != tab) {
                                 if (activeTab != null)
                                     activeTab.setActive(false);
@@ -166,7 +166,7 @@ public class GuiTabCollection extends BaseComponent {
             for(int i = 0; i < tabs.size(); i++) {
                 GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseUpActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5: x - parent.getXSize() + 5, y + (i * 24) + 2, i2);
+                    tab.mouseUpActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5: x - parent.getXSize() + 5, y + (i * 24) - 2, i2);
                     return;
                 }
             }
@@ -177,7 +177,7 @@ public class GuiTabCollection extends BaseComponent {
             for(int i = 0; i < tabs.size(); i++) {
                 GuiTab tab = tabs.get(i);
                 if(tab.isMouseOver(x, y)) {
-                    tab.mouseDragActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.getXSize() + 5, y + (i * 24) + 2, i2, l);
+                    tab.mouseDragActivated(tab instanceof GuiReverseTab ? x + tab.expandedWidth - 5 : x - parent.getXSize() + 5, y + (i * 24) - 2, i2, l);
                     return;
                 }
             }
