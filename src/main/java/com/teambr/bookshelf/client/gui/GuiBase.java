@@ -48,6 +48,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer implemen
         this.title = new GuiComponentText(StatCollector.translateToLocal(name), xSize / 2 - Minecraft.getMinecraft().fontRenderer.getStringWidth(StatCollector.translateToLocal(name)) / 2, 6);
 
         components = new ArrayList<>();
+        components.add(title);
         addComponents();
 
         rightTabs = new GuiTabCollection(this, xSize);
