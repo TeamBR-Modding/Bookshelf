@@ -96,7 +96,8 @@ public abstract class BaseComponent extends Gui {
     public void renderToolTip(int mouseX, int mouseY, GuiScreen parent) {
         if(toolTip != null && !toolTip.isEmpty()) {
             drawHoveringText(toolTip, mouseX, mouseY, parent, Minecraft.getMinecraft().fontRenderer);
-        }
+        } else if(getDynamicToolTip(mouseX, mouseY) != null)
+            drawHoveringText(getDynamicToolTip(mouseX, mouseY), mouseX, mouseY, parent, Minecraft.getMinecraft().fontRenderer);
     }
 
     /**
@@ -191,6 +192,12 @@ public abstract class BaseComponent extends Gui {
     public List<String> getToolTip() {
         return toolTip;
     }
+
+    /**
+     * Overwrite this when declaring the component to have this called for the tooltip
+     * @return The tooltip list
+     */
+    public List<String> getDynamicToolTip(int mouseX, int mouseY) { return null; }
 
     /**
      * Set the tooltip to the given list
