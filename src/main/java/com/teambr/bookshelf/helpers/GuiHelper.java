@@ -17,7 +17,7 @@ public class GuiHelper {
      * @param y Y Position in Gui (move from guiTop beforehand
      * @param maxHeight The max height of the tank render in Pixels
      */
-    public static void renderFluid(FluidTank tank, int x, int y, int maxHeight) {
+    public static void renderFluid(FluidTank tank, int x, int y, int maxHeight, int maxWidth) {
         FluidStack fluid = tank.getFluid();
         if(fluid != null) {
             GL11.glPushMatrix();
@@ -25,17 +25,23 @@ public class GuiHelper {
             IIcon icon = fluid.getFluid().getIcon(fluid);
             Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
             setGLColorFromInt(fluid.getFluid().getColor(fluid));
-            if(level >= 16) {
-                int times = (int) Math.floor(level / 16);
-                for(int i = 1; i <= times; i++) {
-                    drawIconWithCut(icon, x, y - (16 * i), 16, 16, 0);
+
+            int timesW = (int) Math.floor(maxWidth / 16);
+            int cutW = 16;
+            for(int j = 0; j <= timesW; j++) {
+                if(j == timesW)
+                    cutW = maxWidth % 16;
+                if (level >= 16) {
+                    int times = (int) Math.floor(level / 16);
+                    for (int i = 1; i <= times; i++) {
+                        drawIconWithCut(icon, x + (j * 16), y - (16 * i), cutW, 16, 0);
+                    }
+                    int cut = level % 16;
+                    drawIconWithCut(icon, x + (j * 16), y - (16 * (times + 1)), cutW, 16, 16 - cut);
+                } else {
+                    int cut = level % 16;
+                    drawIconWithCut(icon, x + (j * 16), y - 16, cutW, 16, 16 - cut);
                 }
-                int cut = level % 16;
-                drawIconWithCut(icon, x, y - (16 * (times + 1)), 16, 16, 16 - cut);
-            }
-            else {
-                int cut = level % 16;
-                drawIconWithCut(icon, x, y - 16, 16, 16, 16 - cut);
             }
             GL11.glPopMatrix();
         }
