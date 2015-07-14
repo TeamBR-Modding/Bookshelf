@@ -143,7 +143,7 @@ public class VersionChecker implements Runnable {
         return results;
     }*/
 
-    public VersionReturn getResults() {
+    public static VersionReturn getResults() {
         return results;
     }
 }
