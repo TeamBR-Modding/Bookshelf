@@ -138,8 +138,12 @@ public class VersionChecker implements Runnable {
         }
     }
 
-    public VersionReturn execute() {
+    /*public void execute() {
         new Thread(this).start();
+        return results;
+    }*/
+
+    public VersionReturn getResults() {
         return results;
     }
 }
