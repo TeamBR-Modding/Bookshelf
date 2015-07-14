@@ -150,7 +150,6 @@ public class GuiTab extends BaseComponent {
             for (BaseComponent component : children)
                 if(component.isMouseOver(x, y)) {
                     component.mouseDown(x, y, button);
-
                     return true;
                 }
         }
@@ -168,7 +167,6 @@ public class GuiTab extends BaseComponent {
             for (BaseComponent component : children)
                 if(component.isMouseOver(x, y)) {
                     component.mouseUp(x, y, button);
-
                     return true;
                 }
         }

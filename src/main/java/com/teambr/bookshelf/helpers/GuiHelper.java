@@ -1,9 +1,11 @@
 package com.teambr.bookshelf.helpers;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
 import org.lwjgl.opengl.GL11;
@@ -85,6 +87,13 @@ public class GuiHelper {
      */
     public static boolean isInBounds(int x, int y, int a, int b, int c, int d) {
         return (x >= a && x <= c && y >= b && y <=d);
+    }
+
+    /**
+     * Plays the button click sounds
+     */
+    public static void playButtonSound() {
+        Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
     }
 
     public enum GuiColor {

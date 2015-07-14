@@ -1,9 +1,7 @@
 package com.teambr.bookshelf.client.gui;
 
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
-import com.teambr.bookshelf.client.gui.component.control.GuiComponentCheckBox;
 import com.teambr.bookshelf.client.gui.component.control.GuiComponentSetNumber;
-import com.teambr.bookshelf.client.gui.component.display.GuiComponentFluidTank;
 import com.teambr.bookshelf.client.gui.component.display.GuiComponentText;
 import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
 import com.teambr.bookshelf.common.container.ContainerTestBlock;
@@ -11,9 +9,6 @@ import com.teambr.bookshelf.common.tiles.TileTestBlock;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import scala.actors.threadpool.Arrays;
 
 import java.awt.*;
@@ -30,9 +25,12 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
 
     @Override
     public void addComponents() {
-        FluidTank fluidTank = new FluidTank(1600);
-        fluidTank.setFluid(new FluidStack(FluidRegistry.LAVA, 1600));
-        components.add(new GuiComponentFluidTank(50, 50, 75, 35, fluidTank));
+        components.add(new GuiComponentSetNumber(10, 10, 100, 0, 0, 100) {
+            @Override
+            public void setValue(int i) {
+
+            }
+        });
     }
 
     @Override
@@ -74,14 +72,15 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
 
     @Override
     public void addLeftTabs(GuiTabCollection tabs) {
-        List<BaseComponent> testTab = new ArrayList<>();
-        testTab.add(new GuiComponentCheckBox(10, 10, "Test", false) {
+        //Priority Tab
+        List<BaseComponent> v = new ArrayList<>();
+        v.add(new GuiComponentSetNumber(26, 25, 40, 0, 0, 100) {
             @Override
-            public void setValue(boolean bool) {
+            public void setValue(int value) {
 
             }
         });
-        tabs.addReverseTab(testTab, 95, 100, new Color(255, 0, 0), new ItemStack(Blocks.furnace));
-        tabs.getTabs().get(0).setToolTip(Arrays.asList(new String[]{"Hello", "Testing"}));
+        v.add(new GuiComponentText("Fuel Priority", 22, 7));
+        tabs.addReverseTab(v, 95, 100, new Color(255, 68, 51), new ItemStack(Blocks.anvil));
     }
 }

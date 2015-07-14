@@ -45,6 +45,7 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
             upSelected = true;
             if(value < ceiling)
                 value++;
+            GuiHelper.playButtonSound();
             setValue(value);
             textField.setText(String.valueOf(value));
         }
@@ -52,10 +53,13 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
             downSelected = true;
             if(value > floor)
                 value--;
+            GuiHelper.playButtonSound();
             setValue(value);
             textField.setText(String.valueOf(value));
-        } else
+        } else if(GuiHelper.isInBounds(mouseX, y, xPos, yPos, xPos + width - 8, yPos + 16)) {
             textField.mouseClicked(mouseX, y, button);
+        } else
+            textField.setFocused(false);
     }
 
     /**
@@ -76,8 +80,13 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
     public void keyTyped(char letter, int keyCode) {
         if(Character.isLetter(letter) && (keyCode != 8 && keyCode != 109)) return;
         textField.textboxKeyTyped(letter, keyCode);
-        if(textField.getText() == null || textField.getText().equals("") || !isNumeric(textField.getText()))
+        if(textField.getText() == null || textField.getText().equals("") || !isNumeric(textField.getText())) {
+            textField.setTextColor(0xE62E00);
             return;
+        }
+        if(keyCode == 13)
+            textField.setFocused(false);
+        textField.setTextColor(0xFFFFFF);
         if(Integer.valueOf(textField.getText()) > ceiling)
             textField.setText(String.valueOf(ceiling));
         else if(Integer.valueOf(textField.getText()) < floor)
@@ -109,8 +118,6 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
         GL11.glPopMatrix();
 
         GL11.glPushMatrix();
-
-        GL11.glTranslated(guiLeft, guiTop, 0);
 
         textField.drawTextBox();
 
