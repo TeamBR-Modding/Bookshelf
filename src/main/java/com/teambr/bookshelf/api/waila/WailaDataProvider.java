@@ -16,6 +16,11 @@ public class WailaDataProvider implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        if (accessor.getTileEntity() instanceof IWaila) {
+            IWaila tile = (IWaila) accessor.getTileEntity();
+            ItemStack item =  tile.returnWailaStack(accessor, config);
+            return item;
+        }
         return null;
     }
 
