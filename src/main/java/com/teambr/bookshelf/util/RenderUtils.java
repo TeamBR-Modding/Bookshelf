@@ -1,7 +1,7 @@
 package com.teambr.bookshelf.util;
 
 import com.teambr.bookshelf.common.blocks.BaseBlock;
-import com.teambr.bookshelf.lib.Constants;
+import com.teambr.bookshelf.lib.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.RenderHelper;
@@ -15,7 +15,7 @@ import java.awt.*;
 
 public class RenderUtils {
 
-    public static final ResourceLocation GUI_COMPONENTS = new ResourceLocation(Constants.MODID, "textures/gui/guiComponents.png");
+    public static final ResourceLocation GUI_COMPONENTS = new ResourceLocation(Reference.MODID, "textures/gui/guiComponents.png");
     public static final ResourceLocation MC_BLOCKS = new ResourceLocation("textures/atlas/blocks.png");
     public static final ResourceLocation MC_ITEMS = new ResourceLocation("textures/atlas/items.png");
 

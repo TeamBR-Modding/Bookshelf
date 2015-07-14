@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.manager;
 
-import com.teambr.bookshelf.lib.Constants;
+import com.teambr.bookshelf.lib.Reference;
 import com.teambr.bookshelf.network.ClientTileUpdate;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -12,7 +12,7 @@ public class PacketManager {
     public static SimpleNetworkWrapper net;
 
     public static void initPackets() {
-        net = NetworkRegistry.INSTANCE.newSimpleChannel(Constants.MODID.toUpperCase());
+        net = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MODID.toUpperCase());
         registerMessage(ClientTileUpdate.class, ClientTileUpdate.Message.class);
     }
 

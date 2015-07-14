@@ -2,7 +2,7 @@ package com.teambr.bookshelf;
 
 
 import com.teambr.bookshelf.common.CommonProxy;
-import com.teambr.bookshelf.lib.Constants;
+import com.teambr.bookshelf.lib.Reference;
 import com.teambr.bookshelf.manager.GuiManager;
 import com.teambr.bookshelf.manager.PacketManager;
 import cpw.mods.fml.common.Mod;
@@ -13,25 +13,27 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import net.minecraft.block.Block;
+
+import java.io.File;
 
 @SuppressWarnings("unused")
-@Mod(name = Constants.MODNAME, modid = Constants.MODID, version = Constants.VERSION, dependencies = Constants.DEPENDENCIES)
+@Mod(name = Reference.MODNAME, modid = Reference.MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES)
 
 public class Bookshelf {
 
-    Block testBlock;
-
-    @Instance(Constants.MODID)
+    @Instance(Reference.MODID)
     public static Bookshelf instance;
 
     @SidedProxy(clientSide = "com.teambr.bookshelf.client.ClientProxy",
             serverSide = "com.teambr.bookshelf.common.CommonProxy")
     public static CommonProxy proxy;
 
+    public static String configFolderLocation;
+
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
+        configFolderLocation = event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Reference.MODNAME;
         proxy.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager());

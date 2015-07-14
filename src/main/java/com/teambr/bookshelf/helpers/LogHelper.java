@@ -1,12 +1,12 @@
 package com.teambr.bookshelf.helpers;
 
-import com.teambr.bookshelf.lib.Constants;
+import com.teambr.bookshelf.lib.Reference;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class LogHelper {
-    private static final Logger logger = LogManager.getLogger(Constants.MODID);
+    private static final Logger logger = LogManager.getLogger(Reference.MODID);
 
     public static void log(Level level, Object object) {
 
