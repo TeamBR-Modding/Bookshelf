@@ -60,9 +60,6 @@ public class WailaDataProvider implements IWailaDataProvider {
         registrar.registerHeadProvider(new WailaDataProvider(), IWaila.class);
         registrar.registerBodyProvider(new WailaDataProvider(), IWaila.class);
         registrar.registerTailProvider(new WailaDataProvider(), IWaila.class);
-    }
-
-    public static void callbackRegisterServer(IWailaRegistrar registrar) {
         registrar.registerStackProvider(new WailaDataProvider(), IWaila.class);
     }
 }
