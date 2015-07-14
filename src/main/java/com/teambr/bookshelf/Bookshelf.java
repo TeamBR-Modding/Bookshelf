@@ -39,8 +39,8 @@ public class Bookshelf {
         proxy.init();
 
         //register test block
-        GameRegistry.registerBlock(testBlock = new TestBlock(Material.iron, "testBlock", TileTestBlock.class), "testBlock");
-        GameRegistry.registerTileEntity(TileTestBlock.class, "testBlock");
+        //GameRegistry.registerBlock(testBlock = new TestBlock(Material.iron, "testBlock", TileTestBlock.class), "testBlock");
+        //GameRegistry.registerTileEntity(TileTestBlock.class, "testBlock");
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager());
     }
