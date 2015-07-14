@@ -4,14 +4,11 @@ import com.teambr.bookshelf.client.ClientProxy;
 import com.teambr.bookshelf.common.blocks.BaseBlock;
 import com.teambr.bookshelf.util.RenderUtils;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 
-@SideOnly(Side.CLIENT)
 public class BasicBlockRenderer implements ISimpleBlockRenderingHandler {
     public static int renderID;
 

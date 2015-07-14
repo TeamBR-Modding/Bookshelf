@@ -148,7 +148,6 @@ public class BaseBlock extends BlockContainer {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public int getRenderType() {
         return BasicBlockRenderer.renderID;
     }
