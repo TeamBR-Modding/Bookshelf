@@ -1,13 +1,19 @@
 package com.teambr.bookshelf.common.tiles;
 
+import com.teambr.bookshelf.api.waila.IWaila;
 import com.teambr.bookshelf.client.gui.GuiTestBlock;
 import com.teambr.bookshelf.common.container.ContainerTestBlock;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class TileTestBlock extends BaseTile implements IOpensGui, IInventory {
+import java.util.List;
+
+public class TileTestBlock extends BaseTile implements IOpensGui, IInventory, IWaila {
 
 
     @Override
@@ -78,5 +84,25 @@ public class TileTestBlock extends BaseTile implements IOpensGui, IInventory {
     @Override
     public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
         return false;
+    }
+
+    @Override
+    public void returnWailaHead(List<String> tip) {
+
+    }
+
+    @Override
+    public void returnWailaBody(List<String> tip) {
+
+    }
+
+    @Override
+    public void returnWailaTail(List<String> tip) {
+
+    }
+
+    @Override
+    public ItemStack returnWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
+        return new ItemStack(Blocks.anvil);
     }
 }
