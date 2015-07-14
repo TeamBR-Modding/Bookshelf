@@ -80,4 +80,12 @@ public abstract class GuiComponentCheckBox extends BaseComponent {
     public int getHeight() {
         return 8;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }

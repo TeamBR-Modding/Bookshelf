@@ -216,4 +216,16 @@ public class GuiTab extends BaseComponent {
     }
 
     public void setIcon(ItemStack icon) { this.icon = icon; }
+
+    public ItemStack getIcon() {
+        return icon;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }
