@@ -83,4 +83,12 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
     public int getHeight() {
         return height;
     }
+
+    public Color getBarColor() {
+        return barColor;
+    }
+
+    public void setBarColor(Color barColor) {
+        this.barColor = barColor;
+    }
 }

@@ -136,4 +136,32 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
     public int getHeight() {
         return height + 1;
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public int getCeiling() {
+        return ceiling;
+    }
+
+    public void setCeiling(int ceiling) {
+        this.ceiling = ceiling;
+    }
+
+    public GuiTextField getTextField() {
+        return textField;
+    }
+
+    public void setTextField(GuiTextField textField) {
+        this.textField = textField;
+    }
 }

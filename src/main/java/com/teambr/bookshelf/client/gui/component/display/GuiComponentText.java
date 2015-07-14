@@ -54,4 +54,20 @@ public class GuiComponentText extends BaseComponent {
     public int getHeight() {
         return 7;
     }
+
+    public int getHexColor() {
+        return hexColor;
+    }
+
+    public void setHexColor(int hexColor) {
+        this.hexColor = hexColor;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }
