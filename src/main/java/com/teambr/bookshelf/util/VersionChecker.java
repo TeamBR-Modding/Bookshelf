@@ -39,7 +39,7 @@ public class VersionChecker implements Runnable {
         REMOTE_VERSION_XML_FILE = xml;
         lastVersion = lastVersionIn;
         numRetry = numRetryIn;
-        results = new VersionReturn(null, null, null);
+        results = new VersionReturn(null, null, null, null);
         modID = modIDIn;
     }
 
@@ -86,7 +86,7 @@ public class VersionChecker implements Runnable {
             else {
                 result = Results.MC_VERSION_NOT_FOUND;
             }
-            results = new VersionReturn(lastVersion, remoteVersion, result.name());
+            results = new VersionReturn(lastVersion, remoteVersion, result.name(), remoteUpdateLocation);
         }
         catch (Exception ignored) {
         }
