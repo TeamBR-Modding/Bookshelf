@@ -8,17 +8,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-
 public abstract class GuiComponentButton extends BaseComponent {
 
     private String text;
     private int width, height;
+    private boolean isOver;
 
     protected static final int u = 0;
     protected static final int v = 100;
 
     NinePatchRenderer renderer = new NinePatchRenderer(u, v, 4);
+    NinePatchRenderer rendererOver = new NinePatchRenderer(u, v + 9, 4);
 
     /**
      * Button Constructor
@@ -33,6 +33,7 @@ public abstract class GuiComponentButton extends BaseComponent {
         text = StatCollector.translateToLocal(label);
         this.width = width;
         this.height = height;
+        this.isOver = false;
     }
 
     /**
@@ -60,25 +61,37 @@ public abstract class GuiComponentButton extends BaseComponent {
     }
 
     @Override
+    public boolean isMouseOver(int mouseX, int mouseY) {
+        if (mouseX >= xPos && mouseX < xPos + getWidth() && mouseY >= yPos && mouseY < yPos + getHeight()) {
+            isOver = true;
+            return true;
+        }
+        isOver = false;
+        return false;
+    }
+
+    @Override
     public void render(int guiLeft, int guiTop) {
 
         GL11.glPushMatrix();
 
         GL11.glTranslated(xPos, yPos, 0);
         RenderUtils.bindGuiComponentsSheet();
-
-        renderer.render(this, 0, 0, width, height);
+        if (isOver)
+            rendererOver.render(this, 0, 0, width, height);
+        else
+            renderer.render(this, 0, 0, width, height);
 
         GL11.glPopMatrix();
     }
 
     @Override
     public void renderOverlay(int guiLeft, int guiTop) {
-        /*GL11.glPushMatrix();
+        GL11.glPushMatrix();
         int size = Minecraft.getMinecraft().fontRenderer.getStringWidth(text);
         GL11.glTranslated(xPos + (width / 2 - size / 2), yPos + 6, 0);
         Minecraft.getMinecraft().fontRenderer.drawString(text, 0, 0, 0x000000);
-        GL11.glPopMatrix();*/
+        GL11.glPopMatrix();
     }
 
     @Override
@@ -89,9 +102,5 @@ public abstract class GuiComponentButton extends BaseComponent {
     @Override
     public int getHeight() {
         return height;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 }

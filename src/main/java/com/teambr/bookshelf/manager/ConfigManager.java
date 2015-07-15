@@ -10,7 +10,7 @@ public class ConfigManager {
     private static Configuration config;
 
     public static int versionNotify, versionRetry;
-    public static String lastVersion;
+    public static String lastVersion, updateURL;
     public static boolean debug;
 
     public static void init(String configFolderLocation) {
@@ -20,6 +20,7 @@ public class ConfigManager {
         lastVersion         = config.get(Reference.VERSIONCHECK, Reference.REMOTE_VERSION, "").getString();
         versionNotify       = config.get(Reference.VERSIONCHECK, "Notify if out of Date? (0=Always, 1=Once, 2=Never)", 0).getInt();
         versionRetry        = config.get(Reference.VERSIONCHECK, "# of attempts to check for updates?", 3).getInt();
+        updateURL           = config.get(Reference.VERSIONCHECK, Reference.UPDATE_URL, "").getString();
 
         debug               = config.get(Reference.DEBUG, "Enable Debug Mode?", false).getBoolean();
 
