@@ -74,7 +74,7 @@ public abstract class GuiComponentButton extends BaseComponent {
     public void renderOverlay(int guiLeft, int guiTop) {
         GL11.glPushMatrix();
         int size = Minecraft.getMinecraft().fontRenderer.getStringWidth(text);
-        GL11.glTranslated((width / 2 - size / 2), yPos + 6, 0);
+        GL11.glTranslated((width / 2 + size / 2), yPos + 6, 0);
         Minecraft.getMinecraft().fontRenderer.drawString(text, 0, 0, 0x000000);
         GL11.glPopMatrix();
     }
