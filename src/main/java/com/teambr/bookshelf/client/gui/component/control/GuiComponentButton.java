@@ -18,7 +18,7 @@ public abstract class GuiComponentButton extends BaseComponent {
     protected static final int u = 0;
     protected static final int v = 100;
 
-    NinePatchRenderer renderer = new NinePatchRenderer(u, v, 3);
+    NinePatchRenderer renderer = new NinePatchRenderer(u, v, 4);
 
     /**
      * Button Constructor
@@ -67,7 +67,7 @@ public abstract class GuiComponentButton extends BaseComponent {
         GL11.glTranslated(xPos, yPos, 0);
         RenderUtils.bindGuiComponentsSheet();
 
-        renderer.render(this, 0, 0, width, height, new Color(255, 255, 255));
+        renderer.render(this, 0, 0, width, height);
 
         GL11.glPopMatrix();
     }
