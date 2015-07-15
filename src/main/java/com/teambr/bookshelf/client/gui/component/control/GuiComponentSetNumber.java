@@ -79,7 +79,8 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
      */
     public void keyTyped(char letter, int keyCode) {
         if(Character.isLetter(letter) && (keyCode != 8 && keyCode != 109)) return;
-        textField.textboxKeyTyped(letter, keyCode);
+        if(textField.isFocused())
+            textField.textboxKeyTyped(letter, keyCode);
         if(textField.getText() == null || textField.getText().equals("") || !isNumeric(textField.getText())) {
             textField.setTextColor(0xE62E00);
             return;
