@@ -8,6 +8,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
+
 public abstract class GuiComponentButton extends BaseComponent {
 
     private String text;
@@ -65,7 +67,7 @@ public abstract class GuiComponentButton extends BaseComponent {
         GL11.glTranslated(xPos, yPos, 0);
         RenderUtils.bindGuiComponentsSheet();
 
-        renderer.render(this, 0, 0, width, height);
+        renderer.render(this, 0, 0, width, height, new Color(255, 255, 255));
 
         GL11.glPopMatrix();
     }
