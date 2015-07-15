@@ -3,6 +3,8 @@ package com.teambr.bookshelf;
 
 import com.teambr.bookshelf.common.CommonProxy;
 import com.teambr.bookshelf.lib.Reference;
+import com.teambr.bookshelf.manager.BlockManager;
+import com.teambr.bookshelf.manager.ConfigManager;
 import com.teambr.bookshelf.manager.GuiManager;
 import com.teambr.bookshelf.manager.PacketManager;
 import cpw.mods.fml.common.Mod;
@@ -34,6 +36,8 @@ public class Bookshelf {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         configFolderLocation = event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Reference.MODNAME;
+        ConfigManager.init(configFolderLocation);
+        BlockManager.init();
         proxy.init();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager());

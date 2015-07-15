@@ -1,11 +1,11 @@
-package com.teambr.bookshelf.registries;
+package com.teambr.bookshelf.manager;
 
 import com.teambr.bookshelf.lib.Reference;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 
-public class GeneralConfigRegistry {
+public class ConfigManager {
 
     private static Configuration config;
 
