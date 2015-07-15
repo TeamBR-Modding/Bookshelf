@@ -1,18 +1,22 @@
 package com.teambr.bookshelf.client.gui.component.control;
 
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
+import com.teambr.bookshelf.client.gui.component.NinePatchRenderer;
 import com.teambr.bookshelf.helpers.GuiHelper;
+import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public abstract class GuiComponentButton extends BaseComponent {
 
-    protected static final ResourceLocation buttonTextures = new ResourceLocation("textures/gui/widgets.png");
-
     private String text;
     private int width, height;
+
+    protected static final int u = 0;
+    protected static final int v = 100;
+
+    NinePatchRenderer renderer = new NinePatchRenderer(u, v, 3);
 
     /**
      * Button Constructor
@@ -55,20 +59,13 @@ public abstract class GuiComponentButton extends BaseComponent {
 
     @Override
     public void render(int guiLeft, int guiTop) {
+
         GL11.glPushMatrix();
 
         GL11.glTranslated(xPos, yPos, 0);
-        //RenderUtils.bindGuiComponentsSheet();
-        Minecraft.getMinecraft().getTextureManager().bindTexture(buttonTextures);
+        RenderUtils.bindGuiComponentsSheet();
 
-        GL11.glPushMatrix();
-        GL11.glDisable(GL11.GL_LIGHTING);
-
-        this.drawTexturedModalRect(0, 0, 0, 46 + 1 * 20, this.width / 2, this.height);
-        //this.drawTexturedModalRect(0, this.width / 2, 0, 200 - this.width / 2, 46 + k * 20, this.width / 2, this.height);
-
-        GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glPopMatrix();
+        renderer.render(this, 0, 0, width, height);
 
         GL11.glPopMatrix();
     }
