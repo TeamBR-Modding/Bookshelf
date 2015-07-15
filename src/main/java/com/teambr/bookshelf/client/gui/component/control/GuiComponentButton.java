@@ -2,9 +2,7 @@ package com.teambr.bookshelf.client.gui.component.control;
 
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.helpers.GuiHelper;
-import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
@@ -79,7 +77,7 @@ public abstract class GuiComponentButton extends BaseComponent {
     public void renderOverlay(int guiLeft, int guiTop) {
         GL11.glPushMatrix();
         int size = Minecraft.getMinecraft().fontRenderer.getStringWidth(text);
-        GL11.glTranslated(xPos / 2 - size / 2, yPos + 8, 0);
+        GL11.glTranslated(xPos + (width / 2 - size / 2), yPos + 8, 0);
         Minecraft.getMinecraft().fontRenderer.drawString(text, 0, 0, 0x000000);
         GL11.glPopMatrix();
     }
