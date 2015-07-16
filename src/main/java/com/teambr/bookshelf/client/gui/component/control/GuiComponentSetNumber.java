@@ -142,6 +142,10 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
         return value;
     }
 
+    public void setCurrentValue(int val) {
+        value = val;
+    }
+
     public int getFloor() {
         return floor;
     }
