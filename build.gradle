@@ -21,7 +21,7 @@ apply plugin: 'java'
 apply plugin: 'curseforge'
 
 ext.configFile = file "build.properties"
-if (assert file('APIToken').exists()) {
+if (file('APIToken').exists()) {
     String APIToken = new File('APIToken').text
 } else {
     String APIToken = ''
