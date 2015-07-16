@@ -144,6 +144,7 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
 
     public void setCurrentValue(int val) {
         value = val;
+        textField.setText(String.valueOf(value));
     }
 
     public int getFloor() {
