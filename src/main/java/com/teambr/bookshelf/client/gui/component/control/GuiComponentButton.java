@@ -74,6 +74,7 @@ public abstract class GuiComponentButton extends BaseComponent {
     public void render(int guiLeft, int guiTop) {
 
         GL11.glPushMatrix();
+        RenderUtils.prepareRenderState();
 
         GL11.glTranslated(xPos, yPos, 0);
         RenderUtils.bindGuiComponentsSheet();
@@ -82,6 +83,7 @@ public abstract class GuiComponentButton extends BaseComponent {
         else
             renderer.render(this, 0, 0, width, height);
 
+        RenderUtils.restoreRenderState();
         GL11.glPopMatrix();
     }
 
