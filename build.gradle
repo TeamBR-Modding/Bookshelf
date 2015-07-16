@@ -33,7 +33,7 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-if (System.getenv("BUILD_NUMBER") == null || System.genenv("BUILD_NUMBER") == "") {
+if (System.getenv("BUILD_NUMBER") == null || System.genenv("BUILD_NUMBER") == '') {
     version = "${config.minecraft_version}-${config.mod_version}"
 } else {
     version = "${config.minecraft_version}-${config.mod_version}-B" + System.getenv("BUILD_NUMBER")
