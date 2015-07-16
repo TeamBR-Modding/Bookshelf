@@ -36,14 +36,16 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
 
     @Override
     public void addComponents() {
-        components.add(new GuiComponentButton(10, 60, 80, 20, "Get Update") {
+        components.add(new GuiComponentSetNumber(26, 25, 40, 0, 0, 100) {
             @Override
-            public void doAction() {
-                try {
-                    Desktop.getDesktop().browse(URI.create(ConfigManager.updateURL));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            public void setValue(int value) {
+
+            }
+        });
+        components.add(new GuiComponentSetNumber(26, 50, 40, 0, 0, 100) {
+            @Override
+            public void setValue(int value) {
+
             }
         });
     }

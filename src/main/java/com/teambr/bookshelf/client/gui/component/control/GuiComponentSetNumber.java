@@ -56,10 +56,8 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
             GuiHelper.playButtonSound();
             setValue(value);
             textField.setText(String.valueOf(value));
-        } else if(GuiHelper.isInBounds(mouseX, y, xPos, yPos, xPos + width - 8, yPos + 16)) {
-            textField.mouseClicked(mouseX, y, button);
-        } else
-            textField.setFocused(false);
+        }
+        textField.mouseClicked(mouseX, y, button);
     }
 
     /**
@@ -130,12 +128,12 @@ public abstract class GuiComponentSetNumber extends BaseComponent {
 
     @Override
     public int getWidth() {
-        return width + 2;
+        return 20000;
     }
 
     @Override
     public int getHeight() {
-        return height + 1;
+        return 20000;
     }
 
     public int getValue() {
