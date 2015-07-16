@@ -21,10 +21,10 @@ apply plugin: 'java'
 apply plugin: 'curseforge'
 
 ext.configFile = file "build.properties"
+
+String APIToken = ''
 if (file('APIToken').exists()) {
-    String APIToken = new File('APIToken').text
-} else {
-    String APIToken = ''
+    APIToken = new File('APIToken').text
 }
 
 configFile.withReader {
