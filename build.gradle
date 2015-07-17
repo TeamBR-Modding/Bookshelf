@@ -192,6 +192,7 @@ curse {
     apiKey = APIToken
     changelog = 'More Stuff added'
     releaseType 'release'
+    additionalArtifact devJar
     addGameVersion '1.7.10'
 }
 
