@@ -38,7 +38,7 @@ public class Bookshelf {
         configFolderLocation = event.getModConfigurationDirectory().getAbsolutePath() + File.separator + Reference.MODNAME;
         ConfigManager.init(configFolderLocation);
         BlockManager.init();
-        proxy.init();
+        proxy.preInit();
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager());
     }
@@ -46,6 +46,7 @@ public class Bookshelf {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         PacketManager.initPackets();
+        proxy.init();
     }
 
     @EventHandler

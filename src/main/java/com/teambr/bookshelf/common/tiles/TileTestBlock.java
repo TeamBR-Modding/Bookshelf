@@ -3,6 +3,7 @@ package com.teambr.bookshelf.common.tiles;
 import com.teambr.bookshelf.api.waila.IWaila;
 import com.teambr.bookshelf.client.gui.GuiTestBlock;
 import com.teambr.bookshelf.common.container.ContainerTestBlock;
+import com.teambr.bookshelf.helpers.GuiHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.entity.player.EntityPlayer;
@@ -88,7 +89,7 @@ public class TileTestBlock extends BaseTile implements IOpensGui, IInventory, IW
 
     @Override
     public void returnWailaHead(List<String> tip) {
-
+        tip.add(GuiHelper.GuiColor.LIGHTBLUE.toString() + GuiHelper.GuiTextFormat.ITALICS + "Shift+Click to access GUI");
     }
 
     @Override

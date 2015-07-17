@@ -96,6 +96,25 @@ public class GuiHelper {
         Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(new ResourceLocation("gui.button.press"), 1.0F));
     }
 
+    public enum GuiTextFormat {
+        ITALICS(0);
+
+        private int number;
+        GuiTextFormat(int number) {
+            this.number = number;
+        }
+
+        @Override
+        public String toString() {
+            String text = "\u00a7";
+            switch (number) {
+                case 0:
+                    return text + "o";
+            }
+            return "";
+        }
+    }
+
     public enum GuiColor {
         BLACK(0),
         BLUE(1),
