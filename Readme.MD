@@ -1,4 +1,4 @@
-BR-Lib
+BR-Lib [![Build Status](http://www.beyondrealitypack.com:8080/buildStatus/icon?job=Bookshelf)](http://www.beyondrealitypack.com:8080/job/Bookshelf/)
 ======
 
 Library of useful functions used by TeamBR
