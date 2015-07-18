@@ -1,5 +1,6 @@
 package com.teambr.bookshelf.collections;
 
+import com.teambr.bookshelf.helpers.LogHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByte;
@@ -89,6 +90,11 @@ public class InventoryTile {
      * @param tagCompound The tag to read from
      */
     public void readFromNBT(NBTTagCompound tagCompound) {
+        if(!tagCompound.hasKey("Size")) {
+            LogHelper.warning("Seems this tag is invalid, oops. Lets just skip for now");
+            return;
+        }
+
         NBTTagList itemsTag = tagCompound.getTagList("Items", 10);
         this.inventory = new Stack<>();
         inventory.setSize(tagCompound.getInteger("Size"));
