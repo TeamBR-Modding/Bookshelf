@@ -21,7 +21,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.Random;
 
@@ -73,7 +75,7 @@ public class BaseBlock extends BlockContainer {
             player.openGui(Bookshelf.instance, 0, world, x, y, z);
             return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -163,6 +165,10 @@ public class BaseBlock extends BlockContainer {
     @Override
     public int getRenderBlockPass() {
         return getBlockTextures().getOverlay() != null ? 1 : 0;
+    }
+
+    public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
+        return true;
     }
 
     @Override
