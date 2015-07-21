@@ -18,8 +18,7 @@ public class WailaDataProvider implements IWailaDataProvider {
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
         if (accessor.getTileEntity() instanceof IWaila) {
             IWaila tile = (IWaila) accessor.getTileEntity();
-            ItemStack item =  tile.returnWailaStack(accessor, config);
-            return item;
+            return tile.returnWailaStack(accessor, config);
         }
         return null;
     }
@@ -53,13 +52,23 @@ public class WailaDataProvider implements IWailaDataProvider {
 
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
-        return null;
+        if (te instanceof IWaila) {
+            return ((IWaila) te).getNBTData(player, te, tag, world, x, y, z);
+        }
+        return tag;
     }
 
+    @SuppressWarnings("unused")
     public static void callbackRegister(IWailaRegistrar registrar) {
         registrar.registerHeadProvider(new WailaDataProvider(), IWaila.class);
         registrar.registerBodyProvider(new WailaDataProvider(), IWaila.class);
         registrar.registerTailProvider(new WailaDataProvider(), IWaila.class);
         registrar.registerStackProvider(new WailaDataProvider(), IWaila.class);
+        registrar.registerNBTProvider(new WailaDataProvider(), IWaila.class);
+    }
+
+    @SuppressWarnings("unused")
+    public static void callbackRegisterServer(IWailaRegistrar registrar) {
+        registrar.registerNBTProvider(new WailaDataProvider(), IWaila.class);
     }
 }

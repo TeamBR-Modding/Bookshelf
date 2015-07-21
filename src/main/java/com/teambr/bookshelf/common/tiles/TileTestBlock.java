@@ -1,5 +1,7 @@
 package com.teambr.bookshelf.common.tiles;
 
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyHandler;
 import com.teambr.bookshelf.api.waila.IWaila;
 import com.teambr.bookshelf.client.gui.GuiTestBlock;
 import com.teambr.bookshelf.common.container.ContainerTestBlock;
@@ -7,16 +9,24 @@ import com.teambr.bookshelf.helpers.GuiHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.List;
 
-public class TileTestBlock extends BaseTile implements IOpensGui, IInventory, IWaila {
+public class TileTestBlock extends BaseTile implements IOpensGui, IInventory, IWaila, IEnergyHandler {
 
+    protected EnergyStorage energy;
 
+    public TileTestBlock() {
+        energy = new EnergyStorage(32000);
+    }
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         return new ContainerTestBlock(player.inventory, this);
@@ -105,5 +115,47 @@ public class TileTestBlock extends BaseTile implements IOpensGui, IInventory, IW
     @Override
     public ItemStack returnWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
         return new ItemStack(Blocks.anvil);
+    }
+
+    @Override
+    public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
+        return null;
+    }
+
+    @Override
+    public int receiveEnergy(ForgeDirection from, int maxReceive, boolean simulate) {
+        return 0;
+    }
+
+    @Override
+    public int extractEnergy(ForgeDirection from, int maxExtract, boolean simulate) {
+        return 0;
+    }
+
+    @Override
+    public int getEnergyStored(ForgeDirection from) {
+        return 0;
+    }
+
+    @Override
+    public int getMaxEnergyStored(ForgeDirection from) {
+        return 0;
+    }
+
+    @Override
+    public boolean canConnectEnergy(ForgeDirection from) {
+        return false;
+    }
+
+    @Override
+    public void readFromNBT (NBTTagCompound tags) {
+        super.readFromNBT(tags);
+        energy.readFromNBT(tags);
+    }
+
+    @Override
+    public void writeToNBT (NBTTagCompound tags) {
+        super.writeToNBT(tags);
+        energy.writeToNBT(tags);
     }
 }
