@@ -19,5 +19,5 @@ public interface IWaila {
 
     ItemStack returnWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config);
 
-    NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z);
+    NBTTagCompound returnNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z);
 }

@@ -53,7 +53,7 @@ public class WailaDataProvider implements IWailaDataProvider {
     @Override
     public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, int x, int y, int z) {
         if (te instanceof IWaila) {
-            return ((IWaila) te).getNBTData(player, te, tag, world, x, y, z);
+            return ((IWaila) te).returnNBTData(player, te, tag, world, x, y, z);
         }
         return tag;
     }
