@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.client.gui.component.display;
 
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
+import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.StatCollector;
@@ -40,7 +41,9 @@ public class GuiComponentText extends BaseComponent {
         GL11.glPushMatrix();
 
         GL11.glTranslated(xPos, yPos, 0);
+        RenderUtils.prepareRenderState();
         fontRenderer.drawString(text, 0, 0, hexColor);
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
 
         GL11.glPopMatrix();
     }

@@ -92,6 +92,7 @@ public abstract class GuiComponentButton extends BaseComponent {
         GL11.glPushMatrix();
         int size = Minecraft.getMinecraft().fontRenderer.getStringWidth(text);
         GL11.glTranslated(xPos + (width / 2 - size / 2), yPos + 6, 0);
+        RenderUtils.prepareRenderState();
         Minecraft.getMinecraft().fontRenderer.drawString(text, 0, 0, 0xFFFFFF);
         GL11.glPopMatrix();
     }
