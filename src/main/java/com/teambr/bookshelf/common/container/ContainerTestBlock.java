@@ -7,5 +7,7 @@ import net.minecraft.inventory.IInventory;
 public class ContainerTestBlock extends BaseContainer {
     public ContainerTestBlock(IInventory playerInventory, TileTestBlock tileEntity) {
         super(playerInventory, tileEntity);
+        addInventoryLine(10, 10, 0, 3);
+        addPlayerInventorySlots(10, 70);
     }
 }
