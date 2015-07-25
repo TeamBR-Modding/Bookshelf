@@ -36,15 +36,9 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
 
     @Override
     public void addComponents() {
-        components.add(new GuiComponentSetNumber(26, 25, 40, 0, 0, 100) {
+        components.add(new GuiComponentButton(130, 10, 15, 50, "L") {
             @Override
-            public void setValue(int value) {
-
-            }
-        });
-        components.add(new GuiComponentSetNumber(26, 50, 40, 0, 0, 100) {
-            @Override
-            public void setValue(int value) {
+            public void doAction() {
 
             }
         });

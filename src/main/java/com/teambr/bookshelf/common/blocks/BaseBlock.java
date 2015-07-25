@@ -6,6 +6,7 @@ import com.teambr.bookshelf.client.renderer.BasicBlockRenderer;
 import com.teambr.bookshelf.collections.BlockTextures;
 import com.teambr.bookshelf.common.blocks.rotation.IRotation;
 import com.teambr.bookshelf.common.blocks.rotation.NoRotation;
+import com.teambr.bookshelf.common.tiles.IOpensGui;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -71,11 +72,11 @@ public class BaseBlock extends BlockContainer {
      */
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-        if(!player.isSneaking()) {
+        if(world.getTileEntity(x, y, z) != null && world.getTileEntity(x, y, z) instanceof IOpensGui) {
             player.openGui(Bookshelf.instance, 0, world, x, y, z);
             return true;
         }
-        return false;
+        return true;
     }
 
     @Override
