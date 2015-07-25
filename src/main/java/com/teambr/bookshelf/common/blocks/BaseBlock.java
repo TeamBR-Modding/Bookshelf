@@ -120,7 +120,7 @@ public class BaseBlock extends BlockContainer {
     //The sides are: Bottom (0), Top (1), North (2), South (3), West (4), East (5).
     @Override
     @SideOnly(Side.CLIENT)
-    public final IIcon getIcon(int side, int metadata) {
+    public IIcon getIcon(int side, int metadata) {
         switch(side) {
             case 0 :
                 return textures.getDown(metadata, getDefaultRotation());
@@ -190,7 +190,7 @@ public class BaseBlock extends BlockContainer {
     }
 
     /**
-     * Enmpty Contents of an Inventory into world on Block Break
+     * Empty Contents of an Inventory into world on Block Break
      * @param world
      * @param x X-Coord in world
      * @param y Y-Coord in world
