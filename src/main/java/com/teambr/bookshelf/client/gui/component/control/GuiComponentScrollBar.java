@@ -22,7 +22,6 @@ public abstract class GuiComponentScrollBar extends BaseComponent {
     protected int v = 0;
     NinePatchRenderer renderer;
 
-
     public GuiComponentScrollBar(int x, int y, int height) {
         super(x, y);
         this.height = height;
