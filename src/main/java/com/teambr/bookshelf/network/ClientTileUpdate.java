@@ -19,6 +19,7 @@ public class ClientTileUpdate implements IMessageHandler<ClientTileUpdate.Messag
                 World world = ctx.getServerHandler().playerEntity.worldObj;
                 if(world.getTileEntity(message.x, message.y, message.z) != null) {
                     world.getTileEntity(message.x, message.y, message.z).readFromNBT(message.tag);
+                    world.markBlockForUpdate(message.x, message.y, message.z);
                 }
             }
         }
