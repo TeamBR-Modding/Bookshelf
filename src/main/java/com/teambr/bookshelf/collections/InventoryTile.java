@@ -33,7 +33,10 @@ public class InventoryTile {
      * @return The itemstack in the slot, can be null
      */
     public ItemStack getStackInSlot(int slot) {
-        return inventory.get(slot);
+        if(slot < inventory.size())
+            return inventory.get(slot);
+        else
+            return null;
     }
 
     /**
@@ -42,7 +45,8 @@ public class InventoryTile {
      * @param slot The slot to set it in
      */
     public void setStackInSlot(ItemStack stack, int slot) {
-        inventory.set(slot, stack);
+        if(slot < inventory.size())
+            inventory.set(slot, stack);
     }
 
     /**
