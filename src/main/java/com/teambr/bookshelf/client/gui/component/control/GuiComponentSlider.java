@@ -9,7 +9,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class GuiComponendSlider<V> extends BaseComponent {
+public abstract class GuiComponentSlider<V> extends BaseComponent {
     protected int width;
     protected int boxX;
     protected boolean isDragging;
@@ -22,13 +22,14 @@ public abstract class GuiComponendSlider<V> extends BaseComponent {
     private static final int BOX_U = 32;
     private static final int BOX_V = 3;
 
-    public GuiComponendSlider(int x, int y, int length, List<V> data, int index) {
+    public GuiComponentSlider(int x, int y, int length, List<V> data, int index) {
         super(x, y);
         width = length;
         boxX = xPos + 1;
         isDragging = false;
         selectables = data;
         currentSelected = data.get(index);
+        boxX = (index * length) / data.size();
     }
 
     @Override

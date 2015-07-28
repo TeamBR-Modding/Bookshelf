@@ -115,7 +115,7 @@ public class BaseBlock extends BlockContainer {
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase livingBase, ItemStack itemStack) {
         //Calls upon the default rotation to set the meta
-        world.setBlockMetadataWithNotify(x, y, z, getDefaultRotation().getMetaFromEntity(livingBase), 2);
+        world.setBlockMetadataWithNotify(x, y, z, getDefaultRotation().getMetaFromEntity(world, x, y, z, livingBase, itemStack), 2);
     }
 
     //The sides are: Bottom (0), Top (1), North (2), South (3), West (4), East (5).

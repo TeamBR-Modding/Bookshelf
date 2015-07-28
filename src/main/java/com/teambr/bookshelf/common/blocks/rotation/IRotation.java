@@ -1,6 +1,8 @@
 package com.teambr.bookshelf.common.blocks.rotation;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public interface IRotation {
@@ -21,8 +23,7 @@ public interface IRotation {
 
     /**
      * Used when the block is placed, it will calculate what meta should be put onto the block
-     * @param entity The player entity
      * @return The meta to write to the block
      */
-    public int getMetaFromEntity(EntityLivingBase entity);
+    public int getMetaFromEntity(World world, int x, int y, int z, EntityLivingBase livingBase, ItemStack itemStack);
 }
