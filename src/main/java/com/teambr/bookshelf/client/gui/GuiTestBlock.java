@@ -53,6 +53,11 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
             public void setValue(int value) {
 
             }
+
+            @Override
+            public List<String> getDynamicToolTip(int x, int y) {
+                return Collections.singletonList("HELLO");
+            }
         });
         priorityTab.add(new GuiComponentText("Fuel Priority", 22, 7));
         tabs.addTab(priorityTab, 95, 100, new Color(255, 68, 51), new ItemStack(Blocks.anvil));

@@ -112,7 +112,7 @@ public class GuiTabCollection extends BaseComponent {
      */
     public void renderToolTip(int mouseX, int mouseY, GuiScreen parent) {
         for(GuiTab tab : tabs) {
-            if(tab.isMouseOver(mouseX - this.parent.getGuiLeft(), mouseY - this.parent.getGuiTop()) && tab.getWidth() == 24) {
+            if(tab.isMouseOver(mouseX - this.parent.getGuiLeft(), mouseY - this.parent.getGuiTop())) {
                 tab.renderToolTip(mouseX, mouseY, parent);
             }
         }
