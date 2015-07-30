@@ -106,4 +106,12 @@ public abstract class GuiComponentButton extends BaseComponent {
     public int getHeight() {
         return height;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }
