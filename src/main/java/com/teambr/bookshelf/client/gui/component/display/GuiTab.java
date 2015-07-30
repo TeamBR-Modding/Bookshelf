@@ -148,7 +148,7 @@ public class GuiTab extends BaseComponent {
     public void renderToolTip(int mouseX, int mouseY, GuiScreen parent) {
         if(areChildrenActive()) {
             for(BaseComponent component : children) {
-                if(component.isMouseOver(mouseX - xPos, mouseY - yPos)) component.renderToolTip(mouseX, mouseY, parent);
+                if(component.isMouseOver(mouseX - xPos - ((GuiBase)parent).getGuiLeft(), mouseY - yPos - ((GuiBase)parent).getGuiTop())) component.renderToolTip(mouseX, mouseY, parent);
             }
         } else {
             super.renderToolTip(mouseX, mouseY, parent);

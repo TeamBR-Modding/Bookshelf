@@ -4,6 +4,7 @@ import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.client.gui.component.control.GuiComponentButton;
 import com.teambr.bookshelf.client.gui.component.control.GuiComponentCheckBox;
 import com.teambr.bookshelf.client.gui.component.control.GuiComponentSetNumber;
+import com.teambr.bookshelf.client.gui.component.control.GuiComponentTexturedButton;
 import com.teambr.bookshelf.client.gui.component.display.GuiComponentText;
 import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
 import com.teambr.bookshelf.common.container.ContainerTestBlock;
@@ -36,7 +37,7 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
 
     @Override
     public void addComponents() {
-        components.add(new GuiComponentButton(130, 10, 15, 50, "L") {
+        components.add(new GuiComponentTexturedButton(80, 20, 76, 247, 9, 9, 11, 11) {
             @Override
             public void doAction() {
 
@@ -59,7 +60,12 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
                 return Collections.singletonList("HELLO");
             }
         });
-        priorityTab.add(new GuiComponentText("Fuel Priority", 22, 7));
+        priorityTab.add(new GuiComponentText("Fuel Priority", 22, 7) {
+            @Override
+            public List<String> getDynamicToolTip(int mouseX, int mouseY) {
+                return Collections.singletonList("HELLO");
+            }
+        });
         tabs.addTab(priorityTab, 95, 100, new Color(255, 68, 51), new ItemStack(Blocks.anvil));
 
         //Priority Tab
