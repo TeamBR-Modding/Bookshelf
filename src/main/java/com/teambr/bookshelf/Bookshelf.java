@@ -3,7 +3,6 @@ package com.teambr.bookshelf;
 
 import com.teambr.bookshelf.common.CommonProxy;
 import com.teambr.bookshelf.lib.Reference;
-import com.teambr.bookshelf.manager.BlockManager;
 import com.teambr.bookshelf.manager.ConfigManager;
 import com.teambr.bookshelf.manager.GuiManager;
 import com.teambr.bookshelf.manager.PacketManager;
@@ -15,6 +14,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import test.com.teambr.bookshelf.manager.BlockManager;
 
 import java.io.File;
 

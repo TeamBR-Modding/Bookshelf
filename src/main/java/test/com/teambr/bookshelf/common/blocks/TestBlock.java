@@ -1,11 +1,12 @@
-package com.teambr.bookshelf.common.blocks;
+package test.com.teambr.bookshelf.common.blocks;
 
 import com.teambr.bookshelf.Bookshelf;
-import com.teambr.bookshelf.common.tiles.TileTestBlock;
+import com.teambr.bookshelf.common.blocks.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import test.com.teambr.bookshelf.common.tiles.TileTestBlock;
 
 public class TestBlock extends BaseBlock {
 

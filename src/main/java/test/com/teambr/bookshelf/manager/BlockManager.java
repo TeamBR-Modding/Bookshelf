@@ -1,12 +1,13 @@
-package com.teambr.bookshelf.manager;
+package test.com.teambr.bookshelf.manager;
 
-import com.teambr.bookshelf.common.blocks.TestBlock;
-import com.teambr.bookshelf.common.tiles.TileTestBlock;
+import com.teambr.bookshelf.manager.ConfigManager;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.oredict.OreDictionary;
+import test.com.teambr.bookshelf.common.blocks.TestBlock;
+import test.com.teambr.bookshelf.common.tiles.TileTestBlock;
 
 public class BlockManager {
 

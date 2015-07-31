@@ -1,11 +1,13 @@
-package com.teambr.bookshelf.client.gui;
+package test.com.teambr.bookshelf.client.gui;
 
+import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
-import com.teambr.bookshelf.client.gui.component.control.*;
+import com.teambr.bookshelf.client.gui.component.control.GuiComponentButton;
+import com.teambr.bookshelf.client.gui.component.control.GuiComponentCheckBox;
+import com.teambr.bookshelf.client.gui.component.control.GuiComponentSetNumber;
+import com.teambr.bookshelf.client.gui.component.control.GuiComponentSlider;
 import com.teambr.bookshelf.client.gui.component.display.GuiComponentText;
 import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
-import com.teambr.bookshelf.common.container.ContainerTestBlock;
-import com.teambr.bookshelf.common.tiles.TileTestBlock;
 import com.teambr.bookshelf.helpers.GuiHelper;
 import com.teambr.bookshelf.lib.Reference;
 import com.teambr.bookshelf.manager.ConfigManager;
@@ -14,6 +16,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import test.com.teambr.bookshelf.common.container.ContainerTestBlock;
+import test.com.teambr.bookshelf.common.tiles.TileTestBlock;
 
 import java.awt.*;
 import java.io.IOException;
