@@ -1,10 +1,7 @@
 package com.teambr.bookshelf.client.gui;
 
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
-import com.teambr.bookshelf.client.gui.component.control.GuiComponentButton;
-import com.teambr.bookshelf.client.gui.component.control.GuiComponentCheckBox;
-import com.teambr.bookshelf.client.gui.component.control.GuiComponentSetNumber;
-import com.teambr.bookshelf.client.gui.component.control.GuiComponentTexturedButton;
+import com.teambr.bookshelf.client.gui.component.control.*;
 import com.teambr.bookshelf.client.gui.component.display.GuiComponentText;
 import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
 import com.teambr.bookshelf.common.container.ContainerTestBlock;
@@ -37,9 +34,9 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
 
     @Override
     public void addComponents() {
-        components.add(new GuiComponentTexturedButton(80, 20, 76, 247, 9, 9, 11, 11) {
+        components.add(new GuiComponentSlider<Integer>(15, 50, 80, GuiComponentSlider.generateNumberList(0, 16), 8) {
             @Override
-            public void doAction() {
+            public void onValueChanged(Integer value) {
 
             }
         });

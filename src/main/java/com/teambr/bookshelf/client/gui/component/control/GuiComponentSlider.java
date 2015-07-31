@@ -29,7 +29,7 @@ public abstract class GuiComponentSlider<V> extends BaseComponent {
         isDragging = false;
         selectables = data;
         currentSelected = data.get(index);
-        boxX = (index * length) / data.size();
+        boxX = x + 1 + (((index * length) / data.size()) + ((data.size() / length) / 2));
     }
 
     @Override
