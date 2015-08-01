@@ -1,6 +1,7 @@
 package test.com.teambr.bookshelf.common.blocks;
 
 import com.teambr.bookshelf.Bookshelf;
+import com.teambr.bookshelf.client.itemtooltip.IItemTooltip;
 import com.teambr.bookshelf.common.blocks.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +9,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import test.com.teambr.bookshelf.common.tiles.TileTestBlock;
 
-public class TestBlock extends BaseBlock {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TestBlock extends BaseBlock implements IItemTooltip {
 
     public TestBlock(Material mat, String name, Class<? extends TileEntity> tile) {
         super(mat, name, tile);
@@ -24,5 +28,13 @@ public class TestBlock extends BaseBlock {
             return true;
         }
         return true;
+    }
+
+    @Override
+    public List<String> returnTooltip() {
+        List<String> tip = new ArrayList<>();
+        tip.add("This is a test");
+        tip.add("Line 2");
+        return tip;
     }
 }
