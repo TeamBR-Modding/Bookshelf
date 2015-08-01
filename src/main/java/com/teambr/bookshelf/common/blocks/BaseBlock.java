@@ -6,6 +6,7 @@ import com.teambr.bookshelf.client.renderer.BasicBlockRenderer;
 import com.teambr.bookshelf.collections.BlockTextures;
 import com.teambr.bookshelf.common.blocks.rotation.IRotation;
 import com.teambr.bookshelf.common.blocks.rotation.NoRotation;
+import com.teambr.bookshelf.common.tiles.IOpensGui;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -71,11 +72,11 @@ public class BaseBlock extends BlockContainer {
      */
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-        if(!player.isSneaking()) {
+        if(!world.isRemote && world.getTileEntity(x, y, z) != null && world.getTileEntity(x, y, z) instanceof IOpensGui) {
             player.openGui(Bookshelf.instance, 0, world, x, y, z);
             return true;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -114,13 +115,13 @@ public class BaseBlock extends BlockContainer {
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase livingBase, ItemStack itemStack) {
         //Calls upon the default rotation to set the meta
-        world.setBlockMetadataWithNotify(x, y, z, getDefaultRotation().getMetaFromEntity(livingBase), 2);
+        world.setBlockMetadataWithNotify(x, y, z, getDefaultRotation().getMetaFromEntity(world, x, y, z, livingBase, itemStack), 2);
     }
 
     //The sides are: Bottom (0), Top (1), North (2), South (3), West (4), East (5).
     @Override
     @SideOnly(Side.CLIENT)
-    public final IIcon getIcon(int side, int metadata) {
+    public IIcon getIcon(int side, int metadata) {
         switch(side) {
             case 0 :
                 return textures.getDown(metadata, getDefaultRotation());
@@ -190,7 +191,7 @@ public class BaseBlock extends BlockContainer {
     }
 
     /**
-     * Enmpty Contents of an Inventory into world on Block Break
+     * Empty Contents of an Inventory into world on Block Break
      * @param world
      * @param x X-Coord in world
      * @param y Y-Coord in world

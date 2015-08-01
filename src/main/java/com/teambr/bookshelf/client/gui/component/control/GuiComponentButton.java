@@ -82,6 +82,7 @@ public abstract class GuiComponentButton extends BaseComponent {
             rendererOver.render(this, 0, 0, width, height);
         else
             renderer.render(this, 0, 0, width, height);
+        isOver = false;
 
         RenderUtils.restoreRenderState();
         GL11.glPopMatrix();
@@ -105,5 +106,13 @@ public abstract class GuiComponentButton extends BaseComponent {
     @Override
     public int getHeight() {
         return height;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

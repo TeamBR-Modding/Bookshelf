@@ -1,13 +1,13 @@
-package com.teambr.bookshelf.client.gui;
+package test.com.teambr.bookshelf.client.gui;
 
+import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.client.gui.component.control.GuiComponentButton;
 import com.teambr.bookshelf.client.gui.component.control.GuiComponentCheckBox;
 import com.teambr.bookshelf.client.gui.component.control.GuiComponentSetNumber;
+import com.teambr.bookshelf.client.gui.component.control.GuiComponentSlider;
 import com.teambr.bookshelf.client.gui.component.display.GuiComponentText;
 import com.teambr.bookshelf.client.gui.component.display.GuiTabCollection;
-import com.teambr.bookshelf.common.container.ContainerTestBlock;
-import com.teambr.bookshelf.common.tiles.TileTestBlock;
 import com.teambr.bookshelf.helpers.GuiHelper;
 import com.teambr.bookshelf.lib.Reference;
 import com.teambr.bookshelf.manager.ConfigManager;
@@ -16,6 +16,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import test.com.teambr.bookshelf.common.container.ContainerTestBlock;
+import test.com.teambr.bookshelf.common.tiles.TileTestBlock;
 
 import java.awt.*;
 import java.io.IOException;
@@ -36,15 +38,9 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
 
     @Override
     public void addComponents() {
-        components.add(new GuiComponentSetNumber(26, 25, 40, 0, 0, 100) {
+        components.add(new GuiComponentSlider<Integer>(15, 50, 80, GuiComponentSlider.generateNumberList(0, 16), 8) {
             @Override
-            public void setValue(int value) {
-
-            }
-        });
-        components.add(new GuiComponentSetNumber(26, 50, 40, 0, 0, 100) {
-            @Override
-            public void setValue(int value) {
+            public void onValueChanged(Integer value) {
 
             }
         });
@@ -59,8 +55,18 @@ public class GuiTestBlock extends GuiBase<ContainerTestBlock> {
             public void setValue(int value) {
 
             }
+
+            @Override
+            public List<String> getDynamicToolTip(int x, int y) {
+                return Collections.singletonList("HELLO");
+            }
         });
-        priorityTab.add(new GuiComponentText("Fuel Priority", 22, 7));
+        priorityTab.add(new GuiComponentText("Fuel Priority", 22, 7) {
+            @Override
+            public List<String> getDynamicToolTip(int mouseX, int mouseY) {
+                return Collections.singletonList("HELLO");
+            }
+        });
         tabs.addTab(priorityTab, 95, 100, new Color(255, 68, 51), new ItemStack(Blocks.anvil));
 
         //Priority Tab

@@ -6,6 +6,7 @@ import com.teambr.bookshelf.client.gui.component.NinePatchRenderer;
 import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
@@ -136,6 +137,21 @@ public class GuiTab extends BaseComponent {
                 component.renderOverlay(0, 0);
                 RenderUtils.restoreRenderState();
             }
+        }
+    }
+
+    /**
+     * Render the tooltip if you can
+     * @param mouseX Mouse X
+     * @param mouseY Mouse Y
+     */
+    public void renderToolTip(int mouseX, int mouseY, GuiScreen parent) {
+        if(areChildrenActive()) {
+            for(BaseComponent component : children) {
+                if(component.isMouseOver(mouseX - xPos - ((GuiBase)parent).getGuiLeft(), mouseY - yPos - ((GuiBase)parent).getGuiTop())) component.renderToolTip(mouseX, mouseY, parent);
+            }
+        } else {
+            super.renderToolTip(mouseX, mouseY, parent);
         }
     }
 

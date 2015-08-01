@@ -1,11 +1,11 @@
-package com.teambr.bookshelf.common.tiles;
+package test.com.teambr.bookshelf.common.tiles;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import com.teambr.bookshelf.api.waila.IWaila;
-import com.teambr.bookshelf.client.gui.GuiTestBlock;
 import com.teambr.bookshelf.collections.InventoryTile;
-import com.teambr.bookshelf.common.container.ContainerTestBlock;
+import com.teambr.bookshelf.common.tiles.BaseTile;
+import com.teambr.bookshelf.common.tiles.IOpensGui;
 import com.teambr.bookshelf.helpers.GuiHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -18,6 +18,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import test.com.teambr.bookshelf.client.gui.GuiTestBlock;
+import test.com.teambr.bookshelf.common.container.ContainerTestBlock;
 
 import java.util.List;
 

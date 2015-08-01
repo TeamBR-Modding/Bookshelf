@@ -1,23 +1,31 @@
 package com.teambr.bookshelf.common.blocks.rotation;
 
+import net.minecraft.block.BlockPistonBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class FourWayRotation implements IRotation {
+/**
+ * Bookshelf
+ * Created by Paul Davis on 7/27/2015
+ */
+public class SixWayRotation implements IRotation {
     @Override
     public ForgeDirection convertMetaToDirection(int meta) {
         switch (meta) {
+            case 0 :
+                return ForgeDirection.DOWN;
             case 1 :
-                return ForgeDirection.NORTH;
+                return ForgeDirection.UP;
             case 2 :
-                return ForgeDirection.EAST;
+                return ForgeDirection.NORTH;
             case 3 :
                 return ForgeDirection.SOUTH;
             case 4 :
                 return ForgeDirection.WEST;
+            case 5 :
+                return ForgeDirection.EAST;
             default :
                 return ForgeDirection.UNKNOWN;
         }
@@ -27,13 +35,17 @@ public class FourWayRotation implements IRotation {
     public int convertDirectionToMeta(ForgeDirection dir) {
         switch (dir) {
             case NORTH :
-                return 1;
-            case EAST :
                 return 2;
+            case EAST :
+                return 5;
             case SOUTH :
                 return 3;
             case WEST :
                 return 4;
+            case UP :
+                return 1;
+            case DOWN :
+                return 0;
             default :
                 return 0;
         }
@@ -41,24 +53,14 @@ public class FourWayRotation implements IRotation {
 
     @Override
     public int getMetaFromEntity(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
-        int direction = MathHelper.floor_double((double) ((entity.rotationYaw * 4F) / 360F) + 0.5D) & 3;
-        /**
-         * 0 South
-         * 1 West
-         * 2 North
-         * 3 East
-         */
-        switch (direction) {
-            case 0 :
-                return convertDirectionToMeta(ForgeDirection.NORTH);
-            case 1 :
-                return convertDirectionToMeta(ForgeDirection.EAST);
-            case 2 :
-                return convertDirectionToMeta(ForgeDirection.SOUTH);
-            case 3 :
-                return convertDirectionToMeta(ForgeDirection.WEST);
-            default :
-                return 0;
-        }
+       /**
+        * 0: Down
+        * 1: Up
+        * 2: north
+        * 3: south
+        * 4: west
+        * 5: east
+        */
+        return BlockPistonBase.determineOrientation(world, x, y, z, entity);
     }
 }
