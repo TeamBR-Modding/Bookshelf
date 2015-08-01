@@ -44,7 +44,7 @@ public abstract class GuiComponentPowerBar extends BaseComponent {
     /**
      * Used to get the level full
      * @param scale The height, or what we want to scale the completeness to
-     * @return How full, scaled to {@param scale}
+     * @return How full, scaled to scale
      */
     public abstract int getEnergyPercent(int scale);
 
