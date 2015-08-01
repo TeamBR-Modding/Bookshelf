@@ -25,6 +25,7 @@ public class TestBlock extends BaseBlock implements IItemTooltip {
         TileTestBlock tile = (TileTestBlock) world.getTileEntity(x, y, z);
         if (tile != null) {
             player.openGui(Bookshelf.instance, 0, world, x, y, z);
+
             return true;
         }
         return true;
