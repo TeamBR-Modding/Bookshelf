@@ -3,10 +3,7 @@ package com.teambr.bookshelf;
 
 import com.teambr.bookshelf.common.CommonProxy;
 import com.teambr.bookshelf.lib.Reference;
-import com.teambr.bookshelf.manager.BlockManager;
-import com.teambr.bookshelf.manager.ConfigManager;
-import com.teambr.bookshelf.manager.GuiManager;
-import com.teambr.bookshelf.manager.PacketManager;
+import com.teambr.bookshelf.manager.*;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -46,6 +43,7 @@ public class Bookshelf {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         PacketManager.initPackets();
+        EventManager.init();
         proxy.init();
     }
 
