@@ -21,8 +21,10 @@ public class ToolTipEvent {
 
         if (item != null) {
             List<String> tips = item.returnTooltip();
-            for (String tip : tips)
-                event.toolTip.add(tip);
+            if (tips != null) {
+                for (String tip : tips)
+                    event.toolTip.add(tip);
+            }
         }
     }
 }
