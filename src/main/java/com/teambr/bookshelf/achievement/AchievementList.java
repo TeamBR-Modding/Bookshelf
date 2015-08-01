@@ -34,6 +34,11 @@ public abstract class AchievementList {
     public abstract void initAchievements();
 
     /**
+     * Stub method to start
+     */
+    public void start() {}
+
+    /**
      * Get the name of this list
      * @return The mod name
      */
