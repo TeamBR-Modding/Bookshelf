@@ -15,11 +15,11 @@ import scala.util.Random
 trait DropsItems extends Block {
     override def breakBlock(world: World, x: Int, y: Int, z: Int, block: Block, metaData: Int): Unit = {
         world match {
-            case WorldServer => //We are on a server
+            case _: WorldServer => //We are on a server
                 world.getTileEntity(x, y, z) match {
                     case tile: IInventory => //This is an inventory
                         val random = new Random
-                        for (i <- tile.getSizeInventory) {
+                        for (i <- 0 to tile.getSizeInventory) {
                             val stack = tile.getStackInSlot(i)
 
                             if(stack != null && stack.stackSize > 0) {
@@ -44,9 +44,9 @@ trait DropsItems extends Block {
                                 stack.stackSize = 0
                             }
                         }
-                    case _ => //No-OP, not an inventory
+                    case _ => //Not an inventory
                 }
-            case _ => //No-0P, only perform on server
+            case _ => //Not on the server
         }
         super.breakBlock(world, x, y, z, block, metaData)
     }

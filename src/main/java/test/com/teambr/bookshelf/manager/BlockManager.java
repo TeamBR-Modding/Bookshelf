@@ -3,7 +3,6 @@ package test.com.teambr.bookshelf.manager;
 import com.teambr.bookshelf.manager.ConfigManager;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.oredict.OreDictionary;
 import test.com.teambr.bookshelf.common.blocks.TestBlock;
@@ -15,7 +14,7 @@ public class BlockManager {
 
     public static void init() {
         if (ConfigManager.debug) {
-            registerBlock(testBlock = new TestBlock(Material.iron, "testBlock", TileTestBlock.class), "testBlock", TileTestBlock.class);
+            registerBlock(testBlock = new TestBlock(), "testBlock", TileTestBlock.class);
         }
     }
 
