@@ -18,6 +18,7 @@ buildscript {
 apply plugin: 'forge'
 apply plugin: 'maven'
 apply plugin: 'java'
+apply plugin: 'scala'
 apply plugin: 'curseforge'
 
 ext.configFile = file "build.properties"
