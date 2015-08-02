@@ -1,5 +1,6 @@
 package com.teambr.bookshelf.util;
 
+import com.teambr.bookshelf.common.blocks.BaseBlock;
 import com.teambr.bookshelf.common.blocks.BlockBase;
 import com.teambr.bookshelf.lib.Reference;
 import net.minecraft.client.Minecraft;
@@ -62,7 +63,7 @@ public class RenderUtils {
      * @param block {@link BlockBase} to render
      * @param renderer RenderBlocks object
      */
-    public static void render3DInventory(BlockBase block, RenderBlocks renderer) {
+    public static void render3DInventory(BaseBlock block, RenderBlocks renderer) {
         Tessellator tessellator = Tessellator.instance;
 
         block.setBlockBoundsForItemRender();
@@ -70,32 +71,32 @@ public class RenderUtils {
 
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, -1F, 0.0F);
-        renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, block.textures().getBottom());
+        renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, block.getBlockTextures().getBottom());
         tessellator.draw();
 
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 1.0F, 0.0F);
-        renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.textures().getTop());
+        renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getBlockTextures().getTop());
         tessellator.draw();
 
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, -1F);
-        renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, block.textures().getRight());
+        renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.0D, block.getBlockTextures().getRight());
         tessellator.draw();
 
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, 1.0F);
-        renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, block.textures().getLeft());
+        renderer.renderFaceZPos(block, 0.0D, 0.0D, 0.0D, block.getBlockTextures().getLeft());
         tessellator.draw();
 
         tessellator.startDrawingQuads();
         tessellator.setNormal(-1F, 0.0F, 0.0F);
-        renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, block.textures().getBack());
+        renderer.renderFaceXNeg(block, 0.0D, 0.0D, 0.0D, block.getBlockTextures().getBack());
         tessellator.draw();
 
         tessellator.startDrawingQuads();
         tessellator.setNormal(1.0F, 0.0F, 0.0F);
-        renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.textures().getFront());
+        renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getBlockTextures().getFront());
         tessellator.draw();
 
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
@@ -107,7 +108,7 @@ public class RenderUtils {
      * @param icon The icon to render instead
      * @param renderer RenderBlocks object
      */
-    public static void render3DInventory(BlockBase block, IIcon icon, RenderBlocks renderer) {
+    public static void render3DInventory(BaseBlock block, IIcon icon, RenderBlocks renderer) {
         Tessellator tessellator = Tessellator.instance;
 
         block.setBlockBoundsForItemRender();

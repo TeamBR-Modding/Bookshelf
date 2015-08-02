@@ -1,7 +1,7 @@
 package com.teambr.bookshelf.client.renderer;
 
 import com.teambr.bookshelf.client.ClientProxy;
-import com.teambr.bookshelf.common.blocks.BlockBase;
+import com.teambr.bookshelf.common.blocks.BaseBlock;
 import com.teambr.bookshelf.util.RenderUtils;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -14,17 +14,17 @@ public class BasicBlockRenderer implements ISimpleBlockRenderingHandler {
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelId, RenderBlocks renderer) {
-        RenderUtils.render3DInventory((BlockBase) block, renderer);
-        if(((BlockBase)block).textures().getOverlay() != null)
-            RenderUtils.render3DInventory((BlockBase) block, ((BlockBase)block).textures().getOverlay(), renderer);
+        RenderUtils.render3DInventory((BaseBlock) block, renderer);
+        if(((BaseBlock)block).getBlockTextures().getOverlay() != null)
+            RenderUtils.render3DInventory((BaseBlock) block, ((BaseBlock)block).getBlockTextures().getOverlay(), renderer);
     }
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
         if(ClientProxy.renderPass == 0)
             return renderer.renderStandardBlock(block, x, y, z);
-        else if(ClientProxy.renderPass == 1 && ((BlockBase) block).textures().getOverlay() != null)
-            renderer.renderBlockUsingTexture(Blocks.cobblestone, x, y, z, ((BlockBase)block).textures().getOverlay());
+        else if(ClientProxy.renderPass == 1 && ((BaseBlock) block).getBlockTextures().getOverlay() != null)
+            renderer.renderBlockUsingTexture(Blocks.cobblestone, x, y, z, ((BaseBlock)block).getBlockTextures().getOverlay());
         return true;
     }
 

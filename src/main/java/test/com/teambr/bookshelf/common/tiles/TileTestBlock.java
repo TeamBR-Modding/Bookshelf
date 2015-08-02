@@ -28,6 +28,7 @@ public class TileTestBlock extends BaseTile implements IOpensGui, IInventory, IW
     protected EnergyStorage energy;
     protected InventoryTile inventory;
 
+
     public TileTestBlock() {
         energy = new EnergyStorage(32000);
         inventory = new InventoryTile(4);

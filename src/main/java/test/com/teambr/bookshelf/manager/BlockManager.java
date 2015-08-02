@@ -5,8 +5,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.oredict.OreDictionary;
-import test.com.teambr.bookshelf.common.blocks.TestBlock;
-import test.com.teambr.bookshelf.common.tiles.TileTestBlock;
 
 public class BlockManager {
 
@@ -14,7 +12,6 @@ public class BlockManager {
 
     public static void init() {
         if (ConfigManager.debug) {
-            registerBlock(testBlock = new TestBlock(), "testBlock", TileTestBlock.class);
         }
     }
 
