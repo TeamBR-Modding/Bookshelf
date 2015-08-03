@@ -27,7 +27,7 @@ trait WailaTile extends TileEntity with IWaila {
     def returnWailaTail(tip: List[String]) = {}
 
     def returnWailaStack(accessor: IWailaDataAccessor, config: IWailaConfigHandler): ItemStack =
-        new ItemStack(getWorldObj.getBlock(xCoord, yCoord, zCoord), 1, getWorldObj.getBlockMetadata(xCoord, yCoord, zCoord))
+        new ItemStack(getWorld.getBlockState(pos).getBlock, 1, getWorld.getBlockState(pos).getBlock.getDamageValue(getWorld, pos))
 
 
     def returnNBTData(player: EntityPlayerMP, te: TileEntity, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int): NBTTagCompound = tag

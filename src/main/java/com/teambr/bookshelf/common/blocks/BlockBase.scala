@@ -7,18 +7,17 @@ import com.teambr.bookshelf.collections.BlockTextures
 import com.teambr.bookshelf.common.blocks.rotation.{IRotation, NoRotation}
 import com.teambr.bookshelf.common.tiles.IOpensGui
 import com.teambr.bookshelf.scala.traits.DropsItems
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.IIcon
+import net.minecraft.util.{EnumFacing, BlockPos}
 import net.minecraft.world.{IBlockAccess, World, WorldServer}
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 /**
  * Used as a common class for all blocks. Makes things a bit easier
@@ -31,7 +30,7 @@ abstract class BlockBase(val material: Material, val name: String, val tile: Cla
     var textures : BlockTextures = _
 
     //Set up the block
-    setBlockName(name)
+    setUnlocalizedName(name)
     setCreativeTab(getCreativeTab match {
         case Some(i) => i
         case _ => null
@@ -57,39 +56,20 @@ abstract class BlockBase(val material: Material, val name: String, val tile: Cla
     /**
      * Called when the block is activated
      * @param world The world
-     * @param x The X position
-     * @param y The Y position
-     * @param z The Z position
+     * @param pos The X, Y, Z position
      * @param player The player
      */
-    override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, par6: Int, par7: Float, par8: Float, par9: Float) : Boolean = {
+    override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float) : Boolean = {
         world match {
             case _: WorldServer =>
-                world.getTileEntity(x, y, z) match {
+                world.getTileEntity(pos) match {
                     case _: IOpensGui =>
-                        player.openGui(Bookshelf.instance, 0, world, x, y, z)
+                        player.openGui(Bookshelf.instance, 0, world, pos)
                         true
                     case _ => false
                 }
             case _ => true
         }
-    }
-
-    /**
-     * Called by Minecraft to generate the default Icons
-     * @param iconRegistry The registry
-     */
-    override def registerBlockIcons(iconRegistry: IIconRegister) {
-        generateDefaultTextures(iconRegistry)
-    }
-
-    /**
-     * Our call to register icons. Define textures here
-     * @param iIconRegister The registry
-     */
-    def generateDefaultTextures(iIconRegister: IIconRegister) {
-        this.blockIcon = iIconRegister.registerIcon(name)
-        this.textures = new BlockTextures(iIconRegister, name)
     }
 
     /**
