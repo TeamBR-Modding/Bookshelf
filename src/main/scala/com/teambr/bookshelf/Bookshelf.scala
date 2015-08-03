@@ -4,9 +4,11 @@ import java.io.File
 
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.lib.Reference
-import net.minecraftforge.fml.common.event.{FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent}
-import net.minecraftforge.fml.common.{SidedProxy, Mod}
+import com.teambr.bookshelf.manager.GuiManager
 import net.minecraftforge.fml.common.Mod.{EventHandler, Instance}
+import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.{Mod, SidedProxy}
 
 /**
  * This file was created for the Bookshelf
@@ -21,7 +23,7 @@ import net.minecraftforge.fml.common.Mod.{EventHandler, Instance}
 @Mod(name = Reference.MODNAME, modid = Reference.MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES, modLanguage = "scala")
 object Bookshelf {
 
-    @Instance
+    @Instance(Reference.MODID)
     val INSTANCE = null
 
     @SidedProxy(clientSide = "com.teambr.bookshelf.client.ClientProxy",
@@ -34,6 +36,8 @@ object Bookshelf {
         configFolderLocation = event.getModConfigurationDirectory.getAbsolutePath + File.separator + Reference.MODNAME
 
         proxy.preInit()
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager)
     }
 
     @EventHandler def init(event : FMLInitializationEvent) = {
