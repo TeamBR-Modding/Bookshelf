@@ -24,13 +24,13 @@ import net.minecraftforge.fml.common.{Mod, SidedProxy}
 object Bookshelf {
 
     @Instance(Reference.MODID)
-    val INSTANCE = null
+    val INSTANCE = _
 
     @SidedProxy(clientSide = "com.teambr.bookshelf.client.ClientProxy",
                 serverSide = "com.teambr.bookshelf.common.CommonProxy")
-    var proxy : CommonProxy = null
+    var proxy : CommonProxy = _
 
-    var configFolderLocation : String = ""
+    var configFolderLocation : String = _
 
     @EventHandler def preInit(event : FMLPreInitializationEvent) = {
         configFolderLocation = event.getModConfigurationDirectory.getAbsolutePath + File.separator + Reference.MODNAME
