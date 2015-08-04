@@ -1,7 +1,6 @@
 package com.teambr.bookshelf.util;
 
 import com.teambr.bookshelf.common.blocks.BaseBlock;
-import com.teambr.bookshelf.common.blocks.BlockBase;
 import com.teambr.bookshelf.lib.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -60,7 +59,7 @@ public class RenderUtils {
 
     /**
      * Used to render a block in an inventory
-     * @param block {@link BlockBase} to render
+     * @param block {@link BaseBlock} to render
      * @param renderer RenderBlocks object
      */
     public static void render3DInventory(BaseBlock block, RenderBlocks renderer) {
@@ -104,7 +103,7 @@ public class RenderUtils {
 
     /**
      * Used to render a block in an inventory
-     * @param block {@link BlockBase} to render
+     * @param block {@link BaseBlock} to render
      * @param icon The icon to render instead
      * @param renderer RenderBlocks object
      */

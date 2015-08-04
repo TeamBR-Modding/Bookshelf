@@ -55,6 +55,22 @@ minecraft {
     runDir = "eclipse"
 }
 
+sourceSets {
+    main {
+        scala {
+            srcDirs = ['src/main/scala', 'src/main/java']
+        }
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+    api {
+        java {
+            srcDirs = ['src/main/api']
+        }
+    }
+}
+
 configurations.all {
     resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
 }
