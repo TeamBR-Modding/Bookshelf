@@ -1,7 +1,7 @@
 package tests
 
 import com.teambr.bookshelf.collections.CubeTextures
-import com.teambr.bookshelf.common.blocks.traits.{BlockBakeable, FourWayRotation}
+import com.teambr.bookshelf.common.blocks.traits.{BlockBakeable, SixWayRotation}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
@@ -17,7 +17,7 @@ import net.minecraft.util.ResourceLocation
  * @author Paul Davis <pauljoda>
  * @since August 03, 2015
  */
-class BlockTest extends Block(Material.rock) with BlockBakeable with FourWayRotation {
+class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotation {
     override def MODID : String = "bookshelf"
     override def blockName : String = "testBlock"
 
