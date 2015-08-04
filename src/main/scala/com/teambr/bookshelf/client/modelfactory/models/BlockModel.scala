@@ -16,9 +16,9 @@ import net.minecraft.util.{EnumFacing, ResourceLocation}
 import net.minecraftforge.client.model.{ISmartBlockModel, ISmartItemModel}
 
 /**
- * This file was created for the Bookshelf
+ * This file was created for Bookshelf
  *
- * Bookshelf if licensed under the
+ * Bookshelf is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
