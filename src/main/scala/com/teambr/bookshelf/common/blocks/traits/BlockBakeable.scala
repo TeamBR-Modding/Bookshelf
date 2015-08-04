@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.blocks
+package com.teambr.bookshelf.common.blocks.traits
 
 import com.teambr.bookshelf.client.modelfactory.BakeableBlockRegistry
 import com.teambr.bookshelf.collections.CubeTextures
@@ -55,7 +55,6 @@ trait BlockBakeable extends Block {
      */
     def getDefaultCubeTextures: CubeTextures = {
         val map = Minecraft.getMinecraft.getTextureMapBlocks
-        val location = MODID + ":blocks/" + blockName
         val textures = new CubeTextures(
             map.getTextureExtry(MODID + ":blocks/" + blockName),
             map.getTextureExtry(MODID + ":blocks/" + blockName),

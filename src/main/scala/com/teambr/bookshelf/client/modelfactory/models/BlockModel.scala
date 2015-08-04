@@ -4,8 +4,7 @@ import java.util
 import javax.vecmath.Vector3f
 
 import com.teambr.bookshelf.collections.CubeTextures
-import com.teambr.bookshelf.common.blocks.BlockBakeable
-import com.teambr.bookshelf.common.blocks.traits.{FourWayRotation, SixWayRotation}
+import com.teambr.bookshelf.common.blocks.traits.{BlockBakeable, FourWayRotation, SixWayRotation}
 import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.renderer.block.model._
@@ -47,14 +46,22 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
     def this(state: IBlockState) {
         this()
         block = state.getBlock
+
+        //Check for rotation
         block match {
             case property: FourWayRotation =>
                 textures = property.getRotatedTextures(block.asInstanceOf[BlockBakeable].getDefaultCubeTextures, state, block)
             case property: SixWayRotation =>
                 textures = property.getRotatedTextures(block.asInstanceOf[BlockBakeable].getDefaultCubeTextures, state, block)
-            case bakes: BlockBakeable =>
-                textures = bakes.getDefaultCubeTextures
-            case _ => println("Somebody tried to use the model wrong")
+            case _ => textures = null //We want to let the others know we haven't found
+        }
+
+        if(textures == null) {
+            block match {
+                case block : BlockBakeable =>
+                    textures = block.getDefaultCubeTextures
+                case _ => println("Someone isn't using the renderer right. Stop that")
+            }
         }
     }
 

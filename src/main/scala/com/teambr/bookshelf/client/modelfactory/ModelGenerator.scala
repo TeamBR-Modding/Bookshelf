@@ -1,7 +1,7 @@
 package com.teambr.bookshelf.client.modelfactory
 
 import com.teambr.bookshelf.client.modelfactory.models.BlockModel
-import com.teambr.bookshelf.common.blocks.BlockBakeable
+import com.teambr.bookshelf.common.blocks.traits.BlockBakeable
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
 import net.minecraft.item.Item

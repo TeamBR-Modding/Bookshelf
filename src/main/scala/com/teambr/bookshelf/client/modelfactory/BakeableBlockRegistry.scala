@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.client.modelfactory
 
-import com.teambr.bookshelf.common.blocks.BlockBakeable
+import com.teambr.bookshelf.common.blocks.traits.BlockBakeable
 
 import scala.collection.mutable.ArrayBuffer
 

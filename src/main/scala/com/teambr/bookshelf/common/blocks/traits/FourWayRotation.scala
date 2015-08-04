@@ -20,8 +20,8 @@ import net.minecraft.world.World
  * @author Paul Davis <pauljoda>
  * @since August 03, 2015
  */
-trait FourWayRotation extends Block {
-    val PROPERTY_ROTATION = PropertyDirection.create("facing", util.Arrays.asList(List(EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH, EnumFacing.WEST)))
+trait FourWayRotation extends BlockBakeable {
+    def PROPERTY_ROTATION = PropertyDirection.create("facing", util.Arrays.asList(EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH, EnumFacing.WEST))
 
     /**
      * Called when the block is placed, we check which way the player is facing and put our value as the opposite of that
@@ -36,6 +36,26 @@ trait FourWayRotation extends Block {
      * Used to say what our block state is
      */
     override def createBlockState() : BlockState = new BlockState(this, PROPERTY_ROTATION)
+
+    /**
+     * Used to convert the meta to state
+     * @param meta The meta
+     * @return
+     */
+    override def getStateFromMeta(meta : Int) : IBlockState = getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.getFront(meta))
+
+    /**
+     * Called to convert state from meta
+     * @param state The state
+     * @return
+     */
+    override def getMetaFromState(state : IBlockState) = state.getValue(PROPERTY_ROTATION).asInstanceOf[EnumFacing].getIndex
+
+    override def getAllPossibleStates: Array[IBlockState] =
+        Array[IBlockState](getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.NORTH),
+            getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.EAST),
+            getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.SOUTH),
+            getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.WEST))
 
     def getRotatedTextures(that : CubeTextures, state : IBlockState, block : Block) : CubeTextures = {
         val rotated = new CubeTextures

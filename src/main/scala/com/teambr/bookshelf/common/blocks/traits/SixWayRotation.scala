@@ -21,7 +21,7 @@ import net.minecraft.world.World
  * @since August 03, 2015
  */
 trait SixWayRotation extends Block with FourWayRotation {
-    override val PROPERTY_ROTATION = PropertyDirection.create("facing", util.Arrays.asList(EnumFacing.values()))
+    override def PROPERTY_ROTATION = PropertyDirection.create("facing", util.Arrays.asList(EnumFacing.values()))
     
     /**
      * Called when the block is placed, we check which way the player is facing and put our value as the opposite of that
