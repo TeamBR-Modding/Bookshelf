@@ -5,7 +5,7 @@ import java.io.File
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.lib.Reference
 import com.teambr.bookshelf.manager.GuiManager
-import net.minecraftforge.fml.common.Mod.{EventHandler, Instance}
+import net.minecraftforge.fml.common.Mod.{Instance, EventHandler}
 import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.common.registry.GameRegistry
@@ -13,20 +13,18 @@ import net.minecraftforge.fml.common.{Mod, SidedProxy}
 import tests.BlockTest
 
 /**
- * This file was created for the Bookshelf
+ * This file was created for Bookshelf
  *
- * Bookshelf is licensed under a
+ * Bookshelf is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
  * @author Paul Davis <pauljoda>
  * @since August 02, 2015
  */
+@Instance(Reference.MODID)
 @Mod(name = Reference.MODNAME, modid = Reference.MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES, modLanguage = "scala")
 object Bookshelf {
-
-    @Instance(Reference.MODID)
-    val INSTANCE = null
 
     @SidedProxy(clientSide = "com.teambr.bookshelf.client.ClientProxy",
                 serverSide = "com.teambr.bookshelf.common.CommonProxy")

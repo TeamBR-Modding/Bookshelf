@@ -2,10 +2,14 @@ package tests
 
 import com.teambr.bookshelf.collections.CubeTextures
 import com.teambr.bookshelf.common.blocks.traits.{BlockBakeable, SixWayRotation}
+import com.teambr.bookshelf.common.container.Inventory
+import com.teambr.bookshelf.common.tiles.traits.OpensGui
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
+import net.minecraft.world.World
 
 /**
  * This file was created for the Bookshelf
@@ -17,7 +21,7 @@ import net.minecraft.util.ResourceLocation
  * @author Paul Davis <pauljoda>
  * @since August 03, 2015
  */
-class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotation {
+class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotation with OpensGui {
     override def MODID : String = "bookshelf"
     override def blockName : String = "testBlock"
 
@@ -38,4 +42,32 @@ class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotat
 
     override def registerIcons() : Array[ResourceLocation] = Array[ResourceLocation](new ResourceLocation(MODID + ":blocks/" + blockName),
                                                                             new ResourceLocation(MODID + ":blocks/" + blockName + "Front"))
+
+    /**
+     * Return the container for this tile
+     * @param ID Id, probably not needed but could be used for multiple guis
+     * @param player The player that is opening the gui
+     * @param world The world
+     * @param x X Pos
+     * @param y Y Pos
+     * @param z Z Pos
+     * @return The container to open
+     */
+    override def getServerGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
+        new ContainerTest(player.inventory, new Inventory("test", false, 3))
+    }
+
+    /**
+     * Return the gui for this tile
+     * @param ID Id, probably not needed but could be used for multiple guis
+     * @param player The player that is opening the gui
+     * @param world The world
+     * @param x X Pos
+     * @param y Y Pos
+     * @param z Z Pos
+     * @return The gui to open
+     */
+    override def getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
+        new GuiTest(player)
+    }
 }

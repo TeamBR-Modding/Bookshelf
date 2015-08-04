@@ -5,7 +5,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.{BlockPos, EnumFacing}
-import net.minecraft.world.{World, WorldServer}
+import net.minecraft.world.World
 
 /**
  * This file was created for Bookshelf
@@ -51,13 +51,9 @@ trait OpensGui extends Block {
      *      super[OpensGui].onBlockActivated(...)
      */
     override def onBlockActivated(world : World, pos : BlockPos, state : IBlockState, player : EntityPlayer, side : EnumFacing, hitX : Float, hitY : Float, hitZ : Float) : Boolean = {
-        super[Block].onBlockActivated(world, pos, state, player, side, hitX, hitY, hitZ)
+        super.onBlockActivated(world, pos, state, player, side, hitX, hitY, hitZ)
 
-        world match {
-            case world : WorldServer =>
-                player.openGui(Bookshelf.INSTANCE, 0, world, pos.getX, pos.getY, pos.getZ)
-                true
-            case _ => true
-        }
+        player.openGui(Bookshelf, 0, world, pos.getX, pos.getY, pos.getZ)
+        true
     }
 }
