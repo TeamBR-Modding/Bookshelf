@@ -2,10 +2,9 @@ package com.teambr.bookshelf.common.blocks.traits
 
 import java.util
 
-import com.teambr.bookshelf.collections.CubeTextures
-import net.minecraft.block.Block
 import net.minecraft.block.properties.PropertyDirection
 import net.minecraft.block.state.{BlockState, IBlockState}
+import net.minecraft.client.resources.model.ModelRotation
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.{BlockPos, EnumFacing, MathHelper}
 import net.minecraft.world.World
@@ -57,28 +56,13 @@ trait FourWayRotation extends BlockBakeable {
             getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.SOUTH),
             getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.WEST))
 
-    def getRotatedTextures(that : CubeTextures, state : IBlockState, block : Block) : CubeTextures = {
-        val rotated = new CubeTextures
-        rotated.up = that.up
-        rotated.down = that.down
-        if(state == block.getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.NORTH)) {
-            rotated.copy(that)
-        } else if(state == block.getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.EAST)) {
-            rotated.north = that.west
-            rotated.east = that.north
-            rotated.south = that.east
-            rotated.west = that.south
-        } else if(state == block.getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.SOUTH)) {
-            rotated.south = that.north
-            rotated.north = that.south
-            rotated.west = that.east
-            rotated.east = that.west
-        } else if(state == block.getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.WEST)) {
-            rotated.north = that.east
-            rotated.south = that.west
-            rotated.east = that.south
-            rotated.west = that.north
-        }
-        rotated
+    def getModelRotation(state : IBlockState) : ModelRotation = {
+        if(state == getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.EAST))
+            return ModelRotation.X0_Y90
+        else if(state == getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.SOUTH))
+            return ModelRotation.X0_Y180
+        else if(state == getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.WEST))
+            return ModelRotation.X0_Y270
+        ModelRotation.X0_Y0
     }
 }

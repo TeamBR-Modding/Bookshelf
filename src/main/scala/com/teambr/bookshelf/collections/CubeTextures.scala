@@ -1,8 +1,5 @@
 package com.teambr.bookshelf.collections
 
-import com.teambr.bookshelf.common.blocks.traits.{FourWayRotation, SixWayRotation}
-import net.minecraft.block.Block
-import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 
@@ -35,23 +32,6 @@ class CubeTextures {
         west = r
         up = u
         down = d
-    }
-
-    /**
-     * Used to get the textures, rotated by the current state
-     * @param state The state of the block
-     * @param block The block itself
-     * @return
-     */
-    def getRotatedTextures(state : IBlockState, block : Block) : CubeTextures = {
-        val rotated = new CubeTextures()
-        block match {
-            case four : FourWayRotation => //This will rotate four ways
-                four.getRotatedTextures(this, state, block)
-            case six : SixWayRotation => //This will rotate size ways
-                six.getRotatedTextures(this, state, block)
-            case _ => rotated
-        }
     }
 
     def copy(other : CubeTextures) = {

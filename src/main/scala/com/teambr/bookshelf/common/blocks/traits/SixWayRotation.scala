@@ -2,10 +2,10 @@ package com.teambr.bookshelf.common.blocks.traits
 
 import java.util
 
-import com.teambr.bookshelf.collections.CubeTextures
 import net.minecraft.block.properties.PropertyDirection
 import net.minecraft.block.state.IBlockState
 import net.minecraft.block.{Block, BlockPistonBase}
+import net.minecraft.client.resources.model.ModelRotation
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.World
@@ -38,23 +38,11 @@ trait SixWayRotation extends Block with FourWayRotation {
             getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.UP),
             getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.DOWN))
 
-    override def getRotatedTextures(that: CubeTextures, state: IBlockState, block: Block): CubeTextures = {
-        val rotated = super.getRotatedTextures(that, state, block)
-        if(state == block.getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.UP)) {
-            rotated.north = that.down
-            rotated.south = that.up
-            rotated.east = that.east
-            rotated.west = that.west
-            rotated.up = that.north
-            rotated.down = that.south
-        } else if(state == block.getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.DOWN)) {
-            rotated.north = that.down
-            rotated.south = that.up
-            rotated.east = that.east
-            rotated.west = that.west
-            rotated.up = that.south
-            rotated.down = that.north
-        }
-        rotated
+    override def getModelRotation(state : IBlockState) : ModelRotation = {
+        if(state == getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.UP))
+            return ModelRotation.X270_Y0
+        else if(state == getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.DOWN))
+            return ModelRotation.X90_Y0
+        super.getModelRotation(state)
     }
 }

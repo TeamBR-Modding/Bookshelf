@@ -38,6 +38,7 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
     var textures = new CubeTextures
     val faceBakery = new FaceBakery
     var block: Block = _
+    var modelRot = ModelRotation.X0_Y0
 
     /**
      * We are building based on state here, so lets rotate as needed
@@ -50,18 +51,17 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
         //Check for rotation
         block match {
             case property: FourWayRotation =>
-                textures = property.getRotatedTextures(block.asInstanceOf[BlockBakeable].getDefaultCubeTextures, state, block)
+                modelRot = property.getModelRotation(state)
             case property: SixWayRotation =>
-                textures = property.getRotatedTextures(block.asInstanceOf[BlockBakeable].getDefaultCubeTextures, state, block)
-            case _ => textures = null //We want to let the others know we haven't found
+                modelRot = property.getModelRotation(state)
+            case _ => //No spin for you
         }
 
-        if(textures == null) {
-            block match {
-                case block : BlockBakeable =>
-                    textures = block.getDefaultCubeTextures
-                case _ => println("Someone isn't using the renderer right. Stop that")
-            }
+        //Get our textures
+        block match {
+            case block : BlockBakeable =>
+                textures = block.getDefaultCubeTextures
+            case _ => println("Someone isn't using the renderer right. Stop that")
         }
     }
 
@@ -77,7 +77,6 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
         val uv = new BlockFaceUV(Array[Float](0.0F, 0.0F, 16.0F, 16.0F), 0)
         val face = new BlockPartFace(null, 0, "", uv)
 
-        val modelRot = ModelRotation.X0_Y0
         val scale = true
 
         bakedQuads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(16.0F, 0.0F, 16.0F), face, textures.down, EnumFacing.DOWN, modelRot, null, scale, true))
