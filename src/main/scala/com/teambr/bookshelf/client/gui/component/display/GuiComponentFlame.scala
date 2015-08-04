@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11
  * @author Paul Davis <pauljoda>
  * @since August 04, 2015
  */
-class GuiComponentFlame(x: Int, y: Int) extends BaseComponent(x, y) {
+abstract class GuiComponentFlame(x: Int, y: Int) extends BaseComponent(x, y) {
     protected val u: Int = 0
     protected val v: Int = 242
 
