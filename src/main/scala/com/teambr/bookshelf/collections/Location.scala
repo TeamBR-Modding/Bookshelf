@@ -410,7 +410,7 @@ class Location extends NBTSavable {
         this.z = tag.getInteger(id + "Location Z")
     }
 
-    def equals(o: AnyRef): Boolean = {
+    def isEqual(o: AnyRef): Boolean = {
         if (this eq o) return true
         if (o == null || getClass != o.getClass) return false
         val location: Location = o.asInstanceOf[Location]

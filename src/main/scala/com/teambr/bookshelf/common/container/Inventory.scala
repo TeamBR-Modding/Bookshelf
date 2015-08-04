@@ -21,7 +21,7 @@ import scala.collection.mutable.ArrayBuffer
  */
 class Inventory(val name : String, val isLocalized : Boolean, var size : Int) extends IInventory {
     val callBacks = new ArrayBuffer[IInventoryCallback]()
-    var inventoryContents = new mutable.Stack[ItemStack].padTo(size, ItemStack)
+    var inventoryContents = new mutable.Stack[ItemStack].padTo(size, null)
 
     /**
      * Used to add a callback to this inventory
@@ -85,7 +85,7 @@ class Inventory(val name : String, val isLocalized : Boolean, var size : Int) ex
      * Used to save the inventory to an NBT tag
      * @param tag The tag to save to
      */
-    def writeToNBT(tag : NBTTagCompound) = writeToNBT(tag, "")
+    def writeToNBT(tag : NBTTagCompound) : Unit = writeToNBT(tag, "")
 
     /**
      * Used to save the inventory to an NBT tag
@@ -110,7 +110,7 @@ class Inventory(val name : String, val isLocalized : Boolean, var size : Int) ex
      * Used to read the inventory from an NBT tag compound
      * @param tag The tag to read from
      */
-    def readFromNBT(tag : NBTTagCompound) = readFromNBT(tag, "")
+    def readFromNBT(tag : NBTTagCompound) : Unit = readFromNBT(tag, "")
     
     /**
      * Used to read the inventory from an NBT tag compound
@@ -120,7 +120,7 @@ class Inventory(val name : String, val isLocalized : Boolean, var size : Int) ex
     def readFromNBT(tag : NBTTagCompound, inventoryName : String) = {
         if(tag.hasKey("Size:" + inventoryName)) size = tag.getInteger("Size:" + inventoryName)
         val nbttaglist = tag.getTagList("Items:" + inventoryName, 10)
-        inventoryContents = new mutable.Stack[ItemStack].padTo(size, ItemStack)
+        inventoryContents = new mutable.Stack[ItemStack].padTo(size, null)
         for(i <- 0 until nbttaglist.tagCount()) {
             val stacktag = nbttaglist.getCompoundTagAt(i)
             val j = stacktag.getByte("Slot:" + inventoryName)
@@ -190,7 +190,7 @@ class Inventory(val name : String, val isLocalized : Boolean, var size : Int) ex
         if(this.inventoryContents(index) != null) {
             val stack = this.inventoryContents(index)
             this.inventoryContents(index) = null
-            return stack
+            return stack.asInstanceOf[ItemStack]
         }
         null
     }
@@ -213,7 +213,7 @@ class Inventory(val name : String, val isLocalized : Boolean, var size : Int) ex
     /**
      * Set the slot contents
      * @param index The index
-     * @param stack
+     * @param stack The set to set
      */
     override def setInventorySlotContents(index: Int, stack: ItemStack): Unit = {
         this.inventoryContents(index) = stack

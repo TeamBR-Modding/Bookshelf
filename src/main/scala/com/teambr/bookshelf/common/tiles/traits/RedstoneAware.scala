@@ -22,12 +22,12 @@ trait RedstoneAware extends TileEntity {
      * @return True if has power
      */
     def isPowered: Boolean = {
-        isPoweringTo(worldObj,  getPos.offset(EnumFacing.UP),    EnumFacing.DOWN)  ||
-                isPoweringTo(worldObj, getPos.offset(EnumFacing.DOWN),  EnumFacing.UP)    ||
-                isPoweringTo(worldObj, getPos.offset(EnumFacing.NORTH), EnumFacing.SOUTH) ||
-                isPoweringTo(worldObj, getPos.offset(EnumFacing.SOUTH), EnumFacing.NORTH) ||
-                isPoweringTo(worldObj, getPos.offset(EnumFacing.EAST),  EnumFacing.WEST)  ||
-                isPoweringTo(worldObj, getPos.offset(EnumFacing.WEST),  EnumFacing.EAST)
+        isPoweringTo(getWorld,  getPos.offset(EnumFacing.UP),    EnumFacing.DOWN)  ||
+                isPoweringTo(getWorld, getPos.offset(EnumFacing.DOWN),  EnumFacing.UP)    ||
+                isPoweringTo(getWorld, getPos.offset(EnumFacing.NORTH), EnumFacing.SOUTH) ||
+                isPoweringTo(getWorld, getPos.offset(EnumFacing.SOUTH), EnumFacing.NORTH) ||
+                isPoweringTo(getWorld, getPos.offset(EnumFacing.EAST),  EnumFacing.WEST)  ||
+                isPoweringTo(getWorld, getPos.offset(EnumFacing.WEST),  EnumFacing.EAST)
     }
 
     /**

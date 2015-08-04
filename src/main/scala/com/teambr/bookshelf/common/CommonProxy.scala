@@ -21,4 +21,9 @@ class CommonProxy {
      * Called on init
      */
     def init() = {}
+
+    /**
+     * Called on postInit
+     */
+    def postInit() = {}
 }

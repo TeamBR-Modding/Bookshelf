@@ -8,7 +8,9 @@ import com.teambr.bookshelf.manager.GuiManager
 import net.minecraftforge.fml.common.Mod.{EventHandler, Instance}
 import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.common.{Mod, SidedProxy}
+import tests.BlockTest
 
 /**
  * This file was created for the Bookshelf
@@ -24,7 +26,7 @@ import net.minecraftforge.fml.common.{Mod, SidedProxy}
 object Bookshelf {
 
     @Instance(Reference.MODID)
-    val INSTANCE = _
+    val INSTANCE = null
 
     @SidedProxy(clientSide = "com.teambr.bookshelf.client.ClientProxy",
                 serverSide = "com.teambr.bookshelf.common.CommonProxy")
@@ -38,11 +40,15 @@ object Bookshelf {
         proxy.preInit()
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager)
+
+        GameRegistry.registerBlock(new BlockTest, "blockTest")
     }
 
     @EventHandler def init(event : FMLInitializationEvent) = {
         proxy.init()
     }
 
-    @EventHandler def postInit(event : FMLPostInitializationEvent) = {}
+    @EventHandler def postInit(event : FMLPostInitializationEvent) = {
+        proxy.postInit()
+    }
 }

@@ -64,7 +64,7 @@ trait UpdatingTile extends TileEntity with IUpdatePlayerListBox {
      * Called when the tile updates
      */
     override def update() = {
-        if(worldObj.isRemote)
+        if(getWorld.isRemote)
             onClientTick()
         else
             onServerTick()

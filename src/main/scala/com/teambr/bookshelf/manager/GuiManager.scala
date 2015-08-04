@@ -20,14 +20,14 @@ class GuiManager extends IGuiHandler {
     override def getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
         world.getTileEntity(new BlockPos(x, y, z)) match {
             case tile : OpensGui => tile.getClientGuiElement(ID, player, world, x, y, z)
-            case _ =>
+            case _ => null
         }
     }
 
     override def getServerGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
         world.getTileEntity(new BlockPos(x, y, z)) match {
             case tile : OpensGui => tile.getServerGuiElement(ID, player, world, x, y, z)
-            case _ =>
+            case _ => null
         }
     }
 }

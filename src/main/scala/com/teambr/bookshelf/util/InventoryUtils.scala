@@ -1,15 +1,14 @@
 package com.teambr.bookshelf.util
 
-import java.util
-
-import com.google.common.collect.{ImmutableSet, Sets}
 import com.teambr.bookshelf.common.container.Inventory
 import net.minecraft.init.Blocks
-import net.minecraft.inventory.{InventoryLargeChest, ISidedInventory, IInventory}
+import net.minecraft.inventory.{IInventory, ISidedInventory, InventoryLargeChest}
 import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.{TileEntityChest, TileEntity}
-import net.minecraft.util.{BlockPos, Vec3i, EnumFacing}
+import net.minecraft.tileentity.{TileEntity, TileEntityChest}
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.{ILockableContainer, World}
+
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * This file was created for the Bookshelf
@@ -22,7 +21,6 @@ import net.minecraft.world.{ILockableContainer, World}
  * @since August 02, 2015
  */
 object InventoryUtils {
-    val UNKNOWN : EnumFacing = new EnumFacing(6, 0, 0, "unknown", EnumFacing.AxisDirection.NEGATIVE, EnumFacing.Axis.Y, new Vec3i(0, 0, 0))
     /** *
       * Try to merge the supplied stack into the supplied slot in the target
       * inventory
@@ -80,7 +78,7 @@ object InventoryUtils {
     }
 
     def insertItemIntoInventory(inventory: IInventory, stack: ItemStack) {
-        insertItemIntoInventory(inventory, stack, UNKNOWN, -1)
+        insertItemIntoInventory(inventory, stack, EnumFacing.UP, -1)
     }
 
     def insertItemIntoInventory(inventory: IInventory, stack: ItemStack, side: EnumFacing, intoSlot: Int) {
@@ -103,23 +101,23 @@ object InventoryUtils {
             targetInventory = copy
         }
 
-        val attemptSlots: util.TreeSet[Int] = Sets.newTreeSet[Int]
+        val attemptSlots = new ArrayBuffer[Int]
 
         //We need to know if this is a sided inventory, if we don't case then just skip
-        val isSidedInventory: Boolean = inventory.isInstanceOf[ISidedInventory] && side != UNKNOWN
+        val isSidedInventory: Boolean = inventory.isInstanceOf[ISidedInventory] && side != EnumFacing.UP
 
         //If sided, just get the sides we can deal with
         if (isSidedInventory) {
             val accessibleSlots: Array[Int] = inventory.asInstanceOf[ISidedInventory].getSlotsForFace(side)
-            for (slot <- accessibleSlots) attemptSlots.add(slot)
+            for (slot <- accessibleSlots) attemptSlots += slot
         }
         else { //Just add everything then
             for(a <- 0 until inventory.getSizeInventory)
-                attemptSlots.add(a)
+                attemptSlots += a
         }
 
         //If we have a specific slot, we shall use than. Otherwise trim the rest out
-        if (intoSlot > -1) attemptSlots.retainAll(ImmutableSet.of(intoSlot))
+        if (intoSlot > -1) attemptSlots.filter((i : Int) => i == intoSlot)
         if (attemptSlots.isEmpty) return //Nothing to check
         for (slot <- attemptSlots) {
             if (stack.stackSize <= 0)  return //How did we get this far without noticing, leave now
