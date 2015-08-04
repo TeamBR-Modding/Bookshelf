@@ -1,5 +1,6 @@
 package com.teambr.bookshelf.common.container
 
+import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
@@ -19,7 +20,7 @@ import scala.collection.mutable.ArrayBuffer
  * @author Paul Davis <pauljoda>
  * @since August 03, 2015
  */
-class Inventory(val name : String, val isLocalized : Boolean, var size : Int) extends IInventory {
+class Inventory(val name : String, val isLocalized : Boolean, var size : Int) extends IInventory with NBTSavable {
     val callBacks = new ArrayBuffer[IInventoryCallback]()
     var inventoryContents = new mutable.Stack[ItemStack].padTo(size, null)
 

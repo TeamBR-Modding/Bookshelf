@@ -4,7 +4,8 @@ import java.io.File
 
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.lib.Reference
-import com.teambr.bookshelf.manager.GuiManager
+import com.teambr.bookshelf.manager.{EventManager, GuiManager}
+import com.teambr.bookshelf.network.PacketManager
 import net.minecraftforge.fml.common.Mod.{Instance, EventHandler}
 import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import net.minecraftforge.fml.common.network.NetworkRegistry
@@ -43,6 +44,8 @@ object Bookshelf {
     }
 
     @EventHandler def init(event : FMLInitializationEvent) = {
+        PacketManager.initPackets()
+        EventManager.init()
         proxy.init()
     }
 

@@ -4,7 +4,6 @@ import java.awt.Color
 
 import com.teambr.bookshelf.client.gui.GuiBase
 import com.teambr.bookshelf.client.gui.component.BaseComponent
-import com.teambr.bookshelf.client.gui.component.control.GuiComponentButton
 import com.teambr.bookshelf.client.gui.component.display.{GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.common.container.Inventory
 import net.minecraft.entity.player.EntityPlayer
@@ -29,14 +28,6 @@ class GuiTest(player : EntityPlayer)
      * This will be called after the GUI has been initialized and should be where you add all components.
      */
     override def addComponents(): Unit = {
-        components += new GuiComponentButton(10, 20, 50, 20, "testing") {
-            /**
-             * Called when button is pressed
-             */
-            override def doAction(): Unit = {
-                println("HELLO")
-            }
-        }
     }
 
     /**
