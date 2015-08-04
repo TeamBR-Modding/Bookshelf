@@ -103,7 +103,7 @@ trait BlockBakeable extends Block {
     override def getExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : IBlockState = {
         if(state.isInstanceOf[IExtendedBlockState]) { //Needs to have an extended state
             buildExtendedState(state, world, pos) match {
-                case Some(prop) => return prop
+                case Some(state) => return state
                 case None => return state
             }
         }

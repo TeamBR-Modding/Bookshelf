@@ -12,7 +12,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
  * @author Paul Davis <pauljoda>
  * @since August 03, 2015
  */
-public class TileAwareProperty<V> implements IUnlistedProperty<TileEntity> {
+public class TileAwareProperty implements IUnlistedProperty<TileEntity> {
     @Override
     public String getName() {
         return "tileAware";
