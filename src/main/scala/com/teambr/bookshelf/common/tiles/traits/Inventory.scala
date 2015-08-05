@@ -58,7 +58,7 @@ trait Inventory extends IInventory with NBTSavable {
      * Used to push x amount of slots into the inventory
      * @param count How many slots to add
      */
-    def addInventorySlots(count : Int) = for(i <- 0 until count) inventoryContents += null
+    def addInventorySlots(count : Int) = for(i <- 0 until count) addInventorySlot(null)
 
     /**
      * Used to remove the last element of the stack
