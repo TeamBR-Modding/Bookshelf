@@ -21,7 +21,7 @@ trait DropsItems extends Block {
                 world.getTileEntity(pos) match {
                     case tile: IInventory => //This is an inventory
                         val random = new Random
-                        for (i <- 0 to tile.getSizeInventory) {
+                        for (i <- 0 until tile.getSizeInventory) {
                             val stack = tile.getStackInSlot(i)
 
                             if(stack != null && stack.stackSize > 0) {
