@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{ NBTTagCompound, NBTTagList }
 import net.minecraft.util.{ ChatComponentText, IChatComponent, StatCollector }
 
-import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
@@ -27,10 +26,10 @@ trait Inventory extends IInventory with NBTSavable {
     def initialSize : Int
 
     val callBacks = new ArrayBuffer[IInventoryCallback]()
-    var inventoryContents = new mutable.Stack[ItemStack]
+    var inventoryContents = new ArrayBuffer[ItemStack]()
 
     for(0 <- 0 until initialSize)
-        inventoryContents.push(null)
+        inventoryContents += null
 
     /**
      * Used to add a callback to this inventory
@@ -52,19 +51,23 @@ trait Inventory extends IInventory with NBTSavable {
      * Used to add just one stack into the end of the inventory
      * @param stack The stack to push
      */
-    def addInventorySlot(stack : ItemStack) = inventoryContents.push(stack)
+    def addInventorySlot(stack : ItemStack) = inventoryContents += (stack)
 
     /**
      * Used to push x amount of slots into the inventory
      * @param count How many slots to add
      */
-    def addInventorySlots(count : Int) = for(i <- 0 until count) inventoryContents.push(null)
+    def addInventorySlots(count : Int) = for(i <- 0 until count) inventoryContents += null
 
     /**
      * Used to remove the last element of the stack
      * @return The last stack, now popped
      */
-    def removeInventorySlot() : ItemStack = inventoryContents.pop()
+    def removeInventorySlot() : ItemStack = {
+        val stack = inventoryContents.last
+        inventoryContents.reduceToSize(inventoryContents.length - 1)
+        stack
+    }
 
     /**
      * Used to remove a specific amount of items
@@ -73,7 +76,7 @@ trait Inventory extends IInventory with NBTSavable {
      */
     def removeInventorySlots(count : Int) : Array[ItemStack] = {
         val poppedStack = new Array[ItemStack](count)
-        for(i <- 0 until count) poppedStack(i) = inventoryContents.pop()
+        for(i <- 0 until count) poppedStack(i) = removeInventorySlot()
         poppedStack
     }
 
@@ -128,10 +131,10 @@ trait Inventory extends IInventory with NBTSavable {
      */
     def readFromNBT(tag : NBTTagCompound, inventoryName : String) = {
         val nbttaglist = tag.getTagList("Items:" + inventoryName, 10)
-        inventoryContents = new mutable.Stack[ItemStack]
+        inventoryContents = new ArrayBuffer[ItemStack]
         if(tag.hasKey("Size:" + inventoryName)) {
             for(0 <- 0 until tag.getInteger("Size:" + inventoryName))
-                inventoryContents.push(null)
+                inventoryContents += null
         }
         for(i <- 0 until nbttaglist.tagCount()) {
             val stacktag = nbttaglist.getCompoundTagAt(i)
