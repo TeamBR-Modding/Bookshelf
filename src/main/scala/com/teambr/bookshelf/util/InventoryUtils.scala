@@ -96,7 +96,13 @@ object InventoryUtils {
 
         //If we aren't really moving, just clone the inventory (for science)
         if (!doMove) {
-            val copy: Inventory = new Inventory("temporary.inventory", false, targetInventory.getSizeInventory)
+
+            val copy: Inventory = new Inventory {
+                override var inventoryName: String = "temporary.inventory"
+                override def hasCustomName: Boolean = false
+                override var inventorySize: Int = targetInventory.getSizeInventory
+            }
+
             copy.copyFrom(inventory)
             targetInventory = copy
         }

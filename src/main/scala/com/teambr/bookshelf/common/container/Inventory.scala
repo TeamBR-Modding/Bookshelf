@@ -20,9 +20,13 @@ import scala.collection.mutable.ArrayBuffer
  * @author Paul Davis <pauljoda>
  * @since August 03, 2015
  */
-class Inventory(val name : String, val isLocalized : Boolean, var size : Int) extends IInventory with NBTSavable {
+trait Inventory extends IInventory with NBTSavable {
+
+    var inventoryName : String
+    var inventorySize : Int
+
     val callBacks = new ArrayBuffer[IInventoryCallback]()
-    var inventoryContents = new mutable.Stack[ItemStack].padTo(size, null)
+    var inventoryContents = new mutable.Stack[ItemStack].padTo(inventorySize, null)
 
     /**
      * Used to add a callback to this inventory
@@ -119,9 +123,9 @@ class Inventory(val name : String, val isLocalized : Boolean, var size : Int) ex
      * @param inventoryName The inventory name
      */
     def readFromNBT(tag : NBTTagCompound, inventoryName : String) = {
-        if(tag.hasKey("Size:" + inventoryName)) size = tag.getInteger("Size:" + inventoryName)
+        if(tag.hasKey("Size:" + inventoryName)) inventorySize = tag.getInteger("Size:" + inventoryName)
         val nbttaglist = tag.getTagList("Items:" + inventoryName, 10)
-        inventoryContents = new mutable.Stack[ItemStack].padTo(size, null)
+        inventoryContents = new mutable.Stack[ItemStack].padTo(inventorySize, null)
         for(i <- 0 until nbttaglist.tagCount()) {
             val stacktag = nbttaglist.getCompoundTagAt(i)
             val j = stacktag.getByte("Slot:" + inventoryName)
@@ -274,17 +278,17 @@ class Inventory(val name : String, val isLocalized : Boolean, var size : Int) ex
      * New in 1.8, gives a name to the inventory
      * @return The name
      */
-    override def getName: String = name
+    override def getName: String = inventoryName
 
     /**
      * Does this inventory has a custom name
      * @return True if there is a name (localized)
      */
-    override def hasCustomName: Boolean = isLocalized
+    override def hasCustomName: Boolean
 
     /**
      * New in 1.8, gives a name to the inventory. Probably used in chat messages
      * @return The name
      */
-    override def getDisplayName: IChatComponent = new ChatComponentText(if(isLocalized) StatCollector.translateToLocal(name) else "Generic Inventory")
+    override def getDisplayName: IChatComponent = new ChatComponentText(if(hasCustomName) StatCollector.translateToLocal(inventoryName) else "Generic Inventory")
 }
