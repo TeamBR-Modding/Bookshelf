@@ -30,7 +30,7 @@ class GuiTest(player : EntityPlayer)
              */
             override def hasCustomName: Boolean = false
 
-            override var inventorySize: Int = 3
+            override var initialSize: Int = 3
         }), 175, 165, "title.test") {
 
 

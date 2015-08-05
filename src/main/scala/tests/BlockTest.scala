@@ -62,7 +62,7 @@ class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotat
              */
             override def hasCustomName: Boolean = false
 
-            override var inventorySize: Int = 3
+            override var initialSize: Int = 3
         })
     }
 

@@ -24,12 +24,12 @@ import scala.collection.mutable.ArrayBuffer
 trait Inventory extends IInventory with NBTSavable {
 
     var inventoryName : String
-    var inventorySize : Int
+    def initialSize : Int
 
     val callBacks = new ArrayBuffer[IInventoryCallback]()
     var inventoryContents = new mutable.Stack[ItemStack]
 
-    for(0 <- 0 until inventorySize)
+    for(0 <- 0 until initialSize)
         inventoryContents.push(null)
 
     /**
@@ -127,9 +127,12 @@ trait Inventory extends IInventory with NBTSavable {
      * @param inventoryName The inventory name
      */
     def readFromNBT(tag : NBTTagCompound, inventoryName : String) = {
-        if(tag.hasKey("Size:" + inventoryName)) inventorySize = tag.getInteger("Size:" + inventoryName)
         val nbttaglist = tag.getTagList("Items:" + inventoryName, 10)
-        inventoryContents = new mutable.Stack[ItemStack].padTo(inventorySize, null)
+        inventoryContents = new mutable.Stack[ItemStack]
+        if(tag.hasKey("Size:" + inventoryName)) {
+            for(0 <- 0 until tag.getInteger("Size:" + inventoryName))
+                inventoryContents.push(null)
+        }
         for(i <- 0 until nbttaglist.tagCount()) {
             val stacktag = nbttaglist.getCompoundTagAt(i)
             val j = stacktag.getByte("Slot:" + inventoryName)

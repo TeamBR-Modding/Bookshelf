@@ -100,7 +100,7 @@ object InventoryUtils {
             val copy: Inventory = new Inventory {
                 override var inventoryName: String = "temporary.inventory"
                 override def hasCustomName: Boolean = false
-                override var inventorySize: Int = targetInventory.getSizeInventory
+                override var initialSize: Int = targetInventory.getSizeInventory
             }
 
             copy.copyFrom(inventory)
