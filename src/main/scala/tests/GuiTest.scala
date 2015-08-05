@@ -21,7 +21,17 @@ import net.minecraft.item.ItemStack
  * @since August 04, 2015
  */
 class GuiTest(player : EntityPlayer)
-        extends GuiBase[ContainerTest](new ContainerTest(player.inventory, new Inventory("test", false, 3)), 175, 165, "title.test") {
+        extends GuiBase[ContainerTest](new ContainerTest(player.inventory, new Inventory {
+            override var inventoryName: String = "test"
+
+            /**
+             * Does this inventory has a custom name
+             * @return True if there is a name (localized)
+             */
+            override def hasCustomName: Boolean = false
+
+            override var inventorySize: Int = 3
+        }), 175, 165, "title.test") {
 
 
     /**
