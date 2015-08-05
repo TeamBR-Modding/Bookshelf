@@ -1,11 +1,12 @@
-package com.teambr.bookshelf.common.container
+package com.teambr.bookshelf.common.tiles.traits
 
+import com.teambr.bookshelf.common.container.IInventoryCallback
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.{NBTTagList, NBTTagCompound}
-import net.minecraft.util.{StatCollector, ChatComponentText, IChatComponent}
+import net.minecraft.nbt.{ NBTTagCompound, NBTTagList }
+import net.minecraft.util.{ ChatComponentText, IChatComponent, StatCollector }
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -26,7 +27,10 @@ trait Inventory extends IInventory with NBTSavable {
     var inventorySize : Int
 
     val callBacks = new ArrayBuffer[IInventoryCallback]()
-    var inventoryContents = new mutable.Stack[ItemStack].padTo(inventorySize, null)
+    var inventoryContents = new mutable.Stack[ItemStack]
+
+    for(0 <- 0 until inventorySize)
+        inventoryContents.push(null)
 
     /**
      * Used to add a callback to this inventory

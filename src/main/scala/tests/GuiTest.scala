@@ -5,7 +5,7 @@ import java.awt.Color
 import com.teambr.bookshelf.client.gui.GuiBase
 import com.teambr.bookshelf.client.gui.component.BaseComponent
 import com.teambr.bookshelf.client.gui.component.display.{GuiComponentText, GuiTabCollection}
-import com.teambr.bookshelf.common.container.Inventory
+import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack

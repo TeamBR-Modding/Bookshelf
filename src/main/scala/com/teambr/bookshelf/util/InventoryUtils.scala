@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.util
 
-import com.teambr.bookshelf.common.container.Inventory
+import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.init.Blocks
 import net.minecraft.inventory.{IInventory, ISidedInventory, InventoryLargeChest}
 import net.minecraft.item.ItemStack
