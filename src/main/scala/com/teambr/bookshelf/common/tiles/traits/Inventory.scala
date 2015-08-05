@@ -1,5 +1,7 @@
 package com.teambr.bookshelf.common.tiles.traits
 
+import java.util
+
 import com.teambr.bookshelf.common.container.IInventoryCallback
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.entity.player.EntityPlayer
@@ -26,10 +28,9 @@ trait Inventory extends IInventory with NBTSavable {
     def initialSize : Int
 
     val callBacks = new ArrayBuffer[IInventoryCallback]()
-    var inventoryContents = new ArrayBuffer[ItemStack]()
+    var inventoryContents = new util.Stack[ItemStack]()
+    inventoryContents.setSize(initialSize)
 
-    for(0 <- 0 until initialSize)
-        inventoryContents += null
 
     /**
      * Used to add a callback to this inventory
@@ -51,7 +52,7 @@ trait Inventory extends IInventory with NBTSavable {
      * Used to add just one stack into the end of the inventory
      * @param stack The stack to push
      */
-    def addInventorySlot(stack : ItemStack) = inventoryContents += (stack)
+    def addInventorySlot(stack : ItemStack) = inventoryContents.push(stack)
 
     /**
      * Used to push x amount of slots into the inventory
@@ -63,11 +64,7 @@ trait Inventory extends IInventory with NBTSavable {
      * Used to remove the last element of the stack
      * @return The last stack, now popped
      */
-    def removeInventorySlot() : ItemStack = {
-        val stack = inventoryContents.last
-        inventoryContents.reduceToSize(inventoryContents.length - 1)
-        stack
-    }
+    def removeInventorySlot() : ItemStack = inventoryContents.pop()
 
     /**
      * Used to remove a specific amount of items
@@ -107,11 +104,11 @@ trait Inventory extends IInventory with NBTSavable {
     def writeToNBT(tag : NBTTagCompound, inventoryName : String) = {
         tag.setInteger("Size:" + inventoryName, getSizeInventory)
         val nbttaglist = new NBTTagList
-        for(i <- inventoryContents.indices) {
-            if(inventoryContents(i) != null) {
+        for(i <- 0 until inventoryContents.size()) {
+            if(inventoryContents.get(i) != null) {
                 val stackTag = new NBTTagCompound
                 stackTag.setByte("Slot:" + inventoryName, i.asInstanceOf[Byte])
-                inventoryContents(i).writeToNBT(stackTag)
+                inventoryContents.get(i).writeToNBT(stackTag)
                 nbttaglist.appendTag(stackTag)
             }
         }
@@ -131,16 +128,13 @@ trait Inventory extends IInventory with NBTSavable {
      */
     def readFromNBT(tag : NBTTagCompound, inventoryName : String) = {
         val nbttaglist = tag.getTagList("Items:" + inventoryName, 10)
-        inventoryContents = new ArrayBuffer[ItemStack]
-        if(tag.hasKey("Size:" + inventoryName)) {
-            for(0 <- 0 until tag.getInteger("Size:" + inventoryName))
-                inventoryContents += null
-        }
+        inventoryContents = new util.Stack[ItemStack]
+        if(tag.hasKey("Size:" + inventoryName)) inventoryContents.setSize(tag.getInteger("Size:" + inventoryName))
         for(i <- 0 until nbttaglist.tagCount()) {
             val stacktag = nbttaglist.getCompoundTagAt(i)
             val j = stacktag.getByte("Slot:" + inventoryName)
-            if(j >= 0 && j < inventoryContents.length)
-                inventoryContents(j) = ItemStack.loadItemStackFromNBT(stacktag)
+            if(j >= 0 && j < inventoryContents.size())
+                inventoryContents.set(j, ItemStack.loadItemStackFromNBT(stacktag))
         }
     }
 
@@ -155,20 +149,20 @@ trait Inventory extends IInventory with NBTSavable {
      * @return The new stack (the one picked up)
      */
     override def decrStackSize(slot : Int, amount : Int) : ItemStack = {
-        if(inventoryContents(slot) != null) {
+        if(inventoryContents.get(slot) != null) {
             var stack : ItemStack = null
 
-            if(this.inventoryContents(slot).stackSize <= amount) {
-                stack = this.inventoryContents(slot)
-                this.inventoryContents(slot) = null
+            if(this.inventoryContents.get(slot).stackSize <= amount) {
+                stack = this.inventoryContents.get(slot)
+                this.inventoryContents.set(slot, null)
                 onInventoryChanged(slot)
                 return stack
             }
 
-            stack = this.inventoryContents(slot).splitStack(amount)
+            stack = this.inventoryContents.get(slot).splitStack(amount)
 
-            if(this.inventoryContents(slot).stackSize <= 0)
-                this.inventoryContents(slot) = null
+            if(this.inventoryContents.get(slot).stackSize <= 0)
+                this.inventoryContents.set(slot, null)
 
             onInventoryChanged(slot)
             return stack
@@ -186,14 +180,14 @@ trait Inventory extends IInventory with NBTSavable {
      * Get the size of this inventory
      * @return How big this is
      */
-    override def getSizeInventory: Int = inventoryContents.length
+    override def getSizeInventory: Int = inventoryContents.size()
 
     /**
      * Get the stack in the given slot
      * @param index The slot id
      * @return THe stack in the slot
      */
-    override def getStackInSlot(index: Int): ItemStack = inventoryContents(index)
+    override def getStackInSlot(index: Int): ItemStack = inventoryContents.get(index)
 
     /**
      * Used to get the stack when closing. Used when you drop items on the floor ie a workbench
@@ -201,10 +195,10 @@ trait Inventory extends IInventory with NBTSavable {
      * @return What was in that stack, now null
      */
     override def getStackInSlotOnClosing(index: Int): ItemStack = {
-        if(index >= this.inventoryContents.length) return null
-        if(this.inventoryContents(index) != null) {
-            val stack = this.inventoryContents(index)
-            this.inventoryContents(index) = null
+        if(index >= this.inventoryContents.size()) return null
+        if(this.inventoryContents.get(index) != null) {
+            val stack = this.inventoryContents.get(index)
+            this.inventoryContents.set(index, null)
             return stack.asInstanceOf[ItemStack]
         }
         null
@@ -231,7 +225,7 @@ trait Inventory extends IInventory with NBTSavable {
      * @param stack The set to set
      */
     override def setInventorySlotContents(index: Int, stack: ItemStack): Unit = {
-        this.inventoryContents(index) = stack
+        this.inventoryContents.set(index, stack)
 
         if(stack != null && stack.stackSize > getInventoryStackLimit)
             stack.stackSize  = getInventoryStackLimit
@@ -247,7 +241,7 @@ trait Inventory extends IInventory with NBTSavable {
     /**
      * Delete all the things
      */
-    override def clear(): Unit = for(i <- inventoryContents.indices) inventoryContents(i) = null
+    override def clear(): Unit = for(i <- 0 until inventoryContents.size) inventoryContents.set(i, null)
 
     /**
      * Something new in 1.8. Might allow you to edit things from client
