@@ -78,7 +78,7 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
 
     override def getGeneralQuads : util.List[_] = { new util.ArrayList[Nothing] }
 
-    //Used to get the rotated quads, will put all faces on
+
     def getRotatedQuads : util.List[_] = {
         val bakedQuads = new util.ArrayList[BakedQuad]()
         val uv = new BlockFaceUV(Array[Float](0.0F, 0.0F, 16.0F, 16.0F), 0)

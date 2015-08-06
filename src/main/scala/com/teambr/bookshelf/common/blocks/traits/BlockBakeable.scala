@@ -6,10 +6,8 @@ import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.model.ModelResourceLocation
-import net.minecraft.util.{BlockPos, ResourceLocation}
-import net.minecraft.world.IBlockAccess
-import net.minecraftforge.common.property.IExtendedBlockState
-import net.minecraftforge.fml.relauncher.{Side, SideOnly}
+import net.minecraft.util.ResourceLocation
+import net.minecraftforge.fml.relauncher.{ Side, SideOnly }
 
 /**
  * This file was created for Bookshelf
@@ -82,31 +80,9 @@ trait BlockBakeable extends Block {
     override def getRenderType: Int = 3
 
     /**
-     * Use this to pass along relevant info with the block state
-     * @param state The state incoming
-     * @param world The world (Client side)
-     * @param pos The position
-     * @return The new state (or the passed if no changes)
-     */
-    def buildExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : Option[IBlockState] = None
-
-    /**
      * Use this to define every state. Since you want to have a model for each state, make sure all possible values are
      * added here. Without all of them, the model won't be baked for each type
      * @return
      */
     def getAllPossibleStates: Array[IBlockState] = Array[IBlockState](getDefaultState)
-
-    /**
-     * Used to get more info. Cause no way should we have to use default stuff
-     */
-    override def getExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : IBlockState = {
-        if(state.isInstanceOf[IExtendedBlockState]) { //Needs to have an extended state
-            buildExtendedState(state, world, pos) match {
-                case Some(newState) => return newState
-                case None => return state
-            }
-        }
-        state
-    }
 }

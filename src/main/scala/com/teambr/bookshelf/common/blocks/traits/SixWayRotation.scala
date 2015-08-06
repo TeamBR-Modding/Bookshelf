@@ -1,14 +1,14 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import java.util
-
-import net.minecraft.block.properties.PropertyDirection
-import net.minecraft.block.state.IBlockState
-import net.minecraft.block.{Block, BlockPistonBase}
+import com.teambr.bookshelf.common.blocks.properties.PropertyRotation
+import net.minecraft.block.properties.IProperty
+import net.minecraft.block.state.{ BlockState, IBlockState }
+import net.minecraft.block.{ Block, BlockPistonBase }
 import net.minecraft.client.resources.model.ModelRotation
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.{BlockPos, EnumFacing}
-import net.minecraft.world.World
+import net.minecraft.util.{ BlockPos, EnumFacing }
+import net.minecraft.world.{ IBlockAccess, World }
+import net.minecraftforge.common.property.{ IExtendedBlockState, ExtendedBlockState, IUnlistedProperty }
 
 /**
  * This file was created for Bookshelf
@@ -21,28 +21,61 @@ import net.minecraft.world.World
  * @since August 03, 2015
  */
 trait SixWayRotation extends Block with FourWayRotation {
-    override def PROPERTY_ROTATION = PropertyDirection.create("facing", util.Arrays.asList(EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.UP, EnumFacing.DOWN))
-    
+
     /**
      * Called when the block is placed, we check which way the player is facing and put our value as the opposite of that
      */
     override def onBlockPlaced(world: World, blockPos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState = {
-        this.getDefaultState.withProperty(PROPERTY_ROTATION, BlockPistonBase.getFacingFromEntity(world, blockPos, placer))
+        this.getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, BlockPistonBase.getFacingFromEntity(world, blockPos, placer))
     }
 
-    override def getAllPossibleStates: Array[IBlockState] =
-        Array[IBlockState](getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.NORTH),
-            getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.EAST),
-            getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.SOUTH),
-            getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.WEST),
-            getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.UP),
-            getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.DOWN))
+    /**
+     * Used to say what our block state is
+     */
+    override def createBlockState() : BlockState = {
+        val listed = new Array[IProperty](1)
+        listed(0) = PropertyRotation.SIX_WAY.getProperty
+        val unlisted = new Array[IUnlistedProperty[_]](0)
+        new ExtendedBlockState(this, listed, unlisted)
+    }
+
+    override def getExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : IBlockState = {
+        state match {
+            case returnValue : IExtendedBlockState =>
+                returnValue.withProperty(PropertyRotation.SIX_WAY, world.getBlockState(pos).getValue(PropertyRotation.SIX_WAY.getProperty).asInstanceOf[EnumFacing])
+                returnValue
+            case _ =>state
+        }
+    }
+
+    /**
+     * Used to convert the meta to state
+     * @param meta The meta
+     * @return
+     */
+    override def getStateFromMeta(meta : Int) : IBlockState = getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.getFront(meta))
+
+    /**
+     * Called to convert state from meta
+     * @param state The state
+     * @return
+     */
+    override def getMetaFromState(state : IBlockState) = state.getValue(PropertyRotation.SIX_WAY.getProperty).asInstanceOf[EnumFacing].getIndex
+
 
     override def getModelRotation(state : IBlockState) : ModelRotation = {
-        if(state == getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.UP))
+        if(state == getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.UP))
             return ModelRotation.X270_Y0
-        else if(state == getDefaultState.withProperty(PROPERTY_ROTATION, EnumFacing.DOWN))
+        else if(state == getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.DOWN))
             return ModelRotation.X90_Y0
         super.getModelRotation(state)
     }
+
+    override def getAllPossibleStates: Array[IBlockState] =
+        Array[IBlockState](getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.NORTH),
+            getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.EAST),
+            getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.SOUTH),
+            getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.WEST),
+            getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.UP),
+            getDefaultState.withProperty(PropertyRotation.SIX_WAY.getProperty, EnumFacing.DOWN))
 }
