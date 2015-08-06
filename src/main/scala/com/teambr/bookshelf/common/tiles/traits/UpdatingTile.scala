@@ -36,12 +36,12 @@ trait UpdatingTile extends TileEntity with IUpdatePlayerListBox {
     /**
      * Called on the client side only
      */
-    def onClientTick() : Unit
+    def onClientTick() : Unit = {}
 
     /**
      * Called on the server side only
      */
-    def onServerTick() : Unit
+    def onServerTick() : Unit = {}
 
     /**
      * Used to identify the packet that will get called on update

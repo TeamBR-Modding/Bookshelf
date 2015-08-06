@@ -60,19 +60,26 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
         //Get our textures
         block match {
             case block : BlockBakeable =>
-                textures = block.getDefaultCubeTextures
+                textures = block.getDisplayTextures(state)
             case _ => println("Someone isn't using the renderer right. Stop that")
         }
     }
 
     def this(bakeable: BlockBakeable) {
         this()
-        textures = bakeable.asInstanceOf[BlockBakeable].getDefaultCubeTextures
+        textures = bakeable.asInstanceOf[BlockBakeable].getDisplayTextures(bakeable.getDefaultState)
     }
 
-    override def getFaceQuads(facing: EnumFacing): util.List[_] = new util.ArrayList[Nothing]()
+    override def getFaceQuads(facing: EnumFacing): util.List[_] = {
+        if(modelRot == ModelRotation.X0_Y0)
+            getFaceForSide(facing)
+        else getRotatedQuads
+    }
 
-    override def getGeneralQuads: util.List[_] = {
+    override def getGeneralQuads : util.List[_] = { new util.ArrayList[Nothing] }
+
+    //Used to get the rotated quads, will put all faces on
+    def getRotatedQuads : util.List[_] = {
         val bakedQuads = new util.ArrayList[BakedQuad]()
         val uv = new BlockFaceUV(Array[Float](0.0F, 0.0F, 16.0F, 16.0F), 0)
         val face = new BlockPartFace(null, 0, "", uv)
@@ -88,6 +95,34 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
 
         bakedQuads
     }
+
+    //This will help those without model rotation, but if it does rotate, then just used the general quads. Its just easier
+    private def getFaceForSide(facing : EnumFacing) : util.List[_] = {
+        val bakedQuads = new util.ArrayList[BakedQuad]()
+        val uv = new BlockFaceUV(Array[Float](0.0F, 0.0F, 16.0F, 16.0F), 0)
+        val face = new BlockPartFace(null, 0, "", uv)
+
+        val scale = true
+
+        facing match {
+            case EnumFacing.UP =>
+                bakedQuads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 16.0F, 0.0F), new Vector3f(16.0F, 16.0F, 16.0F), face, textures.up, EnumFacing.UP, ModelRotation.X0_Y0, null, scale, true))
+            case EnumFacing.DOWN =>
+                bakedQuads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(16.0F, 0.0F, 16.0F), face, textures.down, EnumFacing.DOWN, ModelRotation.X0_Y0, null, scale, true))
+            case EnumFacing.NORTH =>
+                bakedQuads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(16.0F, 16.0F, 0.0F), face, textures.north, EnumFacing.NORTH, ModelRotation.X0_Y0, null, scale, true))
+            case EnumFacing.SOUTH =>
+                bakedQuads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 0.0F, 16.0F), new Vector3f(16.0F, 16.0F, 16.0F), face, textures.south, EnumFacing.SOUTH, ModelRotation.X0_Y0, null, scale, true))
+            case EnumFacing.EAST =>
+                bakedQuads.add(faceBakery.makeBakedQuad(new Vector3f(16.0F, 0.0F, 0.0F), new Vector3f(16.0F, 16.0F, 16.0F), face, textures.east, EnumFacing.EAST, ModelRotation.X0_Y0, null, scale, true))
+            case EnumFacing.WEST =>
+                bakedQuads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(0.0F, 16.0F, 16.0F), face, textures.west, EnumFacing.WEST, ModelRotation.X0_Y0, null, scale, true))
+            case _ => //What are you doing here. This should never be called but we will make this for safety
+        }
+        bakedQuads
+    }
+
+
 
     override def isAmbientOcclusion: Boolean = true
 

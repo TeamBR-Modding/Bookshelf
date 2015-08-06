@@ -5,6 +5,7 @@ import com.teambr.bookshelf.common.blocks.traits.{BlockBakeable, SixWayRotation}
 import com.teambr.bookshelf.common.tiles.traits.{ Inventory, OpensGui }
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
+import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
@@ -26,7 +27,7 @@ class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotat
 
     setUnlocalizedName(MODID + ":" + blockName)
 
-    override def getDefaultCubeTextures: CubeTextures = {
+    override def getDisplayTextures(state : IBlockState): CubeTextures = {
         val map = Minecraft.getMinecraft.getTextureMapBlocks
         val textures = new CubeTextures(
             map.getTextureExtry(MODID + ":blocks/" + blockName + "Front"),

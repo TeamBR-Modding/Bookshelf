@@ -53,7 +53,7 @@ trait BlockBakeable extends Block {
      *
      * By default, this will just make a texture map using the block name. THAT MUST EXIST OR IT WILL CRASH
      */
-    def getDefaultCubeTextures: CubeTextures = {
+    def getDisplayTextures(state : IBlockState) : CubeTextures = {
         val map = Minecraft.getMinecraft.getTextureMapBlocks
         val textures = new CubeTextures(
             map.getTextureExtry(MODID + ":blocks/" + blockName),
@@ -103,7 +103,7 @@ trait BlockBakeable extends Block {
     override def getExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : IBlockState = {
         if(state.isInstanceOf[IExtendedBlockState]) { //Needs to have an extended state
             buildExtendedState(state, world, pos) match {
-                case Some(state) => return state
+                case Some(newState) => return newState
                 case None => return state
             }
         }
