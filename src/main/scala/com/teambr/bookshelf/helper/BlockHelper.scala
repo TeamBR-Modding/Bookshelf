@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry
  * @author Paul Davis <pauljoda>
  * @since August 05, 2015
  */
-class BlockHelper {
+object BlockHelper {
     /**
      * Get the string for this block
      * @param block Block to check
