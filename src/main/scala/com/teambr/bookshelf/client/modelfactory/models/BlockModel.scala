@@ -122,8 +122,6 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
         bakedQuads
     }
 
-
-
     override def isAmbientOcclusion: Boolean = true
 
     override def isGui3d: Boolean = true
@@ -150,7 +148,5 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
     override def handleItemState(stack: ItemStack): IBakedModel = {
         new BlockModel(Block.getBlockFromItem(stack.getItem).asInstanceOf[BlockBakeable])
     }
-
-
 }
 

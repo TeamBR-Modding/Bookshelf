@@ -1,8 +1,8 @@
 package com.teambr.bookshelf.common.tiles.traits
 
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.network.{NetworkManager, Packet}
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
+import net.minecraft.network.{ NetworkManager, Packet }
 import net.minecraft.server.gui.IUpdatePlayerListBox
 import net.minecraft.tileentity.TileEntity
 

@@ -4,13 +4,13 @@ import java.io.File
 
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.lib.Reference
-import com.teambr.bookshelf.manager.{EventManager, GuiManager}
+import com.teambr.bookshelf.manager.{ EventManager, GuiManager }
 import com.teambr.bookshelf.network.PacketManager
-import net.minecraftforge.fml.common.Mod.{Instance, EventHandler}
-import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import net.minecraftforge.fml.common.Mod.EventHandler
+import net.minecraftforge.fml.common.event.{ FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent }
 import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.common.registry.GameRegistry
-import net.minecraftforge.fml.common.{Mod, SidedProxy}
+import net.minecraftforge.fml.common.{ Mod, SidedProxy }
 import tests.BlockTest
 
 /**
@@ -23,7 +23,6 @@ import tests.BlockTest
  * @author Paul Davis <pauljoda>
  * @since August 02, 2015
  */
-@Instance(Reference.MODID)
 @Mod(name = Reference.MODNAME, modid = Reference.MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES, modLanguage = "scala")
 object Bookshelf {
 

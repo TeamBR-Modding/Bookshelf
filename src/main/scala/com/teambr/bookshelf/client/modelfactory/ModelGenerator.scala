@@ -4,12 +4,9 @@ import com.teambr.bookshelf.client.modelfactory.models.BlockModel
 import com.teambr.bookshelf.common.blocks.traits.BlockBakeable
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.block.statemap.StateMapperBase
-import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraft.item.Item
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.{ ModelBakeEvent, TextureStitchEvent }
-import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.{ EventPriority, SubscribeEvent }
 
@@ -51,10 +48,6 @@ class ModelGenerator {
 
 
         BakeableBlockRegistry.blocks.foreach((block : BlockBakeable) => {
-            val ignoreStates = new StateMapperBase {
-                override def getModelResourceLocation(state : IBlockState) : ModelResourceLocation = block.getNormalModelLocation
-            }
-            ModelLoader.setCustomStateMapper(block, ignoreStates)
             //Bake all world block models
             block.getAllPossibleStates.foreach((state : IBlockState) => event.modelRegistry.putObject(BlockModel.getModelResourceLocation(state), new BlockModel(block)))
             event.modelRegistry.putObject(block.getNormalModelLocation, new BlockModel(block))
