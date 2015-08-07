@@ -44,8 +44,8 @@ object BlockHelper {
     def getBlockFromString(str : String) : (Block, Integer) = {
         val name = str.split(":")
         name.length match {
-            case 3 => (GameRegistry.findBlock(name(0), name(1)), if (Integer.valueOf(name(2)) == -1) 0 else Integer.valueOf(name(2)))
-            case 2 => (GameRegistry.findBlock(name(0), name(1)), 0)
+            case 3 => (Block.getBlockFromItem(GameRegistry.findItem(name(0), name(1))), if (Integer.valueOf(name(2)) == -1) 0 else Integer.valueOf(name(2)))
+            case 2 => (Block.getBlockFromItem(GameRegistry.findItem(name(0), name(1))), 0)
             case _ => (Blocks.air, 0)
         }
     }
