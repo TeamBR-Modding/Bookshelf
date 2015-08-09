@@ -33,7 +33,7 @@ object GuiHelper {
             val timesW = Math.floor(maxWidth / 16).asInstanceOf[Int]
             var cutW = 16
 
-            for(j <- 0 until timesW) {
+            for(j <- 0 to timesW) {
                 if(j == timesW)
                     cutW = maxWidth % 16
                 if(level >= 16) {
