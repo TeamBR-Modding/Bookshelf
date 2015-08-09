@@ -1,5 +1,7 @@
 package com.teambr.bookshelf.client.gui.component.control
 
+import java.awt.Color
+
 import com.teambr.bookshelf.client.gui.component.BaseComponent
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
@@ -56,6 +58,7 @@ abstract class GuiComponentCheckBox(x : Int, y : Int, var label : String, var se
     override def renderOverlay(guiLeft: Int, guiTop: Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
+        RenderUtils.setColor(new Color(0, 0, 0)) //Minecraft doesn't play nice with GL, so we will just set our own color
         Minecraft.getMinecraft.fontRendererObj.drawString(label, 0, 0, 0x000000)
         GL11.glPopMatrix()
     }
