@@ -1,8 +1,8 @@
 package tests
 
 import com.teambr.bookshelf.collections.CubeTextures
-import com.teambr.bookshelf.common.blocks.traits.{ BlockBakeable, SixWayRotation }
-import com.teambr.bookshelf.common.tiles.traits.{ Inventory, OpensGui }
+import com.teambr.bookshelf.common.blocks.traits.{BlockBakeable, SixWayRotation}
+import com.teambr.bookshelf.common.tiles.traits.{Inventory, OpensGui}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState

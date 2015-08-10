@@ -1,5 +1,7 @@
 package com.teambr.bookshelf.common
 
+import net.minecraftforge.fml.common.event.FMLInterModComms
+
 /**
  * This file was created for Bookshelf
  *
@@ -20,7 +22,9 @@ class CommonProxy {
     /**
      * Called on init
      */
-    def init() = {}
+    def init() = {
+        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaDataProvider.callBackRegisterServer")
+    }
 
     /**
      * Called on postInit

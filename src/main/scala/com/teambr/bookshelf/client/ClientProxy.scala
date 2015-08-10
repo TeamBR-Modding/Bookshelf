@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.client.renderer.block.statemap.StateMapperBase
 import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraftforge.client.model.ModelLoader
+import net.minecraftforge.fml.common.event.FMLInterModComms
 
 /**
  * This file was created for Bookshelf
@@ -39,6 +40,8 @@ class ClientProxy extends CommonProxy {
         })
 
         ModelGenerator.register()
+
+        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaDataProvider.callBackRegisterClient")
     }
 
     /**
