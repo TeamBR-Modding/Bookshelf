@@ -8,22 +8,24 @@ package com.teambr.bookshelf.client.gui;
  *
  * @author Paul Davis <pauljoda>
  * @since August 04, 2015
+ *
+ * Used to handle extended formats. Determines what the text will look like
  */
 public enum GuiTextFormat {
-    ITALICS(0);
+    OBFUSCATED('k'),
+    BOLD('l'),
+    STRIKE_THROUGH('m'),
+    UNDERLINE('n'),
+    ITALICS('o'),
+    RESET('r');
 
-    private int number;
-    GuiTextFormat(int number) {
-        this.number = number;
+    private char formatChar;
+    GuiTextFormat(char c) {
+        this.formatChar = c;
     }
 
     @Override
     public String toString() {
-        String text = "\u00a7";
-        switch (number) {
-            case 0:
-                return text + "o";
-        }
-        return "";
+        return "\u00a7" + formatChar;
     }
 }

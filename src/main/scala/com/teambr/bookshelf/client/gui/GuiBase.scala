@@ -27,6 +27,10 @@ import scala.collection.mutable.ArrayBuffer
  * @author Paul Davis <pauljoda>
  * @since August 04, 2015
  *
+ * This is the base GUI class. All GUIs should extend this as it handles many things for you.
+ *
+ * For instance, you can add tabs, use any of our components, and you don't have to render any slots or make a background!
+ * This class will handle drawing all slots and the background of the GUI. It will even center the title for you and translate it
  */
 @Optional.InterfaceList(Array(new Optional.Interface(iface = "codechicken.nei.cofh.api.INEIGuiHandler", modid = "NotEnoughItems")))
 abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: Int, name : String)
@@ -95,26 +99,58 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
      */
     def getYSize: Int = ySize
 
+    /**
+     * Called when the mouse is clicked
+     * @param x The X Position
+     * @param y The Y Position
+     * @param button The button pressed
+     */
     protected override def mouseClicked(x: Int, y: Int, button: Int) {
         super.mouseClicked(x, y, button)
         for (component <- components) if (component.isMouseOver(x - this.guiLeft, y - this.guiTop)) component.mouseDown(x - this.guiLeft, y - this.guiTop, button)
     }
 
+    /**
+     * Called when the mouse releases a button
+     * @param x The X Position
+     * @param y The Y Position
+     * @param button The button released
+     */
     protected override def mouseReleased(x: Int, y: Int, button: Int) {
         super.mouseReleased(x, y, button)
         for (component <- components) if (component.isMouseOver(x - this.guiLeft, y - this.guiTop)) component.mouseUp(x - this.guiLeft, y - this.guiTop, button)
     }
 
+    /**
+     * Used to track when the mouse is clicked and dragged
+     * @param x The Current X Position
+     * @param y The Current Y Position
+     * @param button The button being dragged
+     * @param time How long it has been pressed
+     */
     protected override def mouseClickMove(x: Int, y: Int, button: Int, time: Long) {
         super.mouseClickMove(x, y, button, time)
         for (component <- components) if (component.isMouseOver(x - this.guiLeft, y - this.guiTop)) component.mouseDrag(x - this.guiLeft, y - this.guiTop, button, time)
     }
 
+    /**
+     * Called when a key is typed
+     * @param letter The letter pressed, as a char
+     * @param code The Java key code
+     */
     protected override def keyTyped(letter: Char, code: Int) {
         super.keyTyped(letter, code)
         for (component <- components) component.keyTyped(letter, code)
     }
 
+    /**
+     * Used to draw above the background. This will be called after the background has been drawn
+     *
+     * Used mostly for adding text
+     *
+     * @param x The mouse X Position
+     * @param y The mouse Y Position
+     */
     protected override def drawGuiContainerForegroundLayer(x: Int, y: Int) {
         GL11.glPushMatrix()
         RenderUtils.prepareRenderState()
@@ -128,6 +164,14 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
         GL11.glPopMatrix()
     }
 
+    /**
+     * Called to draw the background
+     *
+     * Usually used to create the base on which to render things
+     * @param f A float?
+     * @param mouseX The mouse X
+     * @param mouseY The mouse Y
+     */
     protected def drawGuiContainerBackgroundLayer(f: Float, mouseX: Int, mouseY: Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(guiLeft, guiTop, 0)
@@ -161,11 +205,28 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
         GL11.glPopMatrix()
     }
 
+    /**
+     * The main draw call. The super will handle calling the background and foreground layers. Then our extra code will run
+     *
+     * Used mainly to attach tool tips as they will always be on the top
+     * @param mouseX The Mouse X Position
+     * @param mouseY The mouse Y Position
+     * @param par3 A Float?
+     */
     override def drawScreen(mouseX: Int, mouseY: Int, par3: Float) {
         super.drawScreen(mouseX, mouseY, par3)
         for (component <- components) if (component.isMouseOver(mouseX - guiLeft, mouseY - guiTop)) component.renderToolTip(mouseX, mouseY, this)
     }
 
+    /**
+     * Used internally to check if the slot should be rendered with a large background
+     *
+     * At the moment, the only slot that we have to check is the furnace slot. If you make a custom slot,
+     * you should implement ICustomSlot as that will handle this. If you're adding vanilla slot checks here, you're probably
+     * using this wrong
+     * @param slot The slot to check
+     * @return True if it is a big slot
+     */
     private def isLargeSlot(slot: Slot): Boolean = slot.isInstanceOf[SlotFurnaceOutput]
 
     /*******************************************************************************************************************

@@ -8,6 +8,9 @@ package com.teambr.bookshelf.client.gui;
  *
  * @author Paul Davis <pauljoda>
  * @since August 04, 2015
+ *
+ * This gives us the ability to add color to all vanilla text. Simply concat one of these enums into your string and
+ * it will color all text after the concatenation
  */
 public enum GuiColor {
     BLACK(0),
