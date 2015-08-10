@@ -4,6 +4,7 @@ import java.awt.Color
 
 import com.teambr.bookshelf.client.gui.GuiBase
 import com.teambr.bookshelf.client.gui.component.BaseComponent
+import com.teambr.bookshelf.client.gui.component.control.GuiComponentCheckBox
 import com.teambr.bookshelf.client.gui.component.display.{GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.entity.player.EntityPlayer
@@ -38,6 +39,21 @@ class GuiTest(player : EntityPlayer)
      * This will be called after the GUI has been initialized and should be where you add all components.
      */
     override def addComponents(): Unit = {
+        components += new GuiComponentCheckBox(20, 20, "import", true) {
+            override def setValue(bool : Boolean) = {
+
+            }
+        }
+
+        components += new GuiComponentCheckBox(20, 35, "export", true) {
+            override def setValue(bool : Boolean) = {
+
+            }
+        }
+        components += new GuiComponentCheckBox(20, 50, "auto", true) {
+            override def setValue(bool : Boolean) = {
+            }
+        }
     }
 
     /**

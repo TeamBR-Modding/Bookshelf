@@ -33,12 +33,12 @@ object GuiHelper {
             val timesW = Math.floor(maxWidth / 16).asInstanceOf[Int]
             var cutW = 16
 
-            for(j <- 0 until timesW) {
+            for(j <- 0 to timesW) {
                 if(j == timesW)
                     cutW = maxWidth % 16
                 if(level >= 16) {
                     val times = Math.floor(level / 16).asInstanceOf[Int]
-                    for(i <- 1 until times) {
+                    for(i <- 1 to times) {
                         drawIconWithCut(icon, x + (j * 16), y - (16 * i), cutW, 16, 0)
                     }
                     val cut = level % 16

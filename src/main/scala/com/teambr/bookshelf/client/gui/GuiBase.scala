@@ -137,6 +137,7 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
         for (component <- components) {
             RenderUtils.prepareRenderState()
             component.render(0, 0)
+            RenderUtils.restoreColor()
             RenderUtils.restoreRenderState()
         }
 
