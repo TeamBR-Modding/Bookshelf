@@ -18,7 +18,7 @@ import org.lwjgl.opengl.{GL11, GL12}
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 04, 2015
  */
 class GuiReverseTab(gui: GuiBase[_ <: Container], x : Int, y : Int, expandedWidth : Int, expandedHeight : Int, color : Color, stack: ItemStack)

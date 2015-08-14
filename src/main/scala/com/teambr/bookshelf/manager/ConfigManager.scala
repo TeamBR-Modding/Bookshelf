@@ -12,7 +12,7 @@ import net.minecraftforge.common.config.Configuration
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 02, 2015
  *
  * Used to manage the config. For us, its helpful debug mode

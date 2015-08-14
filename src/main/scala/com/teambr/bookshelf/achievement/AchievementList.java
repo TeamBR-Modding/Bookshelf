@@ -15,7 +15,7 @@ import java.util.List;
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since July 31, 2015
  */
 public abstract class AchievementList {

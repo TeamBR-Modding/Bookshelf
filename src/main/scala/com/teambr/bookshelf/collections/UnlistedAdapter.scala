@@ -10,7 +10,7 @@ import net.minecraftforge.common.property.Properties.PropertyAdapter
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 06, 2015
  */
 class UnlistedAdapter[V <: Comparable[_]](iProperty: IProperty) extends PropertyAdapter[V](iProperty) {

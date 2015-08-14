@@ -14,7 +14,7 @@ import net.minecraft.world.World
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 02, 2015
  *
  * This defines the block will open a GUI. You must use this in the Block class
