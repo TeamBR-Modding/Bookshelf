@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import com.teambr.bookshelf.common.blocks.properties.{ TileAwareState, TileAwareProperty }
+import com.teambr.bookshelf.common.blocks.properties.TileAwareState
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.tileentity.TileEntity
