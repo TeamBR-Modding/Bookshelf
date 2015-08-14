@@ -32,7 +32,11 @@ import scala.collection.mutable.ArrayBuffer
  * For instance, you can add tabs, use any of our components, and you don't have to render any slots or make a background!
  * This class will handle drawing all slots and the background of the GUI. It will even center the title for you and translate it
  */
-@Optional.InterfaceList(Array(new Optional.Interface(iface = "codechicken.nei.cofh.api.INEIGuiHandler", modid = "NotEnoughItems")))
+@Optional.InterfaceList(Array(
+    new Optional.Interface(iface = "codechicken.nei.VisiblityData", modid = "NotEnoughItems", striprefs = true),
+    new Optional.Interface(iface = "codechicken.nei.api.INEIGuiHandler", modid = "NotEnoughItems", striprefs = true),
+    new Optional.Interface(iface = "codechicken.nei.api.TaggedInventoryArea", modid = "NotEnoughItems", striprefs = true)
+))
 abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: Int, name : String)
         extends GuiContainer(inventory) with INEIGuiHandler {
     this.xSize = width
@@ -232,13 +236,16 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
     /*******************************************************************************************************************
       ********************************************* NEI ****************************************************************
       *******************************************************************************************************************/
-
+    @Optional.Method(modid = "NotEnoughItems")
     override def modifyVisiblity (guiContainer: GuiContainer, visiblityData: VisiblityData) : VisiblityData = null
 
+    @Optional.Method(modid = "NotEnoughItems")
     override def getItemSpawnSlots(guiContainer: GuiContainer, itemStack: ItemStack) : java.lang.Iterable[Integer] = null
 
+    @Optional.Method(modid = "NotEnoughItems")
     override def getInventoryAreas(guiContainer: GuiContainer) : java.util.List[TaggedInventoryArea] = null
 
+    @Optional.Method(modid = "NotEnoughItems")
     override def handleDragNDrop(guiContainer: GuiContainer, i: Int, i1: Int, itemStack: ItemStack, i2: Int) : Boolean = false
 
     @Optional.Method(modid = "NotEnoughItems")
