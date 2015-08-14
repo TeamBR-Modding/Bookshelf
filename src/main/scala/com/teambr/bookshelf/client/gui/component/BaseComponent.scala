@@ -15,7 +15,7 @@ import scala.collection.mutable.ArrayBuffer
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 04, 2015
  */
 abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {

@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 04, 2015
  */
 abstract class BaseContainer(val playerInventory: IInventory, val inventory: IInventory) extends Container {

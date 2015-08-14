@@ -192,9 +192,9 @@ uploadArchives {
 curse {
     projectId = 232784
     apiKey = APIToken
-    changelog = 'More Stuff added'
+    changelog = 'Initial 1.8 Release'
     releaseType 'release'
     additionalArtifact devJar
-    addGameVersion '1.7.10'
+    addGameVersion '1.8'
 }
 

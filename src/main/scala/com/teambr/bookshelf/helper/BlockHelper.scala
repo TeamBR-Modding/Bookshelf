@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 05, 2015
  */
 object BlockHelper {

@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntity
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 03, 2015
  *
  * This trait will make sure when you mark the block to update, it will read and write the NBT tag.

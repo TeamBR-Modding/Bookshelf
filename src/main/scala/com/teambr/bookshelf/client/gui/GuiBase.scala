@@ -24,7 +24,7 @@ import scala.collection.mutable.ArrayBuffer
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis pauljoda
  * @since August 04, 2015
  *
  * This is the base GUI class. All GUIs should extend this as it handles many things for you.

@@ -10,7 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 
 /**
  * This file was created for Modular-Systems
- * <p/>
+ *
  * Modular-Systems is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
