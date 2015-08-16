@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import net.minecraft.block.Block
+import net.minecraft.block.BlockContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.inventory.IInventory
@@ -14,7 +14,7 @@ import scala.util.Random
   * Created by Paul Davis on 8/1/2015
   *
   */
-trait DropsItems extends Block {
+trait DropsItems extends BlockContainer {
     override def breakBlock(world: World, pos: BlockPos, state : IBlockState): Unit = {
         world match {
             case _: WorldServer => //We are on a server
