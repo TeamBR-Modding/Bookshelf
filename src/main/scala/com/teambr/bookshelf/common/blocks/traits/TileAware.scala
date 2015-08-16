@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import com.teambr.bookshelf.common.blocks.properties.TileAwareProperty
+import com.teambr.bookshelf.common.blocks.properties.TileAwareState
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.tileentity.TileEntity
@@ -18,12 +18,12 @@ import net.minecraftforge.common.property.IExtendedBlockState
  * @author Paul Davis pauljoda
  * @since August 04, 2015
  */
-trait TileAwareState extends BlockContainer {
+trait TileAware extends BlockContainer {
     override def getExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : IBlockState = {
         state match {
             case extendedState: IExtendedBlockState => //Needs to have an extended state
                 world.getTileEntity(pos) match {
-                    case tile : TileEntity => extendedState.withProperty(new TileAwareProperty, tile)
+                    case tile : TileEntity => new TileAwareState(tile, world.getBlockState(pos).getBlock)
                     case _ => state
                 }
             case _ => state
