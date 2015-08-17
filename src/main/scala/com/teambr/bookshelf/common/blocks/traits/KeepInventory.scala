@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityItem
@@ -13,7 +12,7 @@ import net.minecraft.world.World
 
 import scala.util.Random
 
-trait KeepInventory extends Block with DropsItems {
+trait KeepInventory extends DropsItems {
 
     /**
      * Override this is you want to do a specific tag write to the item
