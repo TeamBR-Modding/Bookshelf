@@ -78,7 +78,7 @@ object InventoryUtils {
     }
 
     def insertItemIntoInventory(inventory: IInventory, stack: ItemStack) {
-        insertItemIntoInventory(inventory, stack, EnumFacing.UP, -1)
+        insertItemIntoInventory(inventory, stack, null, -1)
     }
 
     def insertItemIntoInventory(inventory: IInventory, stack: ItemStack, side: EnumFacing, intoSlot: Int) {
@@ -110,7 +110,7 @@ object InventoryUtils {
         val attemptSlots = new ArrayBuffer[Int]
 
         //We need to know if this is a sided inventory, if we don't case then just skip
-        val isSidedInventory: Boolean = inventory.isInstanceOf[ISidedInventory] && side != EnumFacing.UP
+        val isSidedInventory: Boolean = inventory.isInstanceOf[ISidedInventory] && side != null
 
         //If sided, just get the sides we can deal with
         if (isSidedInventory) {
