@@ -4,8 +4,9 @@ import java.io.File
 
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.lib.Reference
-import com.teambr.bookshelf.manager.{ EventManager, GuiManager }
+import com.teambr.bookshelf.manager.{ConfigManager, EventManager, GuiManager}
 import com.teambr.bookshelf.network.PacketManager
+import mcp.mobius.waila.api.impl.ConfigHandler
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event.{ FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent }
 import net.minecraftforge.fml.common.network.NetworkRegistry
@@ -34,12 +35,14 @@ object Bookshelf {
 
     @EventHandler def preInit(event : FMLPreInitializationEvent) = {
         configFolderLocation = event.getModConfigurationDirectory.getAbsolutePath + File.separator + Reference.MODNAME
+        ConfigManager.init(configFolderLocation)
 
         proxy.preInit()
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager)
 
-        GameRegistry.registerBlock(new BlockTest, "blockTest")
+        if (ConfigManager.debug)
+            GameRegistry.registerBlock(new BlockTest, "blockTest")
     }
 
     @EventHandler def init(event : FMLInitializationEvent) = {
