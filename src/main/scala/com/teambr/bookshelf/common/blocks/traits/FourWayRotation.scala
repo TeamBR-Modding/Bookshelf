@@ -28,7 +28,7 @@ trait FourWayRotation extends BlockBakeable {
     override def onBlockPlaced(world : World, blockPos : BlockPos, facing : EnumFacing, hitX : Float, hitY : Float, hitZ : Float, meta : Int, placer : EntityLivingBase) : IBlockState = {
         val playerFacingDirection = if (placer == null) 0 else MathHelper.floor_double((placer.rotationYaw / 90.0F) + 0.5D) & 3
         val enumFacing = EnumFacing.getHorizontal(playerFacingDirection).getOpposite
-        this.getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, enumFacing)
+        this.getDefaultState.withProperty(PropertyRotation.FOUR_WAY, enumFacing)
     }
 
     /**
@@ -36,7 +36,7 @@ trait FourWayRotation extends BlockBakeable {
      */
     override def createBlockState() : BlockState = {
         val listed = new Array[IProperty](1)
-        listed(0) = PropertyRotation.FOUR_WAY.getProperty
+        listed(0) = PropertyRotation.FOUR_WAY
         val unlisted = new Array[IUnlistedProperty[_]](0)
         new ExtendedBlockState(this, listed, unlisted)
     }
@@ -44,7 +44,7 @@ trait FourWayRotation extends BlockBakeable {
     override def getExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : IBlockState = {
         state match {
             case returnValue : IExtendedBlockState =>
-                returnValue.withProperty(PropertyRotation.FOUR_WAY, world.getBlockState(pos).getValue(PropertyRotation.FOUR_WAY.getProperty).asInstanceOf[EnumFacing])
+                returnValue.withProperty(PropertyRotation.FOUR_WAY, world.getBlockState(pos).getValue(PropertyRotation.FOUR_WAY).asInstanceOf[EnumFacing])
                 returnValue
             case _ =>state
         }
@@ -55,29 +55,29 @@ trait FourWayRotation extends BlockBakeable {
      * @param meta The meta
      * @return
      */
-    override def getStateFromMeta(meta : Int) : IBlockState = getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, EnumFacing.getFront(meta))
+    override def getStateFromMeta(meta : Int) : IBlockState = getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.getFront(meta))
 
     /**
      * Called to convert state from meta
      * @param state The state
      * @return
      */
-    override def getMetaFromState(state : IBlockState) = state.getValue(PropertyRotation.FOUR_WAY.getProperty).asInstanceOf[EnumFacing].getIndex
+    override def getMetaFromState(state : IBlockState) = state.getValue(PropertyRotation.FOUR_WAY).asInstanceOf[EnumFacing].getIndex
 
 
     def getModelRotation(state : IBlockState) : ModelRotation = {
-        if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, EnumFacing.EAST))
+        if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.EAST))
             return ModelRotation.X0_Y90
-        else if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, EnumFacing.SOUTH))
+        else if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.SOUTH))
             return ModelRotation.X0_Y180
-        else if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, EnumFacing.WEST))
+        else if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.WEST))
             return ModelRotation.X0_Y270
         ModelRotation.X0_Y0
     }
 
     override def getAllPossibleStates: Array[IBlockState] =
-        Array[IBlockState](getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, EnumFacing.NORTH),
-            getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, EnumFacing.EAST),
-            getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, EnumFacing.SOUTH),
-            getDefaultState.withProperty(PropertyRotation.FOUR_WAY.getProperty, EnumFacing.WEST))
+        Array[IBlockState](getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.NORTH),
+            getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.EAST),
+            getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.SOUTH),
+            getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.WEST))
 }
