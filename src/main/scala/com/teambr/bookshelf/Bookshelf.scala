@@ -39,6 +39,7 @@ object Bookshelf {
 
     @EventHandler def preInit(event : FMLPreInitializationEvent) = {
         configFolderLocation = event.getModConfigurationDirectory.getAbsolutePath + File.separator + Reference.MODNAME
+
         ConfigManager.init(configFolderLocation)
 
         proxy.preInit()
