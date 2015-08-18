@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.notification;
 
-import com.dyonovan.neotech.NeoTech;
+import com.teambr.bookshelf.Bookshelf;
 import com.teambr.bookshelf.client.gui.GuiColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -29,9 +29,10 @@ public class GuiNotificationConfig extends GuiScreen {
     public GuiNotificationConfig()
     {
         minecraft = Minecraft.getMinecraft();
-        xPos = NeoTech.notificationXPos();
+        xPos = Bookshelf.notificationXPos();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         updateScale();
@@ -85,18 +86,18 @@ public class GuiNotificationConfig extends GuiScreen {
 
     public static void set(String categoryName, String propertyName, int newValue) {
 
-        NeoTech.notificationConfig().load();
-        if (NeoTech.notificationConfig().getCategoryNames().contains(categoryName)) {
-            if (NeoTech.notificationConfig().getCategory(categoryName).containsKey(propertyName)) {
-                NeoTech.notificationConfig().getCategory(categoryName).get(propertyName).set(newValue);
+        Bookshelf.notificationConfig().load();
+        if (Bookshelf.notificationConfig().getCategoryNames().contains(categoryName)) {
+            if (Bookshelf.notificationConfig().getCategory(categoryName).containsKey(propertyName)) {
+                Bookshelf.notificationConfig().getCategory(categoryName).get(propertyName).set(newValue);
             }
         }
-        NeoTech.notificationConfig().save();
+        Bookshelf.notificationConfig().save();
         reloadValues();
     }
 
     public static void reloadValues() {
-        NeoTech.notificationXPos_$eq(NeoTech.notificationConfig().getInt("notification xpos", "notifications", 1, 0, 2, "0: Left   1: Center   2: Right"));
+        Bookshelf.notificationXPos_$eq(Bookshelf.notificationConfig().getInt("notification xpos", "notifications", 1, 0, 2, "0: Left   1: Center   2: Right"));
     }
 
     private void updateScale() {

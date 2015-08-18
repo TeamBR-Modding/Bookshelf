@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.notification;
 
-import com.dyonovan.neotech.NeoTech;
+import com.teambr.bookshelf.Bookshelf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -137,7 +137,7 @@ public class GuiNotification extends Gui {
             d1 *= d1;
             d1 *= d1;
             int i = (this.width / 2) - 80;
-            switch(NeoTech.notificationXPos()) {
+            switch(Bookshelf.notificationXPos()) {
                 case 0 :
                     i = 0;
                     break;

@@ -7,6 +7,7 @@ import com.teambr.bookshelf.lib.Reference
 import com.teambr.bookshelf.manager.{ConfigManager, EventManager, GuiManager}
 import com.teambr.bookshelf.network.PacketManager
 import mcp.mobius.waila.api.impl.ConfigHandler
+import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event.{ FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent }
 import net.minecraftforge.fml.common.network.NetworkRegistry
@@ -32,6 +33,9 @@ object Bookshelf {
     var proxy : CommonProxy = _
 
     var configFolderLocation : String = _
+
+    var notificationXPos : Int = 0
+    var notificationConfig : Configuration = null
 
     @EventHandler def preInit(event : FMLPreInitializationEvent) = {
         configFolderLocation = event.getModConfigurationDirectory.getAbsolutePath + File.separator + Reference.MODNAME
