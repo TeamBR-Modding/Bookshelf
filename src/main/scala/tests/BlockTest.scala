@@ -1,8 +1,11 @@
 package tests
 
+import com.teambr.bookshelf.api.waila.Waila
 import com.teambr.bookshelf.collections.CubeTextures
 import com.teambr.bookshelf.common.blocks.traits.{BlockBakeable, SixWayRotation}
 import com.teambr.bookshelf.common.tiles.traits.{Inventory, OpensGui}
+import mcp.mobius.waila.api.ITaggedList
+import mcp.mobius.waila.api.ITaggedList.ITipList
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.block.state.IBlockState
@@ -21,7 +24,7 @@ import net.minecraft.world.World
  * @author Paul Davis pauljoda
  * @since August 03, 2015
  */
-class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotation with OpensGui {
+class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotation with OpensGui with Waila {
     override def MODID : String = "bookshelf"
     override def blockName : String = "testBlock"
 
@@ -79,5 +82,10 @@ class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotat
      */
     override def getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
         new GuiTest(player)
+    }
+
+    override def returnWailaHead(tipList: ITaggedList.ITipList): ITipList = {
+        tipList.add("This is a test")
+        tipList
     }
 }

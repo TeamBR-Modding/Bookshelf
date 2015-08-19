@@ -19,8 +19,8 @@ public class WailaDataProvider implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        if (accessor.getTileEntity() instanceof IWaila) {
-            IWaila tile = (IWaila) accessor.getTileEntity();
+        if (accessor.getTileEntity() instanceof Waila) {
+            Waila tile = (Waila) accessor.getTileEntity();
             return tile.returnWailaStack(accessor, config);
         }
         return null;
@@ -28,8 +28,8 @@ public class WailaDataProvider implements IWailaDataProvider {
 
     @Override
     public ITaggedList.ITipList getWailaHead(ItemStack itemStack, ITaggedList.ITipList currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        if(accessor.getTileEntity() instanceof IWaila) {
-            IWaila tile = (IWaila) accessor.getTileEntity();
+        if(accessor.getTileEntity() instanceof Waila) {
+            Waila tile = (Waila) accessor.getTileEntity();
             tile.returnWailaHead(currenttip);
         }
         return currenttip;
@@ -37,8 +37,8 @@ public class WailaDataProvider implements IWailaDataProvider {
 
     @Override
     public ITaggedList.ITipList getWailaBody(ItemStack itemStack, ITaggedList.ITipList currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        if(accessor.getTileEntity() instanceof IWaila) {
-            IWaila tile = (IWaila) accessor.getTileEntity();
+        if(accessor.getTileEntity() instanceof Waila) {
+            Waila tile = (Waila) accessor.getTileEntity();
             tile.returnWailaBody(currenttip);
         }
         return currenttip;
@@ -46,8 +46,8 @@ public class WailaDataProvider implements IWailaDataProvider {
 
     @Override
     public ITaggedList.ITipList getWailaTail(ItemStack itemStack, ITaggedList.ITipList currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        if(accessor.getTileEntity() instanceof IWaila) {
-            IWaila tile = (IWaila) accessor.getTileEntity();
+        if(accessor.getTileEntity() instanceof Waila) {
+            Waila tile = (Waila) accessor.getTileEntity();
             tile.returnWailaTail(currenttip);
         }
         return currenttip;
@@ -55,8 +55,8 @@ public class WailaDataProvider implements IWailaDataProvider {
 
     @Override
     public NBTTagCompound getNBTData(TileEntity te, NBTTagCompound tag, IWailaDataAccessorServer accessor) {
-        if (te instanceof IWaila) {
-            NBTTagCompound returnTag = ((IWaila) te).returnNBTData(te, tag, accessor);
+        if (te instanceof Waila) {
+            NBTTagCompound returnTag = ((Waila) te).returnNBTData(te, tag, accessor);
             if (returnTag != null)
                 return returnTag;
         }
@@ -65,15 +65,15 @@ public class WailaDataProvider implements IWailaDataProvider {
 
     @SuppressWarnings("unused")
     public static void callBackRegisterClient(IWailaRegistrar registrar) {
-        registrar.registerHeadProvider(new WailaDataProvider(), IWaila.class);
-        registrar.registerBodyProvider(new WailaDataProvider(), IWaila.class);
-        registrar.registerTailProvider(new WailaDataProvider(), IWaila.class);
-        registrar.registerStackProvider(new WailaDataProvider(), IWaila.class);
-        registrar.registerNBTProvider(new WailaDataProvider(), IWaila.class);
+        registrar.registerHeadProvider(new WailaDataProvider(), Waila.class);
+        registrar.registerBodyProvider(new WailaDataProvider(), Waila.class);
+        registrar.registerTailProvider(new WailaDataProvider(), Waila.class);
+        registrar.registerStackProvider(new WailaDataProvider(), Waila.class);
+        registrar.registerNBTProvider(new WailaDataProvider(), Waila.class);
     }
 
     @SuppressWarnings("unused")
     public static void callBackRegisterServer(IWailaRegistrar registrar) {
-        registrar.registerNBTProvider(new WailaDataProvider(), IWaila.class);
+        registrar.registerNBTProvider(new WailaDataProvider(), Waila.class);
     }
 }
