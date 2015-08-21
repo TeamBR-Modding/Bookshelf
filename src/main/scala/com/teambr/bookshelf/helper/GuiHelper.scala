@@ -26,7 +26,8 @@ object GuiHelper {
         if(fluid != null) {
             GL11.glPushMatrix()
             val level = (fluid.amount * maxHeight) / tank.getCapacity
-            val icon :TextureAtlasSprite = Minecraft.getMinecraft.getTextureMapBlocks.getAtlasSprite(fluid.getFluid.getStill(fluid).toString)
+            //val icon :TextureAtlasSprite = Minecraft.getMinecraft.getTextureMapBlocks.getAtlasSprite(fluid.getFluid.getStill(fluid).toString)
+            val icon: TextureAtlasSprite = fluid.getFluid.getIcon
             RenderUtils.bindMinecraftBlockSheet()
             setGLColorFromInt(fluid.getFluid.getColor(fluid))
 
