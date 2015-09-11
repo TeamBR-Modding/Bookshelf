@@ -1,4 +1,5 @@
-BR-Lib [![Build Status](http://www.beyondrealitypack.com:8080/buildStatus/icon?job=Bookshelf)](http://www.beyondrealitypack.com:8080/job/Bookshelf/)
+Bookshelf API [![Build Status](http://www.teambrmodding.com/jenkins/buildStatus/icon?job=Bookshelf)](http://www
+.teambrmodding.com/jenkins/job/Bookshelf/)
 ======
 
 Library of useful functions used by TeamBR
@@ -11,7 +12,7 @@ Add the following code to build.gradle.
 ```
 repositories {
     maven {
-        url "http://www.beyondrealitypack.com/maven2/"
+        url "http://www.teambrmodding.com/maven2/"
     }
 }
 
