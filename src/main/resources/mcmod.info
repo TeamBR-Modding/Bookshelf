@@ -1,6 +1,6 @@
 [
 {
-  "modid": "bookshelf",
+  "modid": "bookshelfapi",
   "name": "Bookshelf",
   "description": "Library of useful functions used by TeamBR",
   "version": "${version}",

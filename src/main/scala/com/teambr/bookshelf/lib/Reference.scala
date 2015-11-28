@@ -11,7 +11,7 @@ package com.teambr.bookshelf.lib
  * @since August 02, 2015
  */
 object Reference {
-    final val MODID          = "bookshelf"
+    final val MODID          = "bookshelfapi"
     final val MODNAME        = "Bookshelf"
     final val VERSION        = "@VERSION@"
     final val DEPENDENCIES   = ""
