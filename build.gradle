@@ -192,7 +192,7 @@ uploadArchives {
 curse {
     projectId = 232784
     apiKey = APIToken
-    changelog = 'Initial 1.8 Release'
+    changelog = 'Changed ModID'
     releaseType 'release'
     additionalArtifact devJar
     addGameVersion '1.8'
