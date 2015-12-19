@@ -114,15 +114,15 @@ artifacts {
 configurations {
     deployerJars
 }
-/*
+
 dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
-    compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.ccc_version}:dev"
-    compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
-    compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.NEI_version}:dev"
+    //compile "codechicken:CodeChickenCore:${config.minecraft_version}-${config.ccc_version}:dev"
+    //compile "codechicken:CodeChickenLib:${config.minecraft_version}-${config.CCLIB_version}:dev"
+    //compile "codechicken:NotEnoughItems:${config.minecraft_version}-${config.NEI_version}:dev"
     compile "mcp.mobius.waila:Waila:${config.WAILA_version}:dev"
 }
-*/
+
 repositories {
     mavenCentral()
     maven { // the repo from which to get NEI and stuff

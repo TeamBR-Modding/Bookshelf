@@ -16,7 +16,7 @@ import java.util.Collection;
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @author Paul Davis <pauljoda>
+ * @author Paul Davis
  * @since 12/18/2015
  */
 public class TileAwareState implements IBlockState {
