@@ -203,7 +203,7 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
         GL11.glPushMatrix()
 
         val mc: Minecraft = Minecraft.getMinecraft
-        val scale: Int = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight).getScaleFactor
+        val scale: Int = new ScaledResolution(mc).getScaleFactor
         GL11.glLineWidth(scale * 1.3F)
 
         GL11.glTranslated(-3, -1, 5)

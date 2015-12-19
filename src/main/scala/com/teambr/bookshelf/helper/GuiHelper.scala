@@ -3,8 +3,10 @@ package com.teambr.bookshelf.helper
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.audio.PositionedSoundRecord
+import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.FluidTank
 import org.lwjgl.opengl.GL11
@@ -26,8 +28,7 @@ object GuiHelper {
         if(fluid != null) {
             GL11.glPushMatrix()
             val level = (fluid.amount * maxHeight) / tank.getCapacity
-            //val icon :TextureAtlasSprite = Minecraft.getMinecraft.getTextureMapBlocks.getAtlasSprite(fluid.getFluid.getStill(fluid).toString)
-            val icon: TextureAtlasSprite = fluid.getFluid.getIcon
+            val icon :TextureAtlasSprite = Minecraft.getMinecraft.getTextureMapBlocks.getAtlasSprite(fluid.getFluid.getStill(fluid).toString)
             RenderUtils.bindMinecraftBlockSheet()
             setGLColorFromInt(fluid.getFluid.getColor(fluid))
 
@@ -65,12 +66,7 @@ object GuiHelper {
     private def drawIconWithCut(icon: TextureAtlasSprite, x: Int, y: Int, width: Int, height: Int, cut: Int) {
         val tess = Tessellator.getInstance()
         val renderer = tess.getWorldRenderer
-        renderer.startDrawingQuads()
-        renderer.addVertexWithUV(x, y + height, 0, icon.getMinU, icon.getInterpolatedV(height))
-        renderer.addVertexWithUV(x + width, y + height, 0, icon.getInterpolatedU(width), icon.getInterpolatedV(height))
-        renderer.addVertexWithUV(x + width, y + cut, 0, icon.getInterpolatedU(width), icon.getInterpolatedV(cut))
-        renderer.addVertexWithUV(x, y + cut, 0, icon.getMinU, icon.getInterpolatedV(cut))
-        tess.draw
+        Gui.drawModalRectWithCustomSizedTexture(x, y, icon.getMinU, icon.getMinV, width, height, 16, 16)
     }
 
     private def setGLColorFromInt(color: Int) {

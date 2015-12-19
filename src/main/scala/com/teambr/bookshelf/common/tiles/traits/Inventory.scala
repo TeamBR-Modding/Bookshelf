@@ -190,11 +190,20 @@ trait Inventory extends IInventory with NBTSavable {
     override def getStackInSlot(index: Int): ItemStack = inventoryContents.get(index)
 
     /**
+      * Removes a stack from the given slot and returns it.
+      */
+    override def removeStackFromSlot (index: Int) : ItemStack = {
+        val stack = inventoryContents.get(index).copy()
+        inventoryContents.set(index, null)
+        stack
+    }
+
+    /**
      * Used to get the stack when closing. Used when you drop items on the floor ie a workbench
      * @param index The slot
      * @return What was in that stack, now null
      */
-    override def getStackInSlotOnClosing(index: Int): ItemStack = {
+    def getStackInSlotOnClosing(index: Int): ItemStack = {
         if(index >= this.inventoryContents.size()) return null
         if(this.inventoryContents.get(index) != null) {
             val stack = this.inventoryContents.get(index)

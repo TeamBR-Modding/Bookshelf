@@ -6,7 +6,6 @@ import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.lib.Reference
 import com.teambr.bookshelf.manager.{ConfigManager, EventManager, GuiManager}
 import com.teambr.bookshelf.network.PacketManager
-import mcp.mobius.waila.api.impl.ConfigHandler
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event.{ FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent }

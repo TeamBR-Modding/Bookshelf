@@ -38,6 +38,6 @@ trait RedstoneAware extends TileEntity {
      * @return True if is providing
      */
     def isPoweringTo(world: World, blockPos: BlockPos, side: EnumFacing): Boolean = {
-         world.getBlockState(blockPos).getBlock.isProvidingWeakPower(world, blockPos, world.getBlockState(blockPos), side) > 0
+         world.getBlockState(blockPos).getBlock.getWeakPower(world, blockPos, world.getBlockState(blockPos), side) > 0
     }
 }

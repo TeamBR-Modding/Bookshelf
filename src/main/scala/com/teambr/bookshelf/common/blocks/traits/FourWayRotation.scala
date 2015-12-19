@@ -1,7 +1,8 @@
 package com.teambr.bookshelf.common.blocks.traits
 
+import com.mojang.authlib.properties.Property
 import com.teambr.bookshelf.common.blocks.properties.PropertyRotation
-import net.minecraft.block.properties.IProperty
+import net.minecraft.block.properties.{PropertyDirection, IProperty}
 import net.minecraft.block.state.{ BlockState, IBlockState }
 import net.minecraft.client.resources.model.ModelRotation
 import net.minecraft.entity.EntityLivingBase
@@ -35,7 +36,7 @@ trait FourWayRotation extends BlockBakeable {
      * Used to say what our block state is
      */
     override def createBlockState() : BlockState = {
-        val listed = new Array[IProperty](1)
+        val listed = new Array[IProperty[_]](1)
         listed(0) = PropertyRotation.FOUR_WAY
         val unlisted = new Array[IUnlistedProperty[_]](0)
         new ExtendedBlockState(this, listed, unlisted)
@@ -44,7 +45,7 @@ trait FourWayRotation extends BlockBakeable {
     override def getExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : IBlockState = {
         state match {
             case returnValue : IExtendedBlockState =>
-                returnValue.withProperty(PropertyRotation.FOUR_WAY, world.getBlockState(pos).getValue(PropertyRotation.FOUR_WAY).asInstanceOf[EnumFacing])
+                returnValue.withProperty(PropertyRotation.FOUR_WAY, world.getBlockState(pos).getValue(PropertyRotation.FOUR_WAY))
                 returnValue
             case _ =>state
         }

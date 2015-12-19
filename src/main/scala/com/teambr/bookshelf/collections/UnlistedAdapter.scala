@@ -13,7 +13,7 @@ import net.minecraftforge.common.property.Properties.PropertyAdapter
  * @author Paul Davis pauljoda
  * @since August 06, 2015
  */
-class UnlistedAdapter[V <: Comparable[_]](iProperty: IProperty) extends PropertyAdapter[V](iProperty) {
+class UnlistedAdapter[V <: Comparable[V]](iProperty: IProperty[V]) extends PropertyAdapter[V](iProperty) {
     //Since Forge won't let me use this directly, I'll just get it myself
-    def getProperty : IProperty = iProperty
+    def getProperty : IProperty[V] = iProperty
 }

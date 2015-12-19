@@ -1,8 +1,7 @@
 package com.teambr.bookshelf.client.modelfactory.models
 
 import java.util
-import javax.vecmath.Vector3f
-
+import org.lwjgl.util.vector.Vector3f
 import com.teambr.bookshelf.collections.CubeTextures
 import com.teambr.bookshelf.common.blocks.traits.{BlockBakeable, FourWayRotation, SixWayRotation}
 import net.minecraft.block.Block
@@ -70,16 +69,15 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
         textures = bakeable.asInstanceOf[BlockBakeable].getDisplayTextures(bakeable.getDefaultState)
     }
 
-    override def getFaceQuads(facing: EnumFacing): util.List[_] = {
+    override def getFaceQuads(facing: EnumFacing): util.List[BakedQuad] = {
         if(modelRot == ModelRotation.X0_Y0)
             getFaceForSide(facing)
         else getRotatedQuads
     }
 
-    override def getGeneralQuads : util.List[_] = { new util.ArrayList[Nothing] }
+    override def getGeneralQuads : util.ArrayList[BakedQuad] = { new util.ArrayList[BakedQuad] }
 
-
-    def getRotatedQuads : util.List[_] = {
+    def getRotatedQuads : util.List[BakedQuad] = {
         val bakedQuads = new util.ArrayList[BakedQuad]()
         val uv = new BlockFaceUV(Array[Float](0.0F, 0.0F, 16.0F, 16.0F), 0)
         val face = new BlockPartFace(null, 0, "", uv)
@@ -97,7 +95,7 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
     }
 
     //This will help those without model rotation, but if it does rotate, then just used the general quads. Its just easier
-    private def getFaceForSide(facing : EnumFacing) : util.List[_] = {
+    private def getFaceForSide(facing : EnumFacing) : util.List[BakedQuad] = {
         val bakedQuads = new util.ArrayList[BakedQuad]()
         val uv = new BlockFaceUV(Array[Float](0.0F, 0.0F, 16.0F, 16.0F), 0)
         val face = new BlockPartFace(null, 0, "", uv)
@@ -128,8 +126,6 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
 
     override def isBuiltInRenderer: Boolean = false
 
-    override def getTexture: TextureAtlasSprite = textures.north
-
     /**
      * Now, forge is going to get mad at us and say don't use these. But you know what, I'm not writing a whole new model
      * just for this. So deal with it
@@ -137,9 +133,8 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
     val MovedUp = new ItemTransformVec3f(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(-0.05F, 0.05F, -0.15F), new Vector3f(-0.5F, -0.5F, -0.5F))
 
     override def getItemCameraTransforms: ItemCameraTransforms = {
-        new ItemCameraTransforms(MovedUp, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT)
+        new ItemCameraTransforms(MovedUp, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT, ItemTransformVec3f.DEFAULT)
     }
-
 
     override def handleBlockState(state: IBlockState): IBakedModel = {
         new BlockModel(state)
@@ -148,5 +143,7 @@ class BlockModel extends ISmartBlockModel with ISmartItemModel {
     override def handleItemState(stack: ItemStack): IBakedModel = {
         new BlockModel(Block.getBlockFromItem(stack.getItem).asInstanceOf[BlockBakeable])
     }
+
+    override def getParticleTexture: TextureAtlasSprite = textures.north
 }
 

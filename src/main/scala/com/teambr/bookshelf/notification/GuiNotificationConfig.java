@@ -108,7 +108,7 @@ public class GuiNotificationConfig extends GuiScreen {
         GL11.glLoadIdentity();
         this.width = this.minecraft.displayWidth;
         this.height = this.minecraft.displayHeight;
-        ScaledResolution scaledresolution = new ScaledResolution(this.minecraft, this.minecraft.displayWidth, this.minecraft.displayHeight);
+        ScaledResolution scaledresolution = new ScaledResolution(this.minecraft);
         this.width = scaledresolution.getScaledWidth();
         this.height = scaledresolution.getScaledHeight();
         GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);

@@ -1,7 +1,5 @@
 package com.teambr.bookshelf.client.gui
 
-import codechicken.nei.VisiblityData
-import codechicken.nei.api.{TaggedInventoryArea, INEIGuiHandler}
 import com.teambr.bookshelf.client.gui.component.display.{GuiReverseTab, GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
 import com.teambr.bookshelf.common.container.{SLOT_SIZE, ICustomSlot}
@@ -38,7 +36,7 @@ import scala.collection.mutable.ArrayBuffer
     new Optional.Interface(iface = "codechicken.nei.api.TaggedInventoryArea", modid = "NotEnoughItems", striprefs = true)
 ))
 abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: Int, name : String)
-        extends GuiContainer(inventory) with INEIGuiHandler {
+        extends GuiContainer(inventory) {
     this.xSize = width
     this.ySize = height
 
@@ -233,6 +231,7 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
      */
     private def isLargeSlot(slot: Slot): Boolean = slot.isInstanceOf[SlotFurnaceOutput]
 
+    /* UNTIL UPDATED
     /*******************************************************************************************************************
       ********************************************* NEI ****************************************************************
       *******************************************************************************************************************/
@@ -265,4 +264,5 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
         }
         ((x + w) > xMin && (x + w) < xMax && (y + h) > yMin && (y + h) < yMax) || ((x + w) < xMin + 30 && (x + w) > xMin)
     }
+    */
 }

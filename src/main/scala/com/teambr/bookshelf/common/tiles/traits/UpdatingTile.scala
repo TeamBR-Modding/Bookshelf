@@ -2,9 +2,9 @@ package com.teambr.bookshelf.common.tiles.traits
 
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
-import net.minecraft.network.{ NetworkManager, Packet }
-import net.minecraft.server.gui.IUpdatePlayerListBox
+import net.minecraft.network.{INetHandler, NetworkManager, Packet}
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.ITickable
 
 /**
  * This file was created for Bookshelf
@@ -19,7 +19,7 @@ import net.minecraft.tileentity.TileEntity
  * This trait will make sure when you mark the block to update, it will read and write the NBT tag.
  * If you want something synced, make sure it is sent in the tag and it will sync
  */
-trait UpdatingTile extends TileEntity with IUpdatePlayerListBox {
+trait UpdatingTile extends TileEntity with ITickable {
 
     /**
      * Used to write data to the tag
@@ -47,7 +47,7 @@ trait UpdatingTile extends TileEntity with IUpdatePlayerListBox {
      * Used to identify the packet that will get called on update
      * @return The packet to send
      */
-    override def getDescriptionPacket: Packet = {
+    override def getDescriptionPacket: Packet[_ <: INetHandler] = {
         val tag = new NBTTagCompound
         this.writeToNBT(tag)
         new S35PacketUpdateTileEntity(getPos, 1, tag)
