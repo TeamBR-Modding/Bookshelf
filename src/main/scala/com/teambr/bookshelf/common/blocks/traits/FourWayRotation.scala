@@ -1,14 +1,13 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import com.mojang.authlib.properties.Property
 import com.teambr.bookshelf.common.blocks.properties.PropertyRotation
-import net.minecraft.block.properties.{PropertyDirection, IProperty}
-import net.minecraft.block.state.{ BlockState, IBlockState }
+import net.minecraft.block.properties.IProperty
+import net.minecraft.block.state.{BlockState, IBlockState}
 import net.minecraft.client.resources.model.ModelRotation
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.{ BlockPos, EnumFacing, MathHelper }
-import net.minecraft.world.{ IBlockAccess, World }
-import net.minecraftforge.common.property.{ ExtendedBlockState, IExtendedBlockState, IUnlistedProperty }
+import net.minecraft.util.{BlockPos, EnumFacing, MathHelper}
+import net.minecraft.world.{IBlockAccess, World}
+import net.minecraftforge.common.property.{ExtendedBlockState, IExtendedBlockState, IUnlistedProperty}
 
 /**
  * This file was created for Bookshelf
@@ -21,7 +20,6 @@ import net.minecraftforge.common.property.{ ExtendedBlockState, IExtendedBlockSt
  * @since August 03, 2015
  */
 trait FourWayRotation extends BlockBakeable {
-
 
     /**
      * Called when the block is placed, we check which way the player is facing and put our value as the opposite of that

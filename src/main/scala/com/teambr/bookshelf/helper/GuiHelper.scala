@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraft.client.renderer.texture.{TextureMap, TextureAtlasSprite}
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.FluidTank
@@ -66,7 +66,12 @@ object GuiHelper {
     private def drawIconWithCut(icon: TextureAtlasSprite, x: Int, y: Int, width: Int, height: Int, cut: Int) {
         val tess = Tessellator.getInstance()
         val renderer = tess.getWorldRenderer
-        Gui.drawModalRectWithCustomSizedTexture(x, y, icon.getMinU, icon.getMinV, width, height, 16, 16)
+        renderer.begin(GL11.GL_QUADS, RenderUtils.POSITION_TEX_NORMALF)
+        renderer.pos(x, y + height, 0).tex(icon.getMinU, icon.getInterpolatedV(height)).normal(0, -1, 0).endVertex()
+        renderer.pos(x + width, y + height, 0).tex(icon.getInterpolatedU(width), icon.getInterpolatedV(height)).normal(0, -1, 0).endVertex()
+        renderer.pos(x + width, y + cut, 0).tex(icon.getInterpolatedU(width), icon.getInterpolatedV(cut)).normal(0, -1, 0).endVertex()
+        renderer.pos(x, y + cut, 0).tex(icon.getMinU, icon.getInterpolatedV(cut)).normal(0, -1, 0).endVertex()
+        tess.draw()
     }
 
     private def setGLColorFromInt(color: Int) {
