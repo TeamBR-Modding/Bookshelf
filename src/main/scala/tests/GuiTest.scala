@@ -10,6 +10,7 @@ import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
+import net.minecraft.util.StatCollector
 import net.minecraftforge.fluids.{FluidRegistry, FluidStack, FluidTank}
 
 /**
@@ -40,7 +41,9 @@ class GuiTest(player : EntityPlayer)
      * This will be called after the GUI has been initialized and should be where you add all components.
      */
     override def addComponents(): Unit = {
-        components += new GuiComponentFluidTank(100, 25, 16, 52, new FluidTank(new FluidStack(FluidRegistry.WATER, 25), 100))
+        components += new GuiComponentText(StatCollector.translateToLocal("neotech.grinder.input"), 8, 26)
+        components += new GuiComponentText(StatCollector.translateToLocal("neotech.grinder.grinding"), 8, 48)
+        components += new GuiComponentText(StatCollector.translateToLocal("neotech.grinder.output"), 8, 70)
     }
 
     /**
