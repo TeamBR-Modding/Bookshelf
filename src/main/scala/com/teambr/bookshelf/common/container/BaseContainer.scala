@@ -16,14 +16,23 @@ import net.minecraft.item.ItemStack
  * @since August 04, 2015
  */
 abstract class BaseContainer(val playerInventory: IInventory, val inventory: IInventory) extends Container {
-    
+
+    /**
+      * A restricted slot, will check what the tile will accept before using
+      */
     protected class RestrictedSlot(inventory: IInventory, slot: Int, x: Int, y: Int) extends Slot(inventory, slot, x, y) {
         val inventoryIndex = slot
         override def isItemValid(itemstack: ItemStack): Boolean = inventory.isItemValidForSlot(inventoryIndex, itemstack)
     }
     
     val inventorySize = inventory.getSizeInventory
-    
+
+    /**
+      * Adds an inventory grid to the container
+      * @param xOffset X pixel offset
+      * @param yOffset Y pixel offset
+      * @param width How many wide
+      */
     def addInventoryGrid(xOffset : Int, yOffset : Int, width : Int) : Unit = {
         val height = Math.ceil(inventorySize.toDouble / width).asInstanceOf[Int]
         var slotId = 0
@@ -34,23 +43,47 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: IIn
             }
         }
     }
-    
+
+    /**
+      * Adds a line of slots
+      * @param xOffset X offset
+      * @param yOffset Y offset
+      * @param start start slot number
+      * @param count how many slots
+      */
     protected def addInventoryLine(xOffset: Int, yOffset: Int, start: Int, count: Int) {
         addInventoryLine(xOffset, yOffset, start, count, 0)
     }
-    
+
+    /**
+      * Adds a line of inventory slots with a margin around them
+      * @param xOffset X Offset
+      * @param yOffset Y Offset
+      * @param start The start slot id
+      * @param count The count of slots
+      * @param margin How much to pad the slots
+      */
     def addInventoryLine(xOffset: Int, yOffset: Int, start: Int, count: Int, margin: Int) : Unit = {
-        var slotId = 0
-        for(x <- start until count) {
+        var slotId = start
+        for(x <- 0 until count) {
             addSlotToContainer(new RestrictedSlot(inventory, slotId, xOffset + x * (18 + margin), yOffset))
             slotId += 1
         }
     }
-    
+
+    /**
+      * Adds the player offset with Y offset
+      * @param offsetY How far down
+      */
     def addPlayerInventorySlots(offsetY: Int) {
         addPlayerInventorySlots(8, offsetY)
     }
-    
+
+    /**
+      * Adds player inventory at location, includes space between normal and hotbar
+      * @param offsetX X offset
+      * @param offsetY Y offset
+      */
     def addPlayerInventorySlots (offsetX: Int, offsetY: Int) : Unit = {
         for(row <- 0 until 3) {
             for(column <- 0 until 9) {
