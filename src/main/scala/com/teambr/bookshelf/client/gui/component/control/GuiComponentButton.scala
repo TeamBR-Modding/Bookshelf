@@ -80,4 +80,8 @@ abstract class GuiComponentButton(x: Int, y: Int, var width: Int, var height: In
     def getWidth: Int = width
 
     def getHeight: Int = height
+
+    def setText(text : String) = {
+        label = text
+    }
 }

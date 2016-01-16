@@ -74,4 +74,8 @@ class GuiComponentText(var label : String, var x : Int, var y : Int) extends Bas
       * @return How tall the component is
       */
     override def getHeight: Int = 7
+
+    def setText(text : String) = {
+        label = text
+    }
 }
