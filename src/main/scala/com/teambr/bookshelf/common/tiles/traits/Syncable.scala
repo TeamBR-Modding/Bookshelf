@@ -20,14 +20,14 @@ trait Syncable extends UpdatingTile {
       * @param id The field id
       * @param value The value of the field
       */
-    def setField(id : Int, value : Double)
+    def setVariable(id : Int, value : Double)
 
     /**
       * Used to get the field on the server, this will fetch the server value and overwrite the current
       * @param id The field id
       * @return The value on the server, now set to ourselves
       */
-    def getField(id : Int) : Double
+    def getVariable(id : Int) : Double
 
     /**
       * Sends the value to the server, you should probably only call this from the client

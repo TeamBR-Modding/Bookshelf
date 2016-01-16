@@ -51,18 +51,18 @@ class SyncableFieldPacket extends IMessage with IMessageHandler[SyncableFieldPac
             if(message.returnValue)
                 PacketManager.net.sendToAllAround(new SyncableFieldPacket(false, message.id,
                     ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition)
-                            .asInstanceOf[Syncable].getField(message.id), message.blockPosition),
+                            .asInstanceOf[Syncable].getVariable(message.id), message.blockPosition),
                     new TargetPoint(ctx.getServerHandler.playerEntity.worldObj.provider.getDimensionId,
                         message.blockPosition.getX, message.blockPosition.getY, message.blockPosition.getZ, 25))
             else
                 ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition)
-                        .asInstanceOf[Syncable].setField(message.id, message.value)
+                        .asInstanceOf[Syncable].setVariable(message.id, message.value)
         } else {
             if(message.returnValue)
                 PacketManager.net.sendToServer(new SyncableFieldPacket(false, message.id, message.value, message.blockPosition))
             else
                 Minecraft.getMinecraft.theWorld.getTileEntity(message.blockPosition)
-                        .asInstanceOf[Syncable].setField(message.id, message.value)
+                        .asInstanceOf[Syncable].setVariable(message.id, message.value)
         }
         null
     }
