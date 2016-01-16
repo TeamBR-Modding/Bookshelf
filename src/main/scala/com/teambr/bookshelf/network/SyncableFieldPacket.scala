@@ -48,6 +48,11 @@ class SyncableFieldPacket extends IMessage with IMessageHandler[SyncableFieldPac
 
     override def onMessage(message: SyncableFieldPacket, ctx: MessageContext): IMessage = {
         if(ctx.side.isServer) {
+            if(ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition) == null)
+                return null
+            if(!ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition).isInstanceOf[Syncable])
+                return null
+
             if(message.returnValue)
                 PacketManager.net.sendToAllAround(new SyncableFieldPacket(false, message.id,
                     ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition)
@@ -58,6 +63,11 @@ class SyncableFieldPacket extends IMessage with IMessageHandler[SyncableFieldPac
                 ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition)
                         .asInstanceOf[Syncable].setVariable(message.id, message.value)
         } else {
+            if(Minecraft.getMinecraft.theWorld.getTileEntity(message.blockPosition) == null)
+                return null
+            if(!Minecraft.getMinecraft.theWorld.getTileEntity(message.blockPosition).isInstanceOf[Syncable])
+                return null
+
             if(message.returnValue)
                 PacketManager.net.sendToServer(new SyncableFieldPacket(false, message.id, message.value, message.blockPosition))
             else
