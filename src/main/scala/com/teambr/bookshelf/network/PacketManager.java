@@ -13,6 +13,7 @@ public class PacketManager {
     public static void initPackets() {
         net = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MODID().toUpperCase());
         registerMessage(ClientOverridePacket.class, ClientOverridePacket.class);
+        registerMessage(SyncableFieldPacket.class, SyncableFieldPacket.class);
     }
 
     private static int nextPacketId = 0;
