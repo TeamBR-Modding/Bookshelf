@@ -19,8 +19,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 apply plugin: 'scala'
 apply plugin: 'maven'
-apply plugin: 'java'
-apply plugin: 'idea'
+//apply plugin: 'java'
+//apply plugin: 'idea'
 
 ext.configFile = file "build.properties"
 
@@ -57,6 +57,7 @@ minecraft {
     runDir = "eclipse"
 
     mappings = "stable_20"
+    makeObfSourceJar = false
 }
 
 configurations.all {
@@ -83,13 +84,13 @@ processResources
     }
 }
 
-task devJar(type: Jar, dependsOn: 'classes') {
+/*task devJar(type: Jar, dependsOn: 'classes') {
     from(sourceSets.main.output) {
         include '**'
     }
     extension = 'jar'
     classifier = 'dev'
-}
+}*/
 
 //task myJavadocs(type: Javadoc) {
 //    source = sourceSets.main.allJava
@@ -107,8 +108,8 @@ task sourceJar(type: Jar, dependsOn: "sourceMainScala") {
 **/
 artifacts {
     archives devJar
-    archives javadocJar
-    archives sourceJar
+  //  archives javadocJar
+  //  archives sourceJar
 }
 
 configurations {
