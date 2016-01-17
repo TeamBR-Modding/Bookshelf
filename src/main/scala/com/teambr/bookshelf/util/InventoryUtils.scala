@@ -32,15 +32,15 @@ object InventoryUtils {
       * @param slot
       * @param stack
       */
-    def tryInsertStack(targetInventory: IInventory, slot: Int, stack: ItemStack, canMerge: Boolean) {
-        if (targetInventory.isItemValidForSlot(slot, stack)) {
+    def tryInsertStack(targetInventory: IInventory, slot: Int, stack: ItemStack, canMerge: Boolean, isValid : (Int, ItemStack) => Boolean) {
+        if (isValid(slot, stack)) {
             val targetStack: ItemStack = targetInventory.getStackInSlot(slot)
             if (targetStack == null) {
                 targetInventory.setInventorySlotContents(slot, stack.copy)
                 stack.stackSize = 0
             }
             else if (canMerge) {
-                if (targetInventory.isItemValidForSlot(slot, stack) && areMergeCandidates(stack, targetStack)) {
+                if (isValid(slot, stack) && areMergeCandidates(stack, targetStack)) {
                     val space: Int = targetStack.getMaxStackSize - targetStack.stackSize
                     val mergeAmount: Int = Math.min(space, stack.stackSize)
                     val copy: ItemStack = targetStack.copy
@@ -96,7 +96,6 @@ object InventoryUtils {
 
         //If we aren't really moving, just clone the inventory (for science)
         if (!doMove) {
-
             val copy: Inventory = new Inventory {
                 override var inventoryName: String = "temporary.inventory"
                 override def hasCustomName: Boolean = false
@@ -128,9 +127,9 @@ object InventoryUtils {
         for (slot <- attemptSlots) {
             if (stack.stackSize <= 0)  return //How did we get this far without noticing, leave now
             if (isSidedInventory && inventory.asInstanceOf[ISidedInventory].canInsertItem(slot, stack, side)) //Must be able to insert
-                tryInsertStack(targetInventory, slot, stack, canStack)
+                tryInsertStack(targetInventory, slot, stack, canStack, inventory.isItemValidForSlot)
             else //Who cares, go for it
-                tryInsertStack(targetInventory, slot, stack, canStack)
+                tryInsertStack(targetInventory, slot, stack, canStack, inventory.isItemValidForSlot)
         }
     }
 
