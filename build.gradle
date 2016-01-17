@@ -84,13 +84,13 @@ processResources
     }
 }
 
-/*task devJar(type: Jar, dependsOn: 'classes') {
+task devJar(type: Jar, dependsOn: 'classes') {
     from(sourceSets.main.output) {
         include '**'
     }
     extension = 'jar'
     classifier = 'dev'
-}*/
+}
 
 //task myJavadocs(type: Javadoc) {
 //    source = sourceSets.main.allJava
