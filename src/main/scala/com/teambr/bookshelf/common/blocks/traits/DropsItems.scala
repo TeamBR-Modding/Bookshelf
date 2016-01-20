@@ -44,6 +44,7 @@ trait DropsItems extends BlockContainer {
                                 world.spawnEntityInWorld(itemEntity)
 
                                 stack.stackSize = 0
+                                tile.setInventorySlotContents(i, null)
                             }
                         }
                     case _ => //Not an inventory

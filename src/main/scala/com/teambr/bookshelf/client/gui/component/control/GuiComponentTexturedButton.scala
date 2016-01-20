@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11
  * @since August 04, 2015
  */
 abstract class GuiComponentTexturedButton(x: Int, y: Int, var iconU: Int, var iconV: Int, var iconW: Int, var iconH: Int, width: Int, height: Int)
-    extends GuiComponentButton(x, y, width, height, "") {
+    extends GuiComponentButton(x, y, width, height, " ") {
 
     override def render(guiLeft: Int, guiTop: Int) {
         super.render(guiLeft, guiTop)
