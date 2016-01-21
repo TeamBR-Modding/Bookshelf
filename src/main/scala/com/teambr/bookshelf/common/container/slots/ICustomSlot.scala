@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.container
+package com.teambr.bookshelf.common.container.slots
 
 /**
  * This file was created for Bookshelf

@@ -11,15 +11,15 @@ import net.minecraft.world.{ILockableContainer, World}
 import scala.collection.mutable.ArrayBuffer
 
 /**
- * This file was created for Bookshelf
- *
- * Bookshelf if licensed under the
- * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
- * http://creativecommons.org/licenses/by-nc-sa/4.0/
- *
- * @author Paul Davis pauljoda
- * @since August 02, 2015
- */
+  * This file was created for Bookshelf
+  *
+  * Bookshelf if licensed under the
+  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
+  * http://creativecommons.org/licenses/by-nc-sa/4.0/
+  *
+  * @author Paul Davis pauljoda
+  * @since August 02, 2015
+  */
 object InventoryUtils {
     /** *
       * Try to merge the supplied stack into the supplied slot in the target
@@ -232,6 +232,16 @@ object InventoryUtils {
 
     def getInventory(inventory: IInventory): IInventory = {
         if (inventory.isInstanceOf[TileEntityChest]) return doubleChestFix(inventory.asInstanceOf[TileEntity])
-        return inventory
+        inventory
+    }
+
+    def canStacksMerge(stack1 : ItemStack, stack2 : ItemStack) : Boolean = {
+        if(stack1 == null || stack2 == null)
+            return false
+        if(!stack1.isItemEqual(stack2))
+            return false
+        if(!ItemStack.areItemStackTagsEqual(stack1, stack2))
+            return false
+        true
     }
 }

@@ -2,7 +2,7 @@ package com.teambr.bookshelf.client.gui
 
 import com.teambr.bookshelf.client.gui.component.display.{GuiReverseTab, GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
-import com.teambr.bookshelf.common.container.{SLOT_SIZE, ICustomSlot}
+import com.teambr.bookshelf.common.container.slots.{SLOT_SIZE, ICustomSlot}
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.GuiContainer

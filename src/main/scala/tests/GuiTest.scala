@@ -33,7 +33,7 @@ class GuiTest(player : EntityPlayer)
              */
             override def hasCustomName: Boolean = false
 
-            override def initialSize: Int = 3
+            override def initialSize: Int = 4
         }), 175, 165, "title.test") {
 
 
@@ -41,9 +41,7 @@ class GuiTest(player : EntityPlayer)
      * This will be called after the GUI has been initialized and should be where you add all components.
      */
     override def addComponents(): Unit = {
-        components += new GuiComponentText(StatCollector.translateToLocal("neotech.grinder.input"), 8, 26)
-        components += new GuiComponentText(StatCollector.translateToLocal("neotech.grinder.grinding"), 8, 48)
-        components += new GuiComponentText(StatCollector.translateToLocal("neotech.grinder.output"), 8, 70)
+
     }
 
     /**

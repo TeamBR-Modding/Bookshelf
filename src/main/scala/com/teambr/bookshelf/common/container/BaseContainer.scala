@@ -1,9 +1,12 @@
 package com.teambr.bookshelf.common.container
 
+import com.teambr.bookshelf.common.container.slots.IPhantomSlot
 import com.teambr.bookshelf.util.InventoryUtils
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{IInventory, Slot, Container}
 import net.minecraft.item.ItemStack
+
+import scala.swing.event.MouseButtonEvent
 
 /**
  * This file was created for Bookshelf
@@ -100,6 +103,79 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: IIn
     }
     
     override def canInteractWith(entityPlayer: EntityPlayer): Boolean = inventory.isUseableByPlayer(entityPlayer)
+
+    override def slotClick(slotNumber : Int, mouseButton : Int, modifier : Int, player : EntityPlayer) : ItemStack = {
+        val slot = if (slotNumber < 0) null else this.inventorySlots.get(slotNumber)
+        if(slot.isInstanceOf[IPhantomSlot])
+             slotClickPhantom(slot, mouseButton, modifier, player)
+        else
+             super.slotClick(slotNumber, mouseButton, modifier, player)
+    }
+
+    def slotClickPhantom(slot : Slot, mouseButton : Int, modifier : Int, player : EntityPlayer) : ItemStack = {
+        var stack : ItemStack = null
+
+        if(mouseButton == 2) {
+            if (slot.asInstanceOf[IPhantomSlot].canAdjust)
+                slot.putStack(null)
+        } else if(mouseButton == 0 || mouseButton == 1) {
+            val playerInv = player.inventory
+            slot.onSlotChanged()
+            val stackSlot = slot.getStack
+            val stackHeld = playerInv.getItemStack
+
+            if(stackSlot != null)
+                stack = stackSlot.copy
+
+            if(stackSlot == null) {
+                if(stackHeld != null && slot.isItemValid(stackHeld))
+                    fillPhantomSlot(slot, stackHeld, mouseButton, modifier)
+            } else if(stackHeld == null) {
+                adjustPhantomSlot(slot, mouseButton, modifier)
+                slot.onPickupFromSlot(player, playerInv.getItemStack)
+            } else if(slot.isItemValid(stackHeld)) {
+                if(InventoryUtils.canStacksMerge(stackSlot, stackHeld))
+                    adjustPhantomSlot(slot, mouseButton, modifier)
+                else
+                    fillPhantomSlot(slot, stackHeld, mouseButton, modifier)
+            }
+        }
+        stack
+    }
+
+    def adjustPhantomSlot(slot : Slot, mouseButton : Int, modifier : Int) : Unit = {
+        if(!slot.asInstanceOf[IPhantomSlot].canAdjust)
+            return
+
+        val stackSlot = slot.getStack
+        var stackSize : Int = 0
+        if(modifier == 1)
+            stackSize = if(mouseButton == 0) (stackSlot.stackSize + 1) / 2 else stackSlot.stackSize * 2
+        else
+            stackSize = if(mouseButton == 0) stackSlot.stackSize - 1 else stackSlot.stackSize + 1
+
+        if(stackSize > slot.getSlotStackLimit)
+            stackSize = slot.getSlotStackLimit
+
+        stackSlot.stackSize = stackSize
+
+        if(stackSlot.stackSize <= 0)
+            slot.putStack(null)
+    }
+
+    def fillPhantomSlot(slot : Slot, stackHelf : ItemStack, mouseButton : Int, modifier : Int) : Unit = {
+        if(!slot.asInstanceOf[IPhantomSlot].canAdjust)
+            return
+
+        var stackSize = if(mouseButton == 0) stackHelf.stackSize else 1
+        if(stackSize > slot.getSlotStackLimit)
+            stackSize  = slot.getSlotStackLimit
+
+        val phantomStack = stackHelf.copy()
+        phantomStack.stackSize = stackSize
+
+        slot.putStack(phantomStack)
+    }
 
     protected def mergeItemStackSafe(stackToMerge: ItemStack, start: Int, stop: Int, reverse: Boolean): Boolean = {
         var inventoryChanged: Boolean = false
