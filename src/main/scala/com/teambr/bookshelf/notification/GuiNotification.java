@@ -168,6 +168,7 @@ public class GuiNotification extends Gui {
             GL11.glEnable(GL11.GL_COLOR_MATERIAL);
             GL11.glEnable(GL11.GL_LIGHTING);
             this.itemRenderer.renderItemAndEffectIntoGUI(this.notification.getIcon(), i + 8, j + 8);
+            this.itemRenderer.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRendererObj, this.notification.getIcon(), i + 8, j + 8, null);
             GL11.glDisable(GL11.GL_LIGHTING);
             GL11.glDepthMask(true);
             GL11.glEnable(GL11.GL_DEPTH_TEST);
