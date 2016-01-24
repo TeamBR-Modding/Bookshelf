@@ -26,4 +26,9 @@ abstract class GuiComponentTexturedButton(x: Int, y: Int, var iconU: Int, var ic
         RenderUtils.restoreRenderState()
         GL11.glPopMatrix()
     }
+
+    def setUV(uv : (Int, Int)) = {
+        iconU = uv._1
+        iconV = uv._2
+    }
 }
