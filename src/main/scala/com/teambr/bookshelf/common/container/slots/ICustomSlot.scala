@@ -10,7 +10,7 @@ package com.teambr.bookshelf.common.container.slots
  * @author Paul Davis pauljoda
  * @since August 04, 2015
  */
-abstract class ICustomSlot {
+trait ICustomSlot {
     def getSlotSize: SLOT_SIZE.Value
 
     def getPoint: (Integer, Integer)

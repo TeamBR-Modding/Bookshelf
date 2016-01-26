@@ -117,8 +117,6 @@ public class GuiNotification extends Gui {
             }
 
             this.updateScale();
-            GL11.glDisable(GL11.GL_DEPTH_TEST);
-            GL11.glDepthMask(false);
             double d1 = d0 * 2.0D;
 
             if (d1 > 1.0D)
@@ -170,8 +168,6 @@ public class GuiNotification extends Gui {
             this.itemRenderer.renderItemAndEffectIntoGUI(this.notification.getIcon(), i + 8, j + 8);
             this.itemRenderer.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRendererObj, this.notification.getIcon(), i + 8, j + 8, null);
             GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDepthMask(true);
-            GL11.glEnable(GL11.GL_DEPTH_TEST);
         }
     }
 
