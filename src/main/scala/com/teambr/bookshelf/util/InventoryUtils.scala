@@ -22,10 +22,10 @@ import net.minecraftforge.items.wrapper.{InvWrapper, SidedInvWrapper}
 object InventoryUtils {
 
     /**
-      * Used to move items from one inventory to another. Must come from an IItemHandler! You can wrap it if you have to
+      * Used to move items from one inventory to another. You can wrap it if you have to
       *     but since you'll be calling from us, there shouldn't be an issue
       *
-      * @param fromInventory The IItemHandler to come from
+      * @param source The source inventory, can be IInventory, ISideInventory, or preferably IItemHandler
       * @param fromSlot The from slot, -1 for any
       * @param target The target inventory, can be IInventory, ISideInventory, or preferably IItemHandler
       * @param intoSlot The slot to move into the target, -1 for any
@@ -34,7 +34,22 @@ object InventoryUtils {
       * @param doMove True to actually do the move, false to simulate
       * @return True if something was moved
       */
-    def moveItemInto(fromInventory : IItemHandler, fromSlot : Int, target : AnyRef, intoSlot : Int, maxAmount : Int, dir : EnumFacing, doMove : Boolean) : Boolean = {
+    def moveItemInto(source : AnyRef, fromSlot : Int, target : AnyRef, intoSlot : Int, maxAmount : Int, dir : EnumFacing, doMove : Boolean) : Boolean = {
+        //Try to cast source
+        var fromInventory : IItemHandler = null
+
+        if(!source.isInstanceOf[IItemHandler]) {
+            source match {
+                case iInventory: IInventory if !iInventory.isInstanceOf[ISidedInventory] => fromInventory = new InvWrapper(iInventory)
+                case iSided: ISidedInventory => fromInventory = new SidedInvWrapper(iSided, dir.getOpposite)
+                case _ => return false //Not an inventory or IItemHandler
+            }
+        } else source match { //If we are a ItemHandler, we want to make sure not to wrap, it can be both IInventory and IItemHandler
+            case itemHandler: IItemHandler => fromInventory = itemHandler
+            case _ => return false //Nothing else, somehow?
+        }
+
+        //Try to case sink
         var otherInv : IItemHandler = null
 
         if(!target.isInstanceOf[IItemHandler]) {
@@ -49,7 +64,6 @@ object InventoryUtils {
         }
 
         val fromSlots = new util.ArrayList[Int]()
-
         //Add from slots
         if(fromSlot != -1)
             fromSlots.add(fromSlot)
@@ -57,9 +71,7 @@ object InventoryUtils {
             for(x <- 0 until fromInventory.getSlots)
                 fromSlots.add(x)
 
-
         val toSlots = new util.ArrayList[Int]()
-
         //Add to slots
         if(intoSlot != -1)
             toSlots.add(intoSlot)
@@ -67,34 +79,37 @@ object InventoryUtils {
             for(x <- 0 until otherInv.getSlots)
                 toSlots.add(x)
 
+        //Do actual Movement
         for(x <- 0 until fromSlots.size) { //Cycle the from inventory
             if(fromInventory.getStackInSlot(fromSlots.get(x)) != null) { //If something does exist
-                val fromStack = fromInventory.extractItem(fromSlots.get(x), maxAmount, true) //Simulate so we can see changes
+            val fromStack = fromInventory.extractItem(fromSlots.get(x), maxAmount, true) //Simulate so we can see changes
                 if (fromStack != null) { //Make sure something was extracted
                     for (j <- 0 until toSlots.size()) { //Try to put it somewhere
-                        val slotID = toSlots.get(j) //Get the slot to put into
+                    val slotID = toSlots.get(j) //Get the slot to put into
 
-                        var otherInvFinal : IItemHandler = null
+                        var otherInvSimulate : IItemHandler = null //We are going to use a proxy, for simulations
 
                         if(!doMove) {
-                            otherInvFinal = otherInv
+                            otherInvSimulate = otherInv //No need to make it something else, just use the orginal
                         } else {
-                            otherInvFinal = new Inventory {
+                            otherInvSimulate = new Inventory { //Since we are simulating, we need to pretend
                                 override var inventoryName: String = "TEMPINV"
                                 override def hasCustomName: Boolean = false
                                 override def initialSize: Int = otherInv.getSlots
                             }
-                            otherInvFinal.asInstanceOf[Inventory].copyFrom(otherInv)
+                            otherInvSimulate.asInstanceOf[Inventory].copyFrom(otherInv) //Copy stacks
                         }
 
-                        val beforeStack = if(otherInvFinal.getStackInSlot(slotID) != null) otherInvFinal.getStackInSlot(slotID).copy() else null //First Copy
-                        val movedStack = otherInvFinal.insertItem(slotID, fromStack.copy(), !doMove) //Try to insert
-                        val afterStack = if(otherInvFinal.getStackInSlot(slotID) != null) otherInvFinal.getStackInSlot(slotID).copy() else null  //Second Copy
+                        val beforeStack = if(otherInvSimulate.getStackInSlot(slotID) != null) otherInvSimulate.getStackInSlot(slotID).copy() else null //First Copy
+                        var movedStack = otherInvSimulate.insertItem(slotID, fromStack.copy(), false) //Try to insert
+                        val afterStack = if(otherInvSimulate.getStackInSlot(slotID) != null) otherInvSimulate.getStackInSlot(slotID).copy() else null  //Second Copy
                         if (!ItemStack.areItemStacksEqual(beforeStack, afterStack)) { //If the insert changed the stack
-                            otherInv.insertItem(slotID, fromStack.copy(), !doMove) //Do Extraction on orginal
-                            fromInventory.extractItem(fromSlots.get(x),
-                                if(movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount,
-                                !doMove) //We need to pull if we are told
+                            if(!doMove) { //If we should actually do the move lets do it
+                                movedStack = otherInv.insertItem(slotID, fromStack.copy(), false) //Do insertion on original
+                                fromInventory.extractItem(fromSlots.get(x),
+                                    if (movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount,
+                                    false) //Do Extraction on original
+                            }
                             return true //We did it!
                         }
                     }
