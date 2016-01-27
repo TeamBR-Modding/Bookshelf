@@ -5,7 +5,7 @@ import java.util
 import net.minecraft.inventory.{IInventory, ISidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
-import net.minecraftforge.items.{ItemHandlerHelper, IItemHandler}
+import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.wrapper.{InvWrapper, SidedInvWrapper}
 
 /**
@@ -67,9 +67,13 @@ object InventoryUtils {
                 toSlots.add(x)
 
         for(x <- 0 until fromSlots.size) {
-            if(fromInventory.getStackInSlot(fromSlots.get(x)) != null) {
-                if(!ItemStack.areItemStacksEqual(fromInventory.getStackInSlot(fromSlots.get(x)).copy(), ItemHandlerHelper.insertItem(otherInv, fromInventory.extractItem(fromSlots.get(x), maxAmount, !doMove), !doMove)))
-                    return true
+            val stack = fromInventory.extractItem(fromSlots.get(x), maxAmount, true)
+            if(stack != null) {
+                for(j <- 0 until toSlots.size) {
+                    val slotId = toSlots.get(j)
+                    if(!ItemStack.areItemStacksEqual(stack, otherInv.insertItem(slotId, fromInventory.extractItem(fromSlots.get(x), maxAmount, !doMove), !doMove)))
+                        return true
+                }
             }
         }
         false
