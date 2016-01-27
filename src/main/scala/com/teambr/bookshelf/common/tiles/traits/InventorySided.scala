@@ -32,13 +32,13 @@ trait InventorySided extends Inventory {
     def getCapability[T](capability: Capability[T], facing: EnumFacing): T = {
         if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             facing match {
-                case EnumFacing.UP => handlerTop.asInstanceOf[T]
-                case EnumFacing.DOWN => handlerBottom.asInstanceOf[T]
-                case EnumFacing.WEST => handlerWest.asInstanceOf[T]
-                case EnumFacing.EAST => handlerEast.asInstanceOf[T]
-                case EnumFacing.NORTH => handlerNorth.asInstanceOf[T]
-                case EnumFacing.SOUTH => handlerSouth.asInstanceOf[T]
-                case _ => handlerWest.asInstanceOf[T]
+                case EnumFacing.UP => return handlerTop.asInstanceOf[T]
+                case EnumFacing.DOWN => return handlerBottom.asInstanceOf[T]
+                case EnumFacing.WEST => return handlerWest.asInstanceOf[T]
+                case EnumFacing.EAST => return handlerEast.asInstanceOf[T]
+                case EnumFacing.NORTH => return handlerNorth.asInstanceOf[T]
+                case EnumFacing.SOUTH => return handlerSouth.asInstanceOf[T]
+                case _ => return handlerWest.asInstanceOf[T]
             }
         }
         getCapabilityFromTile[T](capability, facing)
