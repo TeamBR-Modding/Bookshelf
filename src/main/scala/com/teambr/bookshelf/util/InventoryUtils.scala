@@ -72,8 +72,10 @@ object InventoryUtils {
                 if (fromStack != null) { //Make sure something was extracted
                     for (j <- 0 until toSlots.size()) { //Try to put it somewhere
                         val slotID = toSlots.get(j) //Get the slot to put into
+                        val beforeStack = otherInv.getStackInSlot(slotID).copy() //First Copy
                         val movedStack = otherInv.insertItem(slotID, fromStack, !doMove) //Try to insert
-                        if (!ItemStack.areItemStacksEqual(fromStack, movedStack)) { //If the insert changed the stack
+                        val afterStack = otherInv.getStackInSlot(slotID).copy()
+                        if (!ItemStack.areItemStacksEqual(beforeStack, afterStack)) { //If the insert changed the stack
                             fromInventory.extractItem(fromSlots.get(x),
                                 if(movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount,
                                 !doMove) //We need to pull if we are told
