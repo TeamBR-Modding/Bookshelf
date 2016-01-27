@@ -9,6 +9,7 @@ import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{ NBTTagCompound, NBTTagList }
 import net.minecraft.util.{ ChatComponentText, IChatComponent, StatCollector }
+import net.minecraftforge.items.wrapper.InvWrapper
 import net.minecraftforge.items.{ItemHandlerHelper, IItemHandler}
 
 import scala.collection.mutable.ArrayBuffer
@@ -343,60 +344,7 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       * @return The remaining ItemStack that was not inserted (if the entire stack is accepted, then return null)
       **/
     def insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = {
-        if (stack == null) return null
-
-        if (!isItemValidForSlot(slot, stack)) return stack
-
-        val stackInSlot: ItemStack = getStackInSlot(slot)
-
-        var m: Int = 0
-        if (stackInSlot != null) {
-            if (!ItemHandlerHelper.canItemStacksStack(stack, stackInSlot)) return stack
-            m = Math.min(stack.getMaxStackSize, getInventoryStackLimit) - stackInSlot.stackSize
-            if (stack.stackSize <= m) {
-                if (!simulate) {
-                    val copy: ItemStack = stack.copy
-                    copy.stackSize += stackInSlot.stackSize
-                    setInventorySlotContents(slot, copy)
-                    markDirty()
-                }
-                null
-            }
-            else {
-                if (!simulate) {
-                    val copy: ItemStack = stack.splitStack(m)
-                    copy.stackSize += stackInSlot.stackSize
-                    setInventorySlotContents(slot, copy)
-                    markDirty()
-                    stack
-                }
-                else {
-                    stack.stackSize -= m
-                    stack
-                }
-            }
-        }
-        else {
-            m = Math.min(stack.getMaxStackSize, getInventoryStackLimit)
-            if (m < stack.stackSize) {
-                if (!simulate) {
-                    setInventorySlotContents(slot, stack.splitStack(m))
-                    markDirty()
-                    stack
-                }
-                else {
-                    stack.stackSize -= m
-                    stack
-                }
-            }
-            else {
-                if (!simulate) {
-                    setInventorySlotContents(slot, stack)
-                    markDirty()
-                }
-                null
-            }
-        }
+        new InvWrapper(this).insertItem(slot, stack, simulate)
     }
 
     /**
@@ -410,28 +358,7 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       * @return ItemStack extracted from the slot, must be null, if nothing can be extracted
       **/
     def extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = {
-        if (amount == 0) return null
-
-        val stackInSlot: ItemStack = getStackInSlot(slot)
-
-        if (stackInSlot == null) return null
-
-        if (simulate) {
-            if (stackInSlot.stackSize < amount) {
-                stackInSlot.copy
-            }
-            else {
-                val copy: ItemStack = stackInSlot.copy
-                copy.stackSize = amount
-                copy
-            }
-        }
-        else {
-            val m: Int = Math.min(stackInSlot.stackSize, amount)
-            val moved: ItemStack = decrStackSize(slot, m)
-            markDirty()
-            moved
-        }
+        new InvWrapper(this).extractItem(slot, amount, simulate)
     }
 
     /*******************************************************************************************************************
