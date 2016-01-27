@@ -2,6 +2,7 @@ package com.teambr.bookshelf.util
 
 import java.util
 
+import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.inventory.{IInventory, ISidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
@@ -72,10 +73,25 @@ object InventoryUtils {
                 if (fromStack != null) { //Make sure something was extracted
                     for (j <- 0 until toSlots.size()) { //Try to put it somewhere
                         val slotID = toSlots.get(j) //Get the slot to put into
-                        val beforeStack = if(otherInv.getStackInSlot(slotID) != null) otherInv.getStackInSlot(slotID).copy() else null //First Copy
-                        val movedStack = otherInv.insertItem(slotID, fromStack.copy(), !doMove) //Try to insert
-                        val afterStack = if(otherInv.getStackInSlot(slotID) != null) otherInv.getStackInSlot(slotID).copy() else null  //Second Copy
+
+                        var otherInvFinal : IItemHandler = null
+
+                        if(!doMove) {
+                            otherInvFinal = otherInv
+                        } else {
+                            otherInvFinal = new Inventory {
+                                override var inventoryName: String = "TEMPINV"
+                                override def hasCustomName: Boolean = false
+                                override def initialSize: Int = otherInv.getSlots
+                            }
+                            otherInvFinal.asInstanceOf[Inventory].copyFrom(otherInv)
+                        }
+
+                        val beforeStack = if(otherInvFinal.getStackInSlot(slotID) != null) otherInvFinal.getStackInSlot(slotID).copy() else null //First Copy
+                        val movedStack = otherInvFinal.insertItem(slotID, fromStack.copy(), !doMove) //Try to insert
+                        val afterStack = if(otherInvFinal.getStackInSlot(slotID) != null) otherInvFinal.getStackInSlot(slotID).copy() else null  //Second Copy
                         if (!ItemStack.areItemStacksEqual(beforeStack, afterStack)) { //If the insert changed the stack
+                            otherInv.insertItem(slotID, fromStack.copy(), !doMove) //Do Extraction on orginal
                             fromInventory.extractItem(fromSlots.get(x),
                                 if(movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount,
                                 !doMove) //We need to pull if we are told
