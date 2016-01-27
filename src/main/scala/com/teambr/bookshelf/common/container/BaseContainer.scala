@@ -1,10 +1,12 @@
 package com.teambr.bookshelf.common.container
 
 import com.teambr.bookshelf.common.container.slots.IPhantomSlot
+import com.teambr.bookshelf.common.tiles.traits.Inventory
 import com.teambr.bookshelf.util.InventoryUtils
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{IInventory, Slot, Container}
 import net.minecraft.item.ItemStack
+import net.minecraftforge.items.SlotItemHandler
 
 import scala.swing.event.MouseButtonEvent
 
@@ -18,12 +20,12 @@ import scala.swing.event.MouseButtonEvent
  * @author Paul Davis pauljoda
  * @since August 04, 2015
  */
-abstract class BaseContainer(val playerInventory: IInventory, val inventory: IInventory) extends Container {
+abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inventory) extends Container {
 
     /**
       * A restricted slot, will check what the tile will accept before using
       */
-    protected class RestrictedSlot(inventory: IInventory, slot: Int, x: Int, y: Int) extends Slot(inventory, slot, x, y) {
+    protected class RestrictedSlot(inventory: Inventory, slot: Int, x: Int, y: Int) extends SlotItemHandler(inventory, slot, x, y) {
         val inventoryIndex = slot
         override def isItemValid(itemstack: ItemStack): Boolean = inventory.isItemValidForSlot(inventoryIndex, itemstack)
     }
@@ -32,6 +34,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: IIn
 
     /**
       * Adds an inventory grid to the container
+      *
       * @param xOffset X pixel offset
       * @param yOffset Y pixel offset
       * @param width How many wide
@@ -49,6 +52,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: IIn
 
     /**
       * Adds a line of slots
+      *
       * @param xOffset X offset
       * @param yOffset Y offset
       * @param start start slot number
@@ -60,6 +64,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: IIn
 
     /**
       * Adds a line of inventory slots with a margin around them
+      *
       * @param xOffset X Offset
       * @param yOffset Y Offset
       * @param start The start slot id
@@ -76,6 +81,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: IIn
 
     /**
       * Adds the player offset with Y offset
+      *
       * @param offsetY How far down
       */
     def addPlayerInventorySlots(offsetY: Int) {
@@ -84,6 +90,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: IIn
 
     /**
       * Adds player inventory at location, includes space between normal and hotbar
+      *
       * @param offsetX X offset
       * @param offsetY Y offset
       */

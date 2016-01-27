@@ -2,7 +2,7 @@ package com.teambr.bookshelf.common.tiles.traits
 
 import java.util
 
-import com.teambr.bookshelf.common.container.IInventoryCallback
+import com.teambr.bookshelf.common.container.InventoryCallback
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
@@ -24,15 +24,17 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis pauljoda
   * @since August 03, 2015
   */
-trait Inventory extends IInventory with IItemHandler with NBTSavable {
+trait Inventory extends IItemHandler with NBTSavable {
 
-    var inventoryName : String
-    def initialSize : Int
-
-    val callBacks = new ArrayBuffer[IInventoryCallback]()
+    val callBacks = new ArrayBuffer[InventoryCallback]()
     var inventoryContents = new util.Stack[ItemStack]()
     inventoryContents.setSize(initialSize)
 
+    /***
+      * The initial size of the inventory
+      * @return How big to make the inventory on creation
+      */
+    def initialSize : Int
 
     /**
       * Used to add a callback to this inventory
@@ -40,7 +42,7 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       * @param iInventory What you want to be called
       * @return This inventory
       */
-    def addCallback(iInventory: IInventoryCallback) : Inventory = {
+    def addCallback(iInventory: InventoryCallback) : Inventory = {
         callBacks += iInventory
         this
     }
@@ -50,7 +52,8 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       *
       * @param slot The slot that changed
       */
-    def onInventoryChanged(slot : Int) = callBacks.foreach((callBack : IInventoryCallback) => callBack.onInventoryChanged(this, slot))
+    def onInventoryChanged(slot : Int) =
+        callBacks.foreach((callBack : InventoryCallback) => callBack.onInventoryChanged(this, slot))
 
     /**
       * Used to add just one stack into the end of the inventory
@@ -151,9 +154,150 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
         }
     }
 
+
     /*******************************************************************************************************************
-      *************************************** IInventory Methods ********************************************************
-      *******************************************************************************************************************/
+      ****************************************** IItemHandler Methods ****************************************************
+      ********************************************************************************************************************/
+    /**
+      * Returns the number of slots available
+      *
+      * @return The number of slots available
+      **/
+    def getSlots: Int = getSizeInventory
+
+    /**
+      * Inserts an ItemStack into the given slot and return the remainder.
+      * Note: This behaviour is subtly different from IFluidHandlers.fill()
+      *
+      * @param slot             Slot to insert into.
+      * @param originalStack    ItemStack to insert
+      * @param simulate         If true, the insertion is only simulated
+      * @return                 The remaining ItemStack that was not inserted
+      *                             (if the entire stack is accepted, then return null)
+      **/
+    def insertItem(slot: Int, originalStack: ItemStack, simulate: Boolean): ItemStack = {
+        if (originalStack == null) return null
+
+        if (!isItemValidForSlot(slot, originalStack)) return originalStack
+
+        val stackInSlot: ItemStack = getStackInSlot(slot)
+
+        var minimum: Int = 0
+        if (stackInSlot != null) {
+            if (!ItemHandlerHelper.canItemStacksStack(originalStack, stackInSlot)) return originalStack
+            minimum = Math.min(originalStack.getMaxStackSize, getInventoryStackLimit) - stackInSlot.stackSize
+            if (originalStack.stackSize <= minimum) {
+                if (!simulate) {
+                    val stackCopy: ItemStack = originalStack.copy
+                    stackCopy.stackSize += stackInSlot.stackSize
+                    setInventorySlotContents(slot, stackCopy)
+                    markDirty()
+                }
+                null
+            } else {
+                if (!simulate) {
+                    val stackCopy: ItemStack = originalStack.splitStack(minimum)
+                    stackCopy.stackSize += stackInSlot.stackSize
+                    setInventorySlotContents(slot, stackCopy)
+                    markDirty()
+                    originalStack
+                } else {
+                    originalStack.stackSize -= minimum
+                    originalStack
+                }
+            }
+        } else {
+            minimum = Math.min(originalStack.getMaxStackSize, getInventoryStackLimit)
+            if (minimum < originalStack.stackSize) {
+                if (!simulate) {
+                    setInventorySlotContents(slot, originalStack.splitStack(minimum))
+                    markDirty()
+                    originalStack
+                } else {
+                    originalStack.stackSize -= minimum
+                    originalStack
+                }
+            } else {
+                if (!simulate) {
+                    setInventorySlotContents(slot, originalStack)
+                    markDirty()
+                }
+                null
+            }
+        }
+    }
+
+    /**
+      * Extracts an ItemStack from the given slot. The returned value must be null
+      * if nothing is extracted, otherwise it's stack size must not be greater than amount or the
+      * itemstacks getMaxStackSize().
+      *
+      * @param extractSlot  Slot to extract from.
+      * @param amount       Amount to extract (may be greater than the current stacks max limit)
+      * @param simulate     If true, the extraction is only simulated
+      * @return             ItemStack extracted from the slot, must be null, if nothing can be extracted
+      **/
+    def extractItem(extractSlot: Int, amount: Int, simulate: Boolean): ItemStack = {
+        if (amount == 0) return null
+
+        val stackInSlot: ItemStack = getStackInSlot(extractSlot)
+
+        if (stackInSlot == null) return null
+
+        if (simulate) {
+            if (stackInSlot.stackSize < amount) {
+                stackInSlot.copy
+            } else {
+                val copy: ItemStack = stackInSlot.copy
+                copy.stackSize = amount
+                copy
+            }
+        } else {
+            val m: Int = Math.min(stackInSlot.stackSize, amount)
+            val decrStackSizeVal: ItemStack = decrStackSize(extractSlot, m)
+            markDirty()
+            decrStackSizeVal
+        }
+    }
+
+    /**
+      * Returns the ItemStack in a given slot.
+      *
+      * The result's stack size may be greater than the itemstacks max size.
+      *
+      * If the result is null, then the slot is empty.
+      * If the result is not null but the stack size is zero, then it represents
+      * an empty slot that will only accept* a specific itemstack.
+      *
+      * <p/>
+      * IMPORTANT: This ItemStack MUST NOT be modified. This method is not for
+      * altering an inventories contents. Any implementers who are able to detect
+      * modification through this method should throw an exception.
+      * <p/>
+      * SERIOUSLY: DO NOT MODIFY THE RETURNED ITEMSTACK
+      *
+      * @param index Slot to query
+      * @return ItemStack in given slot. May be null.
+      **/
+
+    def getStackInSlot(index: Int): ItemStack = {
+        if(index < inventoryContents.size())
+            inventoryContents.get(index)
+        else
+            null
+    }
+
+    /*******************************************************************************************************************
+      ************************************ IInventory (Legacy) Methods *************************************************
+      ******************************************************************************************************************/
+
+    /**
+      * The code below is remaining from the IInventory. We no longer use IInventory, but the code handles inventories
+      * well internally so we are keeping them. You should never use these if you don't absolutely have to. You should
+      * try to use the IItemHandler methods when at all possible but if you need these, they are available to you.
+      *
+      * DO NOT USE FOR CROSS MOD INTERACTION. THIS SHOULD ONLY BE USED WITHIN YOU OWN INVENTORY CODE
+      */
 
     /**
       * Called to decrease a stack in the inventory
@@ -162,7 +306,7 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       * @param amount The amount to remove
       * @return The new stack (the one picked up)
       */
-    override def decrStackSize(slot : Int, amount : Int) : ItemStack = {
+    def decrStackSize(slot : Int, amount : Int) : ItemStack = {
         if(inventoryContents.get(slot) != null) {
             var stack : ItemStack = null
 
@@ -189,46 +333,19 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       *
       * @return How big this can stack
       */
-    override def getInventoryStackLimit: Int = 64
+    def getInventoryStackLimit: Int = 64
 
     /**
       * Get the size of this inventory
       *
       * @return How big this is
       */
-    override def getSizeInventory: Int = inventoryContents.size()
-
-    /**
-      * Returns the ItemStack in a given slot.
-      *
-      * The result's stack size may be greater than the itemstacks max size.
-      *
-      * If the result is null, then the slot is empty.
-      * If the result is not null but the stack size is zero, then it represents
-      * an empty slot that will only accept* a specific itemstack.
-      *
-      * <p/>
-      * IMPORTANT: This ItemStack MUST NOT be modified. This method is not for
-      * altering an inventories contents. Any implementers who are able to detect
-      * modification through this method should throw an exception.
-      * <p/>
-      * SERIOUSLY: DO NOT MODIFY THE RETURNED ITEMSTACK
-      *
-      * @param index Slot to query
-      * @return ItemStack in given slot. May be null.
-      **/
-
-    override def getStackInSlot(index: Int): ItemStack = {
-        if(index < inventoryContents.size())
-            inventoryContents.get(index)
-        else
-            null
-    }
+    def getSizeInventory: Int = inventoryContents.size()
 
     /**
       * Removes a stack from the given slot and returns it.
       */
-    override def removeStackFromSlot (index: Int) : ItemStack = {
+    def removeStackFromSlot (index: Int) : ItemStack = {
         val stack = inventoryContents.get(index).copy()
         inventoryContents.set(index, null)
         stack
@@ -257,7 +374,7 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       * @param stack The stack to check
       * @return True if you can put this there
       */
-    override def isItemValidForSlot(index: Int, stack: ItemStack): Boolean = true
+    def isItemValidForSlot(index: Int, stack: ItemStack): Boolean = true
 
     /**
       * Used to see if the player can interact with this inventory
@@ -265,7 +382,7 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       * @param player The player trying to access
       * @return True if the player is allowed
       */
-    override def isUseableByPlayer(player: EntityPlayer): Boolean = true
+    def isUseableByPlayer(player: EntityPlayer): Boolean = true
 
     /**
       * Set the slot contents
@@ -273,7 +390,7 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       * @param index The index
       * @param stack The set to set
       */
-    override def setInventorySlotContents(index: Int, stack: ItemStack): Unit = {
+    def setInventorySlotContents(index: Int, stack: ItemStack): Unit = {
         this.inventoryContents.set(index, stack)
 
         if(stack != null && stack.stackSize > getInventoryStackLimit)
@@ -285,27 +402,12 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
     /**
       * Going to go ahead and implement this, but don't trust it to update. Minecraft won't call enough to really follow
       */
-    override def markDirty(): Unit = onInventoryChanged(0)
+    def markDirty(): Unit = onInventoryChanged(0)
 
     /**
       * Delete all the things
       */
-    override def clear(): Unit = for(i <- 0 until inventoryContents.size) inventoryContents.set(i, null)
-
-    /**
-      * Something new in 1.8. Might allow you to edit things from client
-      */
-    override def getFieldCount: Int = 0
-
-    /**
-      * Something new in 1.8. Might allow you to edit things from client
-      */
-    override def getField(id: Int): Int = 0
-
-    /**
-      * Something new in 1.8. Might allow you to edit things from client
-      */
-    override def setField(id: Int, value: Int): Unit = {}
+    def clear(): Unit = for(i <- 0 until inventoryContents.size) inventoryContents.set(i, null)
 
     /**
       * Called when the player opens the inventory.
@@ -314,75 +416,12 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       *
       * @param player The player
       */
-    override def openInventory(player: EntityPlayer): Unit = {}
+    def openInventory(player: EntityPlayer): Unit = {}
 
     /**
       * Called when the player closes the inventory.
       *
       * An example would be the chest, signaling the render to move the lid
       */
-    override def closeInventory(player: EntityPlayer): Unit = {}
-
-
-    /*******************************************************************************************************************
-      ****************************************** IItemHandler Methods ****************************************************
-      ********************************************************************************************************************/
-    /**
-      * Returns the number of slots available
-      *
-      * @return The number of slots available
-      **/
-    def getSlots: Int = getSizeInventory
-
-    /**
-      * Inserts an ItemStack into the given slot and return the remainder.
-      * Note: This behaviour is subtly different from IFluidHandlers.fill()
-      *
-      * @param slot     Slot to insert into.
-      * @param stack    ItemStack to insert
-      * @param simulate If true, the insertion is only simulated
-      * @return The remaining ItemStack that was not inserted (if the entire stack is accepted, then return null)
-      **/
-    def insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = {
-        new InvWrapper(this).insertItem(slot, stack, simulate)
-    }
-
-    /**
-      * Extracts an ItemStack from the given slot. The returned value must be null
-      * if nothing is extracted, otherwise it's stack size must not be greater than amount or the
-      * itemstacks getMaxStackSize().
-      *
-      * @param slot     Slot to extract from.
-      * @param amount   Amount to extract (may be greater than the current stacks max limit)
-      * @param simulate If true, the extraction is only simulated
-      * @return ItemStack extracted from the slot, must be null, if nothing can be extracted
-      **/
-    def extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = {
-        new InvWrapper(this).extractItem(slot, amount, simulate)
-    }
-
-    /*******************************************************************************************************************
-      ****************************************** INamable Methods ********************************************************
-      ********************************************************************************************************************/
-
-    /**
-      * New in 1.8, gives a name to the inventory
-      *
-      * @return The name
-      */
-    override def getName: String = inventoryName
-
-    /**
-      * Does this inventory has a custom name
-      *
-      * @return True if there is a name (localized)
-      */
-    override def hasCustomName: Boolean
-
-    /**
-      * New in 1.8, gives a name to the inventory. Probably used in chat messages
-      *
-      * @return The name
-      */
-    override def getDisplayName: IChatComponent = new ChatComponentText(if(hasCustomName) StatCollector.translateToLocal(inventoryName) else "Generic Inventory")
+    def closeInventory(player: EntityPlayer): Unit = {}
 }

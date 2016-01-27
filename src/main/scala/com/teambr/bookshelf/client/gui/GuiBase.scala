@@ -1,16 +1,14 @@
 package com.teambr.bookshelf.client.gui
 
-import com.teambr.bookshelf.client.gui.component.display.{GuiReverseTab, GuiComponentText, GuiTabCollection}
+import com.teambr.bookshelf.client.gui.component.display.{GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
-import com.teambr.bookshelf.common.container.slots.{SLOT_SIZE, ICustomSlot}
+import com.teambr.bookshelf.common.container.slots.{ICustomSlot, SLOT_SIZE}
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.RenderHelper
-import net.minecraft.inventory.{SlotFurnaceOutput, Slot, Container}
-import net.minecraft.item.ItemStack
+import net.minecraft.inventory.{Container, Slot, SlotFurnaceOutput}
 import net.minecraft.util.StatCollector
-import net.minecraftforge.fml.common.Optional
 import org.lwjgl.opengl.GL11
 
 import scala.collection.mutable.ArrayBuffer
@@ -30,11 +28,7 @@ import scala.collection.mutable.ArrayBuffer
  * For instance, you can add tabs, use any of our components, and you don't have to render any slots or make a background!
  * This class will handle drawing all slots and the background of the GUI. It will even center the title for you and translate it
  */
-@Optional.InterfaceList(Array(
-    new Optional.Interface(iface = "codechicken.nei.VisiblityData", modid = "NotEnoughItems", striprefs = true),
-    new Optional.Interface(iface = "codechicken.nei.api.INEIGuiHandler", modid = "NotEnoughItems", striprefs = true),
-    new Optional.Interface(iface = "codechicken.nei.api.TaggedInventoryArea", modid = "NotEnoughItems", striprefs = true)
-))
+
 abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: Int, name : String)
         extends GuiContainer(inventory) {
     this.xSize = width

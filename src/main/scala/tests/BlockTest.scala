@@ -55,14 +55,6 @@ class BlockTest extends Block(Material.rock) with BlockBakeable with SixWayRotat
      */
     override def getServerGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
         new ContainerTest(player.inventory, new Inventory {
-            override var inventoryName: String = "test"
-
-            /**
-             * Does this inventory has a custom name
-             * @return True if there is a name (localized)
-             */
-            override def hasCustomName: Boolean = false
-
             override def initialSize: Int = 4
         })
     }

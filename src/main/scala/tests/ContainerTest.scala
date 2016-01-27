@@ -2,6 +2,7 @@ package tests
 
 import com.teambr.bookshelf.common.container.BaseContainer
 import com.teambr.bookshelf.common.container.slots.PhantomSlot
+import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.inventory.IInventory
 
 /**
@@ -14,7 +15,7 @@ import net.minecraft.inventory.IInventory
  * @author Paul Davis pauljoda
  * @since August 04, 2015
  */
-class ContainerTest(playerInventory: IInventory, inventory: IInventory) extends BaseContainer(playerInventory, inventory) {
+class ContainerTest(playerInventory: IInventory, inventory: Inventory) extends BaseContainer(playerInventory, inventory) {
     addInventoryLine(10, 50, 0, 3)
     addSlotToContainer(new PhantomSlot(inventory, 3, 50, 30))
     addPlayerInventorySlots(85)

@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.common.container
 
-import net.minecraft.inventory.IInventory
+import net.minecraftforge.items.IItemHandler
 
 /**
  * This file was created for Bookshelf
@@ -12,6 +12,6 @@ import net.minecraft.inventory.IInventory
  * @author Paul Davis pauljoda
  * @since August 03, 2015
  */
-trait IInventoryCallback {
-       def onInventoryChanged(inventory : IInventory, slotNumber : Int)
+trait InventoryCallback {
+       def onInventoryChanged(inventory : IItemHandler, slotNumber : Int)
 }
