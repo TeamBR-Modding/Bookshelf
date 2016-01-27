@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{ NBTTagCompound, NBTTagList }
 import net.minecraft.util.{ ChatComponentText, IChatComponent, StatCollector }
 import net.minecraftforge.items.wrapper.InvWrapper
-import net.minecraftforge.items.{ItemHandlerHelper, IItemHandler}
+import net.minecraftforge.items.{IItemHandlerModifiable, ItemHandlerHelper, IItemHandler}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -24,7 +24,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis pauljoda
   * @since August 03, 2015
   */
-trait Inventory extends IItemHandler with NBTSavable {
+trait Inventory extends IItemHandlerModifiable with NBTSavable {
 
     val callBacks = new ArrayBuffer[InventoryCallback]()
     var inventoryContents = new util.Stack[ItemStack]()
@@ -32,6 +32,7 @@ trait Inventory extends IItemHandler with NBTSavable {
 
     /***
       * The initial size of the inventory
+ *
       * @return How big to make the inventory on creation
       */
     def initialSize : Int
