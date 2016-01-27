@@ -5,8 +5,8 @@ import java.util
 import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.inventory.{IInventory, ISidedInventory}
 import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumFacing
-import net.minecraftforge.items.{ItemHandlerHelper, IItemHandler}
+import net.minecraft.util.{EnumFacing, MathHelper}
+import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.wrapper.{InvWrapper, SidedInvWrapper}
 
 /**
@@ -17,7 +17,7 @@ import net.minecraftforge.items.wrapper.{InvWrapper, SidedInvWrapper}
   * http://creativecommons.org/licenses/by-nc-sa/4.0/
   *
   * @author Paul Davis pauljoda
-  * @since August 02, 2015
+  * @since January 26, 2016
   */
 object InventoryUtils {
 
@@ -125,5 +125,25 @@ object InventoryUtils {
         if(!ItemStack.areItemStackTagsEqual(stack1, stack2))
             return false
         true
+    }
+
+    def calcRedstoneFromInventory(inv: Inventory): Int = {
+        if (inv == null) {
+            0
+        }
+        else {
+            var i: Int = 0
+            var f: Float = 0.0F
+            for (j <- 0 until inv.getSizeInventory) {
+                val itemStack: ItemStack = inv.getStackInSlot(j)
+                if (itemStack != null) {
+                    f += itemStack.stackSize.toFloat / Math.min(inv.getInventoryStackLimit, itemStack.getMaxStackSize).toFloat
+                    i += 1
+                }
+            }
+
+            f = f / inv.getSizeInventory.toFloat
+            MathHelper.floor_float(f * 14.0F) + (if (i > 0) 1 else 0)
+        }
     }
 }
