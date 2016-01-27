@@ -71,7 +71,7 @@ object InventoryUtils {
             if(stack != null) {
                 for(j <- 0 until toSlots.size) {
                     val slotId = toSlots.get(j)
-                    if(!ItemStack.areItemStacksEqual(stack, otherInv.insertItem(slotId, stack, !doMove))) {
+                    if(!ItemStack.areItemStacksEqual(stack, otherInv.insertItem(slotId, fromInventory.extractItem(fromSlots.get(x), maxAmount, !doMove), !doMove))) {
                         return true
                     }
                 }
