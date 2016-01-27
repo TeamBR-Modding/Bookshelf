@@ -23,7 +23,6 @@ object InventoryUtils {
     /**
       * Used to move items from one inventory to another. Must come from an IItemHandler! You can wrap it if you have to
       *     but since you'll be calling from us, there shouldn't be an issue
-      *
       * @param fromInventory The IItemHandler to come from
       * @param fromSlot The from slot, -1 for any
       * @param target The target inventory, can be IInventory, ISideInventory, or preferably IItemHandler
@@ -67,14 +66,12 @@ object InventoryUtils {
                 toSlots.add(x)
 
         for(x <- 0 until fromSlots.size) {
-            val stack = fromInventory.extractItem(x, maxAmount, true)
+            val stack = fromInventory.extractItem(x, maxAmount, !doMove)
             if(stack != null) {
                 for(j <- 0 until toSlots.size) {
                     val slotId = toSlots.get(j)
-                    if(!ItemStack.areItemStacksEqual(stack, otherInv.insertItem(slotId, stack, !doMove))) {
-                        fromInventory.extractItem(x, maxAmount, !doMove)
+                    if(!ItemStack.areItemStacksEqual(stack, otherInv.insertItem(slotId, stack, !doMove)))
                         return true
-                    }
                 }
             }
         }
