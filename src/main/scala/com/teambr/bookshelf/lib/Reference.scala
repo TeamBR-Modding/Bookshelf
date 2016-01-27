@@ -14,6 +14,6 @@ object Reference {
     final val MODID          = "bookshelfapi"
     final val MODNAME        = "Bookshelf"
     final val VERSION        = "2.2.5"//@VERSION@"
-    final val DEPENDENCIES   = "required-after:Forge@[11.15.0.1697,)"
+    final val DEPENDENCIES   = "required-after:Forge@[11.15.1.1722,)"
     final val DEBUG          = "Debug Mode"
 }
