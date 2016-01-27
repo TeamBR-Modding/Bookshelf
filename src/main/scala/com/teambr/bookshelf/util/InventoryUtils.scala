@@ -70,11 +70,13 @@ object InventoryUtils {
             if(fromInventory.getStackInSlot(fromSlots.get(x)) != null) {
                 val fromStack = fromInventory.extractItem(fromSlots.get(x), maxAmount, true)
                 if (fromStack != null) {
-                for (j <- 0 until toSlots.size()) {
-                    val slotID = toSlots.get(j)
-                        val movedStack = otherInv.insertItem(slotID, fromStack.copy(), !doMove)
-                        if (!ItemStack.areItemStacksEqual(fromStack, movedStack))
+                    for (j <- 0 until toSlots.size()) {
+                        val slotID = toSlots.get(j)
+                        val movedStack = otherInv.insertItem(slotID, fromStack, !doMove)
+                        if (!ItemStack.areItemStacksEqual(fromStack, movedStack)) {
+                            fromInventory.extractItem(fromSlots.get(x), if(movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount, !doMove)
                             return true
+                        }
                     }
                 }
             }
