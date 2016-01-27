@@ -89,8 +89,8 @@ trait Inventory extends IInventory with IItemHandler with NBTSavable {
       *
       * @param inventory The inventory to copy from
       */
-    def copyFrom(inventory : IItemHandler) = {
-        for(i <- 0 until inventory.getSlots) {
+    def copyFrom(inventory : IInventory) = {
+        for(i <- 0 until inventory.getSizeInventory) {
             if (i < getSizeInventory) {
                 val stack = inventory.getStackInSlot(i)
                 if(stack != null) setInventorySlotContents(i, stack.copy) else setInventorySlotContents(i, null)
