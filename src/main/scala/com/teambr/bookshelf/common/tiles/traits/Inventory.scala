@@ -32,7 +32,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
 
     /***
       * The initial size of the inventory
- *
+      *
       * @return How big to make the inventory on creation
       */
     def initialSize : Int
@@ -164,7 +164,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
       *
       * @return The number of slots available
       **/
-    def getSlots: Int = getSizeInventory
+    override def getSlots: Int = getSizeInventory
 
     /**
       * Inserts an ItemStack into the given slot and return the remainder.
@@ -176,7 +176,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
       * @return                 The remaining ItemStack that was not inserted
       *                             (if the entire stack is accepted, then return null)
       **/
-    def insertItem(slot: Int, originalStack: ItemStack, simulate: Boolean): ItemStack = {
+    override def insertItem(slot: Int, originalStack: ItemStack, simulate: Boolean): ItemStack = {
         if (originalStack == null) return null
 
         if (!isItemValidForSlot(slot, originalStack)) return originalStack
@@ -238,7 +238,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
       * @param simulate     If true, the extraction is only simulated
       * @return             ItemStack extracted from the slot, must be null, if nothing can be extracted
       **/
-    def extractItem(extractSlot: Int, amount: Int, simulate: Boolean): ItemStack = {
+    override def extractItem(extractSlot: Int, amount: Int, simulate: Boolean): ItemStack = {
         if (amount == 0) return null
 
         val stackInSlot: ItemStack = getStackInSlot(extractSlot)
@@ -281,12 +281,25 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
       * @return ItemStack in given slot. May be null.
       **/
 
-    def getStackInSlot(index: Int): ItemStack = {
+    override def getStackInSlot(index: Int): ItemStack = {
         if(index < inventoryContents.size())
             inventoryContents.get(index)
         else
             null
     }
+
+    /**
+      * Overrides the stack in the given slot. This method is used by the
+      * standard Forge helper methods and classes. It is not intended for
+      * general use by other mods, and the handler may throw an error if it
+      * is called unexpectedly.
+      *
+      * @param slot  Slot to modify
+      * @param stack ItemStack to set slot to (may be null)
+      * @throws RuntimeException if the handler is called in a way that the handler
+      *                          was not expecting.
+      **/
+    override def setStackInSlot(slot : Int, stack : ItemStack) = setInventorySlotContents(slot, stack)
 
     /*******************************************************************************************************************
       ************************************ IInventory (Legacy) Methods *************************************************
