@@ -40,11 +40,11 @@ object InventoryUtils {
             target match {
                 case iInventory: IInventory if !iInventory.isInstanceOf[ISidedInventory] => otherInv = new InvWrapper(iInventory)
                 case iSided: ISidedInventory => otherInv = new SidedInvWrapper(iSided, dir.getOpposite)
-                case _ => return false
+                case _ => return false //Not an inventory or IItemHandler
             }
         } else target match { //If we are a ItemHandler, we want to make sure not to wrap, it can be both IInventory and IItemHandler
             case itemHandler: IItemHandler => otherInv = itemHandler
-            case _ => return false
+            case _ => return false //Nothing else, somehow?
         }
 
         val fromSlots = new util.ArrayList[Int]()
@@ -66,22 +66,24 @@ object InventoryUtils {
             for(x <- 0 until otherInv.getSlots)
                 toSlots.add(x)
 
-        for(x <- 0 until fromSlots.size) {
-            if(fromInventory.getStackInSlot(fromSlots.get(x)) != null) {
-                val fromStack = fromInventory.extractItem(fromSlots.get(x), maxAmount, true)
-                if (fromStack != null) {
-                    for (j <- 0 until toSlots.size()) {
-                        val slotID = toSlots.get(j)
-                        val movedStack = otherInv.insertItem(slotID, fromStack, !doMove)
-                        if (!ItemStack.areItemStacksEqual(fromStack, movedStack)) {
-                            fromInventory.extractItem(fromSlots.get(x), if(movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount, !doMove)
-                            return true
+        for(x <- 0 until fromSlots.size) { //Cycle the from inventory
+            if(fromInventory.getStackInSlot(fromSlots.get(x)) != null) { //If something does exist
+                val fromStack = fromInventory.extractItem(fromSlots.get(x), maxAmount, true) //Simulate so we can see changes
+                if (fromStack != null) { //Make sure something was extracted
+                    for (j <- 0 until toSlots.size()) { //Try to put it somewhere
+                        val slotID = toSlots.get(j) //Get the slot to put into
+                        val movedStack = otherInv.insertItem(slotID, fromStack, !doMove) //Try to insert
+                        if (!ItemStack.areItemStacksEqual(fromStack, movedStack)) { //If the insert changed the stack
+                            fromInventory.extractItem(fromSlots.get(x),
+                                if(movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount,
+                                !doMove) //We need to pull if we are told
+                            return true //We did it!
                         }
                     }
                 }
             }
         }
-        false
+        false //Nothing was moved
     }
 
     def tryMergeStacks(stackToMerge: ItemStack, stackInSlot: ItemStack): Boolean = {
