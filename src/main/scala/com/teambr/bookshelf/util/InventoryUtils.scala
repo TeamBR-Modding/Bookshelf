@@ -67,12 +67,12 @@ object InventoryUtils {
                 toSlots.add(x)
 
         for(x <- 0 until fromSlots.size) {
-            val stack = fromInventory.extractItem(x, maxAmount, true)
+            val stack = fromInventory.extractItem(fromSlots.get(x), maxAmount, true)
             if(stack != null) {
                 for(j <- 0 until toSlots.size) {
                     val slotId = toSlots.get(j)
                     if(!ItemStack.areItemStacksEqual(stack, otherInv.insertItem(slotId, stack, !doMove))) {
-                        fromInventory.extractItem(x, maxAmount, !doMove)
+                        fromInventory.extractItem(fromSlots.get(x), maxAmount, !doMove)
                         return true
                     }
                 }
