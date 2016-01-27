@@ -73,8 +73,8 @@ object InventoryUtils {
                     for (j <- 0 until toSlots.size()) { //Try to put it somewhere
                         val slotID = toSlots.get(j) //Get the slot to put into
                         val beforeStack = otherInv.getStackInSlot(slotID).copy() //First Copy
-                        val movedStack = otherInv.insertItem(slotID, fromStack, !doMove) //Try to insert
-                        val afterStack = otherInv.getStackInSlot(slotID).copy()
+                        val movedStack = otherInv.insertItem(slotID, fromStack.copy(), !doMove) //Try to insert
+                        val afterStack = otherInv.getStackInSlot(slotID).copy() //Second Copy
                         if (!ItemStack.areItemStacksEqual(beforeStack, afterStack)) { //If the insert changed the stack
                             fromInventory.extractItem(fromSlots.get(x),
                                 if(movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount,
