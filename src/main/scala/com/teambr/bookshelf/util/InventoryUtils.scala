@@ -5,8 +5,9 @@ import java.util
 import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.inventory.{IInventory, ISidedInventory}
 import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.{EnumFacing, MathHelper}
-import net.minecraftforge.items.IItemHandler
+import net.minecraftforge.items.{CapabilityItemHandler, IItemHandler}
 import net.minecraftforge.items.wrapper.{InvWrapper, SidedInvWrapper}
 
 /**
@@ -49,6 +50,12 @@ object InventoryUtils {
             case _ => return false //Nothing else, somehow?
         }
 
+        source match { //Check for sidedness
+            case tileEntity: TileEntity if tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir) =>
+                fromInventory = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)
+            case _ =>
+        }
+
         //Try to case sink
         var otherInv : IItemHandler = null
 
@@ -61,6 +68,12 @@ object InventoryUtils {
         } else target match { //If we are a ItemHandler, we want to make sure not to wrap, it can be both IInventory and IItemHandler
             case itemHandler: IItemHandler => otherInv = itemHandler
             case _ => return false //Nothing else, somehow?
+        }
+
+        target match { //Check for sidedness
+            case tileEntity: TileEntity if tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite) =>
+                otherInv = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite)
+            case _ =>
         }
 
         val fromSlots = new util.ArrayList[Int]()
