@@ -86,30 +86,11 @@ object InventoryUtils {
                 if (fromStack != null) { //Make sure something was extracted
                     for (j <- 0 until toSlots.size()) { //Try to put it somewhere
                     val slotID = toSlots.get(j) //Get the slot to put into
-
-                        var otherInvSimulate : IItemHandler = null //We are going to use a proxy, for simulations
-
-                        if(!doMove) {
-                            otherInvSimulate = otherInv //No need to make it something else, just use the orginal
-                        } else {
-                            otherInvSimulate = new Inventory { //Since we are simulating, we need to pretend
-                                override var inventoryName: String = "TEMPINV"
-                                override def hasCustomName: Boolean = false
-                                override def initialSize: Int = otherInv.getSlots
-                            }
-                            otherInvSimulate.asInstanceOf[Inventory].copyFrom(otherInv) //Copy stacks
-                        }
-
-                        val beforeStack = if(otherInvSimulate.getStackInSlot(slotID) != null) otherInvSimulate.getStackInSlot(slotID).copy() else null //First Copy
-                        var movedStack = otherInvSimulate.insertItem(slotID, fromStack.copy(), false) //Try to insert
-                        val afterStack = if(otherInvSimulate.getStackInSlot(slotID) != null) otherInvSimulate.getStackInSlot(slotID).copy() else null  //Second Copy
-                        if (!ItemStack.areItemStacksEqual(beforeStack, afterStack)) { //If the insert changed the stack
-                            if(!doMove) { //If we should actually do the move lets do it
-                                movedStack = otherInv.insertItem(slotID, fromStack.copy(), false) //Do insertion on original
-                                fromInventory.extractItem(fromSlots.get(x),
-                                    if (movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount,
-                                    false) //Do Extraction on original
-                            }
+                    val movedStack = otherInv.insertItem(slotID, fromStack.copy(), !doMove) //Try to insert
+                        if (!ItemStack.areItemStacksEqual(fromStack, movedStack)) { //If the insert changed the stack
+                            fromInventory.extractItem(fromSlots.get(x),
+                                if (movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount,
+                                !doMove) //Do Extraction on original
                             return true //We did it!
                         }
                     }
