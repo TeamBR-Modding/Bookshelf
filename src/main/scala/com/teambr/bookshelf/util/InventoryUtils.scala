@@ -35,7 +35,7 @@ object InventoryUtils {
       * @param doMove True to actually do the move, false to simulate
       * @return True if something was moved
       */
-    def moveItemInto(source : AnyRef, fromSlot : Int, target : AnyRef, intoSlot : Int, maxAmount : Int, dir : EnumFacing, doMove : Boolean) : Boolean = {
+    def moveItemInto(source : AnyRef, fromSlot : Int, target : AnyRef, intoSlot : Int, maxAmount : Int, dir : EnumFacing, doMove : Boolean, checkSidedSource : Boolean = true, checkSidedTarget : Boolean = true) : Boolean = {
         //Try to cast source
         var fromInventory : IItemHandler = null
 
@@ -50,10 +50,12 @@ object InventoryUtils {
             case _ => return false //Nothing else, somehow?
         }
 
-        source match { //Check for sidedness
-            case tileEntity: TileEntity if tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir) =>
-                fromInventory = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)
-            case _ =>
+        if(checkSidedSource) {
+            source match { //Check for sidedness
+                case tileEntity: TileEntity if tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir) =>
+                    fromInventory = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir)
+                case _ =>
+            }
         }
 
         //Try to case sink
@@ -70,10 +72,12 @@ object InventoryUtils {
             case _ => return false //Nothing else, somehow?
         }
 
-        target match { //Check for sidedness
-            case tileEntity: TileEntity if tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite) =>
-                otherInv = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite)
-            case _ =>
+        if(checkSidedTarget) {
+            target match { //Check for sidedness
+                case tileEntity: TileEntity if tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite) =>
+                    otherInv = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, dir.getOpposite)
+                case _ =>
+            }
         }
 
         val fromSlots = new util.ArrayList[Int]()
