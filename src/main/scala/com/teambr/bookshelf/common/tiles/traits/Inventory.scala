@@ -192,7 +192,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
                     val stackCopy: ItemStack = originalStack.copy
                     stackCopy.stackSize += stackInSlot.stackSize
                     setInventorySlotContents(slot, stackCopy)
-                    this.markDirty()
+                    this.thisIsDirty()
                 }
                 null
             } else {
@@ -200,7 +200,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
                     val stackCopy: ItemStack = originalStack.splitStack(minimum)
                     stackCopy.stackSize += stackInSlot.stackSize
                     setInventorySlotContents(slot, stackCopy)
-                    this.markDirty()
+                    this.thisIsDirty()
                     originalStack
                 } else {
                     originalStack.stackSize -= minimum
@@ -212,7 +212,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
             if (minimum < originalStack.stackSize) {
                 if (!simulate) {
                     setInventorySlotContents(slot, originalStack.splitStack(minimum))
-                    this.markDirty()
+                    this.thisIsDirty()
                     originalStack
                 } else {
                     originalStack.stackSize -= minimum
@@ -221,7 +221,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
             } else {
                 if (!simulate) {
                     setInventorySlotContents(slot, originalStack)
-                    this.markDirty()
+                    this.thisIsDirty()
                 }
                 null
             }
@@ -256,7 +256,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
         } else {
             val m: Int = Math.min(stackInSlot.stackSize, amount)
             val decrStackSizeVal: ItemStack = decrStackSize(extractSlot, m)
-            this.markDirty()
+            this.thisIsDirty()
             decrStackSizeVal
         }
     }
@@ -416,7 +416,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
     /**
       * Going to go ahead and implement this, but don't trust it to update. Minecraft won't call enough to really follow
       */
-    def markDirty(): Unit = onInventoryChanged(0)
+    def thisIsDirty(): Unit = onInventoryChanged(0)
 
     /**
       * Delete all the things
