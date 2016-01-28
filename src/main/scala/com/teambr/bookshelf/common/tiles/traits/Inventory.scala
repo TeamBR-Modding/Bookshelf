@@ -192,7 +192,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
                     val stackCopy: ItemStack = originalStack.copy
                     stackCopy.stackSize += stackInSlot.stackSize
                     setInventorySlotContents(slot, stackCopy)
-                    this.thisIsDirty()
+                    onInventoryChanged(0)
                 }
                 null
             } else {
@@ -200,7 +200,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
                     val stackCopy: ItemStack = originalStack.splitStack(minimum)
                     stackCopy.stackSize += stackInSlot.stackSize
                     setInventorySlotContents(slot, stackCopy)
-                    this.thisIsDirty()
+                    onInventoryChanged(0)
                     originalStack
                 } else {
                     originalStack.stackSize -= minimum
@@ -212,7 +212,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
             if (minimum < originalStack.stackSize) {
                 if (!simulate) {
                     setInventorySlotContents(slot, originalStack.splitStack(minimum))
-                    this.thisIsDirty()
+                    onInventoryChanged(0)
                     originalStack
                 } else {
                     originalStack.stackSize -= minimum
@@ -221,7 +221,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
             } else {
                 if (!simulate) {
                     setInventorySlotContents(slot, originalStack)
-                    this.thisIsDirty()
+                    onInventoryChanged(0)
                 }
                 null
             }
@@ -256,7 +256,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
         } else {
             val m: Int = Math.min(stackInSlot.stackSize, amount)
             val decrStackSizeVal: ItemStack = decrStackSize(extractSlot, m)
-            this.thisIsDirty()
+            onInventoryChanged(0)
             decrStackSizeVal
         }
     }
