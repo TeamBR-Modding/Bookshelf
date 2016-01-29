@@ -1,6 +1,8 @@
 package com.teambr.bookshelf.client.gui
 
-import com.teambr.bookshelf.client.gui.component.display.{GuiComponentText, GuiTabCollection}
+import java.awt.Rectangle
+
+import com.teambr.bookshelf.client.gui.component.display.{GuiReverseTab, GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
 import com.teambr.bookshelf.common.container.slots.{ICustomSlot, SLOT_SIZE}
 import com.teambr.bookshelf.util.RenderUtils
@@ -52,14 +54,16 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
 
     /**
      * Adds the tabs to the right. Overwrite this if you want tabs on your GUI
-     * @param tabs List of tabs, put GuiTabs in
+      *
+      * @param tabs List of tabs, put GuiTabs in
      */
     def addRightTabs(tabs: GuiTabCollection) : Unit = {}
 
 
     /**
      * Add the tabs to the left. Overwrite this if you want tabs on your GUI
-     * @param tabs List of tabs, put GuiReverseTabs in
+      *
+      * @param tabs List of tabs, put GuiReverseTabs in
      */
     def addLeftTabs(tabs: GuiTabCollection) : Unit = {}
 
@@ -71,33 +75,38 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
 
     /**
      * Used to get the guiLeft
-     * @return Where the gui starts
+      *
+      * @return Where the gui starts
      */
     def getGuiLeft: Int = guiLeft
 
 
     /**
      * Used to get guiTop
-     * @return Where the gui starts
+      *
+      * @return Where the gui starts
      */
     def getGuiTop: Int = guiTop
 
     /**
      * For some reason this isn't in vanilla
-     * @return The size of the gui
+      *
+      * @return The size of the gui
      */
     def getXSize: Int = xSize
 
 
     /**
      * For some reason this isn't in vanilla
-     * @return The size of the gui
+      *
+      * @return The size of the gui
      */
     def getYSize: Int = ySize
 
     /**
      * Called when the mouse is clicked
-     * @param x The X Position
+      *
+      * @param x The X Position
      * @param y The Y Position
      * @param button The button pressed
      */
@@ -108,7 +117,8 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
 
     /**
      * Called when the mouse releases a button
-     * @param x The X Position
+      *
+      * @param x The X Position
      * @param y The Y Position
      * @param button The button released
      */
@@ -119,7 +129,8 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
 
     /**
      * Used to track when the mouse is clicked and dragged
-     * @param x The Current X Position
+      *
+      * @param x The Current X Position
      * @param y The Current Y Position
      * @param button The button being dragged
      * @param time How long it has been pressed
@@ -131,7 +142,8 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
 
     /**
      * Called when a key is typed
-     * @param letter The letter pressed, as a char
+      *
+      * @param letter The letter pressed, as a char
      * @param code The Java key code
      */
     protected override def keyTyped(letter: Char, code: Int) {
@@ -164,7 +176,8 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
      * Called to draw the background
      *
      * Usually used to create the base on which to render things
-     * @param f A float?
+      *
+      * @param f A float?
      * @param mouseX The mouse X
      * @param mouseY The mouse Y
      */
@@ -205,7 +218,8 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
      * The main draw call. The super will handle calling the background and foreground layers. Then our extra code will run
      *
      * Used mainly to attach tool tips as they will always be on the top
-     * @param mouseX The Mouse X Position
+      *
+      * @param mouseX The Mouse X Position
      * @param mouseY The mouse Y Position
      * @param par3 A Float?
      */
@@ -220,16 +234,17 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
      * At the moment, the only slot that we have to check is the furnace slot. If you make a custom slot,
      * you should implement ICustomSlot as that will handle this. If you're adding vanilla slot checks here, you're probably
      * using this wrong
-     * @param slot The slot to check
+      *
+      * @param slot The slot to check
      * @return True if it is a big slot
      */
     private def isLargeSlot(slot: Slot): Boolean = slot.isInstanceOf[SlotFurnaceOutput]
 
-    /* UNTIL UPDATED
+    // UNTIL UPDATED
     /*******************************************************************************************************************
       ********************************************* NEI ****************************************************************
       *******************************************************************************************************************/
-    @Optional.Method(modid = "NotEnoughItems")
+   /* @Optional.Method(modid = "NotEnoughItems")
     override def modifyVisiblity (guiContainer: GuiContainer, visiblityData: VisiblityData) : VisiblityData = null
 
     @Optional.Method(modid = "NotEnoughItems")
@@ -239,10 +254,9 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
     override def getInventoryAreas(guiContainer: GuiContainer) : java.util.List[TaggedInventoryArea] = null
 
     @Optional.Method(modid = "NotEnoughItems")
-    override def handleDragNDrop(guiContainer: GuiContainer, i: Int, i1: Int, itemStack: ItemStack, i2: Int) : Boolean = false
+    override def handleDragNDrop(guiContainer: GuiContainer, i: Int, i1: Int, itemStack: ItemStack, i2: Int) : Boolean = false*/
 
-    @Optional.Method(modid = "NotEnoughItems")
-    override def hideItemPanelSlot(gc: GuiContainer, x: Int, y: Int, w: Int, h: Int) : Boolean = {
+    def hideItemPanel() : Rectangle = {
         val xMin: Int = guiLeft + xSize
         val yMin: Int = guiTop
         var xMax: Int = xMin
@@ -256,7 +270,8 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
                 else yMax += 24
             }
         }
-        ((x + w) > xMin && (x + w) < xMax && (y + h) > yMin && (y + h) < yMax) || ((x + w) < xMin + 30 && (x + w) > xMin)
+        new Rectangle(xMin, yMin, xMax, yMax)
+        // NEI CODE ((x + w) > xMin && (x + w) < xMax && (y + h) > yMin && (y + h) < yMax) || ((x + w) < xMin + 30 && (x + w) > xMin)
     }
-    */
+
 }
