@@ -117,7 +117,8 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
         GL11.glBegin(GL11.GL_QUADS)
         for(p <- 0 until selections.size()) {
             val pair = selections.get(p)
-            RenderUtils.setColor(pair.getRight)
+            if(pair.getRight != null)
+                RenderUtils.setColor(pair.getRight)
 
             pair.getLeft match {
                 case SidePicker.Side.XPos =>
