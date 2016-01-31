@@ -34,7 +34,7 @@ class Trackball {
     }
 
     def getTransform(mouseX : Float, mouseY : Float) : Matrix4f = {
-        if(dragStart == null) return null
+        if(dragStart == null) return lastTransform
         val current = calculateSpherePoint(mouseX, mouseY)
 
         val dot = Vector3f.dot(dragStart, current)
