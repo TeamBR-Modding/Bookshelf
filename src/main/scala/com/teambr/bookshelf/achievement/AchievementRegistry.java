@@ -13,6 +13,10 @@ import java.util.HashMap;
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
+ * This is the registry for mod achievements. The only use this is to a mod is to trigger the achievement. This will
+ * handle holding the achievements for each mod and as long as you super the constructor of AchievementList it will
+ * get added here automatically
+ *
  * @author Paul Davis pauljoda
  * @since July 31, 2015
  */

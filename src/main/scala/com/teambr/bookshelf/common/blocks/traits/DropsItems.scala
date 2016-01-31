@@ -10,9 +10,15 @@ import net.minecraft.world.{World, WorldServer}
 
 import scala.util.Random
 
-/** Bookshelf
-  * Created by Paul Davis on 8/1/2015
+/**
+  * This file was created for Bookshelf
   *
+  * Bookshelf is licensed under the
+  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
+  * http://creativecommons.org/licenses/by-nc-sa/4.0/
+  *
+  * @author Paul Davis pauljoda
+  * @since August 01, 2015
   */
 trait DropsItems extends BlockContainer {
     override def breakBlock(world: World, pos: BlockPos, state : IBlockState): Unit = {

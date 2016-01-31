@@ -15,6 +15,10 @@ import java.util.List;
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
+ * The AchievementList is what a mod should use to add mods. Extend this class and add achievements to the list
+ * during the initAchievements method. You can use the buildAchievement helper method to make this easier provided by
+ * this class
+ *
  * @author Paul Davis pauljoda
  * @since July 31, 2015
  */
@@ -82,7 +86,7 @@ public abstract class AchievementList {
      * @param parent Does this have a parent?, if so list it here
      */
     public void buildAchievement(String id, int x, int y, Item stack, Achievement parent) {
-        achievements.add((Achievement) new Achievement(id, id, x, y, stack, parent).registerStat());
+        achievements.add(new Achievement(id, id, x, y, stack, parent).registerStat());
     }
 
     /**
@@ -95,7 +99,7 @@ public abstract class AchievementList {
      * @param parent Does this have a parent?, if so list it here
      */
     public void buildAchievement(String id, int x, int y, Block stack, Achievement parent) {
-        achievements.add((Achievement) new Achievement(id, id, x, y, stack, parent).registerStat());
+        achievements.add(new Achievement(id, id, x, y, stack, parent).registerStat());
     }
 
     /**
@@ -108,7 +112,7 @@ public abstract class AchievementList {
      * @param parent Does this have a parent?, if so list it here
      */
     public void buildAchievement(String id, int x, int y, ItemStack stack, Achievement parent) {
-        achievements.add((Achievement) new Achievement(id, id, x, y, stack, parent).registerStat());
+        achievements.add(new Achievement(id, id, x, y, stack, parent).registerStat());
     }
 }
 

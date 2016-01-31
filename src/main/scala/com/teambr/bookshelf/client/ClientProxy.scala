@@ -3,15 +3,9 @@ package com.teambr.bookshelf.client
 import java.io.File
 
 import com.teambr.bookshelf.Bookshelf
-import com.teambr.bookshelf.client.modelfactory.{ BakeableBlockRegistry, ModelGenerator }
 import com.teambr.bookshelf.common.CommonProxy
-import com.teambr.bookshelf.common.blocks.traits.BlockBakeable
 import com.teambr.bookshelf.helper.KeyInputHelper
 import com.teambr.bookshelf.notification.{NotificationKeyBinding, NotificationTickHandler}
-import net.minecraft.block.state.IBlockState
-import net.minecraft.client.renderer.block.statemap.StateMapperBase
-import net.minecraft.client.resources.model.ModelResourceLocation
-import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.event.FMLInterModComms
@@ -45,17 +39,6 @@ class ClientProxy extends CommonProxy {
     override def init() = {
         NotificationKeyBinding.init()
         FMLCommonHandler.instance().bus().register(new KeyInputHelper())
-
-        BakeableBlockRegistry.blocks.foreach((block : BlockBakeable) => {
-
-            //We just want one model
-            val ignoreState = new StateMapperBase {
-                override def getModelResourceLocation(state : IBlockState) : ModelResourceLocation = block.getNormalModelLocation
-            }
-            ModelLoader.setCustomStateMapper(block, ignoreState)
-        })
-
-        ModelGenerator.register()
 
         FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaDataProvider.callBackRegisterClient")
     }

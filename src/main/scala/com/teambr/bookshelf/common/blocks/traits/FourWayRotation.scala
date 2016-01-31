@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.common.blocks.traits
 
 import com.teambr.bookshelf.common.blocks.properties.PropertyRotation
+import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockState, IBlockState}
 import net.minecraft.client.resources.model.ModelRotation
@@ -19,7 +20,7 @@ import net.minecraftforge.common.property.{ExtendedBlockState, IExtendedBlockSta
  * @author Paul Davis pauljoda
  * @since August 03, 2015
  */
-trait FourWayRotation extends BlockBakeable {
+trait FourWayRotation extends Block {
 
     /**
      * Called when the block is placed, we check which way the player is facing and put our value as the opposite of that
@@ -51,6 +52,7 @@ trait FourWayRotation extends BlockBakeable {
 
     /**
      * Used to convert the meta to state
+ *
      * @param meta The meta
      * @return
      */
@@ -58,25 +60,9 @@ trait FourWayRotation extends BlockBakeable {
 
     /**
      * Called to convert state from meta
+ *
      * @param state The state
      * @return
      */
     override def getMetaFromState(state : IBlockState) = state.getValue(PropertyRotation.FOUR_WAY).asInstanceOf[EnumFacing].getIndex
-
-
-    def getModelRotation(state : IBlockState) : ModelRotation = {
-        if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.EAST))
-            return ModelRotation.X0_Y90
-        else if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.SOUTH))
-            return ModelRotation.X0_Y180
-        else if(state == getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.WEST))
-            return ModelRotation.X0_Y270
-        ModelRotation.X0_Y0
-    }
-
-    override def getAllPossibleStates: Array[IBlockState] =
-        Array[IBlockState](getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.NORTH),
-            getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.EAST),
-            getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.SOUTH),
-            getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.WEST))
 }

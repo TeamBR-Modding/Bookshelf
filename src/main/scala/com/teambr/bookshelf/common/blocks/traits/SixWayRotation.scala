@@ -61,21 +61,4 @@ trait SixWayRotation extends Block with FourWayRotation {
      * @return
      */
     override def getMetaFromState(state : IBlockState) = state.getValue(PropertyRotation.SIX_WAY).asInstanceOf[EnumFacing].getIndex
-
-
-    override def getModelRotation(state : IBlockState) : ModelRotation = {
-        if(state == getDefaultState.withProperty(PropertyRotation.SIX_WAY, EnumFacing.UP))
-            return ModelRotation.X270_Y0
-        else if(state == getDefaultState.withProperty(PropertyRotation.SIX_WAY, EnumFacing.DOWN))
-            return ModelRotation.X90_Y0
-        super.getModelRotation(state)
-    }
-
-    override def getAllPossibleStates: Array[IBlockState] =
-        Array[IBlockState](getDefaultState.withProperty(PropertyRotation.SIX_WAY, EnumFacing.NORTH),
-            getDefaultState.withProperty(PropertyRotation.SIX_WAY, EnumFacing.EAST),
-            getDefaultState.withProperty(PropertyRotation.SIX_WAY, EnumFacing.SOUTH),
-            getDefaultState.withProperty(PropertyRotation.SIX_WAY, EnumFacing.WEST),
-            getDefaultState.withProperty(PropertyRotation.SIX_WAY, EnumFacing.UP),
-            getDefaultState.withProperty(PropertyRotation.SIX_WAY, EnumFacing.DOWN))
 }

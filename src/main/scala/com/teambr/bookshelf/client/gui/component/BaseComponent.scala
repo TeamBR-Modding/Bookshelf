@@ -1,5 +1,7 @@
 package com.teambr.bookshelf.client.gui.component
 
+import java.awt.Rectangle
+
 import com.teambr.bookshelf.client.gui.component.listeners.{IKeyboardListener, IMouseEventListener}
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.{FontRenderer, GuiScreen, Gui}
@@ -43,43 +45,56 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
 
     /**
      * Used to find how wide this is
-     * @return How wide the component is
+      *
+      * @return How wide the component is
      */
     def getWidth: Int
 
     /**
      * Used to find how tall this is
-     * @return How tall the component is
+      *
+      * @return How tall the component is
      */
     def getHeight: Int
 
     /**
+      * Used to get what area is being displayed, mainly used for JEI
+      */
+    def getArea: Rectangle =
+        new Rectangle(xPos, yPos, xPos + getWidth, yPos + getHeight)
+
+    /**
      * Set the handler for the mouse input
-     * @param listener The listener to set
+      *
+      * @param listener The listener to set
      */
     def setMouseEventListener(listener: IMouseEventListener) : Unit = mouseEventListener = listener
 
     /**
      * Get the Mouse Listener
-     * @return The listener, null if none is assigned
+      *
+      * @return The listener, null if none is assigned
      */
     def getMouseEventListener: IMouseEventListener = mouseEventListener
 
     /**
      * Set the handler for the keyboard input
-     * @param listener The keyboard listener
+      *
+      * @param listener The keyboard listener
      */
     def setKeyBoardListener(listener: IKeyboardListener) : Unit = keyboardEventListener = listener
 
     /**
      * Get the keyboard listener
-     * @return Keyboard listener, null if none is assigned
+      *
+      * @return Keyboard listener, null if none is assigned
      */
     def getKeyBoardListener: IKeyboardListener = keyboardEventListener
 
     /**
      * Render the tooltip if you can
-     * @param mouseX Mouse X
+      *
+      * @param mouseX Mouse X
      * @param mouseY Mouse Y
      */
     def renderToolTip(mouseX: Int, mouseY: Int, parent: GuiScreen) : Unit = {
@@ -91,7 +106,8 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
 
     /**
      * Called when the mouse is pressed
-     * @param x Mouse X Position
+      *
+      * @param x Mouse X Position
      * @param y Mouse Y Position
      * @param button Mouse Button
      */
@@ -101,7 +117,8 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
 
     /**
      * Called when the mouse button is over the component and released
-     * @param x Mouse X Position
+      *
+      * @param x Mouse X Position
      * @param y Mouse Y Position
      * @param button Mouse Button
      */
@@ -111,7 +128,8 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
 
     /**
      * Called when the user drags the component
-     * @param x Mouse X Position
+      *
+      * @param x Mouse X Position
      * @param y Mouse Y Position
      * @param button Mouse Button
      * @param time How long
@@ -122,7 +140,8 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
 
     /**
      * Used when a key is pressed
-     * @param letter The letter
+      *
+      * @param letter The letter
      * @param keyCode The code
      */
     def keyTyped(letter: Char, keyCode: Int) : Unit = {
@@ -144,49 +163,57 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
 
     /**
      * Get the X Position
-     * @return X Position
+      *
+      * @return X Position
      */
     def getXPos: Int = xPos
 
     /**
      * Set the X Position
-     * @param xPos Position
+      *
+      * @param xPos Position
      */
     def setXPos(xPos: Int) : Unit = this.xPos = xPos
 
     /**
      * Returns the Y Position of this component
-     * @return Y Position
+      *
+      * @return Y Position
      */
     def getYPos: Int = yPos
 
     /**
      * Set the Y Position
-     * @param yPos Position
+      *
+      * @param yPos Position
      */
     def setYPos(yPos: Int) : Unit = this.yPos = yPos
 
     /**
      * Get the Tool Tip for this component
-     * @return A list of strings that is the tooltip
+      *
+      * @return A list of strings that is the tooltip
      */
     def getToolTip: ArrayBuffer[String] = toolTip
 
     /**
      * Overwrite this when declaring the component to have this called for the tooltip
-     * @return The tooltip list
+      *
+      * @return The tooltip list
      */
     def getDynamicToolTip(mouseX: Int, mouseY: Int): ArrayBuffer[String] = null
 
     /**
      * Set the tooltip to the given list
-     * @param tip The new tooltip
+      *
+      * @param tip The new tooltip
      */
     def setToolTip(tip: ArrayBuffer[String]) : Unit = toolTip = tip
 
     /**
      * Used to draw a tooltip over this component
-     * @param tip The list of strings to render
+      *
+      * @param tip The list of strings to render
      * @param mouseX The mouse x Position
      * @param mouseY The mouse Y position
      * @param parent The parent GUI

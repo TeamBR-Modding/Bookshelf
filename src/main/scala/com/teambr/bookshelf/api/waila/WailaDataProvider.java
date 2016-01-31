@@ -20,6 +20,8 @@ import java.util.List;
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
+ * This is the class that handles moving the info to the tile, you should need to modify this
+ *
  * @author Dyonovan
  * @since 12/19/2015
  */

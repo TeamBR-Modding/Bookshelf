@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.client.gui
 
 import java.awt.Rectangle
+import java.util
 
 import com.teambr.bookshelf.client.gui.component.display.{GuiReverseTab, GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
@@ -240,38 +241,19 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
      */
     private def isLargeSlot(slot: Slot): Boolean = slot.isInstanceOf[SlotFurnaceOutput]
 
-    // UNTIL UPDATED
     /*******************************************************************************************************************
-      ********************************************* NEI ****************************************************************
+      ********************************************* JEI ****************************************************************
       *******************************************************************************************************************/
-   /* @Optional.Method(modid = "NotEnoughItems")
-    override def modifyVisiblity (guiContainer: GuiContainer, visiblityData: VisiblityData) : VisiblityData = null
 
-    @Optional.Method(modid = "NotEnoughItems")
-    override def getItemSpawnSlots(guiContainer: GuiContainer, itemStack: ItemStack) : java.lang.Iterable[Integer] = null
-
-    @Optional.Method(modid = "NotEnoughItems")
-    override def getInventoryAreas(guiContainer: GuiContainer) : java.util.List[TaggedInventoryArea] = null
-
-    @Optional.Method(modid = "NotEnoughItems")
-    override def handleDragNDrop(guiContainer: GuiContainer, i: Int, i1: Int, itemStack: ItemStack, i2: Int) : Boolean = false*/
-
-    def hideItemPanel() : Rectangle = {
-        val xMin: Int = guiLeft + xSize
-        val yMin: Int = guiTop
-        var xMax: Int = xMin
-        var yMax: Int = yMin
-        for (tab <- rightTabs.getTabs) {
-            if (!tab.isInstanceOf[GuiReverseTab]) {
-                if (tab.getWidth > 24) {
-                    xMax += tab.getWidth + 10
-                    yMax += tab.getHeight + 20
-                }
-                else yMax += 24
-            }
-        }
-        new Rectangle(xMin, yMin, xMax, yMax)
-        // NEI CODE ((x + w) > xMin && (x + w) < xMax && (y + h) > yMin && (y + h) < yMax) || ((x + w) < xMin + 30 && (x + w) > xMin)
+    /**
+      * Returns a list of Rectangles that represent the areas covered by the GUI
+      * @return
+      */
+    def getCoveredAreas : java.util.List[Rectangle] = {
+        val areas = new util.ArrayList[Rectangle]()
+        areas.add(new Rectangle(guiLeft, guiTop, xSize, ySize))
+        this.components.foreach((component : BaseComponent) => areas.add(new Rectangle(component.getArea)))
+        areas
     }
 
 }
