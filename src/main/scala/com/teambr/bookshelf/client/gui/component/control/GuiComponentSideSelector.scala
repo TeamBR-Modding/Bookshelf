@@ -83,7 +83,10 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
 
         if(highlightSelectedSides) {
             for(dir <- EnumFacing.values())
-                selections.add(org.apache.commons.lang3.tuple.Pair.of(SidePicker.Side.fromEnumFacing(dir), toggleableSidesController.getColorForMode(dir)))
+                selections.add(org.apache.commons.lang3.tuple.Pair.of(SidePicker.Side.fromEnumFacing(dir),
+                    if(toggleableSidesController.getColorForMode(dir) != null)
+                        toggleableSidesController.getColorForMode(dir)
+                    else new Color(0, 0, 0, 255)))
         }
 
         if(selections != null) drawHighlights(selections)
