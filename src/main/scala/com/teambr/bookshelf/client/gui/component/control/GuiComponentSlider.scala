@@ -70,7 +70,7 @@ abstract class GuiComponentSlider[V](x: Int, y: Int, var width: Int, var selecta
         updateCurrentSelection()
     }
 
-    def render(guiLeft: Int, guiTop: Int) {
+    def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.bindGuiComponentsSheet()
@@ -90,7 +90,7 @@ abstract class GuiComponentSlider[V](x: Int, y: Int, var width: Int, var selecta
         GL11.glPopMatrix()
     }
 
-    def renderOverlay(guiLeft: Int, guiTop: Int) {
+    def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         val fontRenderer: FontRenderer = Minecraft.getMinecraft.fontRendererObj
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)

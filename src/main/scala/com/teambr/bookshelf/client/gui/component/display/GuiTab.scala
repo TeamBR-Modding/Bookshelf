@@ -61,7 +61,7 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
 
     override def initialize() : Unit =  {}
 
-    override def render(x: Int, y: Int) : Unit = {
+    override def render(x: Int, y: Int, mouseX : Int, mouseY : Int) : Unit = {
         GL11.glPushMatrix()
         val targetWidth: Double = if (active) expandedWidth else FOLDED_WIDTH
         val targetHeight: Double = if (active) expandedHeight else FOLDED_HEIGHT
@@ -83,18 +83,18 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
         if (areChildrenActive) {
             RenderUtils.prepareRenderState()
             for (component <- children) {
-                component.render(0, 0)
+                component.render(0, 0, mouseX, mouseY)
                 RenderUtils.restoreRenderState()
             }
         }
         GL11.glPopMatrix()
     }
 
-    override def renderOverlay(i: Int, i1: Int) {
+    override def renderOverlay(i: Int, i1: Int, mouseX : Int, mouseY : Int) {
         if (areChildrenActive) {
             RenderUtils.prepareRenderState()
             for (component <- children) {
-                component.renderOverlay(0, 0)
+                component.renderOverlay(0, 0, mouseX, mouseY)
                 RenderUtils.restoreRenderState()
             }
         }

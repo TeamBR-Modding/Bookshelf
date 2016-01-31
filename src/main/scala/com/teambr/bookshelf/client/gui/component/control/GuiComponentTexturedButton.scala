@@ -16,8 +16,8 @@ import org.lwjgl.opengl.GL11
 abstract class GuiComponentTexturedButton(x: Int, y: Int, var iconU: Int, var iconV: Int, var iconW: Int, var iconH: Int, width: Int, height: Int)
     extends GuiComponentButton(x, y, width, height, " ") {
 
-    override def render(guiLeft: Int, guiTop: Int) {
-        super.render(guiLeft, guiTop)
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
+        super.render(guiLeft, guiTop, mouseX, mouseY)
         GL11.glPushMatrix()
         RenderUtils.prepareRenderState()
         GL11.glTranslated(xPos + 1, yPos + 1, 0)

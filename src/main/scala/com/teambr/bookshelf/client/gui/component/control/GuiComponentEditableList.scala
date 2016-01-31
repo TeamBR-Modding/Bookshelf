@@ -152,15 +152,15 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
 
     override def initialize(): Unit = {}
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         RenderUtils.bindGuiComponentsSheet()
         RenderUtils.prepareRenderState()
         renderer.render(this, xPos - 1, yPos + 20, 120, 100, new Color(100, 100, 100))
         RenderUtils.setColor(new Color(255, 255, 255))
-        inputBox.render(guiLeft, guiTop)
-        saveButton.render(guiLeft, guiTop)
-        scrollBar.render(guiLeft, guiTop)
+        inputBox.render(guiLeft, guiTop, mouseX, mouseY)
+        saveButton.render(guiLeft, guiTop, mouseX, mouseY)
+        scrollBar.render(guiLeft, guiTop, mouseX, mouseY)
         if (list.nonEmpty) {
             GL11.glTranslated(xPos + 3, yPos + 23, 0)
             var renderY: Int = 0
@@ -180,13 +180,13 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
         GL11.glPopMatrix()
     }
 
-    override def renderOverlay(guiLeft: Int, guiTop: Int) {
+    override def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         RenderUtils.bindGuiComponentsSheet()
         RenderUtils.prepareRenderState()
-        inputBox.renderOverlay(guiLeft, guiTop)
-        saveButton.renderOverlay(guiLeft, guiTop)
-        scrollBar.renderOverlay(guiLeft, guiTop)
+        inputBox.renderOverlay(guiLeft, guiTop, mouseX, mouseY)
+        saveButton.renderOverlay(guiLeft, guiTop, mouseX, mouseY)
+        scrollBar.renderOverlay(guiLeft, guiTop, mouseX, mouseY)
         RenderUtils.restoreRenderState()
         GL11.glPopMatrix()
     }

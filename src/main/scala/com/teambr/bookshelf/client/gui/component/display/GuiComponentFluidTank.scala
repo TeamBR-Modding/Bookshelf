@@ -25,7 +25,7 @@ class GuiComponentFluidTank(x: Int, y: Int, var width: Int, var height: Int, var
 
     override def initialize() : Unit = {}
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.bindGuiComponentsSheet()
@@ -34,7 +34,7 @@ class GuiComponentFluidTank(x: Int, y: Int, var width: Int, var height: Int, var
         GL11.glPopMatrix()
     }
 
-    def renderOverlay(guiLeft: Int, guiTop: Int) {}
+    def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {}
 
     def getWidth: Int = width
 

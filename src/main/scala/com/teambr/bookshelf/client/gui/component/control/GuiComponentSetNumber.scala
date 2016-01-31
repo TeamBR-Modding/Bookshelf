@@ -108,7 +108,7 @@ abstract class GuiComponentSetNumber(x: Int, y: Int, var width: Int, var value: 
         true
     }
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.bindGuiComponentsSheet()
@@ -120,7 +120,7 @@ abstract class GuiComponentSetNumber(x: Int, y: Int, var width: Int, var value: 
         GL11.glPopMatrix()
     }
 
-    def renderOverlay(guiLeft: Int, guiTop: Int) {}
+    def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {}
 
     def getWidth: Int = 20000
 

@@ -157,15 +157,15 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
      *
      * Used mostly for adding text
      *
-     * @param x The mouse X Position
-     * @param y The mouse Y Position
+     * @param mouseX The mouse X Position
+     * @param mouseY The mouse Y Position
      */
-    protected override def drawGuiContainerForegroundLayer(x: Int, y: Int) {
+    protected override def drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         GL11.glPushMatrix()
         RenderUtils.prepareRenderState()
         for (component <- components) {
             RenderUtils.prepareRenderState()
-            component.renderOverlay(0, 0)
+            component.renderOverlay(0, 0, mouseX - guiLeft, mouseY - guiTop)
             RenderUtils.restoreRenderState()
         }
         RenderUtils.restoreRenderState()
@@ -190,7 +190,7 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
 
         for (component <- components) {
             RenderUtils.prepareRenderState()
-            component.render(0, 0)
+            component.render(0, 0, mouseX - guiLeft, mouseY - guiTop)
             RenderUtils.restoreColor()
             RenderUtils.restoreRenderState()
         }

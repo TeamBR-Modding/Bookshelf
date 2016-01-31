@@ -35,7 +35,7 @@ class GuiReverseTab(gui: GuiBase[_ <: Container], x : Int, y : Int, expandedWidt
         }
     }
 
-    override def render(x: Int, y: Int) {
+    override def render(x: Int, y: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         val targetWidth: Double = if (active) expandedWidth else FOLDED_WIDTH
         val targetHeight: Double = if (active) expandedHeight else FOLDED_HEIGHT
@@ -58,19 +58,19 @@ class GuiReverseTab(gui: GuiBase[_ <: Container], x : Int, y : Int, expandedWidt
             RenderUtils.prepareRenderState()
             GL11.glTranslated(-expandedWidth, 0, 0)
             for (component <- children) {
-                component.render(-expandedWidth, 0)
+                component.render(-expandedWidth, 0, mouseX, mouseY)
                 RenderUtils.restoreRenderState()
             }
         }
         GL11.glPopMatrix()
     }
 
-    override def renderOverlay(i: Int, i1: Int) {
+    override def renderOverlay(i: Int, i1: Int, mouseX : Int, mouseY : Int) {
         if (areChildrenActive) {
             RenderUtils.prepareRenderState()
             GL11.glTranslated(-expandedWidth, 0, 0)
             for (component <- children) {
-                component.renderOverlay(-expandedWidth, 0)
+                component.renderOverlay(-expandedWidth, 0, mouseX, mouseY)
                 RenderUtils.restoreRenderState()
             }
         }

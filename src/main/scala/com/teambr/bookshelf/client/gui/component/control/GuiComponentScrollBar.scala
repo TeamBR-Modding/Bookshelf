@@ -79,7 +79,7 @@ abstract class GuiComponentScrollBar(x: Int, y: Int, var height: Int)
 
     override def initialize() {}
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         if (currentPosition > maxRange) currentPosition = maxRange
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
@@ -93,7 +93,7 @@ abstract class GuiComponentScrollBar(x: Int, y: Int, var height: Int)
         GL11.glPopMatrix()
     }
 
-    def renderOverlay(guiLeft: Int, guiTop: Int) {}
+    def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {}
 
     def getWidth: Int = 14
 

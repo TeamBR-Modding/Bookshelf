@@ -44,12 +44,12 @@ class GuiComponentText(var label : String, var x : Int, var y : Int) extends Bas
     /**
       * Called to render the component
       */
-    override def render(guiLeft: Int, guiTop: Int): Unit = {}
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int): Unit = {}
 
     /**
       * Called after base render, is already translated to guiLeft and guiTop, just move offset
       */
-    override def renderOverlay(guiLeft: Int, guiTop: Int): Unit = {
+    override def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int): Unit = {
         GL11.glPushMatrix()
 
         GL11.glTranslated(xPos, yPos, 0)

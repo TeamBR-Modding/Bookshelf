@@ -32,7 +32,7 @@ abstract class GuiComponentPowerBar(x: Int, y: Int, var width: Int, var height: 
 
     override def initialize() : Unit = {}
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.bindGuiComponentsSheet()
@@ -47,7 +47,7 @@ abstract class GuiComponentPowerBar(x: Int, y: Int, var width: Int, var height: 
         GL11.glPopMatrix()
     }
 
-    def renderOverlay(i: Int, i1: Int) {}
+    def renderOverlay(i: Int, i1: Int, mouseX : Int, mouseY : Int) {}
 
     def getWidth: Int = width
 

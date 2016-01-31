@@ -36,12 +36,12 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
     /**
      * Called to render the component
      */
-    def render(guiLeft: Int, guiTop: Int) : Unit
+    def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) : Unit
 
     /**
      * Called after base render, is already translated to guiLeft and guiTop, just move offset
      */
-    def renderOverlay(guiLeft: Int, guiTop: Int) : Unit
+    def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) : Unit
 
     /**
      * Used to find how wide this is

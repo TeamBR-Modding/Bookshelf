@@ -56,7 +56,7 @@ abstract class GuiComponentButton(x: Int, y: Int, var width: Int, var height: In
         false
     }
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         RenderUtils.prepareRenderState()
         GL11.glTranslated(xPos, yPos, 0)
@@ -68,7 +68,7 @@ abstract class GuiComponentButton(x: Int, y: Int, var width: Int, var height: In
         GL11.glPopMatrix()
     }
 
-    override def renderOverlay(guiLeft: Int, guiTop: Int) {
+    override def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         val size: Int = Minecraft.getMinecraft.fontRendererObj.getStringWidth(label)
         GL11.glTranslated(xPos + (width / 2 - size / 2), yPos + 6, 0)

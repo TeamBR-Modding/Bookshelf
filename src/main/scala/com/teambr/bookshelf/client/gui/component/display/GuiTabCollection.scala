@@ -73,13 +73,13 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
 
     def initialize(): Unit = {}
 
-    def render(i: Int, i1: Int) {
+    def render(i: Int, i1: Int, mouseX: Int, mouseY: Int) {
         realignTabsVertically()
         for (tab <- tabs) {
             GL11.glPushMatrix()
             RenderUtils.prepareRenderState()
             GL11.glTranslated(tab.getXPos, tab.getYPos, 0)
-            tab.render(0, 0)
+            tab.render(0, 0, mouseX, mouseY)
             RenderUtils.restoreRenderState()
             GL11.glPopMatrix()
         }
@@ -96,12 +96,12 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
         }
     }
 
-    def renderOverlay(mouseX: Int, mouseY: Int) {
+    def renderOverlay(i : Int, i1 : Int, mouseX: Int, mouseY: Int) {
         for (tab <- tabs) {
             GL11.glPushMatrix()
             RenderUtils.prepareRenderState()
             GL11.glTranslated(tab.getXPos, tab.getYPos, 0)
-            tab.renderOverlay(0, 0)
+            tab.renderOverlay(0, 0, mouseX, mouseY)
             RenderUtils.restoreRenderState()
             GL11.glPopMatrix()
         }

@@ -9,7 +9,9 @@ import net.minecraft.client.renderer.texture.TextureMap
 import net.minecraft.client.renderer.vertex.{DefaultVertexFormats, VertexFormatElement, VertexFormat}
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
+import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.{GL12, GL11}
+import org.lwjgl.util.vector.{Vector3f, Matrix4f}
 
 /**
  * This file was created for Bookshelf
@@ -36,7 +38,8 @@ object RenderUtils {
 
     /**
      * Used to bind a specific sheet
-     * @param resource The resource
+      *
+      * @param resource The resource
      */
     def bindTexture(resource: ResourceLocation) = {
         Minecraft.getMinecraft.getTextureManager.bindTexture(resource)
@@ -56,7 +59,8 @@ object RenderUtils {
 
     /**
      * Set the GL color. You should probably reset it after this
-     * @param color The color to set
+      *
+      * @param color The color to set
      */
     def setColor(color: Color) = {
         GL11.glColor4f(color.getRed / 255F, color.getGreen / 255F, color.getBlue / 255F, color.getAlpha / 255F)
@@ -95,6 +99,7 @@ object RenderUtils {
 
     /***
       * Used to draw a 3d cube, provide opposite corners
+      *
       * @param x1 First X Position
       * @param y1 First Y Position
       * @param z1 First Z Position
@@ -155,10 +160,29 @@ object RenderUtils {
     /***
       * Sets up the renderer for a Billboard effect (always facing the player)
       * Used to simulate a 3d ish icon with a 2d sprite
+      *
       * @param entity The Entity to Billboard to (usually the player)
       */
     def setupBillboard(entity : Entity) {
         GL11.glRotatef(-entity.rotationYaw, 0, 1, 0)
         GL11.glRotatef(entity.rotationPitch, 1, 0, 0)
+    }
+
+    val matrixBuffer = BufferUtils.createFloatBuffer(16)
+
+    def loadMatrix(transform : Matrix4f) : Unit = {
+        transform.store(matrixBuffer)
+        matrixBuffer.flip()
+        GL11.glMultMatrix(matrixBuffer)
+    }
+
+    def createEntityRotateMatrix(entity : Entity) : Matrix4f = {
+        val yaw : Double = Math.toRadians(entity.rotationYaw - 180)
+        val pitch : Double = Math.toRadians(entity.rotationPitch)
+
+        val initial = new Matrix4f()
+        initial.rotate(pitch.toFloat, new Vector3f(1, 0, 0))
+        initial.rotate(yaw.toFloat  , new Vector3f(0, 1, 0))
+        initial
     }
 }

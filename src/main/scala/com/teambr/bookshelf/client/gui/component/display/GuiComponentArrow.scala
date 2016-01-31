@@ -26,7 +26,7 @@ abstract class GuiComponentArrow(x: Int, y: Int) extends BaseComponent(x, y) {
 
     override def initialize() : Unit = {}
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.bindGuiComponentsSheet()
@@ -35,7 +35,7 @@ abstract class GuiComponentArrow(x: Int, y: Int) extends BaseComponent(x, y) {
         GL11.glPopMatrix()
     }
 
-    override def renderOverlay(i: Int, i1: Int) {}
+    override def renderOverlay(i: Int, i1: Int, mouseX : Int, mouseY : Int) {}
 
     override def getWidth: Int = 23
 

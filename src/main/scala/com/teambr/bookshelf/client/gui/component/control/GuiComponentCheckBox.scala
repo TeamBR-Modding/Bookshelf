@@ -42,7 +42,7 @@ abstract class GuiComponentCheckBox(x : Int, y : Int, var label : String, var se
         }
     }
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.bindGuiComponentsSheet()
@@ -55,7 +55,7 @@ abstract class GuiComponentCheckBox(x : Int, y : Int, var label : String, var se
         GL11.glPopMatrix()
     }
 
-    override def renderOverlay(guiLeft: Int, guiTop: Int) {
+    override def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.setColor(new Color(0, 0, 0)) //Minecraft doesn't play nice with GL, so we will just set our own color

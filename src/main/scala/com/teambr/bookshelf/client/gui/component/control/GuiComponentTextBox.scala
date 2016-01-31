@@ -71,14 +71,14 @@ abstract class GuiComponentTextBox(x: Int, y: Int, var width: Int, var height: I
         }
     }
 
-    override def render(guiLeft: Int, guiTop: Int) {
+    override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
         GL11.glPushMatrix()
         textField.drawTextBox()
         GL11.glDisable(GL11.GL_ALPHA_TEST)
         GL11.glPopMatrix()
     }
 
-    override def renderOverlay(guiLeft: Int, guiTop: Int) : Unit = {}
+    override def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) : Unit = {}
 
     def getWidth: Int = width
 
