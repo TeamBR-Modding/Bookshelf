@@ -146,9 +146,9 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
         val list = new util.ArrayList[Rectangle]()
         tabs.foreach((tab : GuiTab) =>
         if(tab.isInstanceOf[GuiReverseTab])
-            list.add(new Rectangle(tab.xPos - getWidth, tab.yPos, tab.xPos, tab.yPos + getHeight))
+            list.add(new Rectangle(tab.xPos - getWidth, tab.yPos, tab.getWidth, tab.getHeight))
             else
-            list.add(new Rectangle(tab.xPos, tab.yPos, tab.xPos + getWidth, tab.yPos + getWidth))
+            list.add(new Rectangle(tab.xPos, tab.yPos, getWidth, tab.getWidth))
         )
         list
     }

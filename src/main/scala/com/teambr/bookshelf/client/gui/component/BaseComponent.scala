@@ -61,7 +61,7 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
       * Used to get what area is being displayed, mainly used for JEI
       */
     def getArea: Rectangle =
-        new Rectangle(xPos, yPos, xPos + getWidth, yPos + getHeight)
+        new Rectangle(xPos, yPos, getWidth, getHeight)
 
     /**
      * Set the handler for the mouse input
