@@ -142,13 +142,13 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
         false
     }
 
-    def getAreasCovered : java.util.List[Rectangle] = {
+    def getAreasCovered(guiLeft : Int, guiTop : Int) : java.util.List[Rectangle] = {
         val list = new util.ArrayList[Rectangle]()
         tabs.foreach((tab : GuiTab) =>
         if(tab.isInstanceOf[GuiReverseTab])
-            list.add(new Rectangle(tab.xPos - getWidth, tab.yPos, tab.getWidth, tab.getHeight))
+            list.add(new Rectangle(guiLeft + tab.xPos - getWidth, guiTop + tab.yPos, tab.getWidth, tab.getHeight))
             else
-            list.add(new Rectangle(tab.xPos, tab.yPos, getWidth, tab.getWidth))
+            list.add(new Rectangle(guiLeft + tab.xPos, guiTop + tab.yPos, getWidth, tab.getWidth))
         )
         list
     }

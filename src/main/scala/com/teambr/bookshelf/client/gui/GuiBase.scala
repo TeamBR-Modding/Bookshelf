@@ -254,8 +254,8 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
         areas.add(new Rectangle(guiLeft, guiTop, xSize, ySize))
         this.components.foreach((component : BaseComponent) =>
                 component match {
-                    case tabCollection: GuiTabCollection => areas.addAll(tabCollection.getAreasCovered)
-                    case _ => areas.add(new Rectangle(component.getArea))
+                    case tabCollection: GuiTabCollection => areas.addAll(tabCollection.getAreasCovered(guiLeft, guiTop))
+                    case _ => areas.add(new Rectangle(component.getArea(guiLeft, guiTop)))
                 }
         )
         areas
