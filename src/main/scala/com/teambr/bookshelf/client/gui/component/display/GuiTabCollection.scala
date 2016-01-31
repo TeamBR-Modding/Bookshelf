@@ -15,15 +15,15 @@ import org.lwjgl.opengl.GL11
 import scala.collection.mutable.ArrayBuffer
 
 /**
- * This file was created for Bookshelf
- *
- * Bookshelf is licensed under the
- * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
- * http://creativecommons.org/licenses/by-nc-sa/4.0/
- *
- * @author Paul Davis pauljoda
- * @since August 04, 2015
- */
+  * This file was created for Bookshelf
+  *
+  * Bookshelf is licensed under the
+  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
+  * http://creativecommons.org/licenses/by-nc-sa/4.0/
+  *
+  * @author Paul Davis pauljoda
+  * @since August 04, 2015
+  */
 class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComponent(x, 2) {
     protected var tabs = new ArrayBuffer[GuiTab]
     protected var activeTab: GuiTab = null
@@ -31,14 +31,14 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
     setMouseEventListener(new TabMouseListener)
 
     /**
-     * Add a standard tab to this wrapper
+      * Add a standard tab to this wrapper
       *
       * @param components The components to add to the tab
-     * @param maxWidth The max width of the tab
-     * @param maxHeight The max height of the tab
-     * @param color The color of the tab
-     * @param stack What tab to display on the tab
-     */
+      * @param maxWidth The max width of the tab
+      * @param maxHeight The max height of the tab
+      * @param color The color of the tab
+      * @param stack What tab to display on the tab
+      */
     def addTab(components: List[BaseComponent], maxWidth: Int, maxHeight: Int, color: Color, stack: ItemStack) {
         var tab: GuiTab = null
         tab = new GuiTab(parent, this.xPos - 5, this.yPos + (this.yPos + (tabs.size * 24)), maxWidth, maxHeight, color, stack)
@@ -47,14 +47,14 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
     }
 
     /**
-     * Add a reverse tab to this wrapper
+      * Add a reverse tab to this wrapper
       *
       * @param components The components to add to the tab
-     * @param maxWidth The max width of the tab
-     * @param maxHeight The max height of the tab
-     * @param color The color of the tab
-     * @param stack What tab to display on the tab
-     */
+      * @param maxWidth The max width of the tab
+      * @param maxHeight The max height of the tab
+      * @param color The color of the tab
+      * @param stack What tab to display on the tab
+      */
     def addReverseTab(components: List[BaseComponent], maxWidth: Int, maxHeight: Int, color: Color, stack: ItemStack) {
         var tab: GuiTab = null
         tab = new GuiReverseTab(parent, this.xPos + 5, this.yPos + (this.yPos + (tabs.size * 24)), maxWidth, maxHeight, color, stack)
@@ -65,10 +65,10 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
     }
 
     /**
-     * Get the list of tabs in this wrapper
+      * Get the list of tabs in this wrapper
       *
       * @return
-     */
+      */
     def getTabs: ArrayBuffer[GuiTab] = tabs
 
     def initialize(): Unit = {}
@@ -86,8 +86,8 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
     }
 
     /**
-     * Move the tabs to fit the expansion of one
-     */
+      * Move the tabs to fit the expansion of one
+      */
     private def realignTabsVertically() {
         var y: Int = this.yPos
         for (tab <- tabs) {
@@ -108,11 +108,11 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
     }
 
     /**
-     * Render the tooltip if you can
+      * Render the tooltip if you can
       *
       * @param mouseX Mouse X
-     * @param mouseY Mouse Y
-     */
+      * @param mouseY Mouse Y
+      */
     override def renderToolTip(mouseX: Int, mouseY: Int, parent: GuiScreen) {
         for (tab <- tabs) {
             if (tab.isMouseOver(mouseX - this.parent.getGuiLeft, mouseY - this.parent.getGuiTop)) {
@@ -122,11 +122,11 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
     }
 
     /**
-     * Used when a key is pressed
+      * Used when a key is pressed
       *
       * @param letter The letter
-     * @param keyCode The code
-     */
+      * @param keyCode The code
+      */
     override def keyTyped(letter: Char, keyCode: Int) {
         for (tab <- tabs) tab.keyTyped(letter, keyCode)
     }
@@ -145,10 +145,10 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
     def getAreasCovered(guiLeft : Int, guiTop : Int) : java.util.List[Rectangle] = {
         val list = new util.ArrayList[Rectangle]()
         tabs.foreach((tab : GuiTab) =>
-        if(tab.isInstanceOf[GuiReverseTab])
-            list.add(new Rectangle(guiLeft + tab.xPos - getWidth, guiTop + tab.yPos, tab.getWidth, tab.getHeight))
+            if(tab.isInstanceOf[GuiReverseTab])
+                list.add(new Rectangle(guiLeft + tab.xPos - getWidth, guiTop + tab.yPos, tab.getWidth, tab.getHeight))
             else
-            list.add(new Rectangle(guiLeft + tab.xPos, guiTop + tab.yPos, getWidth, tab.getWidth))
+                list.add(new Rectangle(guiLeft + tab.xPos, guiTop + tab.yPos, tab.getWidth, tab.getHeight))
         )
         list
     }
