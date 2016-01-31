@@ -71,7 +71,7 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
         val height : Int = getHeight
 
         GL11.glPushMatrix()
-        GL11.glTranslatef(xPos + width / 2.toFloat, y + height / 2.toFloat, diameter.toFloat)
+        GL11.glTranslatef(xPos + width / 2, yPos + height / 2, diameter.toFloat)
         GL11.glScaled(scale, -scale, scale)
         trackball.update(mouseX - width, -(mouseY - height))
         if(tile != null) TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, -0.5, -0.5, -0.5, 0.0F)
@@ -100,6 +100,8 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
 
     def drawBlock() : Unit = {
         val tessellator = Tessellator.getInstance()
+        GlStateManager.pushMatrix()
+        GlStateManager.enableDepth()
         val wr = tessellator.getWorldRenderer
         wr.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK)
 
@@ -110,12 +112,14 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
         dispatcher.getBlockModelRenderer.renderModel(access, model, blockState, FakeBlockAccess.ORGIN, wr, false)
         wr.setTranslation(0.0D, 0.0D, 0.0D)
         tessellator.draw()
+        GlStateManager.popMatrix()
     }
 
     def drawHighlights(selections : java.util.List[org.apache.commons.lang3.tuple.Pair[SidePicker.Side, Color]]): Unit = {
         GlStateManager.disableLighting()
         GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GlStateManager.enableBlend()
+        GlStateManager.enableAlpha()
         GlStateManager.disableDepth()
         GlStateManager.disableTexture2D()
 
