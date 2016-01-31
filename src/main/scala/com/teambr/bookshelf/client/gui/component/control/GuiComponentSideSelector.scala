@@ -32,7 +32,7 @@ import org.lwjgl.opengl.GL11
   *
   * This class is based on the work by OpenModsLib https://github.com/OpenMods/OpenModsLib/blob/1.8.X/src/main/java/openmods/gui/component/GuiComponentSideSelector.java
   */
-abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockState : IBlockState, tile : TileEntity, highlightSelectedSides : Boolean = true) extends
+abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, var blockState : IBlockState, tile : TileEntity, highlightSelectedSides : Boolean = true) extends
         BaseComponent(x, y) {
 
     val diameter = MathHelper.ceiling_double_int(scale * Math.sqrt(3))
@@ -71,11 +71,13 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
         val height : Int = getHeight
 
         GL11.glPushMatrix()
-        GL11.glTranslatef(xPos + width / 2, yPos + height / 2, diameter.toFloat)
+        GL11.glTranslatef(xPos + width / 2,yPos + height / 2, diameter.toFloat)
         GL11.glScaled(scale, -scale, scale)
         trackball.update(mouseX - width, -(mouseY - height))
-        if(tile != null) TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, -0.5, -0.5, -0.5, 0.0F)
-        if(blockState != null) drawBlock
+        if(tile != null)
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, -0.5, -0.5, -0.5, 0.0F)
+        if(blockState != null)
+            drawBlock()
 
         val picker = new SidePicker(0.5)
 
@@ -88,7 +90,7 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
                 selections.add(org.apache.commons.lang3.tuple.Pair.of(SidePicker.Side.fromEnumFacing(dir),
                     if(toggleableSidesController.getColorForMode(dir) != null)
                         toggleableSidesController.getColorForMode(dir)
-                    else new Color(0, 0, 0, 255)))
+                    else new Color(0, 0, 0, 0)))
         }
 
         if(selections != null) drawHighlights(selections)
@@ -101,7 +103,8 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
     def drawBlock() : Unit = {
         val tessellator = Tessellator.getInstance()
         GlStateManager.pushMatrix()
-        GlStateManager.enableDepth()
+        GlStateManager.translate(-0.5, -0.5, -0.5)
+
         val wr = tessellator.getWorldRenderer
         wr.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK)
 
@@ -170,6 +173,8 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
         GlStateManager.enableDepth()
         GlStateManager.enableTexture2D()
     }
+
+    def setBlockState(newState : IBlockState) : Unit = blockState = newState
 
     /**
       * Called when the mouse is pressed
