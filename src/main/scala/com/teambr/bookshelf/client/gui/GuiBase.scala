@@ -252,7 +252,12 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
     def getCoveredAreas : java.util.List[Rectangle] = {
         val areas = new util.ArrayList[Rectangle]()
         areas.add(new Rectangle(guiLeft, guiTop, xSize, ySize))
-        this.components.foreach((component : BaseComponent) => areas.add(new Rectangle(component.getArea)))
+        this.components.foreach((component : BaseComponent) =>
+                component match {
+                    case tabCollection: GuiTabCollection => areas.addAll(tabCollection.getAreasCovered)
+                    case _ => areas.add(new Rectangle(component.getArea))
+                }
+        )
         areas
     }
 

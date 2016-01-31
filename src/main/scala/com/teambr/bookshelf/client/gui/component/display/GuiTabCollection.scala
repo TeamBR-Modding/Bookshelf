@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.client.gui.component.display
 
-import java.awt.Color
+import java.awt.{Rectangle, Color}
+import java.util
 
 import com.teambr.bookshelf.client.gui.GuiBase
 import com.teambr.bookshelf.client.gui.component.BaseComponent
@@ -31,7 +32,8 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
 
     /**
      * Add a standard tab to this wrapper
-     * @param components The components to add to the tab
+      *
+      * @param components The components to add to the tab
      * @param maxWidth The max width of the tab
      * @param maxHeight The max height of the tab
      * @param color The color of the tab
@@ -46,7 +48,8 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
 
     /**
      * Add a reverse tab to this wrapper
-     * @param components The components to add to the tab
+      *
+      * @param components The components to add to the tab
      * @param maxWidth The max width of the tab
      * @param maxHeight The max height of the tab
      * @param color The color of the tab
@@ -63,7 +66,8 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
 
     /**
      * Get the list of tabs in this wrapper
-     * @return
+      *
+      * @return
      */
     def getTabs: ArrayBuffer[GuiTab] = tabs
 
@@ -105,7 +109,8 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
 
     /**
      * Render the tooltip if you can
-     * @param mouseX Mouse X
+      *
+      * @param mouseX Mouse X
      * @param mouseY Mouse Y
      */
     override def renderToolTip(mouseX: Int, mouseY: Int, parent: GuiScreen) {
@@ -118,7 +123,8 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
 
     /**
      * Used when a key is pressed
-     * @param letter The letter
+      *
+      * @param letter The letter
      * @param keyCode The code
      */
     override def keyTyped(letter: Char, keyCode: Int) {
@@ -134,6 +140,17 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
             if (tab.isMouseOver(mouseX, mouseY)) return true
         }
         false
+    }
+
+    def getAreasCovered : java.util.List[Rectangle] = {
+        val list = new util.ArrayList[Rectangle]()
+        tabs.foreach((tab : GuiTab) =>
+        if(tab.isInstanceOf[GuiReverseTab])
+            list.add(new Rectangle(tab.xPos - getWidth, tab.yPos, tab.xPos, tab.yPos + getHeight))
+            else
+            list.add(new Rectangle(tab.xPos, tab.yPos, tab.xPos + getWidth, tab.yPos + getWidth))
+        )
+        list
     }
 
     private class TabMouseListener extends IMouseEventListener {
