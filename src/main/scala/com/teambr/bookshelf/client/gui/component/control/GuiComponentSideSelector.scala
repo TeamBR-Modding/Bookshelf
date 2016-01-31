@@ -45,6 +45,8 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, blockS
 
     var lastSideHovered : EnumFacing = null
 
+    setToggleController()
+
     /**
       * You should set up a controller here. Without it, there will be no function
       */
