@@ -79,7 +79,7 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
             GL11.glPushMatrix()
             RenderUtils.prepareRenderState()
             GL11.glTranslated(tab.getXPos, tab.getYPos, 0)
-            tab.render(0, 0, mouseX, mouseY)
+            tab.render(0, 0, mouseX - tab.getXPos, mouseY - tab.getYPos)
             RenderUtils.restoreRenderState()
             GL11.glPopMatrix()
         }
