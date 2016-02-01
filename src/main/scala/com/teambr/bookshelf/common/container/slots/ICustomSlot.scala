@@ -39,7 +39,7 @@ trait ICustomSlot {
       * Used to get the color of the slot, this won't be called unless you set hasColor to true
       * @return
       */
-    def getColor : Color
+    def getColor : Color = new Color(0, 0, 0, 0)
 }
 
 object SLOT_SIZE extends Enumeration {
