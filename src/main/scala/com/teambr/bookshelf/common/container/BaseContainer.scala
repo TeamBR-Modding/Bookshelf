@@ -222,7 +222,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
     }
 
     override def transferStackInSlot(player: EntityPlayer, slotId: Int): ItemStack = {
-        val slot: Slot = inventorySlots.get(slotId).asInstanceOf[Slot]
+        val slot: Slot = inventorySlots.get(slotId)
         if (slot != null && slot.getHasStack) {
             val itemToTransfer: ItemStack = slot.getStack
             val copy: ItemStack = itemToTransfer.copy
