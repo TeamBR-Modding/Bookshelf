@@ -3,6 +3,7 @@ package com.teambr.bookshelf.client.gui.component.display
 import java.awt.Color
 
 import com.teambr.bookshelf.client.gui.GuiBase
+import com.teambr.bookshelf.client.gui.component.control.GuiComponentTabSlotHolder
 import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
@@ -16,15 +17,15 @@ import org.lwjgl.opengl.{GL11, GL12}
 import scala.collection.mutable.ArrayBuffer
 
 /**
- * This file was created for Bookshelf
- *
- * Bookshelf is licensed under the
- * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
- * http://creativecommons.org/licenses/by-nc-sa/4.0/
- *
- * @author Paul Davis pauljoda
- * @since August 04, 2015
- */
+  * This file was created for Bookshelf
+  *
+  * Bookshelf is licensed under the
+  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
+  * http://creativecommons.org/licenses/by-nc-sa/4.0/
+  *
+  * @author Paul Davis pauljoda
+  * @since August 04, 2015
+  */
 class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expandedWidth : Int, var expandedHeight : Int, var color : Color, var stack: ItemStack)
         extends BaseComponent(x, y) {
 
@@ -48,15 +49,17 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
     }
 
     /**
-     * Can the tab render the children
-     * @return True if expanded and can render
-     */
+      * Can the tab render the children
+      *
+      * @return True if expanded and can render
+      */
     def areChildrenActive: Boolean = active && currentWidth == expandedWidth && currentHeight == expandedHeight
 
     /**
-     * Add a component to render
-     * @param component What to add
-     */
+      * Add a component to render
+      *
+      * @param component What to add
+      */
     def addChild(component: BaseComponent) : Unit = children += component
 
     override def initialize() : Unit =  {}
@@ -87,6 +90,11 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
                 RenderUtils.restoreRenderState()
             }
         }
+
+        for (component <- children)
+            if(component.isInstanceOf[GuiComponentTabSlotHolder])
+                component.render(0, 0, mouseX, mouseY)
+
         GL11.glPopMatrix()
     }
 
@@ -101,10 +109,11 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
     }
 
     /**
-     * Render the tooltip if you can
-     * @param mouseX Mouse X
-     * @param mouseY Mouse Y
-     */
+      * Render the tooltip if you can
+      *
+      * @param mouseX Mouse X
+      * @param mouseY Mouse Y
+      */
     override def renderToolTip(mouseX: Int, mouseY: Int, parent: GuiScreen) {
         if (areChildrenActive) {
             for (component <- children) {
@@ -117,11 +126,12 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
     }
 
     /**
-     * Called when the mouse is pressed
-     * @param x Mouse X Position
-     * @param y Mouse Y Position
-     * @param button Mouse Button
-     */
+      * Called when the mouse is pressed
+      *
+      * @param x Mouse X Position
+      * @param y Mouse Y Position
+      * @param button Mouse Button
+      */
     def mouseDownActivated(x: Int, y: Int, button: Int): Boolean = {
         if (areChildrenActive) {
             for (component <- children) if (component.isMouseOver(x, y)) {
@@ -133,11 +143,12 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
     }
 
     /**
-     * Called when the mouse button is over the component and released
-     * @param x Mouse X Position
-     * @param y Mouse Y Position
-     * @param button Mouse Button
-     */
+      * Called when the mouse button is over the component and released
+      *
+      * @param x Mouse X Position
+      * @param y Mouse Y Position
+      * @param button Mouse Button
+      */
     def mouseUpActivated(x: Int, y: Int, button: Int): Boolean = {
         if (areChildrenActive) {
             for (component <- children) if (component.isMouseOver(x, y)) {
@@ -149,12 +160,13 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
     }
 
     /**
-     * Called when the user drags the component
-     * @param x Mouse X Position
-     * @param y Mouse Y Position
-     * @param button Mouse Button
-     * @param time How long
-     */
+      * Called when the user drags the component
+      *
+      * @param x Mouse X Position
+      * @param y Mouse Y Position
+      * @param button Mouse Button
+      * @param time How long
+      */
     def mouseDragActivated(x: Int, y: Int, button: Int, time: Long): Boolean = {
         if (areChildrenActive) {
             for (component <- children) if (component.isMouseOver(x, y)) {
@@ -166,24 +178,27 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
     }
 
     /**
-     * Used when a key is pressed
-     * @param letter The letter
-     * @param keyCode The code
-     */
+      * Used when a key is pressed
+      *
+      * @param letter The letter
+      * @param keyCode The code
+      */
     override def keyTyped(letter: Char, keyCode: Int) {
         for (component <- children) component.keyTyped(letter, keyCode)
     }
 
     /**
-     * Used to find how wide this is
-     * @return How wide the component is
-     */
+      * Used to find how wide this is
+      *
+      * @return How wide the component is
+      */
     override def getWidth: Int = currentWidth
 
     /**
-     * Used to find how tall this is
-     * @return How tall the component is
-     */
+      * Used to find how tall this is
+      *
+      * @return How tall the component is
+      */
     override def getHeight: Int = currentHeight
 
     def setActive(b: Boolean) : Unit = this.active = b
