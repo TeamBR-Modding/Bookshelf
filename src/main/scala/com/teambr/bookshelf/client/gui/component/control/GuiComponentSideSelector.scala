@@ -6,12 +6,12 @@ import javax.annotation.Nullable
 import com.google.common.collect.Lists
 import com.teambr.bookshelf.client.gui.component.BaseComponent
 import com.teambr.bookshelf.client.gui.misc.{SidePicker, TrackballWrapper}
-import com.teambr.bookshelf.util.{FakeBlockAccess, RenderUtils}
+import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.block.state.IBlockState
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.{GlStateManager, Tessellator}
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
+import net.minecraft.client.renderer.{GlStateManager, Tessellator}
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.{EnumFacing, MathHelper}
 import org.lwjgl.input.{Keyboard, Mouse}
@@ -108,11 +108,9 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, var bl
         val wr = tessellator.getWorldRenderer
         wr.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK)
 
-        val access = new FakeBlockAccess(blockState)
-
         val dispatcher = Minecraft.getMinecraft.getBlockRendererDispatcher
-        val model = dispatcher.getModelFromBlockState(blockState, access, FakeBlockAccess.ORGIN)
-        dispatcher.getBlockModelRenderer.renderModel(access, model, blockState, FakeBlockAccess.ORGIN, wr, false)
+        val model = dispatcher.getModelFromBlockState(blockState, tile.getWorld, tile.getPos)
+        dispatcher.getBlockModelRenderer.renderModel(tile.getWorld, model, blockState, tile.getPos, wr, false)
         wr.setTranslation(0.0D, 0.0D, 0.0D)
         tessellator.draw()
         GlStateManager.popMatrix()
