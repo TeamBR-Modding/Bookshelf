@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.client.renderer.{GlStateManager, Tessellator}
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.{EnumFacing, MathHelper}
+import net.minecraft.util.{BlockPos, EnumFacing, MathHelper}
 import org.lwjgl.input.{Keyboard, Mouse}
 import org.lwjgl.opengl.GL11
 
@@ -110,7 +110,7 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, var bl
 
         val dispatcher = Minecraft.getMinecraft.getBlockRendererDispatcher
         val model = dispatcher.getModelFromBlockState(blockState, tile.getWorld, tile.getPos)
-        dispatcher.getBlockModelRenderer.renderModel(tile.getWorld, model, blockState, tile.getPos, wr, false)
+        dispatcher.getBlockModelRenderer.renderModel(tile.getWorld, model, blockState, new BlockPos(0, 0, 0), wr, false)
         wr.setTranslation(0.0D, 0.0D, 0.0D)
         tessellator.draw()
         GlStateManager.popMatrix()
