@@ -1,4 +1,4 @@
-Bookshelf API [![Build Status](http://teambrmodding.com/jenkins/buildStatus/icon?job=Bookshelf 1.8)](http://teambrmodding.com/jenkins/job/Bookshelf%201.8/)
+Bookshelf API [![Build Status](http://teambrmodding.com:8080/job/Bookshelf%20API%201.8.9/badge/icon)](http://teambrmodding.com:8080/job/Bookshelf%20API%201.8.9/)
 ======
 
 Library of useful functions used by TeamBR
