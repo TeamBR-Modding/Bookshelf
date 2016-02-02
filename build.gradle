@@ -110,7 +110,7 @@ task sourceJarScala(type: Jar, dependsOn: "classes") {
 
 artifacts {
     archives devJar
-  //  archives javadocJar
+    archives javadocJar
     archives sourceJarScala
 }
 
