@@ -32,7 +32,7 @@ import org.lwjgl.opengl.GL11
   *
   * This class is based on the work by OpenModsLib https://github.com/OpenMods/OpenModsLib/blob/1.8.X/src/main/java/openmods/gui/component/GuiComponentSideSelector.java
   */
-abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, var blockState : IBlockState, tile : TileEntity, highlightSelectedSides : Boolean = true) extends
+abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, var blockState : IBlockState, tile : TileEntity, highlightSelectedSides : Boolean = true, renderTile : Boolean = true) extends
         BaseComponent(x, y) {
 
     val diameter = MathHelper.ceiling_double_int(scale * Math.sqrt(3))
@@ -74,7 +74,7 @@ abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, var bl
         GL11.glTranslatef(xPos + width / 2,yPos + height / 2, diameter.toFloat)
         GL11.glScaled(scale, -scale, scale)
         trackball.update(mouseX - width, -(mouseY - height))
-        if(tile != null)
+        if(tile != null && renderTile)
             TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, -0.5, -0.5, -0.5, 0.0F)
         if(blockState != null)
             drawBlock()
