@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.client.gui.component.display
 
-import java.awt.{Rectangle, Color}
+import java.awt.{Color, Rectangle}
 import java.util
 
 import com.teambr.bookshelf.client.gui.GuiBase
@@ -151,6 +151,13 @@ class GuiTabCollection(parent: GuiBase[_ <: Container], x: Int) extends BaseComp
                 list.add(new Rectangle(guiLeft + tab.xPos, guiTop + tab.yPos, tab.getWidth, tab.getHeight))
         )
         list
+    }
+
+    override def mouseScrolled(dir : Int) : Unit = {
+        for (i <- tabs.indices) {
+            val tab = tabs(i)
+                tab.mouseScrolledTab(dir)
+        }
     }
 
     private class TabMouseListener extends IMouseEventListener {

@@ -139,6 +139,12 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
     }
 
     /**
+      * Called when the mouse is scrolled
+      * @param dir 1 for positive, -1 for negative
+      */
+    def mouseScrolled(dir : Int) : Unit = {}
+
+    /**
      * Used when a key is pressed
       *
       * @param letter The letter

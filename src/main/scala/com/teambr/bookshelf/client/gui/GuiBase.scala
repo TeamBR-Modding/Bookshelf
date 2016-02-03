@@ -3,7 +3,7 @@ package com.teambr.bookshelf.client.gui
 import java.awt.Rectangle
 import java.util
 
-import com.teambr.bookshelf.client.gui.component.display.{GuiReverseTab, GuiComponentText, GuiTabCollection}
+import com.teambr.bookshelf.client.gui.component.display.{GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
 import com.teambr.bookshelf.common.container.slots.{ICustomSlot, SLOT_SIZE}
 import com.teambr.bookshelf.util.RenderUtils
@@ -12,6 +12,7 @@ import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.inventory.{Container, Slot, SlotFurnaceOutput}
 import net.minecraft.util.StatCollector
+import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11
 
 import scala.collection.mutable.ArrayBuffer
@@ -141,6 +142,13 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
         for (component <- components) if (component.isMouseOver(x - this.guiLeft, y - this.guiTop)) component.mouseDrag(x - this.guiLeft, y - this.guiTop, button, time)
     }
 
+    override def handleMouseInput(): Unit = {
+        super.handleMouseInput()
+        val scrollDirection = Mouse.getEventDWheel
+        if(scrollDirection != 0)
+            for (component <- components) component.mouseScrolled(if(scrollDirection > 0) -1 else 1)
+    }
+
     /**
       * Called when a key is typed
       *
@@ -254,6 +262,7 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
 
     /**
       * Returns a list of Rectangles that represent the areas covered by the GUI
+      *
       * @return
       */
     def getCoveredAreas : java.util.List[Rectangle] = {

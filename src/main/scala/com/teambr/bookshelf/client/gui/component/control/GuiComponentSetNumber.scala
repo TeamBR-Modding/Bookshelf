@@ -71,7 +71,7 @@ abstract class GuiComponentSetNumber(x: Int, y: Int, var width: Int, var value: 
      */
     override def mouseUp(x: Int, y: Int, button: Int) {
         upSelected = {
-            downSelected = false;
+            downSelected = false
             downSelected
         }
     }

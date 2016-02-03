@@ -177,6 +177,14 @@ class GuiTab(var gui: GuiBase[_<: Container], var x : Int, var y : Int, var expa
         false
     }
 
+    def mouseScrolledTab(dir : Int) : Unit = {
+        if (areChildrenActive) {
+            for (component <- children)
+                component.mouseScrolled(dir)
+        }
+    }
+
+
     /**
       * Used when a key is pressed
       *
