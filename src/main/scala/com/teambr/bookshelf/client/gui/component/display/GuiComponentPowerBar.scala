@@ -30,12 +30,12 @@ abstract class GuiComponentPowerBar(x: Int, y: Int, var width: Int, var height: 
      */
     def getEnergyPercent(scale: Int): Int
 
-    def setDynamicColor() : Unit = {}
+    def getDynamicColor: Color = barColor
 
     override def initialize() : Unit = {}
 
     override def render(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {
-        setDynamicColor()
+        barColor = getDynamicColor
         GL11.glPushMatrix()
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.bindGuiComponentsSheet()
