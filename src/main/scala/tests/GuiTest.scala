@@ -2,7 +2,7 @@ package tests
 
 import java.awt.Color
 
-import com.teambr.bookshelf.client.gui.{GuiColor, GuiBase}
+import com.teambr.bookshelf.client.gui.GuiBase
 import com.teambr.bookshelf.client.gui.component.BaseComponent
 import com.teambr.bookshelf.client.gui.component.display.{GuiComponentLongText, GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.common.tiles.traits.Inventory
@@ -44,9 +44,8 @@ class GuiTest(player : EntityPlayer)
 
     override def addLeftTabs(tabs : GuiTabCollection) : Unit = {
         tabs.addReverseTab(List[BaseComponent](
-            new GuiComponentLongText(10, 25, GuiColor.YELLOW + "The grinder " + GuiColor.WHITE + "\n\n\n\n\n is an early game ore doubling mechanic. To use, place ores in the top three slots. Then, place any vanilla pressure plate on top. The better the plate, the faster it goes. Jump on the pressure plate to make the grinder start grinding ores. The higher you jump, the more it progresses. Ores will move into the center slot once you start the grinding process. You can automate placing items into the inventory, but you can not pull items out of the output slots.",
+            new GuiComponentLongText(10, 25, "§6Electric Furnace \n §r§fThe electric furnace is simply a furnace that runs on RF. It will smelt anything a vanilla furnace would. \n\n §r§n§2Upgrades:§r \n\n §6Processors: §r \n §fEach processor removes 24 ticks (a little over a second from the cook time§r \n\n §6Hard Drives: §r \n §fEach hard drive multiplies the max energy stored by 10 times the number of hard drives§r \n\n §6Control Upgrade: §r \n §fThe control upgrade gives you access to Redstone controls. High means you need a redstone signal, Low means you need no redstone signal, and Disabled ignores redstone signals§r\n\n§6Expansion Upgrade: §r \n §fThe expansion upgrade allows you to configure the automatic input and output of the machine§r",
                 80, 60, textScale = 50))
             , 100, 100, new Color(0, 0, 0), new ItemStack(Blocks.anvil))
-
     }
 }

@@ -88,14 +88,11 @@ class GuiComponentLongText(x : Int, y : Int, var text : String, width : Int, hei
                 if(actualY + ((textScale * 9) / 100) > height)
                     break
                 RenderUtils.restoreColor()
-
                 val label = lines(x)
 
-                fontRender.drawString(label, 0, yPos + 9, colorDefault)
-
+                fontRender.drawString(label, 0, yPos + 9,  0xFFFFFF)
                 yPos += 9
                 actualY += (textScale * 9) / 100
-                RenderUtils.restoreColor()
             }
         }
 
