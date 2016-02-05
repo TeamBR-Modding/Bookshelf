@@ -1,9 +1,9 @@
 package com.teambr.bookshelf.common.blocks.traits
 
+import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.item.EntityItem
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.BlockPos
 import net.minecraft.world.{World, WorldServer}
@@ -25,7 +25,7 @@ trait DropsItems extends BlockContainer {
         world match {
             case _: WorldServer => //We are on a server
                 world.getTileEntity(pos) match {
-                    case tile: IInventory => //This is an inventory
+                    case tile: Inventory => //This is an inventory
                         val random = new Random
                         for (i <- 0 until tile.getSizeInventory) {
                             val stack = tile.getStackInSlot(i)
