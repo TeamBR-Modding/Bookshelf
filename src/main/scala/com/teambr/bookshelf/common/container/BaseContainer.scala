@@ -4,11 +4,9 @@ import com.teambr.bookshelf.common.container.slots.IPhantomSlot
 import com.teambr.bookshelf.common.tiles.traits.Inventory
 import com.teambr.bookshelf.util.InventoryUtils
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.{IInventory, Slot, Container}
+import net.minecraft.inventory.{Container, IInventory, Slot}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.items.SlotItemHandler
-
-import scala.swing.event.MouseButtonEvent
 
 /**
  * This file was created for Bookshelf
@@ -30,7 +28,10 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
         override def isItemValid(itemstack: ItemStack): Boolean = inventory.isItemValidForSlot(inventoryIndex, itemstack)
     }
     
-    val inventorySize = inventory.getSizeInventory
+    val inventorySize = getInventorySizeNotPlayer
+
+    //Sometimes we have two inventories that aren't the players
+    def getInventorySizeNotPlayer : Int = inventory.getSizeInventory
 
     /**
       * Adds an inventory grid to the container
