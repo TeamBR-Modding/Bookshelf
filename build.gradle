@@ -193,7 +193,7 @@ curseforge  {
     apiKey = APIToken
     project {
         id = '232784'
-        changelog = 'Added new Gui Component'
+        changelog = 'General Fixes'
         releaseType = 'release'
         addArtifact devJar
         addGameVersion '1.8.9'
