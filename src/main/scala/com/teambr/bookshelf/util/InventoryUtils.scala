@@ -189,7 +189,7 @@ object InventoryUtils {
                         if (!ItemStack.areItemStacksEqual(fromStack, movedStack)) { //If the insert changed the stack
                             fromInventory.extractItem(fromSlots.get(x),
                                 if (movedStack != null) fromStack.stackSize - movedStack.stackSize else maxAmount, !doMove) //Do Extraction on original
-                            return Some(movedStack.copy()) //We did it!
+                            return Some(movedStack) //We did it!
                         }
                     }
                 }
