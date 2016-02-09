@@ -193,7 +193,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
             var slotId: Int = if (reverse) stop - 1 else start
             while (stackToMerge.stackSize > 0 && ((!reverse && slotId < stop) || (reverse && slotId >= start))) {
                 val slot: Slot = slots.get(slotId)
-                if (slot.isItemValid(stackToMerge)) {
+                if (slot.isItemValid(stackToMerge) && !slot.isInstanceOf[IPhantomSlot]) {
                     val stackInSlot: ItemStack = slot.getStack
                     if (InventoryUtils.tryMergeStacks(stackToMerge, stackInSlot)) {
                         slot.onSlotChanged()
@@ -207,7 +207,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
             var slotId: Int = if (reverse) stop - 1 else start
             while ((!reverse && slotId < stop) || (reverse && slotId >= start)) {
                 val slot: Slot = slots.get(slotId)
-                if (slot.isItemValid(stackToMerge)) {
+                if (slot.isItemValid(stackToMerge) && !slot.isInstanceOf[IPhantomSlot]) {
                     val stackInSlot: ItemStack = slot.getStack
                     if (stackInSlot == null) {
                         slot.putStack(stackToMerge.copy)
