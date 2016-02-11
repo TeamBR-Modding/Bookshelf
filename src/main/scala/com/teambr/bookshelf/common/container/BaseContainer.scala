@@ -27,6 +27,11 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
         val inventoryIndex = slot
         override def isItemValid(itemstack: ItemStack): Boolean = inventory.isItemValidForSlot(inventoryIndex, itemstack)
         override def getItemStackLimit(stack : ItemStack) : Int = inventory.getInventoryStackLimit
+        override def putStack(stack : ItemStack) : Unit = {
+            inventory.setInventorySlotContents(getSlotIndex, stack)
+            onSlotChanged()
+        }
+        override def canTakeStack(player : EntityPlayer) : Boolean = true
     }
     
     val inventorySize = getInventorySizeNotPlayer
