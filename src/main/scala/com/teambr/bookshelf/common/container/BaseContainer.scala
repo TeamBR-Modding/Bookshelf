@@ -26,6 +26,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
     protected class RestrictedSlot(inventory: Inventory, slot: Int, x: Int, y: Int) extends SlotItemHandler(inventory, slot, x, y) {
         val inventoryIndex = slot
         override def isItemValid(itemstack: ItemStack): Boolean = inventory.isItemValidForSlot(inventoryIndex, itemstack)
+        override def getItemStackLimit(stack : ItemStack) : Int = inventory.getInventoryStackLimit
     }
     
     val inventorySize = getInventorySizeNotPlayer
