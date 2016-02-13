@@ -1,10 +1,12 @@
 package com.teambr.bookshelf.common.tiles.traits
 
+import net.minecraft.block.state.IBlockState
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
 import net.minecraft.network.{INetHandler, NetworkManager, Packet}
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.ITickable
+import net.minecraft.util.{BlockPos, ITickable}
+import net.minecraft.world.World
 
 /**
  * This file was created for Bookshelf
@@ -23,13 +25,15 @@ trait UpdatingTile extends TileEntity with ITickable {
 
     /**
      * Used to write data to the tag
-     * @param tag The tag to write to
+      *
+      * @param tag The tag to write to
      */
     override def writeToNBT(tag : NBTTagCompound)
 
     /**
      * Used to read data from the tag
-     * @param tag The tag to read from
+      *
+      * @param tag The tag to read from
      */
     override def readFromNBT(tag : NBTTagCompound)
 
@@ -44,8 +48,21 @@ trait UpdatingTile extends TileEntity with ITickable {
     def onServerTick() : Unit = {}
 
     /**
+      * Lets the world know if the tile should be remade, usually not. We are going to just check by block, forge
+      * defaults to state
+      * @param world
+      * @param pos
+      * @param oldState
+      * @param newSate
+      * @return
+      */
+    override def shouldRefresh(world: World, pos: BlockPos, oldState: IBlockState, newSate: IBlockState) =
+        oldState.getBlock ne newSate.getBlock
+
+    /**
      * Used to identify the packet that will get called on update
-     * @return The packet to send
+      *
+      * @return The packet to send
      */
     override def getDescriptionPacket: Packet[_ <: INetHandler] = {
         val tag = new NBTTagCompound
@@ -55,7 +72,8 @@ trait UpdatingTile extends TileEntity with ITickable {
 
     /**
      * Called when a packet is received
-     * @param net The manager sending
+      *
+      * @param net The manager sending
      * @param pkt The packet received
      */
     override def onDataPacket(net : NetworkManager, pkt : S35PacketUpdateTileEntity) = this.readFromNBT(pkt.getNbtCompound)
