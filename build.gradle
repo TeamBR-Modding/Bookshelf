@@ -193,7 +193,7 @@ curseforge  {
     apiKey = APIToken
     project {
         id = '232784'
-        changelog = 'Updated to Official COFHApi'
+        changelog = 'Couple of New Functions Added'
         releaseType = 'release'
         addArtifact devJar
         addGameVersion '1.8.9'
