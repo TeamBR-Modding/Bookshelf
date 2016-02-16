@@ -45,6 +45,16 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       * *************************************************  Tile Methods  ************************************************
       * *****************************************************************************************************************/
 
+    var ticker = 0
+    override def onClientTick() : Unit = {
+        ticker -= 1
+        if(ticker <= 0) {
+            ticker = checkDelay
+            energyIn  = 0
+            energyOut = 0
+        }
+    }
+
     override def writeToNBT(tag: NBTTagCompound) : Unit = {
         tag.setInteger("CurrentEnergy", energyStorage.getEnergyStored)
         tag.setInteger("MaxEnergy", energyStorage.getMaxEnergyStored)
@@ -172,7 +182,7 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
             if(energyStorage != null) {
                 val actual = energyStorage.extractEnergy(maxExtract, simulate)
                 if(!simulate)
-                    energyOut = actual
+                    energyOut = -actual
                 if(getWorld != null)
                     getWorld.markBlockForUpdate(getPos)
                 actual
