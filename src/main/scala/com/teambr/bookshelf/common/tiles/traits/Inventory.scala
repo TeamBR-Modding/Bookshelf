@@ -159,10 +159,9 @@ trait Inventory extends TileEntity with IItemHandlerModifiable{
     }
 
     override def getCapability[T](capability: Capability[T], facing: EnumFacing): T = {
-        capability match {
-            case CapabilityItemHandler.ITEM_HANDLER_CAPABILITY => this.asInstanceOf[T]
-            case _ => super.getCapability[T](capability, facing)
-        }
+        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            this.asInstanceOf[T] else
+            super.getCapability[T](capability, facing)
     }
 
     /*******************************************************************************************************************
