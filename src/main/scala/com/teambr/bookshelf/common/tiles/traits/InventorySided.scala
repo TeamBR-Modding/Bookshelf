@@ -20,7 +20,6 @@ trait InventorySided extends Inventory {
     def getSlotsForFace(side: EnumFacing): Array[Int]
     def canInsertItem(slot: Int, itemStackIn: ItemStack, direction: EnumFacing): Boolean
     def canExtractItem(index: Int, stack: ItemStack, direction: EnumFacing): Boolean
-    def getCapabilityFromTile[T](capability: Capability[T], facing: EnumFacing) : T
 
     val handlerTop: IItemHandler = new SidedInventoryWrapper(this, net.minecraft.util.EnumFacing.UP)
     val handlerBottom: IItemHandler = new SidedInventoryWrapper(this, net.minecraft.util.EnumFacing.DOWN)
@@ -29,7 +28,7 @@ trait InventorySided extends Inventory {
     val handlerNorth: IItemHandler = new SidedInventoryWrapper(this, net.minecraft.util.EnumFacing.NORTH)
     val handlerSouth: IItemHandler = new SidedInventoryWrapper(this, net.minecraft.util.EnumFacing.SOUTH)
 
-    def getCapability[T](capability: Capability[T], facing: EnumFacing): T = {
+    override def getCapability[T](capability: Capability[T], facing: EnumFacing): T = {
         if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             facing match {
                 case EnumFacing.UP => return handlerTop.asInstanceOf[T]
@@ -41,6 +40,6 @@ trait InventorySided extends Inventory {
                 case _ => return handlerWest.asInstanceOf[T]
             }
         }
-        getCapabilityFromTile[T](capability, facing)
+        super.getCapability[T](capability, facing)
     }
 }

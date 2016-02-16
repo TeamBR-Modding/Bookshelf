@@ -8,9 +8,11 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{ NBTTagCompound, NBTTagList }
-import net.minecraft.util.{ ChatComponentText, IChatComponent, StatCollector }
+import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.{EnumFacing, ChatComponentText, IChatComponent, StatCollector}
+import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.items.wrapper.InvWrapper
-import net.minecraftforge.items.{IItemHandlerModifiable, ItemHandlerHelper, IItemHandler}
+import net.minecraftforge.items.{CapabilityItemHandler, IItemHandlerModifiable, ItemHandlerHelper, IItemHandler}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -24,7 +26,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis pauljoda
   * @since August 03, 2015
   */
-trait Inventory extends IItemHandlerModifiable with NBTSavable {
+trait Inventory extends IItemHandlerModifiable with TileEntity {
 
     val callBacks = new ArrayBuffer[InventoryCallback]()
     var inventoryContents = new util.Stack[ItemStack]()
@@ -108,7 +110,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
       *
       * @param tag The tag to save to
       */
-    def writeToNBT(tag : NBTTagCompound) : Unit = writeToNBT(tag, "")
+    override def writeToNBT(tag : NBTTagCompound) : Unit = writeToNBT(tag, "")
 
     /**
       * Used to save the inventory to an NBT tag
@@ -135,7 +137,7 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
       *
       * @param tag The tag to read from
       */
-    def readFromNBT(tag : NBTTagCompound) : Unit = readFromNBT(tag, "")
+    override def readFromNBT(tag : NBTTagCompound) : Unit = readFromNBT(tag, "")
 
     /**
       * Used to read the inventory from an NBT tag compound
@@ -155,6 +157,9 @@ trait Inventory extends IItemHandlerModifiable with NBTSavable {
         }
     }
 
+    override def hasCapability(capability: Capability[_], facing : EnumFacing) = {
+        capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY
+    }
 
     /*******************************************************************************************************************
       ****************************************** IItemHandler Methods ****************************************************
