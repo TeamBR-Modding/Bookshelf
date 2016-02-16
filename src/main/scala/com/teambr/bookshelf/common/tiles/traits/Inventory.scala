@@ -3,16 +3,13 @@ package com.teambr.bookshelf.common.tiles.traits
 import java.util
 
 import com.teambr.bookshelf.common.container.InventoryCallback
-import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.{ NBTTagCompound, NBTTagList }
+import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.{EnumFacing, ChatComponentText, IChatComponent, StatCollector}
+import net.minecraft.util.EnumFacing
 import net.minecraftforge.common.capabilities.Capability
-import net.minecraftforge.items.wrapper.InvWrapper
-import net.minecraftforge.items.{CapabilityItemHandler, IItemHandlerModifiable, ItemHandlerHelper, IItemHandler}
+import net.minecraftforge.items.{CapabilityItemHandler, IItemHandler, IItemHandlerModifiable, ItemHandlerHelper}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -26,7 +23,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis pauljoda
   * @since August 03, 2015
   */
-trait Inventory extends IItemHandlerModifiable with TileEntity {
+trait Inventory extends TileEntity with IItemHandlerModifiable{
 
     val callBacks = new ArrayBuffer[InventoryCallback]()
     var inventoryContents = new util.Stack[ItemStack]()
