@@ -19,11 +19,11 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
 
     val energyStorage = new EnergyStorage(defaultEnergyStorageSize)
 
-    var energyIn : Int
-    var energyOut : Int
+    var energyIn  : Int     = 0
+    var energyOut : Int     = 0
 
-    var lastIn : Int
-    var lastOut : Int
+    var lastIn    : Int     = 0
+    var lastOut   : Int     = 0
 
     /**
       * Used to define the default energy storage for this energy handler
