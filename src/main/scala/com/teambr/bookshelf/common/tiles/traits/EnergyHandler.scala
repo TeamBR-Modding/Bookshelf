@@ -22,9 +22,6 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
     var energyIn  : Int     = 0
     var energyOut : Int     = 0
 
-    var lastIn    : Int     = 0
-    var lastOut   : Int     = 0
-
     /**
       * Used to define the default energy storage for this energy handler
       *
@@ -47,19 +44,6 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
     /** ****************************************************************************************************************
       * *************************************************  Tile Methods  ************************************************
       * *****************************************************************************************************************/
-
-    var checkTicker = 0
-    override def onClientTick() = {
-        super.onClientTick()
-        checkTicker -= 1
-        if(checkTicker <= 0) {
-            checkTicker = checkDelay
-            lastIn = energyIn
-            lastOut = energyOut
-            energyIn = 0
-            energyOut = 0
-        }
-    }
 
     override def writeToNBT(tag: NBTTagCompound) : Unit = {
         tag.setInteger("CurrentEnergy", energyStorage.getEnergyStored)
@@ -95,7 +79,7 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       * @return
       */
     def getRFInPerTick: Int = {
-        lastIn / checkDelay
+        energyIn
     }
 
     /**
@@ -103,7 +87,7 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       * @return
       */
     def getRFOutPerTick: Int = {
-        lastOut / checkDelay
+        energyOut
     }
 
     /**
@@ -166,8 +150,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         if(isReceiver) {
             if(energyStorage != null) {
                 val actual = energyStorage.receiveEnergy(maxReceive, simulate)
-                if(!simulate && actual > 0)
-                    energyIn += actual
+                if(!simulate)
+                    energyIn = actual
                 if(getWorld != null)
                     getWorld.markBlockForUpdate(getPos)
                 actual
@@ -187,8 +171,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         if(isReceiver) {
             if(energyStorage != null) {
                 val actual = energyStorage.extractEnergy(maxExtract, simulate)
-                if(!simulate && actual > 0)
-                    energyOut += actual
+                if(!simulate)
+                    energyOut = actual
                 if(getWorld != null)
                     getWorld.markBlockForUpdate(getPos)
                 actual
