@@ -19,9 +19,11 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
 
     val energyStorage = new EnergyStorage(defaultEnergyStorageSize)
 
-    //These need to be added to when you change energy state
     var energyIn : Int
     var energyOut : Int
+
+    var lastIn : Int
+    var lastOut : Int
 
     /**
       * Used to define the default energy storage for this energy handler
@@ -52,6 +54,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         checkTicker -= 1
         if(checkTicker <= 0) {
             checkTicker = checkDelay
+            lastIn = energyIn
+            lastOut = energyOut
             energyIn = 0
             energyOut = 0
         }
@@ -62,6 +66,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         tag.setInteger("MaxEnergy", energyStorage.getMaxEnergyStored)
         tag.setInteger("MaxExtract", energyStorage.getMaxExtract)
         tag.setInteger("MaxReceive", energyStorage.getMaxReceive)
+        tag.setInteger("EnergyIn", energyIn)
+        tag.setInteger("EnergyOut", energyOut)
     }
 
     override def readFromNBT(tag : NBTTagCompound) : Unit = {
@@ -69,6 +75,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         energyStorage.setEnergyStored(tag.getInteger("CurrentEnergy"))
         energyStorage.setMaxExtract(tag.getInteger("MaxExtract"))
         energyStorage.setMaxReceive(tag.getInteger("MaxReceive"))
+        energyIn = tag.getInteger("EnergyIn")
+        energyOut = tag.getInteger("EnergyOut")
     }
 
     /*******************************************************************************************************************
@@ -80,7 +88,23 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       *
       * @return
       */
-    def checkDelay : Int = 20 * 5
+    def checkDelay : Int = 20 * 2
+
+    /**
+      * Used to get the approximate RF change
+      * @return
+      */
+    def getRFInPerTick: Int = {
+        lastIn / checkDelay
+    }
+
+    /**
+      * Used to get the approximate RF change
+      * @return
+      */
+    def getRFOutPerTick: Int = {
+        lastOut / checkDelay
+    }
 
     /**
       * Used to change the max extraction rate of the energy storage
@@ -142,7 +166,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         if(isReceiver) {
             if(energyStorage != null) {
                 val actual = energyStorage.receiveEnergy(maxReceive, simulate)
-                energyIn += actual
+                if(!simulate)
+                    energyIn += actual
                 if(getWorld != null)
                     getWorld.markBlockForUpdate(getPos)
                 actual
@@ -162,7 +187,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         if(isReceiver) {
             if(energyStorage != null) {
                 val actual = energyStorage.extractEnergy(maxExtract, simulate)
-                energyOut += actual
+                if(!simulate)
+                    energyOut += actual
                 if(getWorld != null)
                     getWorld.markBlockForUpdate(getPos)
                 actual
