@@ -66,6 +66,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
 
     override def readFromNBT(tag : NBTTagCompound) : Unit = {
         energyStorage.setCapacity(tag.getInteger("MaxEnergy"))
+        if(energyStorage.getMaxEnergyStored == 0)
+            energyStorage.setCapacity(defaultEnergyStorageSize)
         energyStorage.setEnergyStored(tag.getInteger("CurrentEnergy"))
         energyStorage.setMaxExtract(tag.getInteger("MaxExtract"))
         energyStorage.setMaxReceive(tag.getInteger("MaxReceive"))
