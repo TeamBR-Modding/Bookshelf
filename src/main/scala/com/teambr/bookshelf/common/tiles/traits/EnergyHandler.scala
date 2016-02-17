@@ -46,7 +46,8 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       * *****************************************************************************************************************/
 
     var ticker = 0
-    override def onClientTick() : Unit = {
+    override def update() : Unit = {
+        super.update()
         ticker -= 1
         if(ticker <= 0) {
             ticker = checkDelay
@@ -73,6 +74,10 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         energyStorage.setMaxReceive(tag.getInteger("MaxReceive"))
         energyIn = tag.getInteger("EnergyIn")
         energyOut = tag.getInteger("EnergyOut")
+        if(energyStorage.getMaxExtract == 0)
+            energyStorage.setMaxExtract(defaultEnergyStorageSize)
+        if(energyStorage.getMaxReceive == 0)
+            energyStorage.setMaxReceive(defaultEnergyStorageSize)
     }
 
     /*******************************************************************************************************************
@@ -180,7 +185,7 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       * @return How much energy was/should be drained
       */
     override def extractEnergy(from: EnumFacing, maxExtract: Int, simulate: Boolean): Int = {
-        if(isReceiver) {
+        if(isProvider) {
             if(energyStorage != null) {
                 val actual = energyStorage.extractEnergy(maxExtract, simulate)
                 if(!simulate)
