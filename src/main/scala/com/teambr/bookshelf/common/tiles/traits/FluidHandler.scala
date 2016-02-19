@@ -148,7 +148,7 @@ trait FluidHandler extends IFluidHandler {
     def canDrain(from: EnumFacing, fluid: Fluid): Boolean = {
         for(x <- getOutputTanks) {
             if(x < tanks.length)
-                if(tanks(x).getFluid != null || tanks(x).getFluid.getFluid != null) return true
+                if(tanks(x).getFluid != null && tanks(x).getFluid.getFluid != null) return true
         }
         false
     }
