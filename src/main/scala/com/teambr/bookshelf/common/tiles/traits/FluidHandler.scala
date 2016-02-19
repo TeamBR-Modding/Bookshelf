@@ -28,12 +28,14 @@ trait FluidHandler extends IFluidHandler {
 
     /**
       * Which tanks can input
+      *
       * @return
       */
     def getInputTanks: Array[Int]
 
     /**
       * Which tanks can output
+      *
       * @return
       */
     def getOutputTanks : Array[Int]
@@ -70,10 +72,12 @@ trait FluidHandler extends IFluidHandler {
     def fill(from: EnumFacing, resource: FluidStack, doFill: Boolean): Int = {
         if(resource != null && resource.getFluid != null && canFill(from, resource.getFluid)) {
             for(x <- getInputTanks) {
-                if (tanks(x).fill(resource, false) > 0) {
-                    val actual = tanks(x).fill(resource, doFill)
-                    if (doFill) onTankChanged(tanks(x))
-                    return actual
+                if (x < tanks.length) {
+                    if (tanks(x).fill(resource, false) > 0) {
+                        val actual = tanks(x).fill(resource, doFill)
+                        if (doFill) onTankChanged(tanks(x))
+                        return actual
+                    }
                 }
             }
         }
@@ -112,9 +116,12 @@ trait FluidHandler extends IFluidHandler {
     def drain(from: EnumFacing, maxDrain: Int, doDrain: Boolean): FluidStack = {
         var fluidAmount :FluidStack = null
         for(x <- getOutputTanks) {
-            fluidAmount = tanks(x).drain(maxDrain, false)
-            if (doDrain && fluidAmount != null)
-                tanks(x).drain(maxDrain, true); onTankChanged(tanks(x))
+            if(x < tanks.length) {
+                fluidAmount = tanks(x).drain(maxDrain, false)
+                if (doDrain && fluidAmount != null)
+                    tanks(x).drain(maxDrain, true);
+                onTankChanged(tanks(x))
+            }
         }
         fluidAmount
     }
@@ -126,8 +133,9 @@ trait FluidHandler extends IFluidHandler {
       */
     def canFill(from: EnumFacing, fluid: Fluid): Boolean = {
         for(x <- getInputTanks) {
-            if((tanks(x).getFluid == null || tanks(x).getFluid.getFluid == null) ||
-                    (tanks(x).getFluid != null && tanks(x).getFluid.getFluid == fluid)) return true
+            if(x < tanks.length)
+                if((tanks(x).getFluid == null || tanks(x).getFluid.getFluid == null) ||
+                        (tanks(x).getFluid != null && tanks(x).getFluid.getFluid == fluid)) return true
         }
         false
     }
@@ -139,7 +147,8 @@ trait FluidHandler extends IFluidHandler {
       */
     def canDrain(from: EnumFacing, fluid: Fluid): Boolean = {
         for(x <- getOutputTanks) {
-            if(tanks(x).getFluid != null || tanks(x).getFluid.getFluid != null) return true
+            if(x < tanks.length)
+                if(tanks(x).getFluid != null || tanks(x).getFluid.getFluid != null) return true
         }
         false
     }
