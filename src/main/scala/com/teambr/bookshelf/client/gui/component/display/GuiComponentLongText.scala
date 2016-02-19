@@ -80,6 +80,9 @@ class GuiComponentLongText(x : Int, y : Int, var text : String, width : Int, hei
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.prepareRenderState()
 
+        val uniCode = fontRender.getUnicodeFlag
+        fontRender.setUnicodeFlag(false)
+
         breakable {
             var yPos = -9
             var actualY = 0
@@ -96,6 +99,7 @@ class GuiComponentLongText(x : Int, y : Int, var text : String, width : Int, hei
             }
         }
 
+        fontRender.setUnicodeFlag(uniCode)
         GL11.glPopMatrix()
     }
 
