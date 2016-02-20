@@ -54,11 +54,11 @@ object WorldUtils {
     }
 
     /**
-      * Drops and Array of ItemStacks into the world
+      * Drops and Array of ``ItemStacks into the world
       *
-      * @param world
-      * @param stacks
-      * @param pos
+      * @param world Instance of ``World
+      * @param stacks ``ItemStack Array to drop into the world
+      * @param pos ``BlockPos to drop them from
       */
     def dropStack(world: World, stacks: java.util.List[ItemStack], pos: BlockPos): Unit = {
         for(stack <- stacks.toArray())
@@ -68,9 +68,9 @@ object WorldUtils {
     /**
       * Drops each ItemStack in an inventory into the world
       *
-      * @param world
-      * @param inventory
-      * @param pos
+      * @param world Instance of ``World
+      * @param inventory ``Inventory of ``ItemStack to Drop
+      * @param pos ``BlockPos to drop them from
       */
     def dropStack(world: World, inventory: Inventory, pos: BlockPos): Unit = {
         for(i <- 0 until inventory.getSizeInventory) {
@@ -84,9 +84,9 @@ object WorldUtils {
     /**
       * Drops a ItemStack into the world
       *
-      * @param world
-      * @param stack
-      * @param pos
+      * @param world Instance of ``World
+      * @param stack ``ItemStack Array to drop into the world
+      * @param pos ``BlockPos to drop them from
       */
     def dropStack(world: World, stack: ItemStack, pos: BlockPos): Unit = {
         val random = new Random
