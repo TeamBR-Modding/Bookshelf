@@ -18,9 +18,9 @@ trait ItemBattery extends Item with IEnergyContainerItem {
 
     setMaxDamage(16)
 
-    protected var capacity: Int = 0
-    protected var maxReceive: Int = 0
-    protected var maxExtract: Int = 0
+    def capacity: Int
+    def maxReceive: Int
+    def maxExtract: Int
 
     /**
       * Adds energy to a container item. Returns the quantity of energy that was accepted.
