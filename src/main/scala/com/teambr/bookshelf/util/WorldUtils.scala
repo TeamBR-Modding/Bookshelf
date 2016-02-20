@@ -1,6 +1,12 @@
 package com.teambr.bookshelf.util
 
-import net.minecraft.util.EnumFacing
+import com.teambr.bookshelf.common.tiles.traits.Inventory
+import net.minecraft.entity.item.EntityItem
+import net.minecraft.item.ItemStack
+import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.world.World
+
+import scala.util.Random
 
 /**
  * This file was created for Bookshelf
@@ -15,7 +21,8 @@ import net.minecraft.util.EnumFacing
 object WorldUtils {
     /**
      * Returns the direction to the left of this. This is the direction it is facing turned left
-     * @param toTurn Starting point
+      *
+      * @param toTurn Starting point
      * @return The direction turned 90 left
      */
     def rotateLeft(toTurn : EnumFacing) : EnumFacing = {
@@ -31,7 +38,8 @@ object WorldUtils {
 
     /**
      * Returns the direction to the right of this. This is the direction it is facing turned right
-     * @param toTurn Starting point
+      *
+      * @param toTurn Starting point
      * @return The direction turned 90 right
      */
     def rotateRight(toTurn : EnumFacing) : EnumFacing = {
@@ -42,6 +50,66 @@ object WorldUtils {
             case EnumFacing.WEST  => EnumFacing.NORTH
             case EnumFacing.UP    => EnumFacing.UP
             case EnumFacing.DOWN  => EnumFacing.DOWN
+        }
+    }
+
+    /**
+      * Drops and Array of ItemStacks into the world
+      *
+      * @param world
+      * @param stacks
+      * @param pos
+      */
+    def dropStack(world: World, stacks: java.util.List[ItemStack], pos: BlockPos): Unit = {
+        for(stack <- stacks.toArray())
+            dropStack(world, stack.asInstanceOf[ItemStack], pos)
+    }
+
+    /**
+      * Drops each ItemStack in an inventory into the world
+      *
+      * @param world
+      * @param inventory
+      * @param pos
+      */
+    def dropStack(world: World, inventory: Inventory, pos: BlockPos): Unit = {
+        for(i <- 0 until inventory.getSizeInventory) {
+            if (inventory.getStackInSlot(i) != null) {
+                dropStack(world, inventory.getStackInSlot(i), pos)
+                inventory.setStackInSlot(i, null)
+            }
+        }
+    }
+
+    /**
+      * Drops a ItemStack into the world
+      *
+      * @param world
+      * @param stack
+      * @param pos
+      */
+    def dropStack(world: World, stack: ItemStack, pos: BlockPos): Unit = {
+        val random = new Random
+        if (stack != null && stack.stackSize > 0) {
+            val rx = random.nextFloat * 0.8F + 0.1F
+            val ry = random.nextFloat * 0.8F + 0.1F
+            val rz = random.nextFloat * 0.8F + 0.1F
+
+            val itemEntity = new EntityItem(world,
+                pos.getX + rx, pos.getY + ry, pos.getZ + rz,
+                new ItemStack(stack.getItem, stack.stackSize, stack.getItemDamage))
+
+            if (stack.hasTagCompound)
+                itemEntity.getEntityItem.setTagCompound(stack.getTagCompound)
+
+            val factor = 0.05F
+
+            itemEntity.motionX = random.nextGaussian * factor
+            itemEntity.motionY = random.nextGaussian * factor + 0.2F
+            itemEntity.motionZ = random.nextGaussian * factor
+            world.spawnEntityInWorld(itemEntity)
+
+            stack.stackSize = 0
         }
     }
 }
