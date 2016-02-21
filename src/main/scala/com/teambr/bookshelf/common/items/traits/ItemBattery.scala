@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound
 trait ItemBattery extends Item with IEnergyContainerItem {
 
     setMaxDamage(16)
+    setNoRepair()
 
     var capacity: Int
     var maxReceive: Int
