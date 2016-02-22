@@ -89,7 +89,9 @@ trait ItemBattery extends Item with IEnergyContainerItem {
       */
     def updateDamage(stack: ItemStack): Unit = {
         val r = getEnergyStored(stack).toFloat / getMaxEnergyStored(stack)
-        val res = 16 - Math.round(r * 16)
+        var res = 16 - Math.round(r * 16)
+        if (r < 1 && res == 0)
+            res = 1
         stack.setItemDamage(res)
     }
 }
