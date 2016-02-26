@@ -42,7 +42,7 @@ if (build == null || build == '') {
     version = "${config.minecraft_version}-${config.mod_version}-B" + System.getenv("BUILD_NUMBER")
 }
 group= "com.teambr.bookshelf" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "Bookshelf"
+archivesBaseName = "Bookshelf-API"
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
