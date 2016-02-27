@@ -65,7 +65,7 @@ class ModelConnectedTextures extends ISmartBlockModel with ISmartItemModel {
         list.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 8.0F, 16.0F), new Vector3f(8.0F, 16.0F, 16.0F), face, block.getConnectedTextures.getTextureForCorner(0, connections), EnumFacing.SOUTH, rot, null, scale, true))
         list.add(faceBakery.makeBakedQuad(new Vector3f(8.0F, 8.0F, 16.0F), new Vector3f(16.0F, 16.0F, 16.0F), face, block.getConnectedTextures.getTextureForCorner(1, connections), EnumFacing.SOUTH, rot, null, scale, true))
 
-        if (block != null && block.isTranslucent && world != null) {
+        if (block != null && block.isClear && world != null) {
             list.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 0.0F, 16.001F), new Vector3f(8.0F, 8.0F, 16.001F), face, block.getConnectedTextures.getTextureForCorner(2, connections), EnumFacing.NORTH, rot, null, scale, true))
             list.add(faceBakery.makeBakedQuad(new Vector3f(8.0F, 0.0F, 16.001F), new Vector3f(16.001F, 8.0F, 16.001F), face, block.getConnectedTextures.getTextureForCorner(3, connections), EnumFacing.NORTH, rot, null, scale, true))
             list.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 8.0F, 16.001F), new Vector3f(8.0F, 16.001F, 16.001F), face, block.getConnectedTextures.getTextureForCorner(0, connections), EnumFacing.NORTH, rot, null, scale, true))
