@@ -6,6 +6,7 @@ import com.teambr.bookshelf.common.blocks.traits.CreatesTextures
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockState, IBlockState}
+import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraft.util.{BlockPos, EnumFacing, EnumWorldBlockLayer}
 import net.minecraft.world.IBlockAccess
@@ -54,12 +55,6 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
     lazy val connectedTextures = new ConnectedTextures(TextureManager.getTexture(NoCornersTextureLocation),
         TextureManager.getTexture(AntiCornersTextureLocation), TextureManager.getTexture(CornersTextureLocation),
         TextureManager.getTexture(HorizontalTextureLocation), TextureManager.getTexture(VerticalTextureLocation))
-
-    /**
-      * Register the textures we need to create
-      */
-    for(texture <- getTexturesToStitch)
-        TextureManager.registerTexture(texture)
 
     /**
       * Used to define the strings needed

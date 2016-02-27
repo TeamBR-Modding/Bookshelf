@@ -42,6 +42,11 @@ object TextureManager {
 
     @SubscribeEvent
     def textureStitch(event : TextureStitchEvent.Pre) : Unit = {
+        for(block <- ConnectedTextureBlocks.blocks) {
+            for(texture <- block.getTexturesToStitch)
+                texturesToRegister += texture
+        }
+
         // Iterate the list of things we need, and start the stitching
         for(textureLocation <- texturesToRegister) {
             stitchedTextures.put(textureLocation,
