@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.client
 
 import com.teambr.bookshelf.common.blocks.BlockConnectedTextures
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -14,6 +15,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis "pauljoda"
   * @since 2/26/2016
   */
+@SideOnly(Side.CLIENT)
 object ConnectedTextureBlocks {
     lazy val blocks = new ArrayBuffer[BlockConnectedTextures]()
 }

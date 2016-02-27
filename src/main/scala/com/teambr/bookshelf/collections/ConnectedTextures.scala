@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.collections
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraftforge.fml.relauncher.{SideOnly, Side}
 
 /**
   * This file was created for NeoTech
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite
   * @author Paul Davis "pauljoda"
   * @since 2/26/2016
   */
+@SideOnly(Side.CLIENT)
 class ConnectedTextures(val noConnections : TextureAtlasSprite, val anti_corners : TextureAtlasSprite,
                         val corners : TextureAtlasSprite, val horizontal : TextureAtlasSprite, val vertical : TextureAtlasSprite) {
 

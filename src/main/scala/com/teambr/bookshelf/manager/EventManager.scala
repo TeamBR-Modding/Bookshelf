@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.manager
 
-import com.teambr.bookshelf.client.{TextureManager, ModelFactory}
 import com.teambr.bookshelf.events.ToolTipEvent
 import net.minecraftforge.common.MinecraftForge
 
@@ -17,8 +16,6 @@ import net.minecraftforge.common.MinecraftForge
 object EventManager {
     def init(): Unit = {
         registerEvent(new ToolTipEvent)
-        registerEvent(new ModelFactory)
-        registerEvent(TextureManager)
     }
 
     def registerEvent(thing : Object) : Unit = {

@@ -10,6 +10,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation
 import net.minecraft.util.{BlockPos, EnumFacing, EnumWorldBlockLayer}
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.property.{ExtendedBlockState, IUnlistedProperty}
+import net.minecraftforge.fml.relauncher.{SideOnly, Side}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -49,6 +50,7 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
 
     ConnectedTextureBlocks.blocks += this
 
+    @SideOnly(Side.CLIENT)
     lazy val connectedTextures = new ConnectedTextures(TextureManager.getTexture(NoCornersTextureLocation),
         TextureManager.getTexture(AntiCornersTextureLocation), TextureManager.getTexture(CornersTextureLocation),
         TextureManager.getTexture(HorizontalTextureLocation), TextureManager.getTexture(VerticalTextureLocation))
@@ -70,6 +72,7 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
       *
       * @return
       */
+    @SideOnly(Side.CLIENT)
     def getConnectedTextures : ConnectedTextures = if(connectedTextures != null) connectedTextures else {
         new ConnectedTextures(TextureManager.getTexture(NoCornersTextureLocation),
             TextureManager.getTexture(AntiCornersTextureLocation), TextureManager.getTexture(CornersTextureLocation),
@@ -228,5 +231,8 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
       * Used to define what layer to render in
       */
     override def canRenderInLayer(layer: EnumWorldBlockLayer) : Boolean =
-        layer == EnumWorldBlockLayer.CUTOUT
+        if(isClear)
+            layer == EnumWorldBlockLayer.CUTOUT || layer == EnumWorldBlockLayer.TRANSLUCENT
+        else
+            layer == EnumWorldBlockLayer.SOLID
 }
