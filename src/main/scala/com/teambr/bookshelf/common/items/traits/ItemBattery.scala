@@ -1,8 +1,11 @@
 package com.teambr.bookshelf.common.items.traits
 
 import cofh.api.energy.IEnergyContainerItem
+import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.world.World
 
 /**
   * This file was created for NeoTech
@@ -15,13 +18,29 @@ import net.minecraft.nbt.NBTTagCompound
   * @since 2/17/2016
   */
 trait ItemBattery extends Item with IEnergyContainerItem {
-
     setMaxDamage(16)
     setNoRepair()
 
-    var capacity: Int
-    var maxReceive: Int
-    var maxExtract: Int
+    /**
+      * Must set the following tags:
+      * 'EnergyCapacity'
+      * 'MaxReceive'
+      * 'MaxExtract'
+      */
+    def setDefaultTags(stack: ItemStack): Unit
+
+    override def onCreated(stack: ItemStack, worldIn: World, playerIn: EntityPlayer): Unit = {
+        setDefaultTags(stack)
+        updateDamage(stack)
+    }
+
+    /**
+      * Called on tick, allows us to make sure things are installed
+      */
+    override def onUpdate(stack: ItemStack, worldIn: World, entityIn: Entity, itemSlot: Int, isSelected: Boolean): Unit = {
+        if(!stack.hasTagCompound)
+            setDefaultTags(stack)
+    }
 
     /**
       * Adds energy to a container item. Returns the quantity of energy that was accepted.
@@ -37,7 +56,8 @@ trait ItemBattery extends Item with IEnergyContainerItem {
             stack.setTagCompound(new NBTTagCompound)
         }
         var energy: Int = stack.getTagCompound.getInteger("Energy")
-        val energyReceived: Int = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive))
+        val energyReceived: Int = Math.min(stack.getTagCompound.getInteger("EnergyCapacity") - energy,
+            Math.min(stack.getTagCompound.getInteger("MaxReceive"), maxReceive))
         if (!simulate) {
             energy += energyReceived
             stack.getTagCompound.setInteger("Energy", energy)
@@ -60,7 +80,7 @@ trait ItemBattery extends Item with IEnergyContainerItem {
             return 0
         }
         var energy = stack.getTagCompound.getInteger("Energy")
-        val energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract))
+        val energyExtracted = Math.min(energy, Math.min(stack.getTagCompound.getInteger("MaxExtract"), maxExtract))
 
         if (!simulate) {
             energy -= energyExtracted
@@ -82,7 +102,11 @@ trait ItemBattery extends Item with IEnergyContainerItem {
     /**
       * Get the max amount of energy that can be stored in the container item.
       */
-    override def getMaxEnergyStored(stack: ItemStack): Int = capacity
+    override def getMaxEnergyStored(stack: ItemStack): Int = {
+        if (stack.getTagCompound == null || !stack.getTagCompound.hasKey("EnergyCapacity"))
+            return 0
+        stack.getTagCompound.getInteger("EnergyCapacity")
+    }
 
     /**
       * Sets the Damage Bar on the item to correspond to amount of energy stored
