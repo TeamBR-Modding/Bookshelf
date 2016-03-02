@@ -118,9 +118,13 @@ trait FluidHandler extends IFluidHandler {
         for(x <- getOutputTanks) {
             if(x < tanks.length) {
                 fluidAmount = tanks(x).drain(maxDrain, false)
-                if (doDrain && fluidAmount != null)
-                    tanks(x).drain(maxDrain, true);
-                onTankChanged(tanks(x))
+                if (doDrain && fluidAmount != null) {
+                    tanks(x).drain(maxDrain, true)
+                    onTankChanged(tanks(x))
+                    return fluidAmount
+                }
+                else if(fluidAmount != null)
+                    return fluidAmount
             }
         }
         fluidAmount
