@@ -55,7 +55,7 @@ minecraft {
 
     runDir = "eclipse"
 
-    mappings = "stable_20"
+    mappings = "stable_22"
     makeObfSourceJar = false
 }
 
