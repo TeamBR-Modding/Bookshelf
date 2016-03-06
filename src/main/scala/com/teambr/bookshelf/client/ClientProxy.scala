@@ -5,10 +5,13 @@ import java.io.File
 import com.teambr.bookshelf.Bookshelf
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.helper.KeyInputHelper
+import com.teambr.bookshelf.loadables.ILoadActionProvider
 import com.teambr.bookshelf.notification.{NotificationKeyBinding, NotificationTickHandler}
+import net.minecraft.block.Block
+import net.minecraft.item.Item
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
-import net.minecraftforge.fml.common.event.FMLInterModComms
+import net.minecraftforge.fml.common.event.{FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent, FMLInterModComms}
 
 /**
  * This file was created for Bookshelf
@@ -25,7 +28,7 @@ class ClientProxy extends CommonProxy {
     /**
      * Called on preInit
      */
-    override def preInit() = {
+    override def preInit(event : FMLPreInitializationEvent) = {
         MinecraftForge.EVENT_BUS.register(new NotificationTickHandler())
 
         Bookshelf.notificationConfig = new Configuration(new File(Bookshelf.configFolderLocation + "/NotificationsSettings" + ".cfg"))
@@ -36,7 +39,7 @@ class ClientProxy extends CommonProxy {
     /**
      * Called on init
      */
-    override def init() = {
+    override def init(event : FMLInitializationEvent) = {
         NotificationKeyBinding.init()
         MinecraftForge.EVENT_BUS.register(new KeyInputHelper())
 
@@ -44,10 +47,30 @@ class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register(TextureManager)
 
         FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaDataProvider.callBackRegisterClient")
+
+        val itemIterator = Item.itemRegistry.iterator()
+        while(itemIterator.hasNext) {
+            val item = itemIterator.next()
+            item match {
+                case provider: ILoadActionProvider =>
+                    provider.performLoadAction(event, isClient = true)
+                case _ =>
+            }
+        }
+
+        val blockIterator = Block.blockRegistry.iterator()
+        while(blockIterator.hasNext) {
+            val block = blockIterator.next()
+            block match {
+                case provider: ILoadActionProvider =>
+                    provider.performLoadAction(event, isClient = true)
+                case _ =>
+            }
+        }
     }
 
     /**
      * Called on postInit
      */
-    override def postInit() = {}
+    override def postInit(event : FMLPostInitializationEvent) = {}
 }

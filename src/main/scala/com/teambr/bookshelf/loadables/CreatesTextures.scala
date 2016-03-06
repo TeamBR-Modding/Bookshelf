@@ -1,6 +1,4 @@
-package com.teambr.bookshelf.client
-
-import com.teambr.bookshelf.common.blocks.BlockConnectedTextures
+package com.teambr.bookshelf.loadables
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -14,6 +12,9 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis "pauljoda"
   * @since 2/26/2016
   */
-object ConnectedTextureBlocks {
-    lazy val blocks = new ArrayBuffer[BlockConnectedTextures]()
+trait CreatesTextures {
+    /**
+      * Used to define the strings needed
+      */
+    def getTexturesToStitch: ArrayBuffer[String]
 }

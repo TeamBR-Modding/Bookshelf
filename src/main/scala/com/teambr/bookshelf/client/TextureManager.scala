@@ -1,7 +1,9 @@
 package com.teambr.bookshelf.client
 
+import com.teambr.bookshelf.loadables.CreatesTextures
 import gnu.trove.map.hash.THashMap
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraft.item.Item
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -42,9 +44,28 @@ object TextureManager {
 
     @SubscribeEvent
     def textureStitch(event : TextureStitchEvent.Pre) : Unit = {
-        for(block <- ConnectedTextureBlocks.blocks) {
-            for(texture <- block.getTexturesToStitch)
-                texturesToRegister += texture
+        // Grab items that need created
+        val itemIterator = Item.itemRegistry.iterator()
+        while(itemIterator.hasNext) {
+            val itemLocal = itemIterator.next()
+            itemLocal match {
+                case item : CreatesTextures =>
+                    for(texture <- item.getTexturesToStitch)
+                        texturesToRegister += texture
+                case _ =>
+            }
+        }
+
+        // Grab blocks that need created
+        val blockIterator = Item.itemRegistry.iterator()
+        while(blockIterator.hasNext) {
+            val blockLocal = blockIterator.next()
+            blockLocal match {
+                case block : CreatesTextures =>
+                    for(texture <- block.getTexturesToStitch)
+                        texturesToRegister += texture
+                case _ =>
+            }
         }
 
         // Iterate the list of things we need, and start the stitching

@@ -1,8 +1,8 @@
 package com.teambr.bookshelf.common.blocks
 
-import com.teambr.bookshelf.client.{TextureManager, ConnectedTextureBlocks}
+import com.teambr.bookshelf.client.TextureManager
 import com.teambr.bookshelf.collections.ConnectedTextures
-import com.teambr.bookshelf.common.blocks.traits.CreatesTextures
+import com.teambr.bookshelf.loadables.CreatesTextures
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockState, IBlockState}
@@ -49,8 +49,6 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
     def getNormal : ModelResourceLocation = new ModelResourceLocation(name.split("tile.")(1), "normal")
     def getInventory : ModelResourceLocation = new ModelResourceLocation(name.split("tile.")(1), "inventory")
 
-    ConnectedTextureBlocks.blocks += this
-
     @SideOnly(Side.CLIENT)
     lazy val connectedTextures = new ConnectedTextures(TextureManager.getTexture(NoCornersTextureLocation),
         TextureManager.getTexture(AntiCornersTextureLocation), TextureManager.getTexture(CornersTextureLocation),
@@ -86,6 +84,7 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
       * Kinds long, but the way to get the connection array for the face
       */
     def getConnectionArrayForFace(world: IBlockAccess, pos: BlockPos, facing: EnumFacing): Array[Boolean] = {
+        // TODO: Move to axis rotated list
         val connections = new Array[Boolean](16)
         if (world.isAirBlock(pos.offset(facing)) || (!world.getBlockState(pos.offset(facing)).getBlock.isOpaqueCube &&
                 !canTextureConnect(world.getBlockState(pos.offset(facing)).getBlock))) {

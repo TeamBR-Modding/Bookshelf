@@ -41,7 +41,7 @@ object Bookshelf {
 
         ConfigManager.init(configFolderLocation)
 
-        proxy.preInit()
+        proxy.preInit(event)
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiManager)
 
@@ -52,10 +52,10 @@ object Bookshelf {
     @EventHandler def init(event : FMLInitializationEvent) = {
         PacketManager.initPackets()
         EventManager.init()
-        proxy.init()
+        proxy.init(event)
     }
 
     @EventHandler def postInit(event : FMLPostInitializationEvent) = {
-        proxy.postInit()
+        proxy.postInit(event)
     }
 }
