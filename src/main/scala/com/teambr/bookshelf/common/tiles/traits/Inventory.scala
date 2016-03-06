@@ -3,6 +3,7 @@ package com.teambr.bookshelf.common.tiles.traits
 import java.util
 
 import com.teambr.bookshelf.common.container.InventoryCallback
+import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
@@ -23,7 +24,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis pauljoda
   * @since August 03, 2015
   */
-trait Inventory extends TileEntity with IItemHandlerModifiable{
+trait Inventory extends TileEntity with IItemHandlerModifiable with NBTSavable {
 
     val callBacks = new ArrayBuffer[InventoryCallback]()
     var inventoryContents = new util.Stack[ItemStack]()
@@ -404,7 +405,7 @@ trait Inventory extends TileEntity with IItemHandlerModifiable{
       * @param player The player trying to access
       * @return True if the player is allowed
       */
-    def isUseableByPlayer(player: EntityPlayer): Boolean = true
+    def isUseableByPlayer(player: EntityPlayer): Boolean = !isInvalid
 
     /**
       * Set the slot contents
