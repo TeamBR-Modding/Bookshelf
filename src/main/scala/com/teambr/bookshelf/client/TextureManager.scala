@@ -2,6 +2,7 @@ package com.teambr.bookshelf.client
 
 import com.teambr.bookshelf.loadables.CreatesTextures
 import gnu.trove.map.hash.THashMap
+import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.item.Item
 import net.minecraft.util.ResourceLocation
@@ -57,7 +58,7 @@ object TextureManager {
         }
 
         // Grab blocks that need created
-        val blockIterator = Item.itemRegistry.iterator()
+        val blockIterator = Block.blockRegistry.iterator()
         while(blockIterator.hasNext) {
             val blockLocal = blockIterator.next()
             blockLocal match {
