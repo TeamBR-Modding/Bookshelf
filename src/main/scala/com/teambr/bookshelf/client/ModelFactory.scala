@@ -2,6 +2,7 @@ package com.teambr.bookshelf.client
 
 import com.teambr.bookshelf.client.models.ModelConnectedTextures
 import com.teambr.bookshelf.common.blocks.BlockConnectedTextures
+import com.teambr.bookshelf.loadables.ILoadActionProvider
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.item.Item
@@ -32,8 +33,19 @@ class ModelFactory {
                     event.modelRegistry.putObject (block.getInventory, new ModelConnectedTextures () )
                     Minecraft.getMinecraft.getRenderItem.getItemModelMesher
                             .register(Item.getItemFromBlock (block), 0, block.getInventory)
+                case actionProvider : ILoadActionProvider =>
+                    actionProvider.performLoadAction(event, isClient = true)
                 case _ =>
             }
+        }
+
+        val itemIterator = Item.itemRegistry.iterator()
+        while(itemIterator.hasNext) {
+            val itemLocal = itemIterator.next()
+            itemLocal match {
+                case actionProvider : ILoadActionProvider =>
+                    actionProvider.performLoadAction(event, isClient = true)
+                case _ =>            }
         }
     }
 }
