@@ -46,7 +46,7 @@ class SimpleItemModel(parent : IFlexibleBakedModel) extends
             parent
         } else {
             val textureBuilder = ImmutableMap.builder[String, String]()
-            val textures = stack.getItem.asInstanceOf[SimpleItemModelProvider].getTextures
+            val textures = stack.getItem.asInstanceOf[SimpleItemModelProvider].getTextures(stack)
             for(i <- textures.indices) {
                 textureBuilder.put("layer" + i, textures(i))
             }

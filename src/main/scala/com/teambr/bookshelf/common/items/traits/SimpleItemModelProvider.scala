@@ -4,7 +4,7 @@ import com.teambr.bookshelf.client.models.SimpleItemModel
 import com.teambr.bookshelf.loadables.{CreatesTextures, ILoadActionProvider}
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.model.ModelResourceLocation
-import net.minecraft.item.Item
+import net.minecraft.item.{ItemStack, Item}
 import net.minecraftforge.client.event.ModelBakeEvent
 import net.minecraftforge.client.model.IFlexibleBakedModel
 
@@ -29,13 +29,20 @@ trait SimpleItemModelProvider extends Item with ILoadActionProvider with Creates
       */
     def getTextures : ArrayBuffer[String]
 
+
+    /**
+      * Creates a list of strings to register and render, ItemStack aware
+      *
+      * @return An ArrayBuffer of strings, order matters index == layer
+      */
+    def getTextures(stack : ItemStack) : ArrayBuffer[String]
+
     /**
       * Used to get the model location for this object, default to unlocalizedName plus inventory
       *
       * @return
       */
     def getModelLocation : ModelResourceLocation = new ModelResourceLocation(getUnlocalizedName, "inventory")
-
 
     /**
       * Used to define the strings needed
