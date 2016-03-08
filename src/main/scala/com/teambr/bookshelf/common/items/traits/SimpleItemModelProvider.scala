@@ -35,7 +35,7 @@ trait SimpleItemModelProvider extends Item with ILoadActionProvider with Creates
       *
       * @return An ArrayBuffer of strings, order matters index == layer
       */
-    def getTextures(stack : ItemStack) : ArrayBuffer[String]
+    def getTextures(stack : ItemStack) : ArrayBuffer[String] = getTextures
 
     /**
       * Used to get the model location for this object, default to unlocalizedName plus inventory
