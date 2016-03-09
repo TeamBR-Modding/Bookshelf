@@ -23,5 +23,5 @@ trait ILoadActionProvider {
       * @param event The event being called from
       * @param isClient True if only on client side, false (default) for server side
       */
-    def performLoadAction(@Nonnull event: AnyRef, isClient : Boolean = false) : Unit
+    def performLoadAction(@Nonnull event: AnyRef, isClient : Boolean = false) : Unit = {}
 }
