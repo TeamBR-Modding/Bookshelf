@@ -2,16 +2,18 @@ package com.teambr.bookshelf.util
 
 import java.awt.Color
 
+import com.teambr.bookshelf.client.shapes.{DrawableShape, TexturedCylinder, TexturedSphere}
 import com.teambr.bookshelf.lib.Reference
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.{Tessellator, RenderHelper}
-import net.minecraft.client.renderer.texture.TextureMap
-import net.minecraft.client.renderer.vertex.{DefaultVertexFormats, VertexFormatElement, VertexFormat}
+import net.minecraft.client.renderer.texture.{TextureAtlasSprite, TextureMap}
+import net.minecraft.client.renderer.vertex.{DefaultVertexFormats, VertexFormat, VertexFormatElement}
+import net.minecraft.client.renderer.{RenderHelper, Tessellator}
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.{GL12, GL11}
-import org.lwjgl.util.vector.{Vector3f, Matrix4f}
+import org.lwjgl.opengl.{GL11, GL12}
+import org.lwjgl.util.glu.GLU
+import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 
 /**
  * This file was created for Bookshelf
@@ -166,6 +168,54 @@ object RenderUtils {
     def setupBillboard(entity : Entity) {
         GL11.glRotatef(-entity.rotationYaw, 0, 1, 0)
         GL11.glRotatef(entity.rotationPitch, 1, 0, 0)
+    }
+
+    /**
+      * Draws a sphere, make sure you bind texture and translate etc before calling
+      */
+    def renderSphere(radius : Float, stacks : Int, slices : Int, tex : TextureAtlasSprite, drawMode : DrawableShape.TEXTURE_MODE, color : Color) : Unit = {
+        GL11.glPushMatrix()
+        GL11.glEnable(GL11.GL_BLEND)
+
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        setColor(color)
+        GL11.glEnable(GL11. GL_ALPHA_TEST)
+
+        val sphere = new TexturedSphere()
+        GL11.glShadeModel(GL11.GL_SMOOTH)
+        sphere.setDrawStyle(GLU.GLU_FILL)
+        sphere.setNormals(GLU.GLU_SMOOTH)
+        sphere.setTextureFlag(true)
+        sphere.setTextureMode(drawMode)
+        sphere.setOrientation(GLU.GLU_OUTSIDE)
+        GL11.glTexCoord4f(tex.getMinU, tex.getMaxU, tex.getMinV, tex.getMaxV)
+        sphere.draw(radius, slices, stacks, tex.getMinU, tex.getMaxU, tex.getMinV, tex.getMaxV)
+
+        GL11.glPopMatrix()
+    }
+
+    /**
+      * Draws a cylinder, make sure you bind texture and translate etc before calling
+      */
+    def renderCylinder(radius : Float, stacks : Int, slices : Int, tex : TextureAtlasSprite, drawMode : DrawableShape.TEXTURE_MODE, color : Color) : Unit = {
+        GL11.glPushMatrix()
+        GL11.glEnable(GL11.GL_BLEND)
+
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        setColor(color)
+        GL11.glEnable(GL11. GL_ALPHA_TEST)
+
+        val cylinder = new TexturedCylinder()
+        GL11.glShadeModel(GL11.GL_SMOOTH)
+        cylinder.setDrawStyle(GLU.GLU_FILL)
+        cylinder.setNormals(GLU.GLU_SMOOTH)
+        cylinder.setTextureFlag(true)
+        cylinder.setTextureMode(drawMode)
+        cylinder.setOrientation(GLU.GLU_OUTSIDE)
+        GL11.glTexCoord4f(tex.getMinU, tex.getMaxU, tex.getMinV, tex.getMaxV)
+        cylinder.draw(radius, slices, stacks, tex.getMinU, tex.getMaxU, tex.getMinV, tex.getMaxV)
+
+        GL11.glPopMatrix()
     }
 
     val matrixBuffer = BufferUtils.createFloatBuffer(16)
