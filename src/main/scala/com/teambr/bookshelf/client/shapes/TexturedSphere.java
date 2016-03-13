@@ -90,7 +90,7 @@ public class TexturedSphere extends DrawableShape {
                 switch (textureMode) {
                     case PANEL:
                         xTexCoord = j % 2 == 0 ? minU  : maxU;
-                        yTexCoord = minV;
+                        yTexCoord = maxV;
                         break;
                     case WRAP :
                     default :
