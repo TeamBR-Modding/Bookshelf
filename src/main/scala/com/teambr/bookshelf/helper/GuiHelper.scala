@@ -3,10 +3,8 @@ package com.teambr.bookshelf.helper
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.audio.PositionedSoundRecord
-import net.minecraft.client.gui.Gui
 import net.minecraft.client.renderer.Tessellator
-import net.minecraft.client.renderer.texture.{TextureMap, TextureAtlasSprite}
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats
+import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.FluidTank
 import org.lwjgl.opengl.GL11
@@ -28,6 +26,8 @@ object GuiHelper {
         if(fluid != null) {
             GL11.glPushMatrix()
             val level = (fluid.amount * maxHeight) / tank.getCapacity
+            if(fluid.getFluid.isGaseous(fluid))
+                GL11.glTranslatef(0, level - maxHeight, 0)
             val icon :TextureAtlasSprite = Minecraft.getMinecraft.getTextureMapBlocks.getAtlasSprite(fluid.getFluid.getStill(fluid).toString)
             RenderUtils.bindMinecraftBlockSheet()
             setGLColorFromInt(fluid.getFluid.getColor(fluid))
