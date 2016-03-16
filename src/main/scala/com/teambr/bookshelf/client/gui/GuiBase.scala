@@ -9,7 +9,7 @@ import com.teambr.bookshelf.common.container.slots.{ICustomSlot, SLOT_SIZE}
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.GuiContainer
-import net.minecraft.client.renderer.RenderHelper
+import net.minecraft.client.renderer.{GlStateManager, RenderHelper}
 import net.minecraft.inventory.{Container, Slot, SlotFurnaceOutput}
 import net.minecraft.util.StatCollector
 import org.lwjgl.input.Mouse
@@ -202,10 +202,12 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
 
         for (i <- 0 until inventory.inventorySlots.size()) {
             val obj = inventory.inventorySlots.get(i)
+            GlStateManager.pushMatrix()
             obj match {
                 case customSlot : ICustomSlot =>
                     if(customSlot.hasColor)
                         RenderUtils.setColor(customSlot.getColor)
+                    GlStateManager.translate(0, 0, customSlot.getZLocation)
                     if(customSlot.getSlotSize == SLOT_SIZE.LARGE)
                         this.drawTexturedModalRect(customSlot.getPoint._1, customSlot.getPoint._2, 0, 38, 26, 26)
                     else
@@ -218,6 +220,7 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
                         this.drawTexturedModalRect(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1, 0, 20, 18, 18)
                 case _ => //Not a slot. Somehow...
             }
+            GlStateManager.popMatrix()
         }
 
         for (component <- components) {
