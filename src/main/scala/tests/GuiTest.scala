@@ -4,11 +4,12 @@ import java.awt.Color
 
 import com.teambr.bookshelf.client.gui.GuiBase
 import com.teambr.bookshelf.client.gui.component.BaseComponent
-import com.teambr.bookshelf.client.gui.component.display.{GuiComponentColoredZone, GuiComponentLongText, GuiComponentText, GuiTabCollection}
+import com.teambr.bookshelf.client.gui.component.display._
 import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
+import net.minecraftforge.fluids.{FluidStack, FluidRegistry, FluidTank}
 
 /**
   * This file was created for Bookshelf
@@ -31,6 +32,10 @@ class GuiTest(player : EntityPlayer)
       */
     override def addComponents(): Unit = {
         components += new GuiComponentColoredZone(8, 48, 20, 20, new Color(255, 0, 0, 150))
+
+        val tank = new FluidTank(1000)
+        tank.fill(new FluidStack(FluidRegistry.LAVA, 1000), true)
+        components += new GuiComponentFluidTank(130, 5, 16, 50, tank)
     }
 
     /**

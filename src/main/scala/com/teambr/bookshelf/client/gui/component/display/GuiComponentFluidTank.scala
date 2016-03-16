@@ -30,11 +30,15 @@ class GuiComponentFluidTank(x: Int, y: Int, var width: Int, var height: Int, var
         GL11.glTranslated(xPos, yPos, 0)
         RenderUtils.bindGuiComponentsSheet()
         renderer.render(this, 0, 0, width, height)
-        GuiHelper.renderFluid(tank, 1, height - 1, height - 2, width - 2)
         GL11.glPopMatrix()
     }
 
-    def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int) {}
+    def renderOverlay(guiLeft: Int, guiTop: Int, mouseX : Int, mouseY : Int): Unit = {
+        GL11.glPushMatrix()
+        GL11.glTranslated(xPos, yPos, 0)
+        GuiHelper.renderFluid(tank, 1, height - 1, height - 2, width - 2)
+        GL11.glPopMatrix()
+    }
 
     def getWidth: Int = width
 
