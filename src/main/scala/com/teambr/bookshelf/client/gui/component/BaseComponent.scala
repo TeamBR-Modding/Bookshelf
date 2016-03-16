@@ -227,6 +227,8 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
      */
     protected def drawHoveringText(tip: ArrayBuffer[String], mouseX: Int, mouseY: Int, parent: GuiScreen, font: FontRenderer) {
         if (tip.nonEmpty) {
+            GL11.glPushMatrix()
+            GL11.glTranslated(0.0, 0.0, 5)
             GL11.glDisable(GL12.GL_RESCALE_NORMAL)
             RenderHelper.disableStandardItemLighting()
             GL11.glDisable(GL11.GL_LIGHTING)
@@ -278,6 +280,7 @@ abstract class BaseComponent(var xPos : Int, var yPos : Int) extends Gui {
             GL11.glEnable(GL11.GL_DEPTH_TEST)
             RenderHelper.enableStandardItemLighting()
             GL11.glEnable(GL12.GL_RESCALE_NORMAL)
+            GL11.glPopMatrix()
         }
     }
 }
