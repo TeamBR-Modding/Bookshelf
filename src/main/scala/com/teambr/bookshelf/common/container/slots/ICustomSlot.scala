@@ -40,12 +40,6 @@ trait ICustomSlot {
       * @return
       */
     def getColor : Color = new Color(0, 0, 0, 0)
-
-    /**
-      * Used if you need to translate up a bit
-      * @return
-      */
-    def getZLocation = 0
 }
 
 object SLOT_SIZE extends Enumeration {
