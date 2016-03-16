@@ -196,10 +196,6 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
         RenderUtils.prepareRenderState()
         background.render(this, 0, 0, xSize, ySize)
 
-        RenderUtils.restoreRenderState()
-        RenderUtils.bindGuiComponentsSheet()
-        RenderUtils.prepareRenderState()
-
         for (component <- components) {
             if(!component.isInstanceOf[GuiComponentColoredZone]) {
                 RenderUtils.prepareRenderState()
@@ -208,6 +204,10 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
                 RenderUtils.restoreRenderState()
             }
         }
+
+        RenderUtils.restoreRenderState()
+        RenderUtils.bindGuiComponentsSheet()
+        RenderUtils.prepareRenderState()
 
         for (i <- 0 until inventory.inventorySlots.size()) {
             val obj = inventory.inventorySlots.get(i)
