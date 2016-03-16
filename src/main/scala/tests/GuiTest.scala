@@ -4,13 +4,11 @@ import java.awt.Color
 
 import com.teambr.bookshelf.client.gui.GuiBase
 import com.teambr.bookshelf.client.gui.component.BaseComponent
-import com.teambr.bookshelf.client.gui.component.control.GuiComponentItemStackButton
-import com.teambr.bookshelf.client.gui.component.display.{GuiComponentFluidTank, GuiComponentLongText, GuiComponentText, GuiTabCollection}
+import com.teambr.bookshelf.client.gui.component.display.{GuiComponentColoredZone, GuiComponentLongText, GuiComponentText, GuiTabCollection}
 import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
-import net.minecraftforge.fluids.{FluidRegistry, FluidStack, FluidTank}
 
 /**
   * This file was created for Bookshelf
@@ -32,16 +30,7 @@ class GuiTest(player : EntityPlayer)
       * This will be called after the GUI has been initialized and should be where you add all components.
       */
     override def addComponents(): Unit = {
-        components += new GuiComponentItemStackButton(20, 20, new ItemStack(Blocks.iron_block)) {
-            /**
-              * Called when button is pressed
-              */
-            override def doAction(): Unit = {}
-        }
-
-        val tank = new FluidTank(1000)
-        tank.setFluid(new FluidStack(FluidRegistry.LAVA, 200))
-        components += new GuiComponentFluidTank(150, 5, 16, 60, tank)
+        components += new GuiComponentColoredZone(8, 48, 20, 20, new Color(255, 0, 0, 150))
     }
 
     /**

@@ -196,13 +196,6 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
         RenderUtils.prepareRenderState()
         background.render(this, 0, 0, xSize, ySize)
 
-        for (component <- components) {
-            RenderUtils.prepareRenderState()
-            component.render(0, 0, mouseX - guiLeft, mouseY - guiTop)
-            RenderUtils.restoreColor()
-            RenderUtils.restoreRenderState()
-        }
-
         RenderUtils.restoreRenderState()
         RenderUtils.bindGuiComponentsSheet()
         RenderUtils.prepareRenderState()
@@ -225,6 +218,13 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
                         this.drawTexturedModalRect(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1, 0, 20, 18, 18)
                 case _ => //Not a slot. Somehow...
             }
+        }
+
+        for (component <- components) {
+            RenderUtils.prepareRenderState()
+            component.render(0, 0, mouseX - guiLeft, mouseY - guiTop)
+            RenderUtils.restoreColor()
+            RenderUtils.restoreRenderState()
         }
         RenderUtils.restoreRenderState()
         GL11.glPopMatrix()
