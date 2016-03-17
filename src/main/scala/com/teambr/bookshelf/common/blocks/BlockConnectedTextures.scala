@@ -1,17 +1,17 @@
 package com.teambr.bookshelf.common.blocks
 
-import com.teambr.bookshelf.client.{TextureManager, ConnectedTextureBlocks}
+import com.teambr.bookshelf.client.{ConnectedTextureBlocks, TextureManager}
 import com.teambr.bookshelf.collections.ConnectedTextures
 import com.teambr.bookshelf.common.blocks.traits.CreatesTextures
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
-import net.minecraft.block.state.{BlockState, IBlockState}
-import net.minecraft.client.Minecraft
-import net.minecraft.client.resources.model.ModelResourceLocation
-import net.minecraft.util.{EnumFacing, EnumWorldBlockLayer}
+import net.minecraft.block.state.{BlockStateContainer, IBlockState}
+import net.minecraft.client.renderer.block.model.ModelResourceLocation
+import net.minecraft.util.{BlockRenderLayer, EnumBlockRenderType, EnumFacing}
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.property.{ExtendedBlockState, IUnlistedProperty}
-import net.minecraftforge.fml.relauncher.{SideOnly, Side}
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -87,7 +87,7 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
       */
     def getConnectionArrayForFace(world: IBlockAccess, pos: BlockPos, facing: EnumFacing): Array[Boolean] = {
         val connections = new Array[Boolean](16)
-        if (world.isAirBlock(pos.offset(facing)) || (!world.getBlockState(pos.offset(facing)).getBlock.isOpaqueCube &&
+        if (world.isAirBlock(pos.offset(facing)) || (!world.getBlockState(pos.offset(facing)).getBlock.isOpaqueCube(world.getBlockState(pos.offset(facing))) &&
                 !canTextureConnect(world.getBlockState(pos.offset(facing)).getBlock))) {
             facing match {
                 case EnumFacing.UP =>
@@ -99,14 +99,14 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
                     connections(5) = canTextureConnect(world.getBlockState(pos.add(-1, 0, 1)).getBlock)
                     connections(6) = canTextureConnect(world.getBlockState(pos.add(0, 0, 1)).getBlock)
                     connections(7) = canTextureConnect(world.getBlockState(pos.add(1, 0, 1)).getBlock)
-                    connections(8) = !world.isAirBlock(pos.add(-1, 1, -1)) && world.getBlockState(pos.add(-1, 1, -1)).getBlock.isOpaqueCube
-                    connections(9) = !world.isAirBlock(pos.add(0, 1, -1)) && world.getBlockState(pos.add(0, 1, -1)).getBlock.isOpaqueCube
-                    connections(10) = !world.isAirBlock(pos.add(1, 1, -1)) && world.getBlockState(pos.add(1, 1, -1)).getBlock.isOpaqueCube
-                    connections(11) = !world.isAirBlock(pos.add(-1, 1, 0)) && world.getBlockState(pos.add(-1, 1, 0)).getBlock.isOpaqueCube
-                    connections(12) = !world.isAirBlock(pos.add(1, 1, 0)) && world.getBlockState(pos.add(1, 1, 0)).getBlock.isOpaqueCube
-                    connections(13) = !world.isAirBlock(pos.add(-1, 1, 1)) && world.getBlockState(pos.add(-1, 1, 1)).getBlock.isOpaqueCube
-                    connections(14) = !world.isAirBlock(pos.add(0, 1, 1)) && world.getBlockState(pos.add(0, 1, 1)).getBlock.isOpaqueCube
-                    connections(15) = !world.isAirBlock(pos.add(1, 1, 1)) && world.getBlockState(pos.add(1, 1, 1)).getBlock.isOpaqueCube
+                    connections(8) = !world.isAirBlock(pos.add(-1, 1, -1)) && world.getBlockState(pos.add(-1, 1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, 1, -1)))
+                    connections(9) = !world.isAirBlock(pos.add(0, 1, -1)) && world.getBlockState(pos.add(0, 1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(0, 1, -1)))
+                    connections(10) = !world.isAirBlock(pos.add(1, 1, -1)) && world.getBlockState(pos.add(1, 1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, 1, -1)))
+                    connections(11) = !world.isAirBlock(pos.add(-1, 1, 0)) && world.getBlockState(pos.add(-1, 1, 0)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, 1, 0)))
+                    connections(12) = !world.isAirBlock(pos.add(1, 1, 0)) && world.getBlockState(pos.add(1, 1, 0)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, 1, 0)))
+                    connections(13) = !world.isAirBlock(pos.add(-1, 1, 1)) && world.getBlockState(pos.add(-1, 1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, 1, 1)))
+                    connections(14) = !world.isAirBlock(pos.add(0, 1, 1)) && world.getBlockState(pos.add(0, 1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(0, 1, 1)))
+                    connections(15) = !world.isAirBlock(pos.add(1, 1, 1)) && world.getBlockState(pos.add(1, 1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, 1, 1)))
                     return connections
                 case EnumFacing.DOWN =>
                     connections(0) = canTextureConnect(world.getBlockState(pos.add(-1, 0, 1)).getBlock)
@@ -117,14 +117,14 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
                     connections(5) = canTextureConnect(world.getBlockState(pos.add(-1, 0, -1)).getBlock)
                     connections(6) = canTextureConnect(world.getBlockState(pos.add(0, 0, -1)).getBlock)
                     connections(7) = canTextureConnect(world.getBlockState(pos.add(1, 0, -1)).getBlock)
-                    connections(8) = !world.isAirBlock(pos.add(-1, -1, 1)) && world.getBlockState(pos.add(-1, -1, 1)).getBlock.isOpaqueCube
-                    connections(9) = !world.isAirBlock(pos.add(0, -1, 1)) && world.getBlockState(pos.add(0, -1, 1)).getBlock.isOpaqueCube
-                    connections(10) = !world.isAirBlock(pos.add(1, -1, 1)) && world.getBlockState(pos.add(1, -1, 1)).getBlock.isOpaqueCube
-                    connections(11) = !world.isAirBlock(pos.add(-1, -1, 0)) && world.getBlockState(pos.add(-1, -1, 0)).getBlock.isOpaqueCube
-                    connections(12) = !world.isAirBlock(pos.add(1, -1, 0)) && world.getBlockState(pos.add(1, -1, 0)).getBlock.isOpaqueCube
-                    connections(13) = !world.isAirBlock(pos.add(-1, -1, -1)) && world.getBlockState(pos.add(-1, -1, -1)).getBlock.isOpaqueCube
-                    connections(14) = !world.isAirBlock(pos.add(0, -1, -1)) && world.getBlockState(pos.add(0, -1, -1)).getBlock.isOpaqueCube
-                    connections(15) = !world.isAirBlock(pos.add(1, -1, -1)) && world.getBlockState(pos.add(1, -1, -1)).getBlock.isOpaqueCube
+                    connections(8) = !world.isAirBlock(pos.add(-1, -1, 1)) && world.getBlockState(pos.add(-1, -1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, -1, 1)))
+                    connections(9) = !world.isAirBlock(pos.add(0, -1, 1)) && world.getBlockState(pos.add(0, -1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(0, -1, 1)))
+                    connections(10) = !world.isAirBlock(pos.add(1, -1, 1)) && world.getBlockState(pos.add(1, -1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, -1, 1)))
+                    connections(11) = !world.isAirBlock(pos.add(-1, -1, 0)) && world.getBlockState(pos.add(-1, -1, 0)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, -1, 0)))
+                    connections(12) = !world.isAirBlock(pos.add(1, -1, 0)) && world.getBlockState(pos.add(1, -1, 0)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, -1, 0)))
+                    connections(13) = !world.isAirBlock(pos.add(-1, -1, -1)) && world.getBlockState(pos.add(-1, -1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, -1, -1)))
+                    connections(14) = !world.isAirBlock(pos.add(0, -1, -1)) && world.getBlockState(pos.add(0, -1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(0, -1, -1)))
+                    connections(15) = !world.isAirBlock(pos.add(1, -1, -1)) && world.getBlockState(pos.add(1, -1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, -1, -1)))
                     return connections
                 case EnumFacing.NORTH =>
                     connections(0) = canTextureConnect(world.getBlockState(pos.add(1, 1, 0)).getBlock)
@@ -135,14 +135,14 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
                     connections(5) = canTextureConnect(world.getBlockState(pos.add(1, -1, 0)).getBlock)
                     connections(6) = canTextureConnect(world.getBlockState(pos.add(0, -1, 0)).getBlock)
                     connections(7) = canTextureConnect(world.getBlockState(pos.add(-1, -1, 0)).getBlock)
-                    connections(8) = !world.isAirBlock(pos.add(1, 1, -1)) && world.getBlockState(pos.add(1, 1, -1)).getBlock.isOpaqueCube
-                    connections(9) = !world.isAirBlock(pos.add(0, 1, -1)) && world.getBlockState(pos.add(0, 1, -1)).getBlock.isOpaqueCube
-                    connections(10) = !world.isAirBlock(pos.add(-1, 1, -1)) && world.getBlockState(pos.add(-1, 1, -1)).getBlock.isOpaqueCube
-                    connections(11) = !world.isAirBlock(pos.add(1, 0, -1)) && world.getBlockState(pos.add(1, 0, -1)).getBlock.isOpaqueCube
-                    connections(12) = !world.isAirBlock(pos.add(-1, 0, -1)) && world.getBlockState(pos.add(-1, 0, -1)).getBlock.isOpaqueCube
-                    connections(13) = !world.isAirBlock(pos.add(1, -1, -1)) && world.getBlockState(pos.add(1, -1, -1)).getBlock.isOpaqueCube
-                    connections(14) = !world.isAirBlock(pos.add(0, -1, -1)) && world.getBlockState(pos.add(0, -1, -1)).getBlock.isOpaqueCube
-                    connections(15) = !world.isAirBlock(pos.add(-1, -1, -1)) && world.getBlockState(pos.add(-1, -1, -1)).getBlock.isOpaqueCube
+                    connections(8) = !world.isAirBlock(pos.add(1, 1, -1)) && world.getBlockState(pos.add(1, 1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, 1, -1)))
+                    connections(9) = !world.isAirBlock(pos.add(0, 1, -1)) && world.getBlockState(pos.add(0, 1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(0, 1, -1)))
+                    connections(10) = !world.isAirBlock(pos.add(-1, 1, -1)) && world.getBlockState(pos.add(-1, 1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, 1, -1)))
+                    connections(11) = !world.isAirBlock(pos.add(1, 0, -1)) && world.getBlockState(pos.add(1, 0, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, 0, -1)))
+                    connections(12) = !world.isAirBlock(pos.add(-1, 0, -1)) && world.getBlockState(pos.add(-1, 0, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, 0, -1)))
+                    connections(13) = !world.isAirBlock(pos.add(1, -1, -1)) && world.getBlockState(pos.add(1, -1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, -1, -1)))
+                    connections(14) = !world.isAirBlock(pos.add(0, -1, -1)) && world.getBlockState(pos.add(0, -1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(0, -1, -1)))
+                    connections(15) = !world.isAirBlock(pos.add(-1, -1, -1)) && world.getBlockState(pos.add(-1, -1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, -1, -1)))
                     return connections
                 case EnumFacing.SOUTH =>
                     connections(0) = canTextureConnect(world.getBlockState(pos.add(-1, 1, 0)).getBlock)
@@ -153,14 +153,13 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
                     connections(5) = canTextureConnect(world.getBlockState(pos.add(-1, -1, 0)).getBlock)
                     connections(6) = canTextureConnect(world.getBlockState(pos.add(0, -1, 0)).getBlock)
                     connections(7) = canTextureConnect(world.getBlockState(pos.add(1, -1, 0)).getBlock)
-                    connections(8) = !world.isAirBlock(pos.add(-1, 1, 1)) && world.getBlockState(pos.add(-1, 1, 1)).getBlock.isOpaqueCube
-                    connections(9) = !world.isAirBlock(pos.add(0, 1, 1)) && world.getBlockState(pos.add(0, 1, 1)).getBlock.isOpaqueCube
-                    connections(10) = !world.isAirBlock(pos.add(1, 1, 1)) && world.getBlockState(pos.add(1, 1, 1)).getBlock.isOpaqueCube
-                    connections(11) = !world.isAirBlock(pos.add(-1, 0, 1)) && world.getBlockState(pos.add(-1, 0, 1)).getBlock.isOpaqueCube
-                    connections(12) = !world.isAirBlock(pos.add(1, 0, 1)) && world.getBlockState(pos.add(1, 0, 1)).getBlock.isOpaqueCube
-                    connections(13) = !world.isAirBlock(pos.add(-1, -1, 1)) && world.getBlockState(pos.add(-1, -1, 1)).getBlock.isOpaqueCube
-                    connections(14) = !world.isAirBlock(pos.add(0, -1, 1)) && world.getBlockState(pos.add(0, -1, 1)).getBlock.isOpaqueCube
-                    connections(15) = !world.isAirBlock(pos.add(1, -1, 1)) && world.getBlockState(pos.add(1, -1, 1)).getBlock.isOpaqueCube
+                    connections(8) = !world.isAirBlock(pos.add(-1, 1, 1)) && world.getBlockState(pos.add(-1, 1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, 1, 1)))
+                    connections(9) = !world.isAirBlock(pos.add(0, 1, 1)) && world.getBlockState(pos.add(0, 1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(0, 1, 1)))
+                    connections(10) = !world.isAirBlock(pos.add(1, 1, 1)) && world.getBlockState(pos.add(1, 1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, 1, 1)))
+                    connections(11) = !world.isAirBlock(pos.add(-1, 0, 1)) && world.getBlockState(pos.add(-1, 0, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, 0, 1)))
+                    connections(13) = !world.isAirBlock(pos.add(-1, -1, 1)) && world.getBlockState(pos.add(-1, -1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, -1, 1)))
+                    connections(14) = !world.isAirBlock(pos.add(0, -1, 1)) && world.getBlockState(pos.add(0, -1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(0, -1, 1)))
+                    connections(15) = !world.isAirBlock(pos.add(1, -1, 1)) && world.getBlockState(pos.add(1, -1, 1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(1, -1, 1)))
                     return connections
                 case EnumFacing.WEST =>
                     connections(0) = canTextureConnect(world.getBlockState(pos.add(0, 1, -1)).getBlock)
@@ -171,7 +170,7 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
                     connections(5) = canTextureConnect(world.getBlockState(pos.add(0, -1, -1)).getBlock)
                     connections(6) = canTextureConnect(world.getBlockState(pos.add(0, -1, 0)).getBlock)
                     connections(7) = canTextureConnect(world.getBlockState(pos.add(0, -1, 1)).getBlock)
-                    connections(8) = !world.isAirBlock(pos.add(-1, 1, -1)) && world.getBlockState(pos.add(-1, 1, -1)).getBlock.isOpaqueCube
+                    connections(8) = !world.isAirBlock(pos.add(-1, 1, -1)) && world.getBlockState(pos.add(-1, 1, -1)).getBlock.isOpaqueCube(world.getBlockState(pos.add(-1, 1, -1)))
                     connections(9) = !world.isAirBlock(pos.add(-1, 1, 0)) && world.getBlockState(pos.add(-1, 1, 0)).getBlock.isOpaqueCube
                     connections(10) = !world.isAirBlock(pos.add(-1, 1, 1)) && world.getBlockState(pos.add(-1, 1, 1)).getBlock.isOpaqueCube
                     connections(11) = !world.isAirBlock(pos.add(-1, 0, -1)) && world.getBlockState(pos.add(-1, 0, -1)).getBlock.isOpaqueCube
@@ -207,7 +206,7 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
     /**
       * Used to say what our block state is
       */
-    override def createBlockState(): BlockState = {
+    override def createBlockState(): BlockStateContainer = {
         val listed: Array[IProperty[_]] = new Array(0)
         val unlisted = new Array[IUnlistedProperty[_]](0)
         new ExtendedBlockState(this, listed, unlisted)
@@ -217,17 +216,17 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
         new ConnectedTexturesState(pos, world, state.getBlock.asInstanceOf[BlockConnectedTextures], state.getBlock)
     }
 
-    override def getRenderType = 3
-    override def isOpaqueCube = !isClear
-    override def isTranslucent = isClear
-    override def isFullCube = !isClear
+    override def getRenderType(state: IBlockState) = EnumBlockRenderType.MODEL
+    override def isOpaqueCube(state: IBlockState) = !isClear
+    override def isTranslucent(state: IBlockState) = isClear
+    override def isFullCube(state: IBlockState) = !isClear
 
     /**
       * Used to define what layer to render in
       */
-    override def canRenderInLayer(layer: EnumWorldBlockLayer) : Boolean =
+    override def canRenderInLayer(layer: BlockRenderLayer) : Boolean =
         if(isClear)
-            layer == EnumWorldBlockLayer.CUTOUT || layer == EnumWorldBlockLayer.TRANSLUCENT
+            layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT
         else
-            layer == EnumWorldBlockLayer.SOLID
+            layer == BlockRenderLayer.SOLID
 }
