@@ -8,7 +8,7 @@ import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockState, IBlockState}
 import net.minecraft.client.Minecraft
 import net.minecraft.client.resources.model.ModelResourceLocation
-import net.minecraft.util.{BlockPos, EnumFacing, EnumWorldBlockLayer}
+import net.minecraft.util.{EnumFacing, EnumWorldBlockLayer}
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.property.{ExtendedBlockState, IUnlistedProperty}
 import net.minecraftforge.fml.relauncher.{SideOnly, Side}
