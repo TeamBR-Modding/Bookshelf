@@ -56,7 +56,7 @@ public class AchievementRegistry {
     public void triggerAchievement(String modName, String achievementName, EntityPlayer player) {
         for(Achievement achieve : achievements.get(modName).getAchievements()) {
             if(achieve.statId.equals(achievementName)) {
-                player.triggerAchievement(achieve);
+                player.addStat(achieve, 1);
                 return;
             }
         }
