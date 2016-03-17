@@ -2,10 +2,11 @@ package com.teambr.bookshelf.common.tiles.traits
 
 import net.minecraft.block.state.IBlockState
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity
+import net.minecraft.network.play.server.SPacketUpdateTileEntity
 import net.minecraft.network.{INetHandler, NetworkManager, Packet}
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.{BlockPos, ITickable}
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{ ITickable}
 import net.minecraft.world.World
 
 /**
@@ -50,6 +51,7 @@ trait UpdatingTile extends TileEntity with ITickable {
     /**
       * Lets the world know if the tile should be remade, usually not. We are going to just check by block, forge
       * defaults to state
+      *
       * @param world
       * @param pos
       * @param oldState
@@ -67,7 +69,7 @@ trait UpdatingTile extends TileEntity with ITickable {
     override def getDescriptionPacket: Packet[_ <: INetHandler] = {
         val tag = new NBTTagCompound
         this.writeToNBT(tag)
-        new S35PacketUpdateTileEntity(getPos, 1, tag)
+        new SPacketUpdateTileEntity(getPos, 1, tag)
     }
 
     /**
@@ -76,7 +78,7 @@ trait UpdatingTile extends TileEntity with ITickable {
       * @param net The manager sending
      * @param pkt The packet received
      */
-    override def onDataPacket(net : NetworkManager, pkt : S35PacketUpdateTileEntity) = this.readFromNBT(pkt.getNbtCompound)
+    override def onDataPacket(net : NetworkManager, pkt : SPacketUpdateTileEntity) = this.readFromNBT(pkt.getNbtCompound)
 
     /**
      * Called when the tile updates

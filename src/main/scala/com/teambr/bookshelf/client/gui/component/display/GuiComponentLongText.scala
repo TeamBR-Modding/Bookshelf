@@ -5,7 +5,7 @@ import com.teambr.bookshelf.helper.GuiHelper
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.util.StatCollector
+import net.minecraft.util.text.translation.I18n
 import org.lwjgl.opengl.GL11
 
 import scala.collection.mutable.ArrayBuffer
@@ -37,7 +37,7 @@ class GuiComponentLongText(x : Int, y : Int, var text : String, width : Int, hei
       * Used to create the list of lines we need
       */
     def setupLines() : Unit = {
-        text = StatCollector.translateToLocal(text)
+        text = I18n.translateToLocal(text)
         if(fontRender.getStringWidth(text) < lineWidth)
             lines += text
         else {

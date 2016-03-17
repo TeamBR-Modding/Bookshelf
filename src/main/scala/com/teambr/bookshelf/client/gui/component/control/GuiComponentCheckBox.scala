@@ -5,7 +5,7 @@ import java.awt.Color
 import com.teambr.bookshelf.client.gui.component.BaseComponent
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
-import net.minecraft.util.StatCollector
+import net.minecraft.util.text.translation.I18n
 import org.lwjgl.opengl.GL11
 
 /**
@@ -19,10 +19,11 @@ import org.lwjgl.opengl.GL11
  * @since August 04, 2015
  */
 abstract class GuiComponentCheckBox(x : Int, y : Int, var label : String, var selected : Boolean) extends BaseComponent(x, y) {
-    label = StatCollector.translateToLocal(label)
+    label = I18n.translateToLocal(label)
 
     /**
      * Called when there is a change in state, use this to set the value on what this controls
+ *
      * @param bool The current value of this component
      */
     def setValue (bool : Boolean) : Unit
@@ -31,6 +32,7 @@ abstract class GuiComponentCheckBox(x : Int, y : Int, var label : String, var se
 
     /**
      * Called when the mouse is pressed
+ *
      * @param mouseX Mouse X Position
      * @param mouseY Mouse Y Position
      * @param button Mouse Button

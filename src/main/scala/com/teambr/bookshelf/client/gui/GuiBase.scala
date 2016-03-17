@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.inventory.{Container, Slot, SlotFurnaceOutput}
-import net.minecraft.util.StatCollector
+import net.minecraft.util.text.translation.I18n
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11
 
@@ -39,7 +39,7 @@ abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: I
     this.ySize = height
 
     //Set up all our tings
-    var title = new GuiComponentText(StatCollector.translateToLocal(name), xSize / 2 - Minecraft.getMinecraft.fontRendererObj.getStringWidth(StatCollector.translateToLocal(name)) / 2, 6)
+    var title = new GuiComponentText(I18n.translateToLocal(name), xSize / 2 - Minecraft.getMinecraft.fontRendererObj.getStringWidth(I18n.translateToLocal(name)) / 2, 6)
     protected var background: NinePatchRenderer = new NinePatchRenderer
     protected var components = new ArrayBuffer[BaseComponent]
     protected var rightTabs = new GuiTabCollection(this, xSize)

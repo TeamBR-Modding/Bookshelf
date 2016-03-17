@@ -4,7 +4,9 @@ import com.teambr.bookshelf.Bookshelf
 import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.item.ItemStack
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{EnumHand, EnumFacing}
 import net.minecraft.world.World
 
 /**
@@ -22,7 +24,8 @@ import net.minecraft.world.World
 trait OpensGui extends Block {
     /**
      * Return the container for this tile
-     * @param ID Id, probably not needed but could be used for multiple guis
+      *
+      * @param ID Id, probably not needed but could be used for multiple guis
      * @param player The player that is opening the gui
      * @param world The world
      * @param x X Pos
@@ -34,7 +37,8 @@ trait OpensGui extends Block {
 
     /**
      * Return the gui for this tile
-     * @param ID Id, probably not needed but could be used for multiple guis
+      *
+      * @param ID Id, probably not needed but could be used for multiple guis
      * @param player The player that is opening the gui
      * @param world The world
      * @param x X Pos
@@ -50,8 +54,8 @@ trait OpensGui extends Block {
      * If you want to override this but still call it, make sure you call
      *      super[OpensGui].onBlockActivated(...)
      */
-    override def onBlockActivated(world : World, pos : BlockPos, state : IBlockState, player : EntityPlayer, side : EnumFacing, hitX : Float, hitY : Float, hitZ : Float) : Boolean = {
-        super.onBlockActivated(world, pos, state, player, side, hitX, hitY, hitZ)
+    override def onBlockActivated(world : World, pos : BlockPos, state : IBlockState, player : EntityPlayer, hand: EnumHand, heldItem: ItemStack, side : EnumFacing, hitX : Float, hitY : Float, hitZ : Float) : Boolean = {
+        super.onBlockActivated(world, pos, state, player, hand, heldItem, side, hitX, hitY, hitZ)
 
         player.openGui(Bookshelf, 0, world, pos.getX, pos.getY, pos.getZ)
         true

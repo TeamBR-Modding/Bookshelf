@@ -1,7 +1,7 @@
 package com.teambr.bookshelf.util;
 
 import com.teambr.bookshelf.helper.LogHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.Loader;
 
 import java.io.InputStream;
@@ -107,7 +107,7 @@ public class VersionChecker implements Runnable {
     @Override
     public void run() {
         int tries = 0;
-        LogHelper.info(StatCollector.translateToLocal(modID + ".versioncheck.start"));
+        LogHelper.info(I18n.translateToLocal(modID + ".versioncheck.start"));
         try {
             while (tries < numRetry) {
                 checkVersion();
@@ -124,16 +124,16 @@ public class VersionChecker implements Runnable {
         }
         switch (result) {
             case CURRENT:
-                LogHelper.info(StatCollector.translateToLocal(modID + ".versioncheck.current"));
+                LogHelper.info(I18n.translateToLocal(modID + ".versioncheck.current"));
                 break;
             case OUTDATED:
-                LogHelper.warning(StatCollector.translateToLocal(modID + ".versioncheck.outdated"));
+                LogHelper.warning(I18n.translateToLocal(modID + ".versioncheck.outdated"));
                 break;
             case MC_VERSION_NOT_FOUND:
-                LogHelper.warning(StatCollector.translateToLocal(modID + ".versioncheck.mcversion"));
+                LogHelper.warning(I18n.translateToLocal(modID + ".versioncheck.mcversion"));
                 break;
             default:
-                LogHelper.severe(StatCollector.translateToLocal(modID + ".versioncheck.error"));
+                LogHelper.severe(I18n.translateToLocal(modID + ".versioncheck.error"));
         }
     }
 

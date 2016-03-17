@@ -7,7 +7,7 @@ import com.teambr.bookshelf.helper.GuiHelper
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
-import net.minecraft.util.StatCollector
+import net.minecraft.util.text.translation.I18n
 import org.lwjgl.opengl.GL11
 
 import scala.collection.mutable.ArrayBuffer
@@ -38,7 +38,7 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
         def fieldUpdated(value: String) : Unit = {}
     }
 
-    var saveButton = new GuiComponentButton(xPos + 105, yPos - 3, 30, 20, StatCollector.translateToLocal("Save")) {
+    var saveButton = new GuiComponentButton(xPos + 105, yPos - 3, 30, 20, I18n.translateToLocal("Save")) {
         def doAction() {
             valueSaved(list, inputBox.getValue)
             inputBox.getTextField.setText("")
@@ -67,6 +67,7 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
 
     /**
      * Called when the user selects to delete something, it is then up to you to remove things
+ *
      * @param listFrom What we are removing from
      * @param valueDeleted The value being deleted
      */
@@ -76,6 +77,7 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
      * This is where you should convert the object into what you want to display
      *
      * toString() is not always what you want, so here you can convert things
+ *
      * @param object The object to convert to string
      * @return What you want to display
      */
@@ -83,6 +85,7 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
 
     /**
      * Called when the mouse is pressed
+ *
      * @param mouseX Mouse X Position
      * @param mouseY Mouse Y Position
      * @param button Mouse Button
@@ -113,6 +116,7 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
 
     /**
      * Called when the user drags the component
+ *
      * @param x Mouse X Position
      * @param y Mouse Y Position
      * @param button Mouse Button
@@ -126,6 +130,7 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
 
     /**
      * Called when the mouse button is over the component and released
+ *
      * @param x Mouse X Position
      * @param y Mouse Y Position
      * @param button Mouse Button
@@ -138,6 +143,7 @@ abstract class GuiComponentEditableList[T <: AnyRef](x : Int, y : Int, var list 
 
     /**
      * Used when a key is pressed
+ *
      * @param letter The letter
      * @param keyCode The code
      */

@@ -1,7 +1,8 @@
 package com.teambr.bookshelf.common.tiles.traits
 
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.{EnumFacing, BlockPos}
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{EnumFacing}
 import net.minecraft.world.World
 
 /**
@@ -19,7 +20,8 @@ import net.minecraft.world.World
 trait RedstoneAware extends TileEntity {
     /**
      * Checks if this block is recieving redstone
-     * @return True if has power
+      *
+      * @return True if has power
      */
     def isPowered: Boolean = {
         isPoweringTo(getWorld,  getPos.offset(EnumFacing.UP),    EnumFacing.DOWN)  ||
@@ -32,12 +34,13 @@ trait RedstoneAware extends TileEntity {
 
     /**
      * Tests if the block is providing a redstone signal
-     * @param world The World
+      *
+      * @param world The World
      * @param blockPos The block position
      * @param side Which side of the block
      * @return True if is providing
      */
     def isPoweringTo(world: World, blockPos: BlockPos, side: EnumFacing): Boolean = {
-         world.getBlockState(blockPos).getBlock.getWeakPower(world, blockPos, world.getBlockState(blockPos), side) > 0
+         world.getBlockState(blockPos).getBlock.getWeakPower(world.getBlockState(blockPos), world, blockPos, side) > 0
     }
 }
