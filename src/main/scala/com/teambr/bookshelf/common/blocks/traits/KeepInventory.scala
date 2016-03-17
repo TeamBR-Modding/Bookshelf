@@ -42,7 +42,7 @@ trait KeepInventory extends DropsItems {
         if(stack.hasTagCompound && !world.isRemote) { //If there is a tag and is on the server
             world.getTileEntity(pos).readFromNBT(stack.getTagCompound) //Set the tag
             world.getTileEntity(pos).setPos(pos) //Set the saved tag to here
-            world.markBlockForUpdate(pos) //Mark for update to client
+            world.setBlockState(pos, state, 2) //markBlockForUpdate(pos) //Mark for update to client
         }
     }
 
