@@ -43,7 +43,7 @@ class ClientOverridePacket extends IMessage with IMessageHandler[ClientOverrideP
                 val world: World = ctx.getServerHandler.playerEntity.worldObj
                 if (world.getTileEntity(message.blockPosition) != null) {
                     world.getTileEntity(message.blockPosition).readFromNBT(message.tag)
-                    world.markBlockForUpdate(message.blockPosition)
+                    world.notifyBlockUpdate(message.blockPosition, world.getBlockState(message.blockPosition), world.getBlockState(message.blockPosition), 3)
                 }
             }
         }

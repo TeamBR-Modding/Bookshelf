@@ -6,7 +6,8 @@ import com.teambr.bookshelf.common.tiles.traits.Inventory
 import net.minecraft.inventory.{IInventory, ISidedInventory}
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.{EnumFacing, MathHelper}
+import net.minecraft.util.math.MathHelper
+import net.minecraft.util.{EnumFacing}
 import net.minecraftforge.items.{CapabilityItemHandler, IItemHandler}
 import net.minecraftforge.items.wrapper.{InvWrapper, SidedInvWrapper}
 

@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
-import net.minecraft.util.ResourceLocation
+import net.minecraft.init.SoundEvents
 import net.minecraftforge.fluids.FluidTank
 import org.lwjgl.opengl.GL11
 
@@ -26,8 +26,6 @@ object GuiHelper {
         if(fluid != null) {
             GL11.glPushMatrix()
             val level = (fluid.amount * maxHeight) / tank.getCapacity
-            if(fluid.getFluid.isGaseous(fluid))
-                GL11.glTranslatef(0, level - maxHeight, 0)
             val icon :TextureAtlasSprite = Minecraft.getMinecraft.getTextureMapBlocks.getAtlasSprite(fluid.getFluid.getStill(fluid).toString)
             RenderUtils.bindMinecraftBlockSheet()
             setGLColorFromInt(fluid.getFluid.getColor(fluid))
@@ -56,7 +54,8 @@ object GuiHelper {
 
     /**
      * Draws the given icon with optional cut
-     * @param icon
+      *
+      * @param icon
      * @param x
      * @param y
      * @param width keep width of icon
@@ -65,7 +64,7 @@ object GuiHelper {
      */
     private def drawIconWithCut(icon: TextureAtlasSprite, x: Int, y: Int, width: Int, height: Int, cut: Int) {
         val tess = Tessellator.getInstance()
-        val renderer = tess.getWorldRenderer
+        val renderer = tess.getBuffer
         renderer.begin(GL11.GL_QUADS, RenderUtils.POSITION_TEX_NORMALF)
         renderer.pos(x, y + height, 0).tex(icon.getMinU, icon.getInterpolatedV(height)).normal(0, -1, 0).endVertex()
         renderer.pos(x + width, y + height, 0).tex(icon.getInterpolatedU(width), icon.getInterpolatedV(height)).normal(0, -1, 0).endVertex()
@@ -83,7 +82,8 @@ object GuiHelper {
 
     /**
      * Test if location is in bounds
-     * @param x xLocation
+      *
+      * @param x xLocation
      * @param y yLocation
      * @param a Rectangle point a
      * @param b Rectangle point b
@@ -97,5 +97,5 @@ object GuiHelper {
      * Plays the button click sounds
      */
     def playButtonSound : Unit =
-        Minecraft.getMinecraft.getSoundHandler.playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F))
+        Minecraft.getMinecraft.getSoundHandler.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.ui_button_click, 1.0F))
 }

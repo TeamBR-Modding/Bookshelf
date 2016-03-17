@@ -114,7 +114,7 @@ object RenderUtils {
       * @param v1 Max V
       */
     def renderCubeWithTexture(x1 : Double, y1 : Double, z1 : Double, x2 : Double, y2 : Double, z2 : Double, u : Double, v : Double, u1 : Double, v1 : Double): Unit = {
-        val tes = Tessellator.getInstance().getWorldRenderer
+        val tes = Tessellator.getInstance().getBuffer
 
         tes.begin(GL11.GL_QUADS, POSITION_TEX_NORMALF)
         tes.pos(x1, y1, z1).tex(u, v).normal(0, -1, 0).endVertex()

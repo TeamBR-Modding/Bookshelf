@@ -1,9 +1,7 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import com.teambr.bookshelf.common.blocks.properties.TileAwareState
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.state.IBlockState
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.common.property.IExtendedBlockState
@@ -23,7 +21,7 @@ trait TileAware extends BlockContainer {
         state match {
             case extendedState: IExtendedBlockState => //Needs to have an extended state
                 world.getTileEntity(pos) match {
-                    case tile : TileEntity => new TileAwareState(tile, world.getBlockState(pos).getBlock)
+                   /* case tile : TileEntity => new TileAwareState(tile, world.getBlockState(pos).getBlock)*/
                     case _ => state
                 }
             case _ => state

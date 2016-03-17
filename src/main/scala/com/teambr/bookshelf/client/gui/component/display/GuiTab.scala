@@ -8,8 +8,7 @@ import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRender
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.{Gui, GuiScreen}
-import net.minecraft.client.renderer.RenderHelper
-import net.minecraft.client.renderer.entity.RenderItem
+import net.minecraft.client.renderer.{RenderItem, RenderHelper}
 import net.minecraft.inventory.Container
 import net.minecraft.item.ItemStack
 import org.lwjgl.opengl.{GL11, GL12}

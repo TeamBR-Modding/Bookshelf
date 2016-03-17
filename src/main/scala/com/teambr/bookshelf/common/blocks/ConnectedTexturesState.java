@@ -19,7 +19,7 @@ import java.util.Collection;
  * @author Paul Davis "pauljoda"
  * @since 2/26/2016
  */
-public class ConnectedTexturesState implements IBlockState {
+public class onnectedTexturesState implements IBlockState {
     public BlockPos pos;
     public IBlockAccess world;
     public BlockConnectedTextures block;

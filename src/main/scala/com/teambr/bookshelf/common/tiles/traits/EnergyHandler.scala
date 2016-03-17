@@ -179,7 +179,7 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
                     ticker = 20
                 }
                 if(getWorld != null)
-                    getWorld.notifyBlockUpdate(getPos, worldObj.getBlockState(getPos), worldObj.getBlockState(getPos), 3)
+                    getWorld.notifyBlockUpdate(getPos, getWorld.getBlockState(getPos), getWorld.getBlockState(getPos), 3)
                 actual
             } else 0
         } else 0
@@ -202,7 +202,7 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
                     ticker = 20
                 }
                 if(getWorld != null)
-                    getWorld.notifyBlockUpdate(getPos, worldObj.getBlockState(getPos), worldObj.getBlockState(getPos), 3)
+                    getWorld.notifyBlockUpdate(getPos, getWorld.getBlockState(getPos), getWorld.getBlockState(getPos), 3)
                 actual
             } else 0
         } else 0
