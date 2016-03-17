@@ -3,10 +3,10 @@ package com.teambr.bookshelf.common.blocks.traits
 import com.teambr.bookshelf.common.blocks.properties.PropertyRotation
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
-import net.minecraft.block.state.{BlockState, IBlockState}
-import net.minecraft.client.resources.model.ModelRotation
+import net.minecraft.block.state.{BlockStateContainer, IBlockState}
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.{BlockPos, EnumFacing, MathHelper}
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.{IBlockAccess, World}
 import net.minecraftforge.common.property.{ExtendedBlockState, IExtendedBlockState, IUnlistedProperty}
 
@@ -34,7 +34,7 @@ trait FourWayRotation extends Block {
     /**
      * Used to say what our block state is
      */
-    override def createBlockState() : BlockState = {
+    override def createBlockState() : BlockStateContainer = {
         val listed = new Array[IProperty[_]](1)
         listed(0) = PropertyRotation.FOUR_WAY
         val unlisted = new Array[IUnlistedProperty[_]](0)
@@ -64,5 +64,5 @@ trait FourWayRotation extends Block {
      * @param state The state
      * @return
      */
-    override def getMetaFromState(state : IBlockState) = state.getValue(PropertyRotation.FOUR_WAY).asInstanceOf[EnumFacing].getIndex
+    override def getMetaFromState(state : IBlockState) = state.getValue(PropertyRotation.FOUR_WAY).getIndex
 }

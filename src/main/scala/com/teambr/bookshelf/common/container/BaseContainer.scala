@@ -4,7 +4,7 @@ import com.teambr.bookshelf.common.container.slots.IPhantomSlot
 import com.teambr.bookshelf.common.tiles.traits.Inventory
 import com.teambr.bookshelf.util.InventoryUtils
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.{Container, IInventory, Slot}
+import net.minecraft.inventory.{ClickType, Container, IInventory, Slot}
 import net.minecraft.item.ItemStack
 import net.minecraftforge.items.SlotItemHandler
 
@@ -118,15 +118,15 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
     
     override def canInteractWith(entityPlayer: EntityPlayer): Boolean = inventory.isUseableByPlayer(entityPlayer)
 
-    override def slotClick(slotNumber : Int, mouseButton : Int, modifier : Int, player : EntityPlayer) : ItemStack = {
+    override def func_184996_a(slotNumber : Int, mouseButton : Int, modifier : ClickType, player : EntityPlayer) : ItemStack = {
         val slot = if (slotNumber < 0) null else this.inventorySlots.get(slotNumber)
         if(slot.isInstanceOf[IPhantomSlot])
              slotClickPhantom(slot, mouseButton, modifier, player)
         else
-             super.slotClick(slotNumber, mouseButton, modifier, player)
+             super.func_184996_a(slotNumber, mouseButton, modifier, player)
     }
 
-    def slotClickPhantom(slot : Slot, mouseButton : Int, modifier : Int, player : EntityPlayer) : ItemStack = {
+    def slotClickPhantom(slot : Slot, mouseButton : Int, modifier : ClickType, player : EntityPlayer) : ItemStack = {
         var stack : ItemStack = null
 
         if(mouseButton == 2) {
@@ -157,13 +157,13 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
         stack
     }
 
-    def adjustPhantomSlot(slot : Slot, mouseButton : Int, modifier : Int) : Unit = {
+    def adjustPhantomSlot(slot : Slot, mouseButton : Int, modifier : ClickType) : Unit = {
         if(!slot.asInstanceOf[IPhantomSlot].canAdjust)
             return
 
         val stackSlot = slot.getStack
         var stackSize : Int = 0
-        if(modifier == 1)
+        if(modifier == ClickType.QUICK_MOVE) //TODO Unsure
             stackSize = if(mouseButton == 0) (stackSlot.stackSize + 1) / 2 else stackSlot.stackSize * 2
         else
             stackSize = if(mouseButton == 0) stackSlot.stackSize - 1 else stackSlot.stackSize + 1
@@ -177,7 +177,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
             slot.putStack(null)
     }
 
-    def fillPhantomSlot(slot : Slot, stackHelf : ItemStack, mouseButton : Int, modifier : Int) : Unit = {
+    def fillPhantomSlot(slot : Slot, stackHelf : ItemStack, mouseButton : Int, modifier : ClickType) : Unit = {
         if(!slot.asInstanceOf[IPhantomSlot].canAdjust)
             return
 
@@ -246,6 +246,6 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
 
     def getInventorySize: Int = inventorySize
 
-    def getSlots : java.util.List[Slot] = inventorySlots.asInstanceOf[java.util.List[Slot]]
+    def getSlots : java.util.List[Slot] = inventorySlots
 }
 
