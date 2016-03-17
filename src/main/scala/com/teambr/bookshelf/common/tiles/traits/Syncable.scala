@@ -48,6 +48,6 @@ trait Syncable extends UpdatingTile {
       */
     def sendValueToClient(id : Int, value : Double) = {
         PacketManager.net.sendToAllAround(new SyncableFieldPacket(false, id, value, getPos),
-            new TargetPoint(getWorld.provider.getDimensionId, getPos.getX, getPos.getY, getPos.getZ, 25))
+            new TargetPoint(getWorld.provider.getDimension, getPos.getX, getPos.getY, getPos.getZ, 25))
     }
 }

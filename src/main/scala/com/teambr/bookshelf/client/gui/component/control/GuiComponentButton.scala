@@ -4,7 +4,7 @@ import com.teambr.bookshelf.client.gui.component.{NinePatchRenderer, BaseCompone
 import com.teambr.bookshelf.helper.GuiHelper
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
-import net.minecraft.util.StatCollector
+import net.minecraft.util.text.translation.I18n
 import org.lwjgl.opengl.GL11
 
 /**
@@ -25,7 +25,7 @@ abstract class GuiComponentButton(x: Int, y: Int, var width: Int, var height: In
     var renderer: NinePatchRenderer = new NinePatchRenderer(u, v, 4)
     var rendererOver: NinePatchRenderer = new NinePatchRenderer(u, v + 9, 4)
 
-    label = StatCollector.translateToLocal(label)
+    label = I18n.translateToLocal(label)
 
     /**
      * Called when button is pressed
@@ -36,6 +36,7 @@ abstract class GuiComponentButton(x: Int, y: Int, var width: Int, var height: In
 
     /**
      * Called when the mouse is pressed
+ *
      * @param mouseX Mouse X Position
      * @param mouseY Mouse Y Position
      * @param button Mouse Button
