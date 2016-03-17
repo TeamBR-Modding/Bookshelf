@@ -1,8 +1,7 @@
 package com.teambr.bookshelf.common.blocks
 
-import com.teambr.bookshelf.client.{ConnectedTextureBlocks, TextureManager}
+import com.teambr.bookshelf.client.{ TextureManager}
 import com.teambr.bookshelf.collections.ConnectedTextures
-import com.teambr.bookshelf.common.blocks.traits.CreatesTextures
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockStateContainer, IBlockState}
@@ -25,7 +24,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis "pauljoda"
   * @since 2/26/2016
   */
-trait BlockConnectedTextures extends Block with CreatesTextures {
+trait BlockConnectedTextures extends Block {
 
     // Methods to move textures to lower class, handle others here
     def NoCornersTextureLocation   : String
@@ -48,8 +47,6 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
 
     def getNormal : ModelResourceLocation = new ModelResourceLocation(name.split("tile.")(1), "normal")
     def getInventory : ModelResourceLocation = new ModelResourceLocation(name.split("tile.")(1), "inventory")
-
-    ConnectedTextureBlocks.blocks += this
 
     @SideOnly(Side.CLIENT)
     lazy val connectedTextures = new ConnectedTextures(TextureManager.getTexture(NoCornersTextureLocation),

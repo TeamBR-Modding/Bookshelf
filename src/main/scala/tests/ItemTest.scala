@@ -1,10 +1,8 @@
 package tests
 
 import com.teambr.bookshelf.annotations.ModItem
-import com.teambr.bookshelf.common.items.traits.SimpleItemModelProvider
 import net.minecraft.creativetab.CreativeTabs
-
-import scala.collection.mutable.ArrayBuffer
+import net.minecraft.item.Item
 
 /**
   * This file was created for Bookshelf
@@ -17,13 +15,7 @@ import scala.collection.mutable.ArrayBuffer
   * @since 3/8/2016
   */
 @ModItem(modid = "bookshelfapi")
-class ItemTest extends SimpleItemModelProvider {
+class ItemTest extends Item {
     setUnlocalizedName("bookshelfapi:itemTest")
     setCreativeTab(CreativeTabs.tabBlock)
-    /**
-      * Creates a list of strings to register and render
-      *
-      * @return An ArrayBuffer of strings, order matters index == layer
-      */
-    override def getTextures: ArrayBuffer[String] = ArrayBuffer("bookshelfapi:blocks/testBlock")
 }
