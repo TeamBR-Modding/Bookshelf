@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.common.blocks
 
-import com.teambr.bookshelf.client.{ TextureManager}
+import com.teambr.bookshelf.client.TextureManager
 import com.teambr.bookshelf.collections.ConnectedTextures
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty

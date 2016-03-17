@@ -19,6 +19,7 @@ class ModelFactory {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     def bakeModels(event: ModelBakeEvent): Unit = {
        /* for(block <- ConnectedTextureBlocks.blocks) {
+        for(block <- ConnectedTextureBlocks.blocks) {
            /* event.getModelRegistry.putObject(block.getNormal, new ModelConnectedTextures())
             event.getModelRegistry.putObject(block.getInventory, new ModelConnectedTextures())*/
             Minecraft.getMinecraft.getRenderItem.getItemModelMesher.register(Item.getItemFromBlock(block), 0, block.getInventory)
