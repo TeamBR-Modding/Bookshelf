@@ -211,11 +211,11 @@ trait BlockConnectedTextures extends Block with CreatesTextures {
         val unlisted = new Array[IUnlistedProperty[_]](0)
         new ExtendedBlockState(this, listed, unlisted)
     }
-
+/*
     override def getExtendedState(state: IBlockState, world: IBlockAccess, pos: BlockPos): IBlockState = {
         new ConnectedTexturesState(pos, world, state.getBlock.asInstanceOf[BlockConnectedTextures], state.getBlock)
     }
-
+*/
     override def getRenderType(state: IBlockState) = EnumBlockRenderType.MODEL
     override def isOpaqueCube(state: IBlockState) = !isClear
     override def isTranslucent(state: IBlockState) = isClear

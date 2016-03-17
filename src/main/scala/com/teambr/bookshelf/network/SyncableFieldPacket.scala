@@ -57,7 +57,7 @@ class SyncableFieldPacket extends IMessage with IMessageHandler[SyncableFieldPac
                 PacketManager.net.sendToAllAround(new SyncableFieldPacket(false, message.id,
                     ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition)
                             .asInstanceOf[Syncable].getVariable(message.id), message.blockPosition),
-                    new TargetPoint(ctx.getServerHandler.playerEntity.worldObj.provider.getDimensionId,
+                    new TargetPoint(ctx.getServerHandler.playerEntity.worldObj.provider.getDimension,
                         message.blockPosition.getX, message.blockPosition.getY, message.blockPosition.getZ, 25))
             else
                 ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition)

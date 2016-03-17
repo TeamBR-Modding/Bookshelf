@@ -5,13 +5,14 @@ import java.util
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.{BlockPos, EnumFacing, MathHelper}
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.{BlockPos, MathHelper}
 
 /**
- * This file was created for Bookshelf
- *
- * Bookshelf is licensed under the
- * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
+  * This file was created for Bookshelf
+  *
+  * Bookshelf is licensed under the
+  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
  * @author Paul Davis pauljoda
@@ -25,7 +26,8 @@ class Location extends NBTSavable {
 
     /**
      * Main constructor for the location
-     * @param xPos X Coord
+      *
+      * @param xPos X Coord
      * @param yPos Y Coord
      * @param zPos Z Coord
      */
@@ -38,7 +40,8 @@ class Location extends NBTSavable {
 
     /**
      * Used to generate a location from a TileEntity
-     * @param tile The { @link TileEntity} to extract from
+      *
+      * @param tile The { @link TileEntity} to extract from
      */
     def this(tile: TileEntity) {
         this()
@@ -49,7 +52,8 @@ class Location extends NBTSavable {
 
     /**
      * Used to generate a location from double values
-     * @param xPos X Coord
+      *
+      * @param xPos X Coord
      * @param yPos Y Coord
      * @param zPos Z Coord
      */
@@ -62,7 +66,8 @@ class Location extends NBTSavable {
 
     /**
      * Used to create a location with this block pos
-     * @param blockPos The block pos
+      *
+      * @param blockPos The block pos
      */
     def this(blockPos : BlockPos) = {
         this()
@@ -73,13 +78,15 @@ class Location extends NBTSavable {
 
     /**
      * Used to use a location as a block position
-     * @return A block position for this location
+      *
+      * @return A block position for this location
      */
     def asBlockPos : BlockPos = new BlockPos(x, y, z)
 
     /**
      * Used to shallow copy from another location
-     * @param loc Location to copy
+      *
+      * @param loc Location to copy
      */
     def copyLocation(loc: Location) {
         this.x = loc.x
@@ -89,7 +96,8 @@ class Location extends NBTSavable {
 
     /**
      * Used to move the location in a vector
-     * @param xOffset X offset (can be negative)
+      *
+      * @param xOffset X offset (can be negative)
      * @param yOffset Y offset (can be negative)
      * @param zOffset Z offset (can be negative)
      */
@@ -101,7 +109,8 @@ class Location extends NBTSavable {
 
     /**
      * Used to move the location in a direction
-     * @param dir { @link ForgeDirection} to travel
+      *
+      * @param dir { @link ForgeDirection} to travel
      */
     def travel(dir: EnumFacing) {
         x += dir.getFrontOffsetX
@@ -111,7 +120,8 @@ class Location extends NBTSavable {
 
     /**
      * Add another Location to this one
-     * @param loc The location to add
+      *
+      * @param loc The location to add
      */
     def add(loc: Location) {
         x += loc.x
@@ -121,7 +131,8 @@ class Location extends NBTSavable {
 
     /**
      * Gets the location that is the sum of the object and another
-     * @param loc The location to add
+      *
+      * @param loc The location to add
      * @return A new instance of a location that is the sum of the two
      */
     def getSum(loc: Location): Location = {
@@ -130,7 +141,8 @@ class Location extends NBTSavable {
 
     /**
      * Subtract another location from this one
-     * @param loc The Location to subtract
+      *
+      * @param loc The Location to subtract
      */
     def subtract(loc: Location) {
         x -= loc.x
@@ -140,7 +152,8 @@ class Location extends NBTSavable {
 
     /**
      * Gets the location that is the difference of the object and another
-     * @param loc The location to subtract
+      *
+      * @param loc The location to subtract
      * @return A new instance of a location that is the difference of the two
      */
     def getDifference(loc: Location): Location = {
@@ -149,7 +162,8 @@ class Location extends NBTSavable {
 
     /**
      * Shorthand to get location adjacent
-     * @param dir Which direction to go
+      *
+      * @param dir Which direction to go
      * @return The adjacent location
      */
     def getAdjacentLocation(dir: EnumFacing): Location = {
@@ -158,7 +172,8 @@ class Location extends NBTSavable {
 
     /**
      * Get the location in the direction for the given distance
-     * @param dir What direction to travel
+      *
+      * @param dir What direction to travel
      * @param distance How many units to travel
      * @return A new instance that is the location at that point
      */
@@ -257,7 +272,8 @@ class Location extends NBTSavable {
 
     /**
      * Are we above this location
-     * @param pos The position to check if this is above
+      *
+      * @param pos The position to check if this is above
      * @return True if is above
      */
     def isAbove(pos: Location): Boolean = {
@@ -266,7 +282,8 @@ class Location extends NBTSavable {
 
     /**
      * Is this location below the passed
-     * @param pos The position to check if we are below
+      *
+      * @param pos The position to check if we are below
      * @return True if this is below
      */
     def isBelow(pos: Location): Boolean = {
@@ -275,7 +292,8 @@ class Location extends NBTSavable {
 
     /**
      * Is this location North of the passed
-     * @param pos The position to check against
+      *
+      * @param pos The position to check against
      * @return True if this is north of pos
      */
     def isNorthOf(pos: Location): Boolean = {
@@ -284,7 +302,8 @@ class Location extends NBTSavable {
 
     /**
      * Is this location South of the passed
-     * @param pos The position to check against
+      *
+      * @param pos The position to check against
      * @return True if this is south of pos
      */
     def isSouthOf(pos: Location): Boolean = {
@@ -293,7 +312,8 @@ class Location extends NBTSavable {
 
     /**
      * Is this location East of the passed
-     * @param pos The position to check against
+      *
+      * @param pos The position to check against
      * @return True if this is east of pos
      */
     def isEastOf(pos: Location): Boolean = {
@@ -302,7 +322,8 @@ class Location extends NBTSavable {
 
     /**
      * Is this location West of the passed
-     * @param pos The position to check against
+      *
+      * @param pos The position to check against
      * @return True if this is west of pos
      */
     def isWestOf(pos: Location): Boolean = {
@@ -311,7 +332,8 @@ class Location extends NBTSavable {
 
     /**
      * Are the two on the same X Axis
-     * @param pos The other Location
+      *
+      * @param pos The other Location
      * @return True if on the same X axis
      */
     def isXAligned(pos: Location): Boolean = {
@@ -320,7 +342,8 @@ class Location extends NBTSavable {
 
     /**
      * Are the two locations on the same Y axis
-     * @param pos The other location
+      *
+      * @param pos The other location
      * @return True if on the same Y axis
      */
     def isYAligned(pos: Location): Boolean = {
@@ -329,7 +352,8 @@ class Location extends NBTSavable {
 
     /**
      * Are the two locations on the same Z axis
-     * @param pos The other location
+      *
+      * @param pos The other location
      * @return True is on the same Z axis
      */
     def isZAligned(pos: Location): Boolean = {
@@ -338,7 +362,8 @@ class Location extends NBTSavable {
 
     /**
      * Used to return a new instance of this with same values
-     * @return A shallow copy of this
+      *
+      * @return A shallow copy of this
      */
     def createNew: Location = {
          new Location(x, y, z)
@@ -346,7 +371,8 @@ class Location extends NBTSavable {
 
     /**
      * Checks if the location is a valid location
-     * @return True if valid
+      *
+      * @return True if valid
      */
     def isValid: Boolean = {
          x != INVALID && y != INVALID && z != INVALID
@@ -363,7 +389,8 @@ class Location extends NBTSavable {
 
     /**
      * Returns the distance between two points
-     * @param loc Location to calculate from
+      *
+      * @param loc Location to calculate from
      * @return How far away the location is
      */
     def findDistance(loc: Location): Double = {
@@ -372,7 +399,8 @@ class Location extends NBTSavable {
 
     /**
      * Writes this to the tag
-     * @param tag The tag to write to
+      *
+      * @param tag The tag to write to
      */
     override def writeToNBT(tag: NBTTagCompound) {
         tag.setInteger("Location X", x)
@@ -382,7 +410,8 @@ class Location extends NBTSavable {
 
     /**
      * Read the values for this from the tag
-     * @param tag The tag, must have this written to it
+      *
+      * @param tag The tag, must have this written to it
      */
     override def readFromNBT(tag: NBTTagCompound) {
         this.x = tag.getInteger("Location X")
@@ -392,7 +421,8 @@ class Location extends NBTSavable {
 
     /**
      * Writes this to the tag
-     * @param tag The tag to write to
+      *
+      * @param tag The tag to write to
      */
     def writeToNBT(tag: NBTTagCompound, id: String) {
         tag.setInteger(id + "Location X", this.x)
@@ -402,7 +432,8 @@ class Location extends NBTSavable {
 
     /**
      * Read the values for this from the tag
-     * @param tag The tag, must have this written to it
+      *
+      * @param tag The tag, must have this written to it
      */
     def readFromNBT(tag: NBTTagCompound, id: String) {
         this.x = tag.getInteger(id + "Location X")
