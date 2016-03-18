@@ -42,6 +42,8 @@ object Bookshelf {
     var notificationXPos : Int = 0
     var notificationConfig : Configuration = null
 
+    var testItem : Item = null
+
     var itemsToRegister : java.util.Set[ASMData] = null
 
     @EventHandler def preInit(event : FMLPreInitializationEvent) = {
@@ -61,6 +63,7 @@ object Bookshelf {
                         val itemClass = asmClass.asSubclass(classOf[Item])
 
                         val modItem = itemClass.newInstance()
+                        testItem = modItem
 
                         GameRegistry.registerItem(modItem, modItem.getUnlocalizedName.split(":")(1))
                     } catch {

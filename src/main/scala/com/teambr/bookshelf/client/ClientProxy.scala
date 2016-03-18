@@ -3,33 +3,39 @@ package com.teambr.bookshelf.client
 import java.io.File
 
 import com.teambr.bookshelf.Bookshelf
+import com.teambr.bookshelf.client.models.BakedDynItem
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.helper.KeyInputHelper
 import com.teambr.bookshelf.loadables.ILoadActionProvider
+import com.teambr.bookshelf.manager.ConfigManager
 import com.teambr.bookshelf.notification.{NotificationKeyBinding, NotificationTickHandler}
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.event.{FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent, FMLInterModComms}
 
 /**
- * This file was created for Bookshelf
- *
- * Bookshelf is licensed under the
- * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
- * http://creativecommons.org/licenses/by-nc-sa/4.0/
- *
- * @author Paul Davis pauljoda
- * @since August 02, 2015
- */
+  * This file was created for Bookshelf
+  *
+  * Bookshelf is licensed under the
+  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
+  * http://creativecommons.org/licenses/by-nc-sa/4.0/
+  *
+  * @author Paul Davis pauljoda
+  * @since August 02, 2015
+  */
 class ClientProxy extends CommonProxy {
 
     /**
-     * Called on preInit
-     */
+      * Called on preInit
+      */
     override def preInit(event : FMLPreInitializationEvent) = {
         MinecraftForge.EVENT_BUS.register(new NotificationTickHandler())
+
+        if(ConfigManager.debug)
+            ModelLoader.setCustomModelResourceLocation(Bookshelf.testItem, 0, BakedDynItem.MODEL_RESOURCE_LOCATION)
 
         Bookshelf.notificationConfig = new Configuration(new File(Bookshelf.configFolderLocation + "/NotificationsSettings" + ".cfg"))
         Bookshelf.notificationXPos = Bookshelf.notificationConfig.getInt("notification xpos", "notifications", 1, 0, 2, "0: Left\n1: Center\n2: Right")
@@ -37,8 +43,8 @@ class ClientProxy extends CommonProxy {
     }
 
     /**
-     * Called on init
-     */
+      * Called on init
+      */
     override def init(event : FMLInitializationEvent) = {
         NotificationKeyBinding.init()
         MinecraftForge.EVENT_BUS.register(new KeyInputHelper())
@@ -70,7 +76,7 @@ class ClientProxy extends CommonProxy {
     }
 
     /**
-     * Called on postInit
-     */
+      * Called on postInit
+      */
     override def postInit(event : FMLPostInitializationEvent) = {}
 }
