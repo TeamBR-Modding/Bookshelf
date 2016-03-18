@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.common.tiles.traits
 
-import cofh.api.energy.{IEnergyProvider, EnergyStorage, IEnergyReceiver}
+import cofh.api.energy.{EnergyStorage, IEnergyProvider, IEnergyReceiver}
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
