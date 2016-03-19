@@ -3,10 +3,12 @@ package tests
 import java.util
 
 import com.teambr.bookshelf.annotations.ModItem
+import com.teambr.bookshelf.client.models.BakedDynItem
 import com.teambr.bookshelf.common.items.traits.ItemModelProvider
 import com.teambr.bookshelf.loadables.CreatesTextures
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.{ItemStack, Item}
+import net.minecraftforge.client.model.ModelLoader
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -24,6 +26,7 @@ import scala.collection.mutable.ArrayBuffer
 class ItemTest extends Item with ItemModelProvider with CreatesTextures {
     setUnlocalizedName("bookshelfapi:itemTest")
     setCreativeTab(CreativeTabs.tabBlock)
+    ModelLoader.setCustomModelResourceLocation(this, 0, BakedDynItem.MODEL_RESOURCE_LOCATION)
 
     override def getTextures(stack: ItemStack) : util.List[String] = {
         val list = new util.ArrayList[String]()

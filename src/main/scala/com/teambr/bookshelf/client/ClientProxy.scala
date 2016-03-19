@@ -3,7 +3,7 @@ package com.teambr.bookshelf.client
 import java.io.File
 
 import com.teambr.bookshelf.Bookshelf
-import com.teambr.bookshelf.client.models.{BakedConnectedTextures, BakedDynItem}
+import com.teambr.bookshelf.client.models.BakedConnectedTextures
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.helper.KeyInputHelper
 import com.teambr.bookshelf.loadables.ILoadActionProvider
@@ -14,7 +14,7 @@ import net.minecraft.item.Item
 import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.config.Configuration
-import net.minecraftforge.fml.common.event.{FMLPostInitializationEvent, FMLInitializationEvent, FMLPreInitializationEvent, FMLInterModComms}
+import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLInterModComms, FMLPostInitializationEvent, FMLPreInitializationEvent}
 
 /**
   * This file was created for Bookshelf
@@ -37,8 +37,6 @@ class ClientProxy extends CommonProxy {
         if(ConfigManager.debug) {
             ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(Bookshelf.blockTest), 0,
                 BakedConnectedTextures.MODEL_RESOURCE_LOCATION_NORMAL)
-
-            ModelLoader.setCustomModelResourceLocation(Bookshelf.testItem, 0, BakedDynItem.MODEL_RESOURCE_LOCATION)
         }
 
         Bookshelf.notificationConfig = new Configuration(new File(Bookshelf.configFolderLocation + "/NotificationsSettings" + ".cfg"))

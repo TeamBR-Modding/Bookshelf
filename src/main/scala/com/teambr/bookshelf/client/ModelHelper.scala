@@ -49,7 +49,7 @@ object ModelHelper {
         val ground = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
             new Vector3f(0, 2F / 16F, 0),
             TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 0, 0)),
-            new Vector3f(0.5F, 0.5F, 05F),
+            new Vector3f(0.5F, 0.5F, 0.5F),
             null))
         val head = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
             new Vector3f(0, 13F / 16F, 7F / 16F),
@@ -99,7 +99,7 @@ object ModelHelper {
             ItemCameraTransforms.TransformType.GROUND, ground))
     }
 
-    def DEFAULT_BLOCK_STATE : IModelState = { //Normal block
+    lazy val DEFAULT_BLOCK_STATE : IModelState = { //Normal block
     val gui = new TRSRTransformation(
             new Vector3f(0, 0, 0),
             TRSRTransformation.quatFromXYZDegrees(new Vector3f(30, 225, 0)),
