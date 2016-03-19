@@ -1,14 +1,20 @@
 package com.teambr.bookshelf.common.blocks
 
+import javax.annotation.Nonnull
+
 import com.teambr.bookshelf.client.TextureManager
+import com.teambr.bookshelf.client.models.BakedConnectedTextures
 import com.teambr.bookshelf.collections.ConnectedTextures
+import com.teambr.bookshelf.loadables.{CreatesTextures, ILoadActionProvider}
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockStateContainer, IBlockState}
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.block.model.ModelResourceLocation
-import net.minecraft.util.{BlockRenderLayer, EnumBlockRenderType, EnumFacing}
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{BlockRenderLayer, EnumBlockRenderType, EnumFacing}
 import net.minecraft.world.IBlockAccess
+import net.minecraftforge.client.event.ModelBakeEvent
 import net.minecraftforge.common.property.{ExtendedBlockState, IUnlistedProperty}
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
@@ -24,7 +30,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis "pauljoda"
   * @since 2/26/2016
   */
-trait BlockConnectedTextures extends Block {
+trait BlockConnectedTextures extends Block with CreatesTextures with ILoadActionProvider {
 
     // Methods to move textures to lower class, handle others here
     def NoCornersTextureLocation   : String
@@ -56,7 +62,7 @@ trait BlockConnectedTextures extends Block {
     /**
       * Used to define the strings needed
       */
-    def getTexturesToStitch: ArrayBuffer[String] = ArrayBuffer(NoCornersTextureLocation, AntiCornersTextureLocation,
+    override def getTexturesToStitch: ArrayBuffer[String] = ArrayBuffer(NoCornersTextureLocation, AntiCornersTextureLocation,
         CornersTextureLocation, HorizontalTextureLocation, VerticalTextureLocation)
 
     /**
@@ -208,11 +214,12 @@ trait BlockConnectedTextures extends Block {
         val unlisted = new Array[IUnlistedProperty[_]](0)
         new ExtendedBlockState(this, listed, unlisted)
     }
-/*
+
     override def getExtendedState(state: IBlockState, world: IBlockAccess, pos: BlockPos): IBlockState = {
-        new ConnectedTexturesState(pos, world, state.getBlock.asInstanceOf[BlockConnectedTextures], state.getBlock)
+        new ConnectedTexturesState(pos, Minecraft.getMinecraft.theWorld,
+            state.getBlock.asInstanceOf[BlockConnectedTextures], state.getBlock)
     }
-*/
+
     override def getRenderType(state: IBlockState) = EnumBlockRenderType.MODEL
     override def isOpaqueCube(state: IBlockState) = !isClear
     override def isTranslucent(state: IBlockState) = isClear
@@ -226,4 +233,18 @@ trait BlockConnectedTextures extends Block {
             layer == BlockRenderLayer.CUTOUT || layer == BlockRenderLayer.TRANSLUCENT
         else
             layer == BlockRenderLayer.SOLID
+
+    /**
+      * Performs the action at the given event
+      *
+      * @param event The event being called from
+      * @param isClient True if only on client side, false (default) for server side
+      */
+    def performLoadAction(@Nonnull event: AnyRef, isClient : Boolean = false) : Unit = {
+        event match  {
+            case modelBake : ModelBakeEvent =>
+                modelBake.getModelRegistry.putObject(getNormal, new BakedConnectedTextures)
+            case _ =>
+        }
+    }
 }

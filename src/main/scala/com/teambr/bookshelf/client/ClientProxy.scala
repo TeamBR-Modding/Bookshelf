@@ -3,7 +3,7 @@ package com.teambr.bookshelf.client
 import java.io.File
 
 import com.teambr.bookshelf.Bookshelf
-import com.teambr.bookshelf.client.models.BakedDynItem
+import com.teambr.bookshelf.client.models.{BakedConnectedTextures, BakedDynItem}
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.helper.KeyInputHelper
 import com.teambr.bookshelf.loadables.ILoadActionProvider
@@ -34,8 +34,12 @@ class ClientProxy extends CommonProxy {
     override def preInit(event : FMLPreInitializationEvent) = {
         MinecraftForge.EVENT_BUS.register(new NotificationTickHandler())
 
-        if(ConfigManager.debug)
+        if(ConfigManager.debug) {
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(Bookshelf.blockTest), 0,
+                BakedConnectedTextures.MODEL_RESOURCE_LOCATION_NORMAL)
+
             ModelLoader.setCustomModelResourceLocation(Bookshelf.testItem, 0, BakedDynItem.MODEL_RESOURCE_LOCATION)
+        }
 
         Bookshelf.notificationConfig = new Configuration(new File(Bookshelf.configFolderLocation + "/NotificationsSettings" + ".cfg"))
         Bookshelf.notificationXPos = Bookshelf.notificationConfig.getInt("notification xpos", "notifications", 1, 0, 2, "0: Left\n1: Center\n2: Right")

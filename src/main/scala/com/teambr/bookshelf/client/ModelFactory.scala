@@ -1,7 +1,7 @@
 package com.teambr.bookshelf.client
 
 
-import com.teambr.bookshelf.client.models.BakedDynItem
+import com.teambr.bookshelf.client.models.{BakedConnectedTextures, BakedDynItem}
 import com.teambr.bookshelf.loadables.ILoadActionProvider
 import net.minecraft.block.Block
 import net.minecraft.item.Item
@@ -39,9 +39,14 @@ class ModelFactory {
             itemLocal match {
                 case actionProvider : ILoadActionProvider =>
                     actionProvider.performLoadAction(event, isClient = true)
-                case _ =>            }
+                case _ =>
+            }
         }
 
+        // Register the location for our dyn item models
         event.getModelRegistry.putObject(BakedDynItem.MODEL_RESOURCE_LOCATION, new BakedDynItem())
+
+        // Register the location for connected textures
+        event.getModelRegistry.putObject(BakedConnectedTextures.MODEL_RESOURCE_LOCATION_NORMAL, new BakedConnectedTextures())
     }
 }

@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.IModelState;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
 import net.minecraftforge.client.model.ItemLayerModel;
 import org.apache.commons.lang3.tuple.Pair;
@@ -79,7 +78,7 @@ public class BakedDynItem implements IBakedModel, IPerspectiveAwareModel {
         for(String loc : textureLocations)
             builder.add(new ResourceLocation(loc));
 
-        return (new ItemLayerModel(builder.build())).bake(ModelHelper.DEFAULT_ITEM_STATE_LEFT(),
+        return (new ItemLayerModel(builder.build())).bake(ModelHelper.DEFAULT_ITEM_STATE(),
                 DefaultVertexFormats.ITEM, ModelHelper.textureGetter()).getQuads(state, side, rand);
     }
 
@@ -116,22 +115,12 @@ public class BakedDynItem implements IBakedModel, IPerspectiveAwareModel {
     @Override
     public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
 
-        // Get the default state to use
-        IModelState state = isTool ? ModelHelper.DEFAULT_TOOL_STATE() : ModelHelper.DEFAULT_ITEM_STATE_RIGHT();
-
-        // Tools already handle the hand movement
-        if(!isTool) {
-            switch (cameraTransformType) {
-                case THIRD_PERSON_LEFT_HAND:
-                case FIRST_PERSON_LEFT_HAND:
-                    state = ModelHelper.DEFAULT_ITEM_STATE_LEFT();
-                default:
-                    break;
-            }
-        }
-
         // Wrap the base and have it handle the movement
-        return IPerspectiveAwareModel.MapWrapper.handlePerspective(this, state, cameraTransformType);
+        return IPerspectiveAwareModel.MapWrapper
+                .handlePerspective(
+                        this,
+                        isTool ? ModelHelper.DEFAULT_TOOL_STATE() : ModelHelper.DEFAULT_ITEM_STATE(),
+                        cameraTransformType);
     }
 
     /**

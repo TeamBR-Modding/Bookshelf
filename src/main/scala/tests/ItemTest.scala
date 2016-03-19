@@ -39,5 +39,5 @@ class ItemTest extends Item with ItemModelProvider with CreatesTextures {
         ArrayBuffer("bookshelfapi:blocks/testBlock",
         "bookshelfapi:blocks/testBlockFront")
 
-    override def isTool: Boolean = true
+    override def isTool: Boolean = false
 }

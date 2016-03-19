@@ -15,7 +15,7 @@ import net.minecraft.util.EnumFacing
  * @author Paul Davis pauljoda
  * @since August 06, 2015
  */
-object PropertyRotation {
+object Properties {
     val FOUR_WAY = PropertyDirection.create("facing", util.Arrays.asList(EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH, EnumFacing.WEST))
     val SIX_WAY = PropertyDirection.create("facing", util.Arrays.asList(EnumFacing.NORTH, EnumFacing.EAST, EnumFacing.SOUTH, EnumFacing.WEST, EnumFacing.UP, EnumFacing.DOWN))
 }

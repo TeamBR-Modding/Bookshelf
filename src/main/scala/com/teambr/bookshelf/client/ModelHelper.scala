@@ -25,13 +25,23 @@ import net.minecraftforge.client.model.{IModelState, SimpleModelState, TRSRTrans
   */
 object ModelHelper {
 
-    lazy val DEFAULT_ITEM_STATE_RIGHT : IModelState = { //Normal items (not held as a tool)
+    lazy val DEFAULT_ITEM_STATE : IModelState = { //Normal items (not held as a tool)
     val thirdPerson = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
             new Vector3f(0, 3 / 16F, 1 / 16F),
             TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 0, 0)),
             new Vector3f(0.55F, 0.55F, 0.55F),
             null))
         val firstPerson = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+            new Vector3f(1.13F / 16F, 3.2F / 16F, 1.13F / 16F),
+            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, -90, 25)),
+            new Vector3f(0.68F, 0.68F, 0.68F),
+            null))
+        val thirdPersonLeft = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
+            new Vector3f(0, 3 / 16F, 1 / 16F),
+            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 0, 0)),
+            new Vector3f(0.55F, 0.55F, 0.55F),
+            null))
+        val firstPersonLeft = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
             new Vector3f(1.13F / 16F, 3.2F / 16F, 1.13F / 16F),
             TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, -90, 25)),
             new Vector3f(0.68F, 0.68F, 0.68F),
@@ -44,44 +54,18 @@ object ModelHelper {
         val head = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
             new Vector3f(0, 13F / 16F, 7F / 16F),
             TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 180, 0)),
-            new Vector3f(1, 1, 1),
+            new Vector3f(1,1, 1),
             null))
-        new SimpleModelState(ImmutableMap.of(
-            ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, thirdPerson,
-            ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, firstPerson,
-            ItemCameraTransforms.TransformType.GROUND, ground,
-            ItemCameraTransforms.TransformType.HEAD, head))
+        new SimpleModelState(ImmutableMap.builder()
+                .put(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, thirdPerson)
+                .put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, firstPerson)
+                .put(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, thirdPersonLeft)
+                .put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, firstPersonLeft)
+                .put(ItemCameraTransforms.TransformType.GROUND, ground)
+                .put(ItemCameraTransforms.TransformType.HEAD, head).build())
     }
 
-    lazy val DEFAULT_ITEM_STATE_LEFT : IModelState = { //Normal items (not held as a tool)
-    val thirdPerson = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
-            new Vector3f(0, 3 / 16F, 1 / 16F),
-            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 0, 0)),
-            new Vector3f(0.55F, 0.55F, 0.55F),
-            null))
-        val firstPerson = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
-            new Vector3f(1.13F / 16F, 3.2F / 16F, 1.13F / 16F),
-            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, -90, 25)),
-            new Vector3f(0.68F, 0.68F, 0.68F),
-            null))
-        val ground = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
-            new Vector3f(0, 2F / 16F, 0),
-            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 0, 0)),
-            new Vector3f(0.5F, 0.5F, 05F),
-            null))
-        val head = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
-            new Vector3f(0, 13F / 16F, 7F / 16F),
-            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 180, 0)),
-            new Vector3f(1, 1, 1),
-            null))
-        new SimpleModelState(ImmutableMap.of(
-            ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, thirdPerson,
-            ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, firstPerson,
-            ItemCameraTransforms.TransformType.GROUND, ground,
-            ItemCameraTransforms.TransformType.HEAD, head))
-    }
-
-    var DEFAULT_TOOL_STATE : IModelState = { //Tool items, held in hand
+    lazy val DEFAULT_TOOL_STATE : IModelState = { //Tool items, held in hand
     val thirdPersonRight = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
             new Vector3f(0, 4F / 16, 0.5F / 16),
             TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, -90, 55)),
@@ -115,13 +99,44 @@ object ModelHelper {
             ItemCameraTransforms.TransformType.GROUND, ground))
     }
 
-    lazy val DEFAULT_BLOCK_STATE_RIGHT : IModelState = { //Normal block
-    val thirdPerson = TRSRTransformation.blockCenterToCorner(new TRSRTransformation(
-            new Vector3f(0, 1.5F, -2.75F),
-            TRSRTransformation.quatFromXYZDegrees(new Vector3f(10F, -45F, -2.75F)),
+    def DEFAULT_BLOCK_STATE : IModelState = { //Normal block
+    val gui = new TRSRTransformation(
+            new Vector3f(0, 0, 0),
+            TRSRTransformation.quatFromXYZDegrees(new Vector3f(30, 225, 0)),
+            new Vector3f(0.625F, 0.625F, 0.625F),
+            null)
+        val ground = new TRSRTransformation(
+            new Vector3f(0, 3F / 16F, 0),
+            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 0, 0)),
+            new Vector3f(0.25F, 0.25F, 0.25F),
+            null)
+        val fixed = new TRSRTransformation(
+            new Vector3f(0, 0, 0),
+            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 0, 0)),
+            new Vector3f(0.5F, 0.5F, 0.5F),
+            null)
+        val thirdPersonRight = new TRSRTransformation(
+            new Vector3f(0, 2.5F / 16F, 0F),
+            TRSRTransformation.quatFromXYZDegrees(new Vector3f(75, 45, 0)),
             new Vector3f(0.375F, 0.375F, 0.375F),
-            null))
-        new SimpleModelState(ImmutableMap.of(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, thirdPerson))
+            null)
+        val firstPersonRight = new TRSRTransformation(
+            new Vector3f(0, 0, 0F),
+            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 45, 0)),
+            new Vector3f(0.4F, 0.4F, 0.4F),
+            null)
+        val firstPersonLeft = new TRSRTransformation(
+            new Vector3f(0, 0, 0),
+            TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 225, 0)),
+            new Vector3f(0.4F, 0.4F, 0.4F),
+            null)
+        new SimpleModelState(ImmutableMap.builder()
+                .put(ItemCameraTransforms.TransformType.GUI, gui)
+                .put(ItemCameraTransforms.TransformType.GROUND, ground)
+                .put(ItemCameraTransforms.TransformType.FIXED, fixed)
+                .put(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, thirdPersonRight)
+                .put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, firstPersonRight)
+                .put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, firstPersonLeft).build())
     }
 
     val textureGetter: com.google.common.base.Function[ResourceLocation, TextureAtlasSprite] =

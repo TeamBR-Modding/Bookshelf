@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import com.teambr.bookshelf.common.blocks.properties.PropertyRotation
+import com.teambr.bookshelf.common.blocks.properties.Properties
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockStateContainer, IBlockState}
@@ -28,7 +28,7 @@ trait FourWayRotation extends Block {
     override def onBlockPlaced(world : World, blockPos : BlockPos, facing : EnumFacing, hitX : Float, hitY : Float, hitZ : Float, meta : Int, placer : EntityLivingBase) : IBlockState = {
         val playerFacingDirection = if (placer == null) 0 else MathHelper.floor_double((placer.rotationYaw / 90.0F) + 0.5D) & 3
         val enumFacing = EnumFacing.getHorizontal(playerFacingDirection).getOpposite
-        this.getDefaultState.withProperty(PropertyRotation.FOUR_WAY, enumFacing)
+        this.getDefaultState.withProperty(Properties.FOUR_WAY, enumFacing)
     }
 
     /**
@@ -36,7 +36,7 @@ trait FourWayRotation extends Block {
      */
     override def createBlockState() : BlockStateContainer = {
         val listed = new Array[IProperty[_]](1)
-        listed(0) = PropertyRotation.FOUR_WAY
+        listed(0) = Properties.FOUR_WAY
         val unlisted = new Array[IUnlistedProperty[_]](0)
         new ExtendedBlockState(this, listed, unlisted)
     }
@@ -44,7 +44,7 @@ trait FourWayRotation extends Block {
     override def getExtendedState(state : IBlockState, world : IBlockAccess, pos : BlockPos) : IBlockState = {
         state match {
             case returnValue : IExtendedBlockState =>
-                returnValue.withProperty(PropertyRotation.FOUR_WAY, world.getBlockState(pos).getValue(PropertyRotation.FOUR_WAY))
+                returnValue.withProperty(Properties.FOUR_WAY, world.getBlockState(pos).getValue(Properties.FOUR_WAY))
                 returnValue
             case _ =>state
         }
@@ -56,7 +56,7 @@ trait FourWayRotation extends Block {
      * @param meta The meta
      * @return
      */
-    override def getStateFromMeta(meta : Int) : IBlockState = getDefaultState.withProperty(PropertyRotation.FOUR_WAY, EnumFacing.getFront(meta))
+    override def getStateFromMeta(meta : Int) : IBlockState = getDefaultState.withProperty(Properties.FOUR_WAY, EnumFacing.getFront(meta))
 
     /**
      * Called to convert state from meta
@@ -64,5 +64,5 @@ trait FourWayRotation extends Block {
      * @param state The state
      * @return
      */
-    override def getMetaFromState(state : IBlockState) = state.getValue(PropertyRotation.FOUR_WAY).getIndex
+    override def getMetaFromState(state : IBlockState) = state.getValue(Properties.FOUR_WAY).getIndex
 }

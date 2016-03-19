@@ -1,6 +1,6 @@
 package tests
 
-import com.teambr.bookshelf.common.blocks.traits.SixWayRotation
+import com.teambr.bookshelf.common.blocks.BlockConnectedTextures
 import com.teambr.bookshelf.common.tiles.traits.{Inventory, OpensGui}
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -17,13 +17,14 @@ import net.minecraft.world.World
  * @author Paul Davis pauljoda
  * @since August 03, 2015
  */
-class BlockTest extends Block(Material.rock) with SixWayRotation with OpensGui {
+class BlockTest extends Block(Material.rock) with BlockConnectedTextures with OpensGui {
 
-    setUnlocalizedName("bookshelf" + ":" + "test")
+    setUnlocalizedName("bookshelfapi" + ":" + "blockTest")
 
     /**
      * Return the container for this tile
-     * @param ID Id, probably not needed but could be used for multiple guis
+      *
+      * @param ID Id, probably not needed but could be used for multiple guis
      * @param player The player that is opening the gui
      * @param world The world
      * @param x X Pos
@@ -39,7 +40,8 @@ class BlockTest extends Block(Material.rock) with SixWayRotation with OpensGui {
 
     /**
      * Return the gui for this tile
-     * @param ID Id, probably not needed but could be used for multiple guis
+      *
+      * @param ID Id, probably not needed but could be used for multiple guis
      * @param player The player that is opening the gui
      * @param world The world
      * @param x X Pos
@@ -50,4 +52,22 @@ class BlockTest extends Block(Material.rock) with SixWayRotation with OpensGui {
     override def getClientGuiElement(ID: Int, player: EntityPlayer, world: World, x: Int, y: Int, z: Int): AnyRef = {
         new GuiTest(player)
     }
+
+    // Methods to move textures to lower class, handle others here
+    override def NoCornersTextureLocation: String = "bookshelfapi:blocks/phantomGlass"
+
+    override def CornersTextureLocation: String = "bookshelfapi:blocks/phantomGlass_corners"
+
+    override def VerticalTextureLocation: String = "bookshelfapi:blocks/phantomGlass_vertical"
+
+    override def AntiCornersTextureLocation: String = "bookshelfapi:blocks/phantomGlass_anti_corners"
+
+    override def HorizontalTextureLocation: String = "bookshelfapi:blocks/phantomGlass_horizontal"
+    /**
+      * Define true if you are a clear texture
+      *
+      * @return
+      */
+    override def isClear: Boolean = true
+
 }

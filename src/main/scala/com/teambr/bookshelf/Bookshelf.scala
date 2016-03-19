@@ -8,6 +8,7 @@ import com.teambr.bookshelf.helper.LogHelper
 import com.teambr.bookshelf.lib.Reference
 import com.teambr.bookshelf.manager.{ConfigManager, EventManager, GuiManager}
 import com.teambr.bookshelf.network.PacketManager
+import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.Mod.EventHandler
@@ -43,6 +44,7 @@ object Bookshelf {
     var notificationConfig : Configuration = null
 
     var testItem : Item = null
+    var blockTest : Block = null
 
     var itemsToRegister : java.util.Set[ASMData] = null
 
@@ -54,7 +56,8 @@ object Bookshelf {
         ConfigManager.init(configFolderLocation)
 
         if (ConfigManager.debug) {
-            GameRegistry.registerBlock(new BlockTest, "blockTest")
+            blockTest = new BlockTest
+            GameRegistry.registerBlock(blockTest, "blockTest")
             for (data <- itemsToRegister) {
                 if (data.getAnnotationInfo.get("modid") != null &&
                         data.getAnnotationInfo.get("modid").equals("bookshelfapi")) {
