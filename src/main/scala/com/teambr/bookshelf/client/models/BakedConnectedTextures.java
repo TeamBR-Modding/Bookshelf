@@ -2,11 +2,8 @@ package com.teambr.bookshelf.client.models;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.teambr.bookshelf.client.ModelHelper;
-import com.teambr.bookshelf.collections.ConnectedTextures;
 import com.teambr.bookshelf.common.blocks.BlockConnectedTextures;
 import com.teambr.bookshelf.common.blocks.ConnectedTexturesState;
-import com.teambr.bookshelf.common.blocks.properties.Properties;
 import com.teambr.bookshelf.lib.Reference;
 import gnu.trove.map.hash.THashMap;
 import net.minecraft.block.Block;
@@ -22,7 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.IPerspectiveAwareModel;
-import net.minecraftforge.client.model.TRSRTransformation;
+import net.minecraftforge.common.model.TRSRTransformation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.util.vector.Vector3f;
 

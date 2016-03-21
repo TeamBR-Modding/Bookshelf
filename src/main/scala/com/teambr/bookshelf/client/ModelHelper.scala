@@ -9,7 +9,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.util.ResourceLocation
-import net.minecraftforge.client.model.{IModelState, SimpleModelState, TRSRTransformation}
+import net.minecraftforge.client.model.SimpleModelState
+import net.minecraftforge.common.model.{IModelState, TRSRTransformation}
 
 /**
   * This file was created for NeoTech
