@@ -103,21 +103,21 @@ public class BakedConnectedTextures implements IBakedModel, IPerspectiveAwareMod
             boolean[] connections = block.getConnectionArrayForFace(world, pos, side);
 
             quads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 0.0F, 16.0F), new Vector3f(8.0F, 8.0F, 16.0F),
-                    new BlockPartFace(null, 0, "", new BlockFaceUV(new float[] {0.0F, 8.0F, 8.0F, 0.0F}, 0)),
+                    new BlockPartFace(null, 0, "", new BlockFaceUV(new float[] {0.0F, 0.0F, 8.0F, 8.0F}, 0)),
                     block.getConnectedTextures().getTextureForCorner(2, connections), EnumFacing.SOUTH, rot, null, true, true));
 
             quads.add(faceBakery.makeBakedQuad(new Vector3f(8.0F, 0.0F, 16.0F), new Vector3f(16.0F, 8.0F, 16.0F),
-                    new BlockPartFace(null, 0, "", new BlockFaceUV(new float[] {8.0F, 8.0F, 16.0F, 0.0F}, 0)),
+                    new BlockPartFace(null, 0, "", new BlockFaceUV(new float[] {8.0F, 0.0F, 16.0F, 8.0F}, 0)),
                     block.getConnectedTextures().getTextureForCorner(3, connections), EnumFacing.SOUTH, rot, null, true, true));
 
 
             quads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 8.0F, 16.0F), new Vector3f(8.0F, 16.0F, 16.0F),
-                    new BlockPartFace(null, 0, "", new BlockFaceUV(new float[] {0.0F, 16.0F, 8.0F, 8.0F}, 0)),
+                    new BlockPartFace(null, 0, "", new BlockFaceUV(new float[] {0.0F, 8.0F, 8.0F, 16.0F}, 0)),
                     block.getConnectedTextures().getTextureForCorner(0, connections), EnumFacing.SOUTH, rot, null, true, true));
 
 
             quads.add(faceBakery.makeBakedQuad(new Vector3f(8.0F, 8.0F, 16.0F), new Vector3f(16.0F, 16.0F, 16.0F),
-                    new BlockPartFace(null, 0, "", new BlockFaceUV(new float[] {8.0F, 16.0F, 16.0F, 8.0F}, 0)),
+                    new BlockPartFace(null, 0, "", new BlockFaceUV(new float[] {8.0F, 8.0F, 16.0F, 16.0F}, 0)),
                     block.getConnectedTextures().getTextureForCorner(1, connections), EnumFacing.SOUTH, rot, null, true, true));
 
 

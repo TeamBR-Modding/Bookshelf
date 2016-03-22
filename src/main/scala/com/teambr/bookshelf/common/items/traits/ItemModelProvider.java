@@ -1,5 +1,6 @@
 package com.teambr.bookshelf.common.items.traits;
 
+import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
