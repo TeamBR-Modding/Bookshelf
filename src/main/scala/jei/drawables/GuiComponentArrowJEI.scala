@@ -1,7 +1,7 @@
 package jei.drawables
 
 import com.teambr.bookshelf.client.gui.component.display.GuiComponentArrow
-import jei.BookshelfPlugin
+import mezz.jei.api.IJeiHelpers
 import mezz.jei.api.gui.IDrawableAnimated
 import net.minecraft.client.Minecraft
 import org.lwjgl.input.Mouse
@@ -16,8 +16,8 @@ import org.lwjgl.input.Mouse
   * @author Paul Davis <pauljoda>
   * @since 2/21/2016
   */
-class GuiComponentArrowJEI(x: Int, y: Int) extends GuiComponentArrow(x, y) with IDrawableAnimated {
-    var ticker = BookshelfPlugin.jeiHelpers.getGuiHelper.createTickTimer(50, 50, false)
+class GuiComponentArrowJEI(x: Int, y: Int, jeiHelpers: IJeiHelpers) extends GuiComponentArrow(x, y) with IDrawableAnimated {
+    var ticker = jeiHelpers.getGuiHelper.createTickTimer(50, 50, false)
 
     override def getCurrentProgress: Int =
         Math.min(((ticker.getValue * 24) / Math.max(ticker.getMaxValue, 0.001)).toInt, 24)

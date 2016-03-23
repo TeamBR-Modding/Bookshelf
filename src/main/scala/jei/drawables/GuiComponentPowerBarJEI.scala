@@ -3,7 +3,7 @@ package jei.drawables
 import java.awt.Color
 
 import com.teambr.bookshelf.client.gui.component.display.GuiComponentPowerBarGradient
-import jei.BookshelfPlugin
+import mezz.jei.api.IJeiHelpers
 import mezz.jei.api.gui.IDrawableAnimated
 import net.minecraft.client.Minecraft
 import org.lwjgl.input.Mouse
@@ -18,10 +18,10 @@ import org.lwjgl.input.Mouse
   * @author Paul Davis <pauljoda>
   * @since 2/21/2016
   */
-class GuiComponentPowerBarJEI(x: Int, y: Int, width: Int, height: Int, colorFull: Color)
+class GuiComponentPowerBarJEI(x: Int, y: Int, width: Int, height: Int, colorFull: Color, jeiHelpers: IJeiHelpers)
         extends GuiComponentPowerBarGradient(x, y, width, height, colorFull) with IDrawableAnimated {
 
-    var ticker = BookshelfPlugin.jeiHelpers.getGuiHelper.createTickTimer(50, 50, true)
+    var ticker = jeiHelpers.getGuiHelper.createTickTimer(50, 50, true)
 
     override def draw(minecraft: Minecraft): Unit = {}
 
