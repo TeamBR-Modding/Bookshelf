@@ -19,10 +19,10 @@ class ToolTipEvent {
     @SubscribeEvent def onToolTip(event: ItemTooltipEvent) {
         var itemWithTip : HasToolTip = null
 
-        Block.getBlockFromItem(event.itemStack.getItem) match {
+        Block.getBlockFromItem(event.getItemStack.getItem) match {
             case tip: HasToolTip => itemWithTip = tip
             case _ => //Not a block, what about an item?
-                event.itemStack.getItem match {
+                event.getItemStack.getItem match {
                     case tip : HasToolTip => itemWithTip = tip
                     case _ => return //We can't use this, just leave
                 }
@@ -30,7 +30,7 @@ class ToolTipEvent {
 
         if(itemWithTip != null)
             for(tip <- itemWithTip.getToolTip())
-                event.toolTip.add(tip)
+                event.getToolTip.add(tip)
 
     }
 }

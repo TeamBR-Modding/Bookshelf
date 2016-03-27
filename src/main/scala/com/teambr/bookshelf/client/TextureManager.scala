@@ -72,7 +72,7 @@ object TextureManager {
         // Iterate the list of things we need, and start the stitching
         for(textureLocation <- texturesToRegister) {
             stitchedTextures.put(textureLocation,
-                event.map.registerSprite(new ResourceLocation(textureLocation)))
+                event.getMap.registerSprite(new ResourceLocation(textureLocation)))
         }
     }
 }
