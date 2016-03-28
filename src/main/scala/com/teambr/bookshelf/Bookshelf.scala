@@ -34,6 +34,12 @@ import scala.collection.JavaConversions._
 @Mod(name = Reference.MODNAME, modid = Reference.MODID, version = Reference.VERSION, dependencies = Reference.DEPENDENCIES, modLanguage = "scala")
 object Bookshelf {
 
+    /**
+      * Used to get an instance of the mod, useful when calling from Java
+      * @return
+      */
+    def getInstance = this
+
     @SidedProxy(clientSide = "com.teambr.bookshelf.client.ClientProxy",
                 serverSide = "com.teambr.bookshelf.common.CommonProxy")
     var proxy : CommonProxy = _
