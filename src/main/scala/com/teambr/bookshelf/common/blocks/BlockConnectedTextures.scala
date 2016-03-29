@@ -82,7 +82,8 @@ trait BlockConnectedTextures extends Block with CreatesTextures with ILoadAction
       *
       * @return True if can connect
       */
-    def canTextureConnect(world : IBlockAccess, pos : BlockPos) : Boolean = world.getBlockState(pos).getBlock == this
+    def canTextureConnect(world : IBlockAccess, pos : BlockPos, otherPos : BlockPos) : Boolean =
+        world.getBlockState(otherPos).getBlock == this
 
     /**
       * Kinds long, but the way to get the connection array for the face
@@ -90,67 +91,67 @@ trait BlockConnectedTextures extends Block with CreatesTextures with ILoadAction
     def getConnectionArrayForFace(world: IBlockAccess, pos: BlockPos, facing: EnumFacing): Array[Boolean] = {
         val connections = new Array[Boolean](16)
         if (world.isAirBlock(pos.offset(facing)) || (!world.getBlockState(pos.offset(facing)).getBlock.isOpaqueCube(world.getBlockState(pos.offset(facing))) &&
-                !canTextureConnect(world, pos.offset(facing)))) {
+                !canTextureConnect(world, pos, pos.offset(facing)))) {
             facing match {
                 case EnumFacing.UP =>
-                    connections(0) = canTextureConnect(world, pos.add(-1, 0, -1))
-                    connections(1) = canTextureConnect(world, pos.add(0, 0, -1))
-                    connections(2) = canTextureConnect(world, pos.add(1, 0, -1))
-                    connections(3) = canTextureConnect(world, pos.add(-1, 0, 0))
-                    connections(4) = canTextureConnect(world, pos.add(1, 0, 0))
-                    connections(5) = canTextureConnect(world, pos.add(-1, 0, 1))
-                    connections(6) = canTextureConnect(world, pos.add(0, 0, 1))
-                    connections(7) = canTextureConnect(world, pos.add(1, 0, 1))
+                    connections(0) = canTextureConnect(world, pos, pos.add(-1, 0, -1))
+                    connections(1) = canTextureConnect(world, pos, pos.add(0, 0, -1))
+                    connections(2) = canTextureConnect(world, pos, pos.add(1, 0, -1))
+                    connections(3) = canTextureConnect(world, pos, pos.add(-1, 0, 0))
+                    connections(4) = canTextureConnect(world, pos, pos.add(1, 0, 0))
+                    connections(5) = canTextureConnect(world, pos, pos.add(-1, 0, 1))
+                    connections(6) = canTextureConnect(world, pos, pos.add(0, 0, 1))
+                    connections(7) = canTextureConnect(world, pos, pos.add(1, 0, 1))
                    return connections
                 case EnumFacing.DOWN =>
-                    connections(0) = canTextureConnect(world, pos.add(-1, 0, 1))
-                    connections(1) = canTextureConnect(world, pos.add(0, 0, 1))
-                    connections(2) = canTextureConnect(world, pos.add(1, 0, 1))
-                    connections(3) = canTextureConnect(world, pos.add(-1, 0, 0))
-                    connections(4) = canTextureConnect(world, pos.add(1, 0, 0))
-                    connections(5) = canTextureConnect(world, pos.add(-1, 0, -1))
-                    connections(6) = canTextureConnect(world, pos.add(0, 0, -1))
-                    connections(7) = canTextureConnect(world, pos.add(1, 0, -1))
+                    connections(0) = canTextureConnect(world, pos, pos.add(-1, 0, 1))
+                    connections(1) = canTextureConnect(world, pos, pos.add(0, 0, 1))
+                    connections(2) = canTextureConnect(world, pos, pos.add(1, 0, 1))
+                    connections(3) = canTextureConnect(world, pos, pos.add(-1, 0, 0))
+                    connections(4) = canTextureConnect(world, pos, pos.add(1, 0, 0))
+                    connections(5) = canTextureConnect(world, pos, pos.add(-1, 0, -1))
+                    connections(6) = canTextureConnect(world, pos, pos.add(0, 0, -1))
+                    connections(7) = canTextureConnect(world, pos, pos.add(1, 0, -1))
                    return connections
                 case EnumFacing.NORTH =>
-                    connections(0) = canTextureConnect(world, pos.add(1, 1, 0))
-                    connections(1) = canTextureConnect(world, pos.add(0, 1, 0))
-                    connections(2) = canTextureConnect(world, pos.add(-1, 1, 0))
-                    connections(3) = canTextureConnect(world, pos.add(1, 0, 0))
-                    connections(4) = canTextureConnect(world, pos.add(-1, 0, 0))
-                    connections(5) = canTextureConnect(world, pos.add(1, -1, 0))
-                    connections(6) = canTextureConnect(world, pos.add(0, -1, 0))
-                    connections(7) = canTextureConnect(world, pos.add(-1, -1, 0))
+                    connections(0) = canTextureConnect(world, pos, pos.add(1, 1, 0))
+                    connections(1) = canTextureConnect(world, pos, pos.add(0, 1, 0))
+                    connections(2) = canTextureConnect(world, pos, pos.add(-1, 1, 0))
+                    connections(3) = canTextureConnect(world, pos, pos.add(1, 0, 0))
+                    connections(4) = canTextureConnect(world, pos, pos.add(-1, 0, 0))
+                    connections(5) = canTextureConnect(world, pos, pos.add(1, -1, 0))
+                    connections(6) = canTextureConnect(world, pos, pos.add(0, -1, 0))
+                    connections(7) = canTextureConnect(world, pos, pos.add(-1, -1, 0))
                    return connections
                 case EnumFacing.SOUTH =>
-                    connections(0) = canTextureConnect(world, pos.add(-1, 1, 0))
-                    connections(1) = canTextureConnect(world, pos.add(0, 1, 0))
-                    connections(2) = canTextureConnect(world, pos.add(1, 1, 0))
-                    connections(3) = canTextureConnect(world, pos.add(-1, 0, 0))
-                    connections(4) = canTextureConnect(world, pos.add(1, 0, 0))
-                    connections(5) = canTextureConnect(world, pos.add(-1, -1, 0))
-                    connections(6) = canTextureConnect(world, pos.add(0, -1, 0))
-                    connections(7) = canTextureConnect(world, pos.add(1, -1, 0))
+                    connections(0) = canTextureConnect(world, pos, pos.add(-1, 1, 0))
+                    connections(1) = canTextureConnect(world, pos, pos.add(0, 1, 0))
+                    connections(2) = canTextureConnect(world, pos, pos.add(1, 1, 0))
+                    connections(3) = canTextureConnect(world, pos, pos.add(-1, 0, 0))
+                    connections(4) = canTextureConnect(world, pos, pos.add(1, 0, 0))
+                    connections(5) = canTextureConnect(world, pos, pos.add(-1, -1, 0))
+                    connections(6) = canTextureConnect(world, pos, pos.add(0, -1, 0))
+                    connections(7) = canTextureConnect(world, pos, pos.add(1, -1, 0))
                    return connections
                 case EnumFacing.WEST =>
-                    connections(0) = canTextureConnect(world, pos.add(0, 1, -1))
-                    connections(1) = canTextureConnect(world, pos.add(0, 1, 0))
-                    connections(2) = canTextureConnect(world, pos.add(0, 1, 1))
-                    connections(3) = canTextureConnect(world, pos.add(0, 0, -1))
-                    connections(4) = canTextureConnect(world, pos.add(0, 0, 1))
-                    connections(5) = canTextureConnect(world, pos.add(0, -1, -1))
-                    connections(6) = canTextureConnect(world, pos.add(0, -1, 0))
-                    connections(7) = canTextureConnect(world, pos.add(0, -1, 1))
+                    connections(0) = canTextureConnect(world, pos, pos.add(0, 1, -1))
+                    connections(1) = canTextureConnect(world, pos, pos.add(0, 1, 0))
+                    connections(2) = canTextureConnect(world, pos, pos.add(0, 1, 1))
+                    connections(3) = canTextureConnect(world, pos, pos.add(0, 0, -1))
+                    connections(4) = canTextureConnect(world, pos, pos.add(0, 0, 1))
+                    connections(5) = canTextureConnect(world, pos, pos.add(0, -1, -1))
+                    connections(6) = canTextureConnect(world, pos, pos.add(0, -1, 0))
+                    connections(7) = canTextureConnect(world, pos, pos.add(0, -1, 1))
                    return connections
                 case EnumFacing.EAST =>
-                    connections(0) = canTextureConnect(world, pos.add(0, 1, 1))
-                    connections(1) = canTextureConnect(world, pos.add(0, 1, 0))
-                    connections(2) = canTextureConnect(world, pos.add(0, 1, -1))
-                    connections(3) = canTextureConnect(world, pos.add(0, 0, 1))
-                    connections(4) = canTextureConnect(world, pos.add(0, 0, -1))
-                    connections(5) = canTextureConnect(world, pos.add(0, -1, 1))
-                    connections(6) = canTextureConnect(world, pos.add(0, -1, 0))
-                    connections(7) = canTextureConnect(world, pos.add(0, -1, -1))
+                    connections(0) = canTextureConnect(world, pos, pos.add(0, 1, 1))
+                    connections(1) = canTextureConnect(world, pos, pos.add(0, 1, 0))
+                    connections(2) = canTextureConnect(world, pos, pos.add(0, 1, -1))
+                    connections(3) = canTextureConnect(world, pos, pos.add(0, 0, 1))
+                    connections(4) = canTextureConnect(world, pos, pos.add(0, 0, -1))
+                    connections(5) = canTextureConnect(world, pos, pos.add(0, -1, 1))
+                    connections(6) = canTextureConnect(world, pos, pos.add(0, -1, 0))
+                    connections(7) = canTextureConnect(world, pos, pos.add(0, -1, -1))
                   return connections
                 case _ => return connections
             }
