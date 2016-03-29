@@ -198,7 +198,7 @@ curseforge  {
     apiKey = APIToken
     project {
         id = '232784'
-        changelog = 'Updated Forge to 1811'
+        changelog = 'Fixed issue using unlocalized name'
         releaseType = 'beta'
         addArtifact devJar
         addGameVersion '1.9'
