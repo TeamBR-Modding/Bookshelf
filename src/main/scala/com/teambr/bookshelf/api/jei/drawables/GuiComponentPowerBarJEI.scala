@@ -1,4 +1,4 @@
-package jei.drawables
+package com.teambr.bookshelf.api.jei.drawables
 
 import java.awt.Color
 

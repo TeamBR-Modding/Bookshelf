@@ -54,15 +54,15 @@ class BlockTest extends Block(Material.rock) with BlockConnectedTextures with Op
     }
 
     // Methods to move textures to lower class, handle others here
-    override def NoCornersTextureLocation: String = "bookshelfapi:blocks/phantomGlass"
+    override def NoCornersTextureLocation: String = "bookshelfapi:blocks/noCorners"
 
-    override def CornersTextureLocation: String = "bookshelfapi:blocks/phantomGlass_corners"
+    override def CornersTextureLocation: String = "bookshelfapi:blocks/corners"
 
-    override def VerticalTextureLocation: String = "bookshelfapi:blocks/phantomGlass_vertical"
+    override def VerticalTextureLocation: String = "bookshelfapi:blocks/vertical"
 
-    override def AntiCornersTextureLocation: String = "bookshelfapi:blocks/phantomGlass_anti_corners"
+    override def AntiCornersTextureLocation: String = "bookshelfapi:blocks/antiCorners"
 
-    override def HorizontalTextureLocation: String = "bookshelfapi:blocks/phantomGlass_horizontal"
+    override def HorizontalTextureLocation: String = "bookshelfapi:blocks/horizontal"
     /**
       * Define true if you are a clear texture
       *

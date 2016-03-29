@@ -61,6 +61,17 @@ trait UpdatingTile extends TileEntity with ITickable {
     override def shouldRefresh(world: World, pos: BlockPos, oldState: IBlockState, newSate: IBlockState) =
         oldState.getBlock ne newSate.getBlock
 
+
+    /**
+      * Used to mark block for update, makes it easier to call
+      *
+      * @param flags Optional flags, won't cause re-render by default. Set to 3 to render client change
+      */
+    def markForUpdate(flags : Int = 6): Unit = {
+        getWorld.notifyBlockUpdate(getPos, getWorld.getBlockState(getPos), getWorld.getBlockState(getPos), flags)
+        markDirty()
+    }
+
     /**
      * Used to identify the packet that will get called on update
       *

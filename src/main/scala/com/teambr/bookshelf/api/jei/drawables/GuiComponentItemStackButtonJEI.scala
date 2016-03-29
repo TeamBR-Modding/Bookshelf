@@ -1,4 +1,4 @@
-package jei.drawables
+package com.teambr.bookshelf.api.jei.drawables
 
 import com.teambr.bookshelf.client.gui.component.control.GuiComponentItemStackButton
 import mezz.jei.api.gui.IDrawable

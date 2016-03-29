@@ -1,10 +1,10 @@
-package jei.drawables
+package com.teambr.bookshelf.api.jei.drawables
 
 import com.teambr.bookshelf.util.RenderUtils
 import mezz.jei.api.gui.IDrawable
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
-import net.minecraft.client.renderer.{VertexBuffer, GlStateManager, Tessellator}
+import net.minecraft.client.renderer.{GlStateManager, Tessellator, VertexBuffer}
 
 /**
   * This file was created for NeoTech

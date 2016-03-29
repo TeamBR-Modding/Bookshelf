@@ -1,4 +1,4 @@
-package jei.drawables
+package com.teambr.bookshelf.api.jei.drawables
 
 import com.teambr.bookshelf.client.gui.component.display.GuiComponentFluidTank
 import com.teambr.bookshelf.util.RenderUtils
