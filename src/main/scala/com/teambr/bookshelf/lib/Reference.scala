@@ -13,7 +13,7 @@ package com.teambr.bookshelf.lib
 object Reference {
     final val MODID          = "bookshelfapi"
     final val MODNAME        = "Bookshelf"
-    final val VERSION        = "3.0.0"//@VERSION@"
-    final val DEPENDENCIES   = "required-after:Forge@[11.16.0.1782,)"
+    final val VERSION        = "3.0.1"//@VERSION@"
+    final val DEPENDENCIES   = "required-after:Forge@[11.16.0.1811,)"
     final val DEBUG          = "Debug Mode"
 }

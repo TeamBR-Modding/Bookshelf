@@ -198,7 +198,7 @@ curseforge  {
     apiKey = APIToken
     project {
         id = '232784'
-        changelog = 'Updated to Minecraft 1.9'
+        changelog = 'Updated Forge to 1811'
         releaseType = 'beta'
         addArtifact devJar
         addGameVersion '1.9'
