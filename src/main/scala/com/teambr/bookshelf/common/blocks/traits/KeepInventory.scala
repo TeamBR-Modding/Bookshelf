@@ -8,7 +8,7 @@ import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import net.minecraft.world.{IBlockAccess, World}
 
 import scala.util.Random
 
@@ -20,7 +20,8 @@ trait KeepInventory extends DropsItems {
      */
     def manualOverride(tile : TileEntity, stack : ItemStack, tag : NBTTagCompound) : Boolean = false
 
-    override def onBlockHarvested(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer): Unit = {
+    override def canHarvestBlock(world: IBlockAccess, pos: BlockPos, player: EntityPlayer): Boolean = {
+        val state = world.getBlockState(pos)
         if (!player.capabilities.isCreativeMode) {
             world.getTileEntity(pos) match {
                 case tile: TileEntity =>
@@ -29,12 +30,13 @@ trait KeepInventory extends DropsItems {
                     if (!manualOverride(tile, item, tag)) //If the manual override doesn't do anything, just write the whole tag
                         tile.writeToNBT(tag)
                     item.setTagCompound(tag) //Set the tile's tag to the stack
-                    dropItem(world, item, pos) //Drop it
+                    dropItem(player.getEntityWorld, item, pos) //Drop it
                 case _ =>
             }
         } else {
-            super[DropsItems].breakBlock(world, pos, state)
+            super[DropsItems].breakBlock(player.getEntityWorld, pos, state)
         }
+        false
     }
 
     override def onBlockPlacedBy(world: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack:
