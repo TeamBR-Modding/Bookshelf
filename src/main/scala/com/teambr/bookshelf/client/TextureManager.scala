@@ -1,8 +1,8 @@
 package com.teambr.bookshelf.client
 
 import com.teambr.bookshelf.loadables.CreatesTextures
-import gnu.trove.map.hash.THashMap
 import net.minecraft.block.Block
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.item.Item
 import net.minecraft.util.ResourceLocation
@@ -29,11 +29,6 @@ object TextureManager {
     lazy val texturesToRegister = new ArrayBuffer[String]()
 
     /**
-      * The textures that have been created and are valid, identified by the name
-      */
-    lazy val stitchedTextures = new THashMap[String, TextureAtlasSprite]
-
-    /**
       * Used to specify the texture to register, you MUST include the mod id
       */
     def registerTexture(location : String) : Unit = texturesToRegister += location
@@ -41,7 +36,8 @@ object TextureManager {
     /**
       * Used to get the texture from the location
       */
-    def getTexture(textureLocation : String) : TextureAtlasSprite = stitchedTextures.get(textureLocation)
+    def getTexture(textureLocation : String) : TextureAtlasSprite =
+        Minecraft.getMinecraft.getTextureMapBlocks.getAtlasSprite(textureLocation)
 
     @SubscribeEvent
     def textureStitch(event : TextureStitchEvent.Pre) : Unit = {
@@ -71,8 +67,7 @@ object TextureManager {
 
         // Iterate the list of things we need, and start the stitching
         for(textureLocation <- texturesToRegister) {
-            stitchedTextures.put(textureLocation,
-                event.getMap.registerSprite(new ResourceLocation(textureLocation)))
+            event.getMap.registerSprite(new ResourceLocation(textureLocation))
         }
     }
 }

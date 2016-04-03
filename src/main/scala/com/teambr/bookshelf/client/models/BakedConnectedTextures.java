@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -131,7 +132,12 @@ public class BakedConnectedTextures implements IBakedModel, IPerspectiveAwareMod
             ModelRotation rot = lookUpRotationForFace(EnumFacing.SOUTH);
 
             for(EnumFacing facing : EnumFacing.values())
-                quads.add(faceBakery.makeBakedQuad(new Vector3f(0.0F, 0.0F, 0.0F), new Vector3f(16.0F, 16.0F, 16.0F), face, block.getConnectedTextures().corners(), facing, rot, null, true, true));
+                quads.add(faceBakery.makeBakedQuad(
+                        new Vector3f(0.0F, 0.0F, 0.0F),
+                        new Vector3f(16.0F, 16.0F, 16.0F),
+                        face,
+                        com.teambr.bookshelf.client.TextureManager.getTexture(block.getConnectedTextures().corners()),
+                        facing, rot, null, true, true));
 
             return quads;
         }
@@ -175,7 +181,9 @@ public class BakedConnectedTextures implements IBakedModel, IPerspectiveAwareMod
 
     @Override
     public TextureAtlasSprite getParticleTexture() {
-        return block == null ? Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite() : block.getConnectedTextures().corners();
+        return block == null ?
+                Minecraft.getMinecraft().getTextureMapBlocks().getMissingSprite() :
+                com.teambr.bookshelf.client.TextureManager.getTexture(block.getConnectedTextures().corners());
     }
 
     @Override
@@ -222,13 +230,16 @@ public class BakedConnectedTextures implements IBakedModel, IPerspectiveAwareMod
                 final BlockConnectedTextures block = (BlockConnectedTextures)Block.getBlockFromItem(stack.getItem());
 
                 // Check if already in the cache, don't need to remake it otherwise
-                if(BakedConnectedTextures.modelCache.containsKey(block.getConnectedTextures().noConnections()))
-                    return BakedConnectedTextures.modelCache.get(block.getConnectedTextures().noConnections());
+                if(BakedConnectedTextures.modelCache.containsKey(
+                        com.teambr.bookshelf.client.TextureManager.getTexture(block.getConnectedTextures().noConnections())))
+                    return BakedConnectedTextures.modelCache.get(
+                            com.teambr.bookshelf.client.TextureManager.getTexture(block.getConnectedTextures().noConnections()));
                 else { // Not in cache, add and build new model
                     BakedConnectedTextures model = new BakedConnectedTextures();
                     model.isItem = true;
                     model.block = block;
-                    BakedConnectedTextures.modelCache.put(block.getConnectedTextures().noConnections(), model);
+                    BakedConnectedTextures.modelCache.put(
+                            com.teambr.bookshelf.client.TextureManager.getTexture(block.getConnectedTextures().noConnections()), model);
                     return BakedConnectedTextures.modelCache.getOrDefault(block.getConnectedTextures().noConnections(), model);
                 }
             }

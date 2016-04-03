@@ -1,5 +1,6 @@
 package com.teambr.bookshelf.collections
 
+import com.teambr.bookshelf.client.TextureManager
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraftforge.fml.relauncher.{SideOnly, Side}
 
@@ -14,8 +15,8 @@ import net.minecraftforge.fml.relauncher.{SideOnly, Side}
   * @since 2/26/2016
   */
 @SideOnly(Side.CLIENT)
-class ConnectedTextures(val noConnections : TextureAtlasSprite, val anti_corners : TextureAtlasSprite,
-                        val corners : TextureAtlasSprite, val horizontal : TextureAtlasSprite, val vertical : TextureAtlasSprite) {
+class ConnectedTextures(val noConnections : String, val anti_corners : String,
+                        val corners : String, val horizontal : String, val vertical : String) {
 
     /**
       * This is used to get what part should be rendered for each corner
@@ -44,62 +45,62 @@ class ConnectedTextures(val noConnections : TextureAtlasSprite, val anti_corners
         corner match {
             case 0 =>
                 if(connections(0) && connections(1) && connections(3))
-                    return noConnections
+                    return TextureManager.getTexture(noConnections)
                 else if(connections(0) && connections(1))
-                    return vertical
+                    return TextureManager.getTexture(vertical)
                 else if(connections(0) && connections(3))
-                    return horizontal
+                    return TextureManager.getTexture(horizontal)
                 else if(connections(1) && connections(3))
-                    return anti_corners
+                    return TextureManager.getTexture(anti_corners)
                 else if(connections(1))
-                    return vertical
+                    return TextureManager.getTexture(vertical)
                 else if(connections(3))
-                    return horizontal
-                corners
+                    return TextureManager.getTexture(horizontal)
+                TextureManager.getTexture(corners)
             case 1 =>
                 if(connections(2) && connections(1) && connections(4))
-                    return noConnections
+                    return TextureManager.getTexture(noConnections)
                 else if(connections(2) && connections(1))
-                    return vertical
+                    return TextureManager.getTexture(vertical)
                 else if(connections(2) && connections(4))
-                    return horizontal
+                    return TextureManager.getTexture(horizontal)
                 else if(connections(1) && connections(4))
-                    return anti_corners
+                    return TextureManager.getTexture(anti_corners)
                 else if(connections(1))
-                    return vertical
+                    return TextureManager.getTexture(vertical)
                 else if(connections(4))
-                    return horizontal
-                corners
+                    return TextureManager.getTexture(horizontal)
+                TextureManager.getTexture(corners)
             case 2 =>
                 if(connections(5) && connections(6) && connections(3))
-                    return noConnections
+                    return TextureManager.getTexture(noConnections)
                 else if(connections(5) && connections(6))
-                    return vertical
+                    return TextureManager.getTexture(vertical)
                 else if(connections(5) && connections(3))
-                    return horizontal
+                    return TextureManager.getTexture(horizontal)
                 else if(connections(6) && connections(3))
-                    return anti_corners
+                    return TextureManager.getTexture(anti_corners)
                 else if(connections(6))
-                    return vertical
+                    return TextureManager.getTexture(vertical)
                 else if(connections(3))
-                    return horizontal
-                corners
+                    return TextureManager.getTexture(horizontal)
+                TextureManager.getTexture(corners)
             case 3 =>
                 if(connections(7) && connections(6) && connections(4))
-                    return noConnections
+                    return TextureManager.getTexture(noConnections)
                 else if(connections(7) && connections(6))
-                    return vertical
+                    return TextureManager.getTexture(vertical)
                 else if(connections(7) && connections(4))
-                    return horizontal
+                    return TextureManager.getTexture(horizontal)
                 else if(connections(6) && connections(4))
-                    return anti_corners
+                    return TextureManager.getTexture(anti_corners)
                 else if(connections(6))
-                    return vertical
+                    return TextureManager.getTexture(vertical)
                 else if(connections(4))
-                    return horizontal
-                corners
+                    return TextureManager.getTexture(horizontal)
+                TextureManager.getTexture(corners)
             case _ =>
-                noConnections
+                TextureManager.getTexture(noConnections)
         }
     }
 }

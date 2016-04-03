@@ -2,7 +2,6 @@ package com.teambr.bookshelf.common.blocks
 
 import javax.annotation.Nonnull
 
-import com.teambr.bookshelf.client.TextureManager
 import com.teambr.bookshelf.client.models.BakedConnectedTextures
 import com.teambr.bookshelf.collections.ConnectedTextures
 import com.teambr.bookshelf.loadables.{CreatesTextures, ILoadActionProvider}
@@ -55,9 +54,9 @@ trait BlockConnectedTextures extends Block with CreatesTextures with ILoadAction
     def getInventory : ModelResourceLocation = new ModelResourceLocation(name.split("tile.")(1), "inventory")
 
     @SideOnly(Side.CLIENT)
-    lazy val connectedTextures = new ConnectedTextures(TextureManager.getTexture(NoCornersTextureLocation),
-        TextureManager.getTexture(AntiCornersTextureLocation), TextureManager.getTexture(CornersTextureLocation),
-        TextureManager.getTexture(HorizontalTextureLocation), TextureManager.getTexture(VerticalTextureLocation))
+    lazy val connectedTextures = new ConnectedTextures(NoCornersTextureLocation,
+        AntiCornersTextureLocation, CornersTextureLocation,
+        HorizontalTextureLocation, VerticalTextureLocation)
 
     /**
       * Used to define the strings needed
@@ -72,9 +71,9 @@ trait BlockConnectedTextures extends Block with CreatesTextures with ILoadAction
       */
     @SideOnly(Side.CLIENT)
     def getConnectedTextures : ConnectedTextures = if(connectedTextures != null) connectedTextures else {
-        new ConnectedTextures(TextureManager.getTexture(NoCornersTextureLocation),
-            TextureManager.getTexture(AntiCornersTextureLocation), TextureManager.getTexture(CornersTextureLocation),
-            TextureManager.getTexture(HorizontalTextureLocation), TextureManager.getTexture(VerticalTextureLocation))
+        new ConnectedTextures(NoCornersTextureLocation,
+            AntiCornersTextureLocation, CornersTextureLocation,
+            HorizontalTextureLocation, VerticalTextureLocation)
     }
 
     /**
