@@ -22,7 +22,7 @@ object BlockHelper {
      * @return 'modid:name:meta' string representation
      */
     def getBlockString(block : Block, meta : Int) : String = {
-        block.getRegistryName + ":" + meta
+        block.getRegistryName.toString + ":" + meta
         //block.getUnlocalizedName.substring(5) + ":" + meta
     }
 
@@ -32,7 +32,7 @@ object BlockHelper {
      * @return "modid:name:-1"
      */
     def getBlockString(block : Block) : String = {
-        block.getRegistryName + ":" + String.valueOf(-1)
+        block.getRegistryName.toString + ":" + String.valueOf(-1)
         //block.getUnlocalizedName.substring(5) + ":" + String.valueOf(-1)
     }
 
