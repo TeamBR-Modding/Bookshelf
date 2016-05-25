@@ -42,7 +42,7 @@ object TextureManager {
     @SubscribeEvent
     def textureStitch(event : TextureStitchEvent.Pre) : Unit = {
         // Grab items that need created
-        val itemIterator = Item.itemRegistry.iterator()
+        val itemIterator = Item.REGISTRY.iterator()
         while(itemIterator.hasNext) {
             val itemLocal = itemIterator.next()
             itemLocal match {
@@ -54,7 +54,7 @@ object TextureManager {
         }
 
         // Grab blocks that need created
-        val blockIterator = Block.blockRegistry.iterator()
+        val blockIterator = Block.REGISTRY.iterator()
         while(blockIterator.hasNext) {
             val blockLocal = blockIterator.next()
             blockLocal match {

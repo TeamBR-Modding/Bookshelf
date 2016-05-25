@@ -19,7 +19,7 @@ trait NBTSavable {
      * Used to save the object to an NBT tag
      * @param tag The tag to save to
      */
-    def writeToNBT(tag : NBTTagCompound)
+    def writeToNBT(tag : NBTTagCompound) : NBTTagCompound
 
     /**
      * Used to read from an NBT tag

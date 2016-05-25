@@ -25,7 +25,7 @@ import scala.collection.mutable.ArrayBuffer
 @ModItem(modid = "bookshelfapi")
 class ItemTest extends Item with ItemModelProvider with CreatesTextures {
     setUnlocalizedName("bookshelfapi:itemTest")
-    setCreativeTab(CreativeTabs.tabBlock)
+    setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
     ModelLoader.setCustomModelResourceLocation(this, 0, BakedDynItem.MODEL_RESOURCE_LOCATION)
 
     override def getTextures(stack: ItemStack) : util.List[String] = {

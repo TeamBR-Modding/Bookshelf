@@ -17,7 +17,7 @@ import net.minecraft.world.World
  * @author Paul Davis pauljoda
  * @since August 03, 2015
  */
-class BlockTest extends Block(Material.rock) with BlockConnectedTextures with OpensGui {
+class BlockTest extends Block(Material.ROCK) with BlockConnectedTextures with OpensGui {
 
     setUnlocalizedName("bookshelfapi" + ":" + "blockTest")
 

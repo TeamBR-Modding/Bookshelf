@@ -6,6 +6,7 @@ import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -97,7 +98,7 @@ public class ConnectedTexturesState implements IBlockState {
     }
 
     @Override
-    public int getlightValue() {
+    public int getLightValue() {
         return holder.getLightValue(this);
     }
 
@@ -254,5 +255,15 @@ public class ConnectedTexturesState implements IBlockState {
     @Override
     public boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side) {
         return holder.isSideSolid(this, world, pos, side);
+    }
+
+    @Override
+    public boolean onBlockEventReceived(World world, BlockPos blockPos, int i, int i1) {
+        return false;
+    }
+
+    @Override
+    public void neighborChanged(World world, BlockPos blockPos, Block block) {
+
     }
 }

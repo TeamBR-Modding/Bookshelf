@@ -118,12 +118,12 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
     
     override def canInteractWith(entityPlayer: EntityPlayer): Boolean = inventory.isUseableByPlayer(entityPlayer)
 
-    override def func_184996_a(slotNumber : Int, mouseButton : Int, modifier : ClickType, player : EntityPlayer) : ItemStack = {
+    override def slotClick(slotNumber : Int, mouseButton : Int, modifier : ClickType, player : EntityPlayer) : ItemStack = {
         val slot = if (slotNumber < 0) null else this.inventorySlots.get(slotNumber)
         if(slot.isInstanceOf[IPhantomSlot])
              slotClickPhantom(slot, mouseButton, modifier, player)
         else
-             super.func_184996_a(slotNumber, mouseButton, modifier, player)
+             super.slotClick(slotNumber, mouseButton, modifier, player)
     }
 
     def slotClickPhantom(slot : Slot, mouseButton : Int, modifier : ClickType, player : EntityPlayer) : ItemStack = {

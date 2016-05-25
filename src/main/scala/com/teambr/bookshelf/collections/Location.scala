@@ -402,10 +402,11 @@ class Location extends NBTSavable {
       *
       * @param tag The tag to write to
      */
-    override def writeToNBT(tag: NBTTagCompound) {
+    override def writeToNBT(tag: NBTTagCompound) : NBTTagCompound = {
         tag.setInteger("Location X", x)
         tag.setInteger("Location Y", y)
         tag.setInteger("Location Z", z)
+        tag
     }
 
     /**

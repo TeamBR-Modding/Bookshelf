@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 class ModelFactory {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     def bakeModels(event: ModelBakeEvent): Unit = {
-        val blockIterator = Block.blockRegistry.iterator()
+        val blockIterator = Block.REGISTRY.iterator()
         while(blockIterator.hasNext) {
             val blockLocal = blockIterator.next()
             blockLocal match {
@@ -33,7 +33,7 @@ class ModelFactory {
             }
         }
 
-        val itemIterator = Item.itemRegistry.iterator()
+        val itemIterator = Item.REGISTRY.iterator()
         while(itemIterator.hasNext) {
             val itemLocal = itemIterator.next()
             itemLocal match {
