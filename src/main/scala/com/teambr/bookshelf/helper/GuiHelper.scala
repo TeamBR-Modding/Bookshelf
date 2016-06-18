@@ -97,5 +97,5 @@ object GuiHelper {
      * Plays the button click sounds
      */
     def playButtonSound : Unit =
-        Minecraft.getMinecraft.getSoundHandler.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.ui_button_click, 1.0F))
+        Minecraft.getMinecraft.getSoundHandler.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F))
 }

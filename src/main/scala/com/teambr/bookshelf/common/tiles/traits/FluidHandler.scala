@@ -195,6 +195,7 @@ trait FluidHandler extends IFluidHandler with NBTSavable {
             }
         }
         tag.setTag("Tanks", tagList)
+        tag
     }
 
     /**

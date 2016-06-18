@@ -58,16 +58,17 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
         }
     }
 
-    override def writeToNBT(tag: NBTTagCompound) : Unit = {
+    override def writeToNBT(tag: NBTTagCompound) : NBTTagCompound = {
         tag.setInteger("CurrentEnergy", energyStorage.getEnergyStored)
         tag.setInteger("EnergyCapacity", energyStorage.getMaxEnergyStored)
         tag.setInteger("MaxExtract", energyStorage.getMaxExtract)
         tag.setInteger("MaxReceive", energyStorage.getMaxReceive)
         tag.setInteger("EnergyIn", energyIn)
         tag.setInteger("EnergyOut", energyOut)
+        tag
     }
 
-    override def readFromNBT(tag : NBTTagCompound) : Unit = {
+    override def readFromNBT(tag : NBTTagCompound) = {
         energyStorage.setCapacity(tag.getInteger("EnergyCapacity"))
         if(energyStorage.getMaxEnergyStored == 0)
             energyStorage.setCapacity(defaultEnergyStorageSize)

@@ -29,7 +29,7 @@ import org.lwjgl.util.vector.{Matrix4f, Vector3f}
  */
 object RenderUtils {
     val GUI_COMPONENTS: ResourceLocation = new ResourceLocation(Reference.MODID, "textures/gui/guiComponents.png")
-    val MC_BLOCKS: ResourceLocation = TextureMap.locationBlocksTexture
+    val MC_BLOCKS: ResourceLocation = TextureMap.LOCATION_BLOCKS_TEXTURE
     val MC_ITEMS: ResourceLocation = new ResourceLocation("textures/atlas/items.png")
 
     val POSITION_TEX_NORMALF = new VertexFormat()

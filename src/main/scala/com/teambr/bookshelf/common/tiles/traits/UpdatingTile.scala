@@ -29,7 +29,7 @@ trait UpdatingTile extends TileEntity with ITickable {
       *
       * @param tag The tag to write to
      */
-    override def writeToNBT(tag : NBTTagCompound)
+    override def writeToNBT(tag : NBTTagCompound) : NBTTagCompound
 
     /**
      * Used to read data from the tag
@@ -77,7 +77,7 @@ trait UpdatingTile extends TileEntity with ITickable {
       *
       * @return The packet to send
      */
-    override def getDescriptionPacket: Packet[_ <: INetHandler] = {
+    override def getUpdatePacket: SPacketUpdateTileEntity = {
         val tag = new NBTTagCompound
         this.writeToNBT(tag)
         new SPacketUpdateTileEntity(getPos, 1, tag)

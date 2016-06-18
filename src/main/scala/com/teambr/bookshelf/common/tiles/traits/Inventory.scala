@@ -108,7 +108,7 @@ trait Inventory extends TileEntity with IItemHandlerModifiable with NBTSavable {
       *
       * @param tag The tag to save to
       */
-    override def writeToNBT(tag : NBTTagCompound) : Unit = writeToNBT(tag, "")
+    override def writeToNBT(tag : NBTTagCompound) : NBTTagCompound = writeToNBT(tag, "")
 
     /**
       * Used to save the inventory to an NBT tag
@@ -116,7 +116,7 @@ trait Inventory extends TileEntity with IItemHandlerModifiable with NBTSavable {
       * @param tag The tag to save to
       * @param inventoryName The name, in case you have more than one
       */
-    def writeToNBT(tag : NBTTagCompound, inventoryName : String) = {
+    def writeToNBT(tag : NBTTagCompound, inventoryName : String) : NBTTagCompound = {
         tag.setInteger("Size:" + inventoryName, getSizeInventory)
         val nbttaglist = new NBTTagList
         for(i <- 0 until inventoryContents.size()) {
@@ -128,6 +128,7 @@ trait Inventory extends TileEntity with IItemHandlerModifiable with NBTSavable {
             }
         }
         tag.setTag("Items:" + inventoryName, nbttaglist)
+        tag
     }
 
     /**
