@@ -198,10 +198,10 @@ curseforge  {
     apiKey = APIToken
     project {
         id = '232784'
-        changelog = 'Fixed issue using unlocalized name'
+        changelog = 'Updated to Forge/MC 1.9.4-12.17.0.1965. Special Thanks to vpzomtrrfrt For The Actual Update'
         releaseType = 'beta'
         addArtifact devJar
-        addGameVersion '1.9'
+        addGameVersion '1.9.4'
     }
 }
 
