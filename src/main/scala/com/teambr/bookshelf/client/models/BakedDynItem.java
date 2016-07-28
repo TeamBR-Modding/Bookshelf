@@ -20,6 +20,7 @@ import net.minecraftforge.client.model.ItemLayerModel;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.vecmath.Matrix4f;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,8 @@ public class BakedDynItem implements IBakedModel, IPerspectiveAwareModel {
 
     // Holds the list of textures, order is important
     protected List<String> textureLocations;
+
+    protected List<BakedQuad> quads = null;
 
     /**
      * Used to define if this is a tool
@@ -73,13 +76,15 @@ public class BakedDynItem implements IBakedModel, IPerspectiveAwareModel {
 
     @Override
     public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-        ImmutableList.Builder<ResourceLocation> builder = ImmutableList.builder();
+        if(quads == null || (textureLocations != null && quads.size() == 0)) {
+            ImmutableList.Builder<ResourceLocation> builder = ImmutableList.builder();
 
-        for(String loc : textureLocations)
-            builder.add(new ResourceLocation(loc));
-
-        return (new ItemLayerModel(builder.build())).bake(ModelHelper.DEFAULT_ITEM_STATE(),
-                DefaultVertexFormats.ITEM, ModelHelper.textureGetter()).getQuads(state, side, rand);
+            for (String loc : textureLocations)
+                builder.add(new ResourceLocation(loc));
+            quads = (new ItemLayerModel(builder.build())).bake(ModelHelper.DEFAULT_ITEM_STATE(),
+                    DefaultVertexFormats.ITEM, ModelHelper.textureGetter()).getQuads(state, side, rand);
+        }
+        return quads;
     }
 
     @Override

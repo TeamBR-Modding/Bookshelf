@@ -28,10 +28,11 @@ class ItemTest extends Item with ItemModelProvider with CreatesTextures {
     setCreativeTab(CreativeTabs.BUILDING_BLOCKS)
     ModelLoader.setCustomModelResourceLocation(this, 0, BakedDynItem.MODEL_RESOURCE_LOCATION)
 
+    val list = new util.ArrayList[String]()
+    list.add("bookshelfapi:blocks/testBlock")
+    list.add("bookshelfapi:blocks/testBlockFront")
+
     override def getTextures(stack: ItemStack) : util.List[String] = {
-        val list = new util.ArrayList[String]()
-        list.add("bookshelfapi:blocks/testBlock")
-        list.add("bookshelfapi:blocks/testBlockFront")
         list
     }
 
