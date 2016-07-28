@@ -206,8 +206,7 @@ trait FluidHandler extends IFluidHandler with NBTSavable {
     def readFromNBT(tag : NBTTagCompound) = {
         val tagList = tag.getTagList("Tanks", 10)
         val size = tag.getInteger("Size")
-        if(size != tanks.size && size == 0) 0 // NO OP
-        else if(size != 0 && tanks.size != size) tanks = new ArrayBuffer[FluidTank](size)
+        if(size != tanks.size && tag.hasKey("Size")) tanks = new ArrayBuffer[FluidTank](size)
         for(x <- 0 until tagList.tagCount()) {
             val tankCompound = tagList.getCompoundTagAt(x)
             val position = tankCompound.getByte("TankID")
