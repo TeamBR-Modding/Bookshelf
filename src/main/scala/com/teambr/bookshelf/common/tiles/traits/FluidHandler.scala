@@ -252,9 +252,9 @@ trait FluidHandler extends TileEntity with IFluidHandler with NBTSavable {
         info
     }
 
-    override def drain(resource: FluidStack, doDrain: Boolean): FluidStack = drain(resource, doDrain)
+    override def drain(resource: FluidStack, doDrain: Boolean): FluidStack = drain(EnumFacing.UP, resource, doDrain)
 
-    override def drain(maxDrain: Int, doDrain: Boolean): FluidStack = drain(maxDrain, doDrain)
+    override def drain(maxDrain: Int, doDrain: Boolean): FluidStack = drain(EnumFacing.UP, maxDrain, doDrain)
 
-    override def fill(resource: FluidStack, doFill: Boolean): Int = fill(resource, doFill)
+    override def fill(resource: FluidStack, doFill: Boolean): Int = fill(EnumFacing.UP, resource, doFill)
 }
