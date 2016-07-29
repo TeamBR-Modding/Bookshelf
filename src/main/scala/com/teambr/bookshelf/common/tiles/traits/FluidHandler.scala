@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.fluids._
-import net.minecraftforge.fluids.capability.{CapabilityFluidHandler, IFluidHandler}
+import net.minecraftforge.fluids.capability.{CapabilityFluidHandler, IFluidHandler, IFluidTankProperties}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -225,4 +225,36 @@ trait FluidHandler extends TileEntity with IFluidHandler with NBTSavable {
         if (capability eq CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return this.asInstanceOf[T]
         super.getCapability(capability, facing)
     }
+
+    /*******************************************************************************************************************
+      * Fluid Handler Methods
+      ******************************************************************************************************************/
+
+    override def getTankProperties: Array[IFluidTankProperties] = {
+        val info = new Array[IFluidTankProperties](tanks.length)
+        var i = 0
+        for(tank <- tanks) {
+            info(i) = new IFluidTankProperties() {
+                override def canDrainFluidType(fluidStack: FluidStack): Boolean = tanks(i).canDrainFluidType(fluidStack)
+
+                override def canFillFluidType(fluidStack: FluidStack): Boolean = tanks(i).canFillFluidType(fluidStack)
+
+                override def getContents: FluidStack = tanks(i).getFluid
+
+                override def canFill: Boolean = tanks(i).canFill
+
+                override def canDrain: Boolean = tanks(i).canDrain
+
+                override def getCapacity: Int = tanks(i).getCapacity
+            }
+            i += 1
+        }
+        info
+    }
+
+    override def drain(resource: FluidStack, doDrain: Boolean): FluidStack = drain(resource, doDrain)
+
+    override def drain(maxDrain: Int, doDrain: Boolean): FluidStack = drain(maxDrain, doDrain)
+
+    override def fill(resource: FluidStack, doFill: Boolean): Int = fill(resource, doFill)
 }
