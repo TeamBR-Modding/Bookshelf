@@ -55,7 +55,7 @@ minecraft {
 
     runDir = "eclipse"
 
-    mappings = "snapshot_20160525"
+    mappings = "${config.MAPPINGS}"
     makeObfSourceJar = false
 }
 

@@ -88,6 +88,11 @@ public class ConnectedTexturesState implements IBlockState {
     }
 
     @Override
+    public boolean func_189884_a(Entity p_189884_1_) {
+        return false;
+    }
+
+    @Override
     public int getLightOpacity() {
         return holder.getLightOpacity(this);
     }
