@@ -4,7 +4,7 @@ import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids._
-import net.minecraftforge.fluids.capability.TileFluidHandler
+import net.minecraftforge.fluids.capability.IFluidHandler
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -20,7 +20,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis <pauljoda>
   * @since 2/4/2016
   */
-trait FluidHandler extends TileFluidHandler with NBTSavable {
+trait FluidHandler extends IFluidHandler with NBTSavable {
 
     /**
       * The tanks themselves
