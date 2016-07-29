@@ -2,9 +2,11 @@ package com.teambr.bookshelf.common.tiles.traits
 
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
+import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.fluids._
-import net.minecraftforge.fluids.capability.IFluidHandler
+import net.minecraftforge.fluids.capability.{CapabilityFluidHandler, IFluidHandler}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -20,7 +22,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis <pauljoda>
   * @since 2/4/2016
   */
-trait FluidHandler extends IFluidHandler with NBTSavable {
+trait FluidHandler extends TileEntity with IFluidHandler with NBTSavable {
 
     /**
       * The tanks themselves
@@ -214,5 +216,13 @@ trait FluidHandler extends IFluidHandler with NBTSavable {
             if(position < tanks.size)
                 tanks(position).readFromNBT(tankCompound)
         }
+    }
+
+    override def hasCapability(capability: Capability[_], facing: EnumFacing): Boolean =
+        (capability eq CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) || super.hasCapability(capability, facing)
+
+    @SuppressWarnings(Array("unchecked")) override def getCapability[T](capability: Capability[T], facing: EnumFacing): T = {
+        if (capability eq CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return this.asInstanceOf[T]
+        super.getCapability(capability, facing)
     }
 }
