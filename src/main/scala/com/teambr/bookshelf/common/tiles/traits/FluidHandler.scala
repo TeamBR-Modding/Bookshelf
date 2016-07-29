@@ -1,9 +1,10 @@
 package com.teambr.bookshelf.common.tiles.traits
 
 import com.teambr.bookshelf.traits.NBTSavable
-import net.minecraft.nbt.{NBTTagList, NBTTagCompound}
+import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids._
+import net.minecraftforge.fluids.capability.TileFluidHandler
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -19,7 +20,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis <pauljoda>
   * @since 2/4/2016
   */
-trait FluidHandler extends IFluidHandler with NBTSavable {
+trait FluidHandler extends TileFluidHandler with NBTSavable {
 
     /**
       * The tanks themselves
@@ -181,7 +182,7 @@ trait FluidHandler extends IFluidHandler with NBTSavable {
       *
       * @param tag The tag to save to
       */
-    def writeToNBT(tag : NBTTagCompound) = {
+    override def writeToNBT(tag : NBTTagCompound) = {
         var id = 0
         tag.setInteger("Size", tanks.size)
         val tagList = new NBTTagList
@@ -203,7 +204,7 @@ trait FluidHandler extends IFluidHandler with NBTSavable {
       *
       * @param tag The tag to read from
       */
-    def readFromNBT(tag : NBTTagCompound) = {
+    override def readFromNBT(tag : NBTTagCompound) = {
         val tagList = tag.getTagList("Tanks", 10)
         val size = tag.getInteger("Size")
         if(size != tanks.size && tag.hasKey("Size")) tanks = new ArrayBuffer[FluidTank](size)

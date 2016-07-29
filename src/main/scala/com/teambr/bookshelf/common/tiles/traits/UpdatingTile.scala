@@ -92,6 +92,12 @@ trait UpdatingTile extends TileEntity with ITickable {
     override def onDataPacket(net : NetworkManager, pkt : SPacketUpdateTileEntity) = this.readFromNBT(pkt.getNbtCompound)
 
     /**
+      * Forge moved client update here, enables old behavior
+      * @return
+      */
+    override def getUpdateTag: NBTTagCompound = this.writeToNBT(new NBTTagCompound)
+
+    /**
      * Called when the tile updates
      */
     override def update() = {
