@@ -227,7 +227,7 @@ trait FluidHandler extends TileEntity with IFluidHandler with NBTSavable {
     }
 
     /*******************************************************************************************************************
-      * Fluid Handler Methods
+      * Fluid Handler Methods                                                                                          *
       ******************************************************************************************************************/
 
     override def getTankProperties: Array[IFluidTankProperties] = {
