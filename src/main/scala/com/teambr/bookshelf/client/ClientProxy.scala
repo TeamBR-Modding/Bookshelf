@@ -54,7 +54,7 @@ class ClientProxy extends CommonProxy {
         MinecraftForge.EVENT_BUS.register(new ModelFactory)
         MinecraftForge.EVENT_BUS.register(TextureManager)
 
-        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaDataProvider.callBackRegisterClient")
+        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaDataProvider.callbackRegisterClient")
 
         val itemIterator = Item.REGISTRY.iterator()
         while(itemIterator.hasNext) {
