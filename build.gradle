@@ -122,7 +122,7 @@ configurations {
 dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.JEI_version}"
-    //compile "mcp.mobius.waila:Waila:${config.WAILA_version}:dev"
+    compile "mcp.mobius.waila:Waila:${config.WAILA_version}:dev"
 }
 
 repositories {
