@@ -235,17 +235,18 @@ trait FluidHandler extends TileEntity with IFluidHandler with NBTSavable {
         var i = 0
         for(tank <- tanks) {
             info(i) = new IFluidTankProperties() {
-                override def canDrainFluidType(fluidStack: FluidStack): Boolean = tanks(i).canDrainFluidType(fluidStack)
+                val infoNumber = i
+                override def canDrainFluidType(fluidStack: FluidStack): Boolean = tanks(infoNumber).canDrainFluidType(fluidStack)
 
-                override def canFillFluidType(fluidStack: FluidStack): Boolean = tanks(i).canFillFluidType(fluidStack)
+                override def canFillFluidType(fluidStack: FluidStack): Boolean = tanks(infoNumber).canFillFluidType(fluidStack)
 
-                override def getContents: FluidStack = tanks(i).getFluid
+                override def getContents: FluidStack = tanks(infoNumber).getFluid
 
-                override def canFill: Boolean = tanks(i).canFill
+                override def canFill: Boolean = tanks(infoNumber).canFill
 
-                override def canDrain: Boolean = tanks(i).canDrain
+                override def canDrain: Boolean = tanks(infoNumber).canDrain
 
-                override def getCapacity: Int = tanks(i).getCapacity
+                override def getCapacity: Int = tanks(infoNumber).getCapacity
             }
             i += 1
         }
