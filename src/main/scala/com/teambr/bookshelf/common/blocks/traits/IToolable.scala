@@ -74,6 +74,7 @@ trait IToolable extends Block {
                 val stack = getStackDroppedByWrench(world, pos)
                 stack.setTagCompound(tag)
                 WorldUtils.dropStack(world, stack, pos)
+                world.removeTileEntity(pos) // Remove to prevent drop code from triggering
                 world.setBlockToAir(pos)
                 return true
             case _ =>
