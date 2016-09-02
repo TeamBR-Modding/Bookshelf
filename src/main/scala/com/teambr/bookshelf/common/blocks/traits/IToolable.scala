@@ -7,6 +7,7 @@ import net.minecraft.block.state.{BlockStateContainer, IBlockState}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
@@ -72,6 +73,7 @@ trait IToolable extends Block {
                 val stack = getStackDroppedByWrench(world, pos)
                 stack.setTagCompound(tag)
                 WorldUtils.dropStack(world, stack, pos)
+                world.setBlockToAir(pos)
                 return true
             case _ =>
         }
