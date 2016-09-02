@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.event.AttachCapabilitiesEvent.TileEntity
 
 /**
   * This file was created for Lux et Umbra
@@ -68,7 +69,7 @@ trait IToolable extends Block {
     def breakSavingNBT(world : World, pos : BlockPos): Boolean = {
         if(world.isRemote) return false
         world.getTileEntity(pos) match {
-            case savable : NBTSavable =>
+            case savable =>
                 val tag = savable.writeToNBT(new NBTTagCompound)
                 val stack = getStackDroppedByWrench(world, pos)
                 stack.setTagCompound(tag)
@@ -87,8 +88,12 @@ trait IToolable extends Block {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
         if(stack.hasTagCompound) {
             worldIn.getTileEntity(pos) match {
-                case savable : NBTSavable =>
-                    savable.readFromNBT(stack.getTagCompound)
+                case savable =>
+                    val tag = stack.getTagCompound
+                    tag.setInteger("x", pos.getX)
+                    tag.setInteger("y", pos.getY)
+                    tag.setInteger("z", pos.getZ)
+                    savable.readFromNBT(tag)
                 case _ =>
             }
         }
