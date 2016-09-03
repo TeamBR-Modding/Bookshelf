@@ -1,9 +1,13 @@
 package com.teambr.bookshelf.common.tiles.traits
 
-import cofh.api.energy.{EnergyStorage, IEnergyProvider, IEnergyReceiver}
-import com.teambr.bookshelf.traits.NBTSavable
+import cofh.api.energy.{IEnergyHandler, IEnergyProvider, IEnergyReceiver}
+import com.teambr.bookshelf.energy.implementations.EnergyBank
+import com.teambr.bookshelf.manager.ConfigManager
+import ic2.api.tile.IEnergyStorage
+import net.darkhax.tesla.api.{ITeslaConsumer, ITeslaHolder, ITeslaProducer}
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
+import net.minecraftforge.fml.common.Optional
 
 /**
   * This file was created for Bookshelf
@@ -15,12 +19,17 @@ import net.minecraft.util.EnumFacing
   * @author Paul Davis <pauljoda>
   * @since 2/15/2016
   */
-trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvider with NBTSavable {
+@Optional.InterfaceList(Array(
+    new Optional.Interface(iface = "ic2.api.tile.IEnergyStorage", modid = "IC2"),
+    new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaHolder", modid = "tesla"),
+    new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaConsumer", modid = "tesla"),
+    new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
 
-    val energyStorage = new EnergyStorage(defaultEnergyStorageSize)
-
-    var energyIn  : Int     = 0
-    var energyOut : Int     = 0
+))
+trait EnergyHandler extends EnergyBank
+        with IEnergyHandler with IEnergyReceiver with IEnergyProvider
+        with IEnergyStorage
+        with ITeslaHolder with ITeslaConsumer with ITeslaProducer {
 
     /**
       * Used to define the default energy storage for this energy handler
@@ -43,125 +52,50 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       */
     def isReceiver : Boolean
 
-    /** ****************************************************************************************************************
-      * *************************************************  Tile Methods  ************************************************
-      * *****************************************************************************************************************/
-
-    var ticker = 0
-    override def update() : Unit = {
-        super.update()
-        ticker -= 1
-        if(ticker <= 0) {
-            ticker = checkDelay
-            energyIn  = 0
-            energyOut = 0
-        }
-    }
-
-    override def writeToNBT(tag: NBTTagCompound) : NBTTagCompound = {
-        tag.setInteger("CurrentEnergy", energyStorage.getEnergyStored)
-        tag.setInteger("EnergyCapacity", energyStorage.getMaxEnergyStored)
-        tag.setInteger("MaxExtract", energyStorage.getMaxExtract)
-        tag.setInteger("MaxReceive", energyStorage.getMaxReceive)
-        tag.setInteger("EnergyIn", energyIn)
-        tag.setInteger("EnergyOut", energyOut)
-        tag
-    }
-
-    override def readFromNBT(tag : NBTTagCompound) = {
-        energyStorage.setCapacity(tag.getInteger("EnergyCapacity"))
-        if(energyStorage.getMaxEnergyStored == 0)
-            energyStorage.setCapacity(defaultEnergyStorageSize)
-        energyStorage.setEnergyStored(tag.getInteger("CurrentEnergy"))
-        energyStorage.setMaxExtract(tag.getInteger("MaxExtract"))
-        energyStorage.setMaxReceive(tag.getInteger("MaxReceive"))
-        energyIn = tag.getInteger("EnergyIn")
-        energyOut = tag.getInteger("EnergyOut")
-        if(energyStorage.getMaxExtract == 0)
-            energyStorage.setMaxExtract(defaultEnergyStorageSize)
-        if(energyStorage.getMaxReceive == 0)
-            energyStorage.setMaxReceive(defaultEnergyStorageSize)
-    }
-
     /*******************************************************************************************************************
-      ************************************************ Energy methods **************************************************
+      * Tile Methods                                                                                                   *
       ******************************************************************************************************************/
 
     /**
-      * Used to get how long before checking levels again
-      *
-      * @return
+      * Write to the tag
+      * @param tag The tag to write to
       */
-    def checkDelay : Int = 20 * 2
-
-    /**
-      * Used to get the approximate RF change
-      *
-      * @return
-      */
-    def getRFInPerTick: Int = {
-        energyIn
+    override def writeToNBT(tag: NBTTagCompound) : NBTTagCompound = {
+        super[EnergyBank].writeToNBT(tag)
+        tag
     }
 
     /**
-      * Used to get the approximate RF change
-      *
-      * @return
+      * Read data from tag
+      * @param tag The tag to read from
       */
-    def getRFOutPerTick: Int = {
-        energyOut
+    override def readFromNBT(tag : NBTTagCompound) = {
+        super[EnergyBank].readFromNBT(tag)
+
+        // Checks for bad tags
+        if(maxStored == 0)
+            maxStored = defaultEnergyStorageSize
+
+        if(maxInsert == 0)
+            maxInsert = defaultEnergyStorageSize
+
+        if(maxExtract == 0)
+            maxExtract = defaultEnergyStorageSize
+
     }
 
+    /*******************************************************************************************************************
+      * RF Compatibility                                                                                               *
+      ******************************************************************************************************************/
     /**
-      * Used to change the max extraction rate of the energy storage
-      *
-      * @param maxExtract The new max extraction rate
+      * Returns the amount of energy currently stored.
       */
-    def setMaxExtract(maxExtract : Int) : Unit = {
-        energyStorage.setMaxExtract(maxExtract)
-    }
+    override def getEnergyStored(from: EnumFacing): Int = getEnergyStored
 
     /**
-      * Used to set the maximum energy received
-      *
-      * @param maxReceive The max energy to receive
+      * Returns the maximum amount of energy that can be stored.
       */
-    def setMaxReceive(maxReceive : Int) : Unit = {
-        energyStorage.setMaxReceive(maxReceive)
-    }
-
-    /**
-      * Used to set the max energy stored
-      *
-      * @param maxEnergyStored The maximum amount to store
-      */
-    def setMaxEnergyStored(maxEnergyStored : Int) : Unit = {
-        energyStorage.setCapacity(maxEnergyStored)
-    }
-
-    /**
-      * Get the current energy stored in the energy tank
-      *
-      * @param from The side to check (can be used if you have different energy storages)
-      * @return
-      */
-    override def getEnergyStored(from: EnumFacing): Int = energyStorage.getEnergyStored
-
-    /**
-      * Get the maximum energy this handler can store, not the current
-      *
-      * @param from The side to check from (can be used if you have different energy storages)
-      * @return The maximum potential energy
-      */
-    override def getMaxEnergyStored(from: EnumFacing): Int = energyStorage.getMaxEnergyStored
-
-    /**
-      * Checks if energy can connect to a given side
-      *
-      * @param from The face to check
-      * @return True if the face allows energy flow
-      */
-    override def canConnectEnergy(from: EnumFacing): Boolean = true
+    override def getMaxEnergyStored(from: EnumFacing): Int = getMaxStored
 
     /**
       * Add energy to an IEnergyReceiver, internal distribution is left entirely to the IEnergyReceiver.
@@ -172,18 +106,10 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       * @return Amount of energy that was (or would have been, if simulated) received.
       */
     override def receiveEnergy(from: EnumFacing, maxReceive: Int, simulate: Boolean): Int = {
-        if(isReceiver) {
-            if(energyStorage != null) {
-                val actual = energyStorage.receiveEnergy(maxReceive, simulate)
-                if (!simulate) {
-                    energyIn = actual
-                    ticker = 20
-                }
-                if(getWorld != null)
-                    getWorld.notifyBlockUpdate(getPos, getWorld.getBlockState(getPos), getWorld.getBlockState(getPos), 3)
-                actual
-            } else 0
-        } else 0
+        if(isReceiver)
+            super.receivePower(maxReceive, !simulate)
+        else
+            0
     }
 
     /**
@@ -195,17 +121,103 @@ trait EnergyHandler extends UpdatingTile with IEnergyReceiver with IEnergyProvid
       * @return How much energy was/should be drained
       */
     override def extractEnergy(from: EnumFacing, maxExtract: Int, simulate: Boolean): Int = {
-        if(isProvider) {
-            if(energyStorage != null) {
-                val actual = energyStorage.extractEnergy(maxExtract, simulate)
-                if(!simulate) {
-                    energyOut = -actual
-                    ticker = 20
-                }
-                if(getWorld != null)
-                    getWorld.notifyBlockUpdate(getPos, getWorld.getBlockState(getPos), getWorld.getBlockState(getPos), 3)
-                actual
-            } else 0
-        } else 0
+        if(isProvider)
+            providePower(maxExtract, !simulate)
+        else
+            0
     }
+
+    /*******************************************************************************************************************
+      * IC2 Compatibility                                                                                              *
+      ******************************************************************************************************************/
+
+    /**
+      * Get the amount of energy currently stored in the block.
+      *
+      * @return Energy stored in the block
+      */
+    override def getStored: Int = getStored * ConfigManager.euMultiplier
+
+    /**
+      * Set the amount of energy currently stored in the block.
+      *
+      * @param energy stored energy
+      */
+    override def setStored(energy: Int) : Unit = setCurrentStored(energy * ConfigManager.euMultiplier)
+
+    /**
+      * Add the specified amount of energy.
+      *
+      * Use negative values to decrease.
+      *
+      * @param amount of energy to add
+      * @return Energy stored in the block after adding the specified amount
+      */
+    override def addEnergy(amount: Int): Int = {
+        currentStored += amount * ConfigManager.euMultiplier
+        if(currentStored < 0)
+            currentStored = 0
+        else if(currentStored > maxStored)
+            currentStored = maxStored
+        currentStored
+    }
+
+    /**
+      * Get the maximum amount of energy the block can store.
+      *
+      * @return Maximum energy stored
+      */
+    override def getCapacity: Int = getMaxStored * ConfigManager.euMultiplier
+
+    /**
+      * Get the block's energy output.
+      *
+      * @return Energy output in EU/t
+            */
+    override def getOutput: Int = maxExtract * ConfigManager.euMultiplier
+
+    /**
+      * Get the block's energy output.
+      *
+      * @return Energy output in EU/t
+      */
+    override def getOutputEnergyUnitsPerTick: Double = maxExtract * ConfigManager.euMultiplier
+
+    /**
+      * Get whether this block can have its energy used by an adjacent teleporter.
+      *
+      * @param side side the teleporter is draining energy from
+      * @return Whether the block is teleporter compatible
+      */
+    override def isTeleporterCompatible(side: EnumFacing): Boolean = true
+
+    /*******************************************************************************************************************
+      * Tesla                                                                                                          *
+      ******************************************************************************************************************/
+    /**
+      * Gets the amount of Tesla power stored being stored.
+      *
+      * @return The amount of Tesla power being stored.
+      */
+    override def getStoredPower: Long = currentStored
+
+    /**
+      * Offers power to the Tesla Consumer.
+      *
+      * @param power     The amount of power to offer.
+      * @param simulated Whether or not this is being called as part of a simulation.
+      *                  Simulations are used to get information without affecting the Tesla Producer.
+      * @return The amount of power that the consumer accepts.
+      */
+    def givePower(power: Long, simulated: Boolean): Long = providePower(power.toInt, !simulated)
+
+    /**
+      * Requests an amount of power from the Tesla Producer.
+      *
+      * @param power     The amount of power to request.
+      * @param simulated Whether or not this is being called as part of a simulation.
+      *                  Simulations are used to get information without affecting the Tesla Producer.
+      * @return The amount of power that the Tesla Producer will give.
+      */
+    def takePower(power: Long, simulated: Boolean): Long = receivePower(power.toInt, !simulated)
 }

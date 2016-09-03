@@ -56,7 +56,7 @@ abstract class GuiComponentPowerBarGradient(x: Int, y: Int, width: Int, height: 
         var colorPosition = pos * colors.size / height
         colorPosition = colors.size - 1 - colorPosition
         val colorStart = colors(Math.max(Math.min(colorPosition, colors.size - 1), 0))
-        val colorEnd = if(colorPosition - 1 >= 0) colors(colorPosition - 1) else colors(colorPosition)
+        val colorEnd = if(colorPosition - 1 >= 0) colors(colorPosition - 1) else colors(Math.max(0, colorPosition))
         ColorUtils.getColorBetween(colorStart, colorEnd, (pos - ((height / colors.size) * (pos * colors.size / height))) * 1F / (height / colors.size).toFloat)
     }
 }

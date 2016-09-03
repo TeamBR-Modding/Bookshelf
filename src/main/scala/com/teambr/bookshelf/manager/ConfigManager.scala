@@ -22,11 +22,15 @@ object ConfigManager {
 
     var debug : Boolean = _
 
+    var euMultiplier : Int = 0
+
     def init(configFolderLocation : String) = {
         config = new Configuration(new File(configFolderLocation + File.separator + "Bookshelf.cfg"))
         config.load()
 
         debug         = config.get(Reference.DEBUG, "Enable Debug Mode?", false).getBoolean
+
+        euMultiplier  = config.get(Reference.ENERGY, "How many EU per our energy (RF)", 4).getInt
 
         config.save()
     }

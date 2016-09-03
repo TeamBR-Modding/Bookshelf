@@ -15,5 +15,8 @@ object Reference {
     final val MODNAME        = "Bookshelf"
     final val VERSION        = "3.2.2"//@VERSION@"
     final val DEPENDENCIES   = "required-after:Forge@[12.18.1.2011,)"
+
+    // Categories
     final val DEBUG          = "Debug Mode"
+    final val ENERGY         = "Energy Options"
 }

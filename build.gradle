@@ -11,9 +11,18 @@ buildscript {
     }
 }
 
+
 plugins {
     id 'com.matthewprenger.cursegradle' version '1.0.7'
     //id "net.minecraftforge.gradle.forge" version "2.0.2"
+}
+
+
+repositories {
+
+    maven {
+        url 'http://maven.epoxide.xyz'
+    }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -123,6 +132,7 @@ dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.JEI_version}"
     compile "mcp.mobius.waila:Waila:${config.WAILA_version}:dev"
+    compile "net.darkhax.tesla:Tesla:${config.TESLA_version}"
 }
 
 repositories {
