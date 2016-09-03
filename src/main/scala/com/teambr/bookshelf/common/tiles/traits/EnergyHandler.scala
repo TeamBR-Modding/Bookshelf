@@ -99,6 +99,11 @@ trait EnergyHandler extends Syncable with EnergyBank
     override def getMaxEnergyStored(from: EnumFacing): Int = getMaxStored
 
     /**
+      * Returns TRUE if the TileEntity can connect on a given side.
+      */
+    def canConnectEnergy(from: EnumFacing): Boolean = true
+
+    /**
       * Add energy to an IEnergyReceiver, internal distribution is left entirely to the IEnergyReceiver.
       *
       * @param from Orientation the energy is received from.
