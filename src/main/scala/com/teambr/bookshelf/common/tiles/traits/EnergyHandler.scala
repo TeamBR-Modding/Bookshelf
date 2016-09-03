@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.Optional
 trait EnergyHandler extends EnergyBank
         with IEnergyHandler with IEnergyReceiver with IEnergyProvider
         with IEnergyStorage
-        with ITeslaHolder with ITeslaConsumer with ITeslaProducer {
+        with ITeslaConsumer with ITeslaProducer {
 
     /**
       * Used to define the default energy storage for this energy handler
@@ -61,7 +61,7 @@ trait EnergyHandler extends EnergyBank
       * @param tag The tag to write to
       */
     override def writeToNBT(tag: NBTTagCompound) : NBTTagCompound = {
-        super[EnergyBank].writeToNBT(tag)
+        super.writeToNBT(tag)
         tag
     }
 
@@ -70,17 +70,17 @@ trait EnergyHandler extends EnergyBank
       * @param tag The tag to read from
       */
     override def readFromNBT(tag : NBTTagCompound) = {
-        super[EnergyBank].readFromNBT(tag)
+        super.readFromNBT(tag)
 
         // Checks for bad tags
-        if(maxStored == 0)
-            maxStored = defaultEnergyStorageSize
+        if(getMaxStored == 0)
+            setMaxStored(defaultEnergyStorageSize)
 
-        if(maxInsert == 0)
-            maxInsert = defaultEnergyStorageSize
+        if(getMaxInsert == 0)
+            setMaxInsert(defaultEnergyStorageSize)
 
-        if(maxExtract == 0)
-            maxExtract = defaultEnergyStorageSize
+        if(getMaxExtract == 0)
+            setMaxExtract(defaultEnergyStorageSize)
 
     }
 
@@ -154,12 +154,12 @@ trait EnergyHandler extends EnergyBank
       * @return Energy stored in the block after adding the specified amount
       */
     override def addEnergy(amount: Int): Int = {
-        currentStored += amount * ConfigManager.euMultiplier
-        if(currentStored < 0)
-            currentStored = 0
-        else if(currentStored > maxStored)
-            currentStored = maxStored
-        currentStored
+        setStored(amount * ConfigManager.euMultiplier)
+        if(getStored < 0)
+            setStored(0)
+        else if(getStored > getMaxStored)
+            setStored(getMaxStored)
+        getStored
     }
 
     /**
@@ -167,21 +167,21 @@ trait EnergyHandler extends EnergyBank
       *
       * @return Maximum energy stored
       */
-    override def getCapacity: Int = getMaxStored * ConfigManager.euMultiplier
+    override def getCapacity : Int = getMaxStored * ConfigManager.euMultiplier
 
     /**
       * Get the block's energy output.
       *
       * @return Energy output in EU/t
             */
-    override def getOutput: Int = maxExtract * ConfigManager.euMultiplier
+    override def getOutput: Int = getMaxExtract * ConfigManager.euMultiplier
 
     /**
       * Get the block's energy output.
       *
       * @return Energy output in EU/t
       */
-    override def getOutputEnergyUnitsPerTick: Double = maxExtract * ConfigManager.euMultiplier
+    override def getOutputEnergyUnitsPerTick: Double = getMaxExtract * ConfigManager.euMultiplier
 
     /**
       * Get whether this block can have its energy used by an adjacent teleporter.
@@ -194,12 +194,6 @@ trait EnergyHandler extends EnergyBank
     /*******************************************************************************************************************
       * Tesla                                                                                                          *
       ******************************************************************************************************************/
-    /**
-      * Gets the amount of Tesla power stored being stored.
-      *
-      * @return The amount of Tesla power being stored.
-      */
-    override def getStoredPower: Long = currentStored
 
     /**
       * Offers power to the Tesla Consumer.

@@ -4,6 +4,7 @@ import com.teambr.bookshelf.energy.IEnergyHolder;
 import com.teambr.bookshelf.energy.IEnergyProvider;
 import com.teambr.bookshelf.energy.IEnergyReceiver;
 import com.teambr.bookshelf.traits.NBTSavable;
+import net.darkhax.tesla.api.ITeslaHolder;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
