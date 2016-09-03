@@ -6,6 +6,7 @@ import com.teambr.bookshelf.manager.ConfigManager
 import ic2.api.tile.IEnergyStorage
 import net.darkhax.tesla.api.{ITeslaConsumer, ITeslaHolder, ITeslaProducer}
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fml.common.Optional
 
@@ -26,7 +27,7 @@ import net.minecraftforge.fml.common.Optional
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
 
 ))
-trait EnergyHandler extends EnergyBank
+trait EnergyHandler extends Syncable with EnergyBank
         with IEnergyHandler with IEnergyReceiver with IEnergyProvider
         with IEnergyStorage
         with ITeslaConsumer with ITeslaProducer {

@@ -1,11 +1,10 @@
-package com.teambr.bookshelf.energy.implementations;
+package com.teambr.bookshelf.energy.implementations
 
-import com.teambr.bookshelf.energy.IEnergyHolder;
-import com.teambr.bookshelf.energy.IEnergyProvider;
-import com.teambr.bookshelf.energy.IEnergyReceiver;
-import com.teambr.bookshelf.traits.NBTSavable;
-import net.darkhax.tesla.api.ITeslaHolder;
-import net.minecraft.nbt.NBTTagCompound;
+import com.teambr.bookshelf.energy.IEnergyHolder
+import com.teambr.bookshelf.energy.IEnergyProvider
+import com.teambr.bookshelf.energy.IEnergyReceiver
+import com.teambr.bookshelf.traits.NBTSavable
+import net.minecraft.nbt.NBTTagCompound
 
 /**
  * This file was created for Lux et Umbra
@@ -17,20 +16,20 @@ import net.minecraft.nbt.NBTTagCompound;
  * @author Paul Davis <pauljoda>
  * @since 9/2/2016
  */
-public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiver, NBTSavable {
+trait EnergyBank extends IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
 
-    protected int currentStored;
-    protected int maxStored;
+    var currentStored : Int
+    var maxStored : Int
 
-    protected int maxInsert;
-    protected int maxExtract;
+    var maxInsert : Int
+    var maxExtract : Int
 
     /**
      * Simplest constructor of EnergyBank
      * @param size The max stored, also sets max in and out
      */
-    public EnergyBank(int size) {
-        this(0, size, size, size);
+    def EnergyBank(size : Int) {
+        EnergyBank(0, size, size, size)
     }
 
     /**
@@ -39,8 +38,8 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * @param maxIn The max energy in rate
      * @param maxOut The max energy out rate
      */
-    public EnergyBank(int size, int maxIn, int maxOut) {
-        this(0, size, maxIn, maxOut);
+    def EnergyBank(size : Int, maxIn : Int, maxOut : Int) {
+        EnergyBank(0, size, maxIn, maxOut)
     }
 
     /**
@@ -50,11 +49,11 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * @param maxIn The max insert rate
      * @param maxOut The max extract rate
      */
-    public EnergyBank(int initialStored, int maxStorage, int maxIn, int maxOut) {
-        currentStored = initialStored;
-        maxStored     = maxStorage;
-        maxInsert     = maxIn;
-        maxExtract    = maxOut;
+    def EnergyBank(initialStored : Int, maxStorage : Int, maxIn : Int, maxOut : Int) {
+        currentStored = initialStored
+        maxStored     = maxStorage
+        maxInsert     = maxIn
+        maxExtract    = maxOut
     }
 
     /*******************************************************************************************************************
@@ -65,65 +64,60 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * Get the current energy stored
      * @return The current energy stored
      */
-    public int getCurrentStored() {
-        return currentStored;
-    }
+    def getCurrentStored: Int =
+        currentStored
 
     /**
      * Set the current energy stored
      * @param currentStored The new current stored
      */
-    public void setCurrentStored(int currentStored) {
-        this.currentStored = currentStored;
-    }
+    def setCurrentStored(currentStored : Int) =
+        this.currentStored = currentStored
 
     /**
      * Get the max energy stored
      * @return The max energy stored
      */
-    public int getMaxStored() {
-        return maxStored;
-    }
+    def getMaxStored: Int =
+         maxStored
 
     /**
      * Set the max energy stored
      * @param maxStored The max energy stored
      */
-    public void setMaxStored(int maxStored) {
-        this.maxStored = maxStored;
-    }
+    def setMaxStored(maxStored : Int) =
+        this.maxStored = maxStored
 
     /**
      * Get the max receive rate
      * @return The max receive rate
      */
-    public int getMaxInsert() {
-        return maxInsert;
+    def getMaxInsert: Int = {
+        maxInsert
     }
 
     /**
      * Set the max insert rate
      * @param maxInsert The max insert rate
      */
-    public void setMaxInsert(int maxInsert) {
-        this.maxInsert = maxInsert;
+    def setMaxInsert(maxInsert : Int) {
+        this.maxInsert = maxInsert
     }
 
     /**
      * Get the max extract rate
      * @return The max extract rate
      */
-    public int getMaxExtract() {
-        return maxExtract;
+    def getMaxExtract: Int = {
+        maxExtract
     }
 
     /**
      * Set the max extract
      * @param maxExtract The max extract
      */
-    public void setMaxExtract(int maxExtract) {
-        this.maxExtract = maxExtract;
-    }
+    def setMaxExtract(maxExtract : Int) =
+        this.maxExtract = maxExtract
 
     /*******************************************************************************************************************
      * Energy Methods                                                                                                  *
@@ -133,19 +127,17 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * Get current energy stored
      * @return The current energy stored
      */
-    @Override
-    public int getEnergyStored() {
-        return currentStored;
-    }
+    override def getEnergyStored: Int =
+        currentStored
+
 
     /**
      * The max amount of energy this object can hold
      * @return The max energy stored, must be positive
      */
-    @Override
-    public int getMaxEnergyStored() {
-        return maxStored;
-    }
+    override def getMaxEnergyStored: Int =
+        maxStored
+
 
     /**
      * Allow the object to receive power
@@ -153,17 +145,16 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * @param doFill True to fill, false to simulate
      * @return The amount taken
      */
-    @Override
-    public int receivePower(int incomingPower, boolean doFill) {
+    override def receivePower(incomingPower : Int, doFill : Boolean) : Int = {
         // Find most can accept
-        int possibleInserted = Math.min(Math.min(maxInsert, incomingPower), maxStored - currentStored);
+        var possibleInserted = Math.min(Math.min(maxInsert, incomingPower), maxStored - currentStored)
 
         // If actually filling...
         if(doFill)
-            currentStored += possibleInserted;
+            currentStored += possibleInserted
 
         // Return what could/was filled
-        return possibleInserted;
+        possibleInserted
     }
 
     /**
@@ -172,17 +163,16 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * @param doDrain True to drain, false to simulate
      * @return The amount drained from internal storage (successful sent)
      */
-    @Override
-    public int providePower(int maxOut, boolean doDrain) {
+    override def providePower(maxOut : Int, doDrain : Boolean) : Int = {
         // Find most can extract
-        int possibleExtract = Math.min(Math.min(this.maxExtract, maxOut), currentStored);
+        var possibleExtract = Math.min(Math.min(this.maxExtract, maxOut), currentStored)
 
         // If actually draining...
         if(doDrain)
-            currentStored -= possibleExtract;
+            currentStored -= possibleExtract
 
         // Return what could/was drained
-        return possibleExtract;
+        possibleExtract
     }
 
 
@@ -191,40 +181,38 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * NBTSavable                                                                                                      *
      *******************************************************************************************************************/
 
-    public static final String CURRENT_ENERGY = "CurrentEnergy";
-    public static final String MAX_ENERGY     = "MaxEnergy";
-    public static final String MAX_INSERT     = "MaxInsert";
-    public static final String MAX_EXTRACT    = "MaxExtract";
+    lazy val  CURRENT_ENERGY = "CurrentEnergy"
+    lazy val  MAX_ENERGY     = "MaxEnergy"
+    lazy val  MAX_INSERT     = "MaxInsert"
+    lazy val  MAX_EXTRACT    = "MaxExtract"
 
     /**
      * Save to tag
      * @param tag The incoming tag
      * @return The written tag
      */
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+    override def writeToNBT(tag : NBTTagCompound) : NBTTagCompound = {
         // Write storage values
-        tag.setInteger(CURRENT_ENERGY, currentStored);
-        tag.setInteger(MAX_ENERGY,     maxStored);
+        tag.setInteger(CURRENT_ENERGY, currentStored)
+        tag.setInteger(MAX_ENERGY,     maxStored)
 
         // IO values
-        tag.setInteger(MAX_INSERT,     maxInsert);
-        tag.setInteger(MAX_EXTRACT,    maxExtract);
-        return tag;
+        tag.setInteger(MAX_INSERT,     maxInsert)
+        tag.setInteger(MAX_EXTRACT,    maxExtract)
+        tag
     }
 
     /**
      * Read from the tag
      * @param tag The written tag
      */
-    @Override
-    public void readFromNBT(NBTTagCompound tag) {
+   override def readFromNBT(tag : NBTTagCompound) : Unit =  {
         // Read Storage Values
-        currentStored = tag.getInteger(CURRENT_ENERGY);
-        maxStored     = tag.getInteger(MAX_ENERGY);
+        currentStored = tag.getInteger(CURRENT_ENERGY)
+        maxStored     = tag.getInteger(MAX_ENERGY)
 
         // Read IO values
-        maxInsert     = tag.getInteger(MAX_INSERT);
-        maxExtract   = tag.getInteger(MAX_EXTRACT);
+        maxInsert     = tag.getInteger(MAX_INSERT)
+        maxExtract   = tag.getInteger(MAX_EXTRACT)
     }
 }
