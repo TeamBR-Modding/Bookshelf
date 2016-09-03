@@ -6,6 +6,7 @@ import com.teambr.bookshelf.energy.IEnergyProvider
 import com.teambr.bookshelf.energy.IEnergyReceiver
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.tileentity.TileEntity
 
 /**
  * This file was created for Lux et Umbra
@@ -17,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound
  * @author Paul Davis <pauljoda>
  * @since 9/2/2016
  */
-abstract class EnergyBank extends Syncable with IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
+abstract class EnergyBank extends TileEntity with IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
 
     var currentStored : Int
     var maxStored : Int
