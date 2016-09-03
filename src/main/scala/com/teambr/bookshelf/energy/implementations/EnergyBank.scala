@@ -1,5 +1,6 @@
 package com.teambr.bookshelf.energy.implementations
 
+import com.teambr.bookshelf.common.tiles.traits.Syncable
 import com.teambr.bookshelf.energy.IEnergyHolder
 import com.teambr.bookshelf.energy.IEnergyProvider
 import com.teambr.bookshelf.energy.IEnergyReceiver
@@ -16,7 +17,7 @@ import net.minecraft.nbt.NBTTagCompound
  * @author Paul Davis <pauljoda>
  * @since 9/2/2016
  */
-trait EnergyBank extends IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
+abstract class EnergyBank extends Syncable with IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
 
     var currentStored : Int
     var maxStored : Int

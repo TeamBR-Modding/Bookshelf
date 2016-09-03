@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Optional
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
 
 ))
-trait EnergyHandler extends Syncable with EnergyBank
+trait EnergyHandler extends EnergyBank
         with IEnergyHandler with IEnergyReceiver with IEnergyProvider
         with IEnergyStorage
         with ITeslaConsumer with ITeslaProducer {
