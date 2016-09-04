@@ -351,7 +351,7 @@ trait EnergyHandler extends Syncable
     override def injectEnergy(directionFrom: EnumFacing, amount: Double, voltage: Double): Double = {
         val returnValue = energyStorage.receivePower(amount.toInt, true) * ConfigManager.euMultiplier
         sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
-        returnValue
+        amount - returnValue
     }
 
     /*******************************************************************************************************************
