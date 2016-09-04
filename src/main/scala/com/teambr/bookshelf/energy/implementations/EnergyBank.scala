@@ -9,7 +9,7 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 
 /**
- * This file was created for Lux et Umbra
+ * This file was created for Bookshelf
  * <p>
  * Bookshelf is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
@@ -18,7 +18,7 @@ import net.minecraft.tileentity.TileEntity
  * @author Paul Davis <pauljoda>
  * @since 9/2/2016
  */
-abstract class EnergyBank extends TileEntity with IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
+abstract class EnergyBank extends IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
 
     var currentStored : Int
     var maxStored : Int

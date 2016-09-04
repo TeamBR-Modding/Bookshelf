@@ -1,7 +1,7 @@
 package com.teambr.bookshelf.energy;
 
 /**
- * This file was created for Lux et Umbra
+ * This file was created for Bookshelf
  * <p>
  * Bookshelf is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
