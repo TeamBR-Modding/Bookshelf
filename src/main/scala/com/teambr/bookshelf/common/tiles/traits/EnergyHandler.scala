@@ -35,7 +35,7 @@ trait EnergyHandler extends Syncable
         with IEnergyStorage with IEnergySource with IEnergySink
         with ITeslaConsumer with ITeslaProducer {
 
-    lazy val UPDATE_ENERGY_ID = 0
+    lazy val UPDATE_ENERGY_ID = 123
 
     // Energy Storage
     lazy val energyStorage = new EnergyBank(10000)
@@ -349,9 +349,9 @@ trait EnergyHandler extends Syncable
       * @return Energy not consumed (leftover)
       */
     override def injectEnergy(directionFrom: EnumFacing, amount: Double, voltage: Double): Double = {
-        val returnValue = energyStorage.receivePower(amount.toInt * ConfigManager.euMultiplier, true)
+        energyStorage.receivePower(amount.toInt * ConfigManager.euMultiplier, true)
         sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
-        amount - returnValue
+        0 // As per documentation, kinda strange but oh well
     }
 
     /*******************************************************************************************************************
