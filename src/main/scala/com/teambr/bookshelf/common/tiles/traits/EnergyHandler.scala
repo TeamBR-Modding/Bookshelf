@@ -22,7 +22,6 @@ import net.minecraftforge.fml.common.Optional
   */
 @Optional.InterfaceList(Array(
     new Optional.Interface(iface = "ic2.api.tile.IEnergyStorage", modid = "IC2"),
-    new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaHolder", modid = "tesla"),
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaConsumer", modid = "tesla"),
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
 

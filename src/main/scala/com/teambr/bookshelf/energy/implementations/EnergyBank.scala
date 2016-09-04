@@ -18,7 +18,7 @@ import net.minecraft.tileentity.TileEntity
  * @author Paul Davis <pauljoda>
  * @since 9/2/2016
  */
-abstract class EnergyBank extends IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
+trait EnergyBank extends IEnergyHolder with IEnergyProvider with IEnergyReceiver with NBTSavable {
 
     var currentStored : Int
     var maxStored : Int
