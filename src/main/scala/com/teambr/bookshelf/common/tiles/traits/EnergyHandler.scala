@@ -30,10 +30,12 @@ import net.minecraftforge.fml.common.Optional
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
 
 ))
-trait EnergyHandler extends UpdatingTile
+trait EnergyHandler extends Syncable
         with IEnergyHandler with IEnergyReceiver with IEnergyProvider
         with IEnergyStorage with IEnergySource with IEnergySink
         with ITeslaConsumer with ITeslaProducer {
+
+    lazy val UPDATE_ENERGY_ID = 0
 
     // Energy Storage
     lazy val energyStorage = new EnergyBank(10000)
@@ -119,6 +121,31 @@ trait EnergyHandler extends UpdatingTile
 
     }
 
+    /**
+      * Used to set the value of a field
+      * @param id The field id
+      * @param value The value of the field
+      */
+    override def setVariable(id : Int, value : Double): Unit = {
+        id match {
+            case UPDATE_ENERGY_ID =>
+                energyStorage.setCurrentStored(value.toInt)
+            case _ =>
+        }
+    }
+
+    /**
+      * Used to get the field on the server, this will fetch the server value and overwrite the current
+      * @param id The field id
+      * @return The value on the server, now set to ourselves
+      */
+    override def getVariable(id : Int) : Double = {
+        id match {
+            case UPDATE_ENERGY_ID => energyStorage.getCurrentStored
+            case _ => 0.0
+        }
+    }
+
     /*******************************************************************************************************************
       * RF Compatibility                                                                                               *
       ******************************************************************************************************************/
@@ -146,8 +173,11 @@ trait EnergyHandler extends UpdatingTile
       * @return Amount of energy that was (or would have been, if simulated) received.
       */
     override def receiveEnergy(from: EnumFacing, maxReceive: Int, simulate: Boolean): Int = {
-        if(isReceiver)
-            energyStorage.receivePower(maxReceive, !simulate)
+        if(isReceiver) {
+            val returnValue = energyStorage.receivePower(maxReceive, !simulate)
+            sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
+            returnValue
+        }
         else
             0
     }
@@ -161,8 +191,11 @@ trait EnergyHandler extends UpdatingTile
       * @return How much energy was/should be drained
       */
     override def extractEnergy(from: EnumFacing, maxExtract: Int, simulate: Boolean): Int = {
-        if(isProvider)
-            energyStorage.providePower(maxExtract, !simulate)
+        if(isProvider) {
+            val returnValue = energyStorage.providePower(maxExtract, !simulate)
+            sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
+            returnValue
+        }
         else
             0
     }
@@ -199,6 +232,7 @@ trait EnergyHandler extends UpdatingTile
             energyStorage.setCurrentStored(0)
         else if(energyStorage.getCurrentStored > energyStorage.getMaxStored)
             energyStorage.setCurrentStored(energyStorage.getMaxStored)
+        sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
         energyStorage.getCurrentStored
     }
 
@@ -241,7 +275,7 @@ trait EnergyHandler extends UpdatingTile
       * @param side     side the energy is to be sent to
       * @return Whether energy should be emitted
       */
-    def emitsEnergyTo(receiver: IEnergyAcceptor, side: EnumFacing): Boolean = true
+    override def emitsEnergyTo(receiver: IEnergyAcceptor, side: EnumFacing): Boolean = true
 
     /**
       * Energy output provided by the source this tick.
@@ -250,7 +284,7 @@ trait EnergyHandler extends UpdatingTile
       * @note Modifying the energy net from this method is disallowed.
       * @return Energy offered this tick
       */
-    def getOfferedEnergy: Double = energyStorage.getMaxExtract * ConfigManager.euMultiplier
+    override def getOfferedEnergy: Double = energyStorage.getMaxExtract * ConfigManager.euMultiplier
 
     /**
       * Draw energy from this source's buffer.
@@ -259,7 +293,10 @@ trait EnergyHandler extends UpdatingTile
       *
       * @param amount amount of EU to draw, may be negative
       */
-    def drawEnergy(amount: Double) = energyStorage.providePower((amount / ConfigManager.euMultiplier).toInt, true)
+    override def drawEnergy(amount: Double) : Unit = {
+        energyStorage.providePower(amount.toInt, true) * ConfigManager.euMultiplier
+        sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
+    }
 
     /**
       * Determine the tier of this energy source.
@@ -268,7 +305,7 @@ trait EnergyHandler extends UpdatingTile
       * @note Modifying the energy net from this method is disallowed.
       * @return tier of this energy source
       */
-    def getSourceTier: Int = 1
+    override def getSourceTier: Int = 1
 
     /**
       * Determine how much energy the sink accepts.
@@ -278,7 +315,7 @@ trait EnergyHandler extends UpdatingTile
       * @note Modifying the energy net from this method is disallowed.
       * @return max accepted input in eu
       */
-    def getDemandedEnergy: Double = (energyStorage.getMaxEnergyStored * ConfigManager.euMultiplier) - (energyStorage.getCurrentStored * ConfigManager.euMultiplier)
+    override def getDemandedEnergy: Double = (energyStorage.getMaxEnergyStored - energyStorage.getCurrentStored) * ConfigManager.euMultiplier
 
     /**
       * Determine if this acceptor can accept current from an adjacent emitter in a direction.
@@ -289,7 +326,7 @@ trait EnergyHandler extends UpdatingTile
       * @param emitter energy emitter, may also be null or an IMetaDelegate
       * @param side    side the energy is being received from
       */
-    def acceptsEnergyFrom(emitter: IEnergyEmitter, side: EnumFacing): Boolean = true
+    override def acceptsEnergyFrom(emitter: IEnergyEmitter, side: EnumFacing): Boolean = true
 
     /**
       * Determine the tier of this energy sink.
@@ -299,7 +336,7 @@ trait EnergyHandler extends UpdatingTile
       * @note Return Integer.MAX_VALUE to allow any voltage.
       * @return tier of this energy sink
       */
-    def getSinkTier: Int = Integer.MAX_VALUE
+    override def getSinkTier: Int = Integer.MAX_VALUE
 
     /**
       * Transfer energy to the sink.
@@ -311,7 +348,11 @@ trait EnergyHandler extends UpdatingTile
       * @param amount        energy to be transferred
       * @return Energy not consumed (leftover)
       */
-    def injectEnergy(directionFrom: EnumFacing, amount: Double, voltage: Double): Double = energyStorage.receivePower((amount / ConfigManager.euMultiplier).toInt, true)
+    override def injectEnergy(directionFrom: EnumFacing, amount: Double, voltage: Double): Double = {
+        val returnValue = energyStorage.receivePower(amount.toInt, true) * ConfigManager.euMultiplier
+        sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
+        returnValue
+    }
 
     /*******************************************************************************************************************
       * Tesla                                                                                                          *
@@ -325,7 +366,11 @@ trait EnergyHandler extends UpdatingTile
       *                  Simulations are used to get information without affecting the Tesla Producer.
       * @return The amount of power that the consumer accepts.
       */
-    def givePower(power: Long, simulated: Boolean): Long = energyStorage.providePower(power.toInt, !simulated)
+    override def givePower(power: Long, simulated: Boolean): Long = {
+        val returnValue = energyStorage.providePower(power.toInt, !simulated)
+        sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
+        returnValue
+    }
 
     /**
       * Requests an amount of power from the Tesla Producer.
@@ -335,5 +380,9 @@ trait EnergyHandler extends UpdatingTile
       *                  Simulations are used to get information without affecting the Tesla Producer.
       * @return The amount of power that the Tesla Producer will give.
       */
-    def takePower(power: Long, simulated: Boolean): Long = energyStorage.receivePower(power.toInt, !simulated)
+    override def takePower(power: Long, simulated: Boolean): Long = {
+        val returnValue = energyStorage.receivePower(power.toInt, !simulated)
+        sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
+        returnValue
+    }
 }
