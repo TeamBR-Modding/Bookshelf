@@ -26,10 +26,13 @@ import net.minecraftforge.fml.common.Optional
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
 
 ))
-trait EnergyHandler extends EnergyBank
+trait EnergyHandler extends UpdatingTile
         with IEnergyHandler with IEnergyReceiver with IEnergyProvider
         with IEnergyStorage
         with ITeslaConsumer with ITeslaProducer {
+
+    // Energy Storage
+    lazy val energyStorage = new EnergyBank(10000)
 
     /**
       * Used to define the default energy storage for this energy handler
@@ -62,6 +65,7 @@ trait EnergyHandler extends EnergyBank
       */
     override def writeToNBT(tag: NBTTagCompound) : NBTTagCompound = {
         super.writeToNBT(tag)
+        energyStorage.writeToNBT(tag)
         tag
     }
 
@@ -72,15 +76,17 @@ trait EnergyHandler extends EnergyBank
     override def readFromNBT(tag : NBTTagCompound) = {
         super.readFromNBT(tag)
 
+        energyStorage.readFromNBT(tag)
+
         // Checks for bad tags
-        if(getMaxStored == 0)
-            setMaxStored(defaultEnergyStorageSize)
+        if(energyStorage.getMaxStored == 0)
+            energyStorage.setMaxStored(defaultEnergyStorageSize)
 
-        if(getMaxInsert == 0)
-            setMaxInsert(defaultEnergyStorageSize)
+        if(energyStorage.getMaxInsert == 0)
+            energyStorage.setMaxInsert(defaultEnergyStorageSize)
 
-        if(getMaxExtract == 0)
-            setMaxExtract(defaultEnergyStorageSize)
+        if(energyStorage.getMaxExtract == 0)
+            energyStorage.setMaxExtract(defaultEnergyStorageSize)
 
     }
 
@@ -90,12 +96,12 @@ trait EnergyHandler extends EnergyBank
     /**
       * Returns the amount of energy currently stored.
       */
-    override def getEnergyStored(from: EnumFacing): Int = getEnergyStored
+    override def getEnergyStored(from: EnumFacing): Int = energyStorage.getEnergyStored
 
     /**
       * Returns the maximum amount of energy that can be stored.
       */
-    override def getMaxEnergyStored(from: EnumFacing): Int = getMaxStored
+    override def getMaxEnergyStored(from: EnumFacing): Int = energyStorage.getMaxStored
 
     /**
       * Returns TRUE if the TileEntity can connect on a given side.
@@ -112,7 +118,7 @@ trait EnergyHandler extends EnergyBank
       */
     override def receiveEnergy(from: EnumFacing, maxReceive: Int, simulate: Boolean): Int = {
         if(isReceiver)
-            super.receivePower(maxReceive, !simulate)
+            energyStorage.receivePower(maxReceive, !simulate)
         else
             0
     }
@@ -127,7 +133,7 @@ trait EnergyHandler extends EnergyBank
       */
     override def extractEnergy(from: EnumFacing, maxExtract: Int, simulate: Boolean): Int = {
         if(isProvider)
-            providePower(maxExtract, !simulate)
+            energyStorage.providePower(maxExtract, !simulate)
         else
             0
     }
@@ -141,14 +147,14 @@ trait EnergyHandler extends EnergyBank
       *
       * @return Energy stored in the block
       */
-    override def getStored: Int = getStored * ConfigManager.euMultiplier
+    override def getStored: Int = energyStorage.getCurrentStored * ConfigManager.euMultiplier
 
     /**
       * Set the amount of energy currently stored in the block.
       *
       * @param energy stored energy
       */
-    override def setStored(energy: Int) : Unit = setCurrentStored(energy * ConfigManager.euMultiplier)
+    override def setStored(energy: Int) : Unit = energyStorage.setCurrentStored(energy * ConfigManager.euMultiplier)
 
     /**
       * Add the specified amount of energy.
@@ -160,11 +166,11 @@ trait EnergyHandler extends EnergyBank
       */
     override def addEnergy(amount: Int): Int = {
         setStored(amount * ConfigManager.euMultiplier)
-        if(getStored < 0)
-            setStored(0)
-        else if(getStored > getMaxStored)
-            setStored(getMaxStored)
-        getStored
+        if(energyStorage.getCurrentStored < 0)
+            energyStorage.setCurrentStored(0)
+        else if(energyStorage.getCurrentStored > energyStorage.getMaxStored)
+            energyStorage.setCurrentStored(energyStorage.getMaxStored)
+        energyStorage.getCurrentStored
     }
 
     /**
@@ -172,21 +178,21 @@ trait EnergyHandler extends EnergyBank
       *
       * @return Maximum energy stored
       */
-    override def getCapacity : Int = getMaxStored * ConfigManager.euMultiplier
+    override def getCapacity : Int = energyStorage.getMaxStored * ConfigManager.euMultiplier
 
     /**
       * Get the block's energy output.
       *
       * @return Energy output in EU/t
             */
-    override def getOutput: Int = getMaxExtract * ConfigManager.euMultiplier
+    override def getOutput: Int = energyStorage.getMaxExtract * ConfigManager.euMultiplier
 
     /**
       * Get the block's energy output.
       *
       * @return Energy output in EU/t
       */
-    override def getOutputEnergyUnitsPerTick: Double = getMaxExtract * ConfigManager.euMultiplier
+    override def getOutputEnergyUnitsPerTick: Double = energyStorage.getMaxExtract * ConfigManager.euMultiplier
 
     /**
       * Get whether this block can have its energy used by an adjacent teleporter.
@@ -208,7 +214,7 @@ trait EnergyHandler extends EnergyBank
       *                  Simulations are used to get information without affecting the Tesla Producer.
       * @return The amount of power that the consumer accepts.
       */
-    def givePower(power: Long, simulated: Boolean): Long = providePower(power.toInt, !simulated)
+    def givePower(power: Long, simulated: Boolean): Long = energyStorage.providePower(power.toInt, !simulated)
 
     /**
       * Requests an amount of power from the Tesla Producer.
@@ -218,5 +224,5 @@ trait EnergyHandler extends EnergyBank
       *                  Simulations are used to get information without affecting the Tesla Producer.
       * @return The amount of power that the Tesla Producer will give.
       */
-    def takePower(power: Long, simulated: Boolean): Long = receivePower(power.toInt, !simulated)
+    def takePower(power: Long, simulated: Boolean): Long = energyStorage.receivePower(power.toInt, !simulated)
 }
