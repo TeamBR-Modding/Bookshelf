@@ -227,7 +227,7 @@ trait EnergyHandler extends Syncable
       * @return Energy stored in the block after adding the specified amount
       */
     override def addEnergy(amount: Int): Int = {
-        setStored(amount * ConfigManager.euMultiplier)
+        energyStorage.setCurrentStored(energyStorage.getCurrentStored + (amount * ConfigManager.euMultiplier))
         if(energyStorage.getCurrentStored < 0)
             energyStorage.setCurrentStored(0)
         else if(energyStorage.getCurrentStored > energyStorage.getMaxStored)
@@ -248,14 +248,14 @@ trait EnergyHandler extends Syncable
       *
       * @return Energy output in EU/t
       */
-    override def getOutput: Int = energyStorage.getMaxExtract * ConfigManager.euMultiplier
+    override def getOutput: Int = energyStorage.getMaxExtract / ConfigManager.euMultiplier
 
     /**
       * Get the block's energy output.
       *
       * @return Energy output in EU/t
       */
-    override def getOutputEnergyUnitsPerTick: Double = energyStorage.getMaxExtract * ConfigManager.euMultiplier
+    override def getOutputEnergyUnitsPerTick: Double = energyStorage.getMaxExtract / ConfigManager.euMultiplier
 
     /**
       * Get whether this block can have its energy used by an adjacent teleporter.
@@ -284,7 +284,7 @@ trait EnergyHandler extends Syncable
       * @note Modifying the energy net from this method is disallowed.
       * @return Energy offered this tick
       */
-    override def getOfferedEnergy: Double = energyStorage.getMaxExtract * ConfigManager.euMultiplier
+    override def getOfferedEnergy: Double = energyStorage.getMaxExtract / ConfigManager.euMultiplier
 
     /**
       * Draw energy from this source's buffer.
@@ -294,7 +294,7 @@ trait EnergyHandler extends Syncable
       * @param amount amount of EU to draw, may be negative
       */
     override def drawEnergy(amount: Double) : Unit = {
-        energyStorage.providePower(amount.toInt, true) * ConfigManager.euMultiplier
+        energyStorage.providePower(amount.toInt * ConfigManager.euMultiplier, true)
         sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
     }
 
@@ -305,7 +305,7 @@ trait EnergyHandler extends Syncable
       * @note Modifying the energy net from this method is disallowed.
       * @return tier of this energy source
       */
-    override def getSourceTier: Int = 1
+    override def getSourceTier: Int = ConfigManager.ic2Tier
 
     /**
       * Determine how much energy the sink accepts.
@@ -315,7 +315,7 @@ trait EnergyHandler extends Syncable
       * @note Modifying the energy net from this method is disallowed.
       * @return max accepted input in eu
       */
-    override def getDemandedEnergy: Double = (energyStorage.getMaxEnergyStored - energyStorage.getCurrentStored) * ConfigManager.euMultiplier
+    override def getDemandedEnergy: Double = (energyStorage.getMaxEnergyStored - energyStorage.getCurrentStored) / ConfigManager.euMultiplier
 
     /**
       * Determine if this acceptor can accept current from an adjacent emitter in a direction.
@@ -349,7 +349,7 @@ trait EnergyHandler extends Syncable
       * @return Energy not consumed (leftover)
       */
     override def injectEnergy(directionFrom: EnumFacing, amount: Double, voltage: Double): Double = {
-        val returnValue = energyStorage.receivePower(amount.toInt, true) * ConfigManager.euMultiplier
+        val returnValue = energyStorage.receivePower(amount.toInt * ConfigManager.euMultiplier, true)
         sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored)
         amount - returnValue
     }

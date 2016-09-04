@@ -23,6 +23,7 @@ object ConfigManager {
     var debug : Boolean = _
 
     var euMultiplier : Int = 0
+    var ic2Tier : Int = 0
 
     def init(configFolderLocation : String) = {
         config = new Configuration(new File(configFolderLocation + File.separator + "Bookshelf.cfg"))
@@ -31,6 +32,7 @@ object ConfigManager {
         debug         = config.get(Reference.DEBUG, "Enable Debug Mode?", false).getBoolean
 
         euMultiplier  = config.get(Reference.ENERGY, "How many EU per our energy (RF)", 4).getInt
+        ic2Tier       = config.get(Reference.ENERGY, "IC2 Tier for machines: 1 = LV, 2 = MV, 3 = HV, 4 = EV etc.)", 1).getInt
 
         config.save()
     }
