@@ -10,7 +10,7 @@ import net.darkhax.tesla.api.{ITeslaConsumer, ITeslaHolder, ITeslaProducer}
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.fml.common.Optional
+import net.minecraftforge.fml.common.{FMLModContainer, Loader, Optional}
 
 /**
   * This file was created for Bookshelf
@@ -35,12 +35,20 @@ trait EnergyHandler extends Syncable
         with IEnergyStorage with IEnergySource with IEnergySink
         with ITeslaConsumer with ITeslaProducer {
 
-    lazy val UPDATE_ENERGY_ID = 1000
+    // Sync Values
+    lazy val UPDATE_ENERGY_ID     = 1000
+    lazy val UPDATE_DIFFERENCE_ID = 1001
 
     // Energy Storage
     lazy val energyStorage = new EnergyBank(10000)
 
+    // IC2 Update
     protected var firstRun = true
+
+    // Energy Change Values
+    protected var lastEnergy = 0
+    protected var lastDifference = 0
+    protected var currentDifference = 0
 
     /**
       * Used to define the default energy storage for this energy handler
@@ -72,20 +80,32 @@ trait EnergyHandler extends Syncable
       */
     override def onServerTick(): Unit = {
         super.onServerTick()
+
+        // Check if needed add on load IC2
         if (firstRun) {
-            MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
+            if(Loader.isModLoaded("IC2"))
+                MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
             firstRun = false
         }
+
+        // Handle energy change
+        currentDifference = energyStorage.getCurrentStored - lastEnergy
+
+        if(currentDifference != lastDifference)
+            sendValueToClient(UPDATE_DIFFERENCE_ID, currentDifference)
+
+        lastDifference = currentDifference
+        lastEnergy = energyStorage.getCurrentStored
     }
 
     override def onChunkUnload() {
-        if (!getWorld.isRemote)
+        if (!getWorld.isRemote && Loader.isModLoaded("IC2"))
             MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
         super.onChunkUnload()
     }
 
     override def invalidate() {
-        if (!getWorld.isRemote)
+        if (!getWorld.isRemote && Loader.isModLoaded("IC2"))
             MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
         super.invalidate()
     }
@@ -130,6 +150,8 @@ trait EnergyHandler extends Syncable
         id match {
             case UPDATE_ENERGY_ID =>
                 energyStorage.setCurrentStored(value.toInt)
+            case UPDATE_DIFFERENCE_ID =>
+                currentDifference = value.toInt
             case _ =>
         }
     }
@@ -142,6 +164,7 @@ trait EnergyHandler extends Syncable
     override def getVariable(id : Int) : Double = {
         id match {
             case UPDATE_ENERGY_ID => energyStorage.getCurrentStored
+            case UPDATE_DIFFERENCE_ID => currentDifference
             case _ => 0.0
         }
     }
@@ -272,10 +295,11 @@ trait EnergyHandler extends Syncable
       */
     def lookupMaxByTier(tier : Int) : Int = {
         tier match {
-            case 1 => 128
-            case 2 => 512
-            case 3 => 2048
-            case 4 => 8192
+            case 1 => 32
+            case 2 => 128
+            case 3 => 512
+            case 4 => 2048
+            case 5 => 8192
             case _ => 128
         }
     }
@@ -315,7 +339,7 @@ trait EnergyHandler extends Syncable
 
     /**
       * Determine the tier of this energy source.
-      * 1 = LV, 2 = MV, 3 = HV, 4 = EV etc.
+      * 1 = LV, 2 = MV, 3 = MHV, 4 = HV, 5 = EV etc.
       *
       * @note Modifying the energy net from this method is disallowed.
       * @return tier of this energy source
