@@ -323,7 +323,10 @@ trait EnergyHandler extends Syncable
       * @note Modifying the energy net from this method is disallowed.
       * @return Energy offered this tick
       */
-    override def getOfferedEnergy: Double = Math.min(energyStorage.getMaxExtract / ConfigManager.euMultiplier, lookupMaxByTier(ConfigManager.ic2Tier))
+    override def getOfferedEnergy: Double =
+        Math.min(
+            Math.min(energyStorage.getCurrentStored / ConfigManager.euMultiplier, energyStorage.getMaxExtract / ConfigManager.euMultiplier),
+            lookupMaxByTier(ConfigManager.ic2Tier))
 
     /**
       * Draw energy from this source's buffer.
