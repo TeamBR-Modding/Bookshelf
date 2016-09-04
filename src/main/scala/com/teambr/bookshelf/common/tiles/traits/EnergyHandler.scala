@@ -77,13 +77,13 @@ trait EnergyHandler extends UpdatingTile
     }
 
     override def onChunkUnload() {
-        if (!worldObj.isRemote)
+        if (!getWorld.isRemote)
             MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
         super.onChunkUnload()
     }
 
     override def invalidate() {
-        if (!worldObj.isRemote)
+        if (!getWorld.isRemote)
             MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
         super.invalidate()
     }
