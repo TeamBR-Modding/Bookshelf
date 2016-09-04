@@ -3,11 +3,10 @@ package com.teambr.bookshelf.common.tiles.traits
 import cofh.api.energy.{IEnergyHandler, IEnergyProvider, IEnergyReceiver}
 import com.teambr.bookshelf.energy.implementations.EnergyBank
 import com.teambr.bookshelf.manager.ConfigManager
-import ic2.api.energy.tile.{IEnergySink, IEnergySource}
+import ic2.api.energy.tile.{IEnergyAcceptor, IEnergyEmitter, IEnergySink, IEnergySource}
 import ic2.api.tile.IEnergyStorage
 import net.darkhax.tesla.api.{ITeslaConsumer, ITeslaHolder, ITeslaProducer}
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fml.common.Optional
 
@@ -206,6 +205,18 @@ trait EnergyHandler extends UpdatingTile
     override def isTeleporterCompatible(side: EnumFacing): Boolean = true
 
     /**
+      * Determine if this emitter can emit energy to an adjacent receiver.
+      *
+      * The TileEntity in the receiver parameter is what was originally added to the energy net,
+      * which may be normal in-world TileEntity, a delegate or an IMetaDelegate.
+      *
+      * @param receiver receiver, may also be null or an IMetaDelegate
+      * @param side     side the energy is to be sent to
+      * @return Whether energy should be emitted
+      */
+    def emitsEnergyTo(receiver: IEnergyAcceptor, side: EnumFacing): Boolean = true
+
+    /**
       * Energy output provided by the source this tick.
       * This is typically Math.min(stored energy, max output/tick).
       *
@@ -241,6 +252,17 @@ trait EnergyHandler extends UpdatingTile
       * @return max accepted input in eu
       */
     def getDemandedEnergy: Double = (energyStorage.getMaxEnergyStored * ConfigManager.euMultiplier) - (energyStorage.getCurrentStored * ConfigManager.euMultiplier)
+
+    /**
+      * Determine if this acceptor can accept current from an adjacent emitter in a direction.
+      *
+      * The TileEntity in the emitter parameter is what was originally added to the energy net,
+      * which may be normal in-world TileEntity, a delegate or an IMetaDelegate.
+      *
+      * @param emitter energy emitter, may also be null or an IMetaDelegate
+      * @param side    side the energy is being received from
+      */
+    def acceptsEnergyFrom(emitter: IEnergyEmitter, side: EnumFacing): Boolean = true
 
     /**
       * Determine the tier of this energy sink.
