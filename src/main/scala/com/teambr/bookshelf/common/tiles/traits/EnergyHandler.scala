@@ -3,6 +3,7 @@ package com.teambr.bookshelf.common.tiles.traits
 import cofh.api.energy.{IEnergyHandler, IEnergyProvider, IEnergyReceiver}
 import com.teambr.bookshelf.energy.implementations.EnergyBank
 import com.teambr.bookshelf.manager.ConfigManager
+import ic2.api.energy.tile.{IEnergySink, IEnergySource}
 import ic2.api.tile.IEnergyStorage
 import net.darkhax.tesla.api.{ITeslaConsumer, ITeslaHolder, ITeslaProducer}
 import net.minecraft.nbt.NBTTagCompound
@@ -22,13 +23,15 @@ import net.minecraftforge.fml.common.Optional
   */
 @Optional.InterfaceList(Array(
     new Optional.Interface(iface = "ic2.api.tile.IEnergyStorage", modid = "IC2"),
+    new Optional.Interface(iface = "ic2.api.energy.tile.IEnergySource", modid = "IC2"),
+    new Optional.Interface(iface = "ic2.api.energy.tile.IEnergySink", modid = "IC2"),
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaConsumer", modid = "tesla"),
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
 
 ))
 trait EnergyHandler extends UpdatingTile
         with IEnergyHandler with IEnergyReceiver with IEnergyProvider
-        with IEnergyStorage
+        with IEnergyStorage with IEnergySource with IEnergySink
         with ITeslaConsumer with ITeslaProducer {
 
     // Energy Storage
@@ -201,6 +204,65 @@ trait EnergyHandler extends UpdatingTile
       * @return Whether the block is teleporter compatible
       */
     override def isTeleporterCompatible(side: EnumFacing): Boolean = true
+
+    /**
+      * Energy output provided by the source this tick.
+      * This is typically Math.min(stored energy, max output/tick).
+      *
+      * @note Modifying the energy net from this method is disallowed.
+      * @return Energy offered this tick
+      */
+    def getOfferedEnergy: Double = energyStorage.getMaxExtract * ConfigManager.euMultiplier
+
+    /**
+      * Draw energy from this source's buffer.
+      *
+      * If the source doesn't have a buffer, this is a no-op.
+      *
+      * @param amount amount of EU to draw, may be negative
+      */
+    def drawEnergy(amount: Double) = energyStorage.providePower((amount / ConfigManager.euMultiplier).toInt, true)
+
+    /**
+      * Determine the tier of this energy source.
+      * 1 = LV, 2 = MV, 3 = HV, 4 = EV etc.
+      *
+      * @note Modifying the energy net from this method is disallowed.
+      * @return tier of this energy source
+      */
+    def getSourceTier: Int = 1
+
+    /**
+      * Determine how much energy the sink accepts.
+      *
+      * Make sure that injectEnergy() does accepts energy if demandsEnergy() returns anything > 0.
+      *
+      * @note Modifying the energy net from this method is disallowed.
+      * @return max accepted input in eu
+      */
+    def getDemandedEnergy: Double = (energyStorage.getMaxEnergyStored * ConfigManager.euMultiplier) - (energyStorage.getCurrentStored * ConfigManager.euMultiplier)
+
+    /**
+      * Determine the tier of this energy sink.
+      * 1 = LV, 2 = MV, 3 = HV, 4 = EV etc.
+      *
+      * @note Modifying the energy net from this method is disallowed.
+      * @note Return Integer.MAX_VALUE to allow any voltage.
+      * @return tier of this energy sink
+      */
+    def getSinkTier: Int = Integer.MAX_VALUE
+
+    /**
+      * Transfer energy to the sink.
+      *
+      * It's highly recommended to accept all energy by letting the internal buffer overflow to
+      * increase the performance and accuracy of the distribution simulation.
+      *
+      * @param directionFrom direction from which the energy comes from
+      * @param amount        energy to be transferred
+      * @return Energy not consumed (leftover)
+      */
+    def injectEnergy(directionFrom: EnumFacing, amount: Double, voltage: Double): Double = energyStorage.receivePower((amount / ConfigManager.euMultiplier).toInt, true)
 
     /*******************************************************************************************************************
       * Tesla                                                                                                          *
