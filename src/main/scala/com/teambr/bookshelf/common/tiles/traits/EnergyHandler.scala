@@ -35,7 +35,7 @@ trait EnergyHandler extends Syncable
         with IEnergyStorage with IEnergySource with IEnergySink
         with ITeslaConsumer with ITeslaProducer {
 
-    lazy val UPDATE_ENERGY_ID = 123
+    lazy val UPDATE_ENERGY_ID = 1000
 
     // Energy Storage
     lazy val energyStorage = new EnergyBank(10000)
@@ -209,7 +209,7 @@ trait EnergyHandler extends Syncable
       *
       * @return Energy stored in the block
       */
-    override def getStored: Int = energyStorage.getCurrentStored * ConfigManager.euMultiplier
+    override def getStored: Int = energyStorage.getCurrentStored / ConfigManager.euMultiplier
 
     /**
       * Set the amount of energy currently stored in the block.
