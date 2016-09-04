@@ -248,14 +248,14 @@ trait EnergyHandler extends Syncable
       *
       * @return Energy output in EU/t
       */
-    override def getOutput: Int = energyStorage.getMaxExtract / ConfigManager.euMultiplier
+    override def getOutput: Int = Math.min(energyStorage.getMaxExtract / ConfigManager.euMultiplier, lookupMaxByTier(ConfigManager.ic2Tier))
 
     /**
       * Get the block's energy output.
       *
       * @return Energy output in EU/t
       */
-    override def getOutputEnergyUnitsPerTick: Double = energyStorage.getMaxExtract / ConfigManager.euMultiplier
+    override def getOutputEnergyUnitsPerTick: Double = Math.min(energyStorage.getMaxExtract / ConfigManager.euMultiplier, lookupMaxByTier(ConfigManager.ic2Tier))
 
     /**
       * Get whether this block can have its energy used by an adjacent teleporter.
@@ -264,6 +264,21 @@ trait EnergyHandler extends Syncable
       * @return Whether the block is teleporter compatible
       */
     override def isTeleporterCompatible(side: EnumFacing): Boolean = true
+
+    /**
+      * Used to get how much power maxed by tier
+      * @param tier Tier
+      * @return Max output
+      */
+    def lookupMaxByTier(tier : Int) : Int = {
+        tier match {
+            case 1 => 128
+            case 2 => 512
+            case 3 => 2048
+            case 4 => 8192
+            case _ => 128
+        }
+    }
 
     /**
       * Determine if this emitter can emit energy to an adjacent receiver.
@@ -284,7 +299,7 @@ trait EnergyHandler extends Syncable
       * @note Modifying the energy net from this method is disallowed.
       * @return Energy offered this tick
       */
-    override def getOfferedEnergy: Double = energyStorage.getMaxExtract / ConfigManager.euMultiplier
+    override def getOfferedEnergy: Double = Math.min(energyStorage.getMaxExtract / ConfigManager.euMultiplier, lookupMaxByTier(ConfigManager.ic2Tier))
 
     /**
       * Draw energy from this source's buffer.
