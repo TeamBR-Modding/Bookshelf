@@ -3,11 +3,13 @@ package com.teambr.bookshelf.common.tiles.traits
 import cofh.api.energy.{IEnergyHandler, IEnergyProvider, IEnergyReceiver}
 import com.teambr.bookshelf.energy.implementations.EnergyBank
 import com.teambr.bookshelf.manager.ConfigManager
+import ic2.api.energy.event.{EnergyTileLoadEvent, EnergyTileUnloadEvent}
 import ic2.api.energy.tile.{IEnergyAcceptor, IEnergyEmitter, IEnergySink, IEnergySource}
 import ic2.api.tile.IEnergyStorage
 import net.darkhax.tesla.api.{ITeslaConsumer, ITeslaHolder, ITeslaProducer}
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumFacing
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Optional
 
 /**
@@ -36,6 +38,8 @@ trait EnergyHandler extends UpdatingTile
     // Energy Storage
     lazy val energyStorage = new EnergyBank(10000)
 
+    protected var firstRun = true
+
     /**
       * Used to define the default energy storage for this energy handler
       *
@@ -57,9 +61,32 @@ trait EnergyHandler extends UpdatingTile
       */
     def isReceiver : Boolean
 
-    /*******************************************************************************************************************
+    /** *****************************************************************************************************************
       * Tile Methods                                                                                                   *
-      ******************************************************************************************************************/
+      * *****************************************************************************************************************/
+
+    /**
+      *  Called on the server side only
+      */
+    override def onServerTick(): Unit = {
+        super.onServerTick()
+        if (firstRun) {
+            MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
+            firstRun = false
+        }
+    }
+
+    override def onChunkUnload() {
+        if (!worldObj.isRemote)
+            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+        super.onChunkUnload()
+    }
+
+    override def invalidate() {
+        if (!worldObj.isRemote)
+            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+        super.invalidate()
+    }
 
     /**
       * Write to the tag
@@ -186,7 +213,7 @@ trait EnergyHandler extends UpdatingTile
       * Get the block's energy output.
       *
       * @return Energy output in EU/t
-            */
+      */
     override def getOutput: Int = energyStorage.getMaxExtract * ConfigManager.euMultiplier
 
     /**
