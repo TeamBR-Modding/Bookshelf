@@ -46,9 +46,9 @@ trait EnergyHandler extends Syncable
     protected var firstRun = true
 
     // Energy Change Values
-    protected var lastEnergy = 0
-    protected var lastDifference = 0
-    protected var currentDifference = 0
+    var lastEnergy = 0
+    var lastDifference = 0
+    var currentDifference = 0
 
     /**
       * Used to define the default energy storage for this energy handler
