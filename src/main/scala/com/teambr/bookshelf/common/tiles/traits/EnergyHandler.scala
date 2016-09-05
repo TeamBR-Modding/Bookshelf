@@ -28,7 +28,6 @@ import net.minecraftforge.fml.common.{FMLModContainer, Loader, Optional}
     new Optional.Interface(iface = "ic2.api.energy.tile.IEnergySink", modid = "IC2"),
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaConsumer", modid = "tesla"),
     new Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
-
 ))
 trait EnergyHandler extends Syncable
         with IEnergyHandler with IEnergyReceiver with IEnergyProvider
@@ -84,7 +83,7 @@ trait EnergyHandler extends Syncable
         // Check if needed add on load IC2
         if (firstRun) {
             if(Loader.isModLoaded("IC2"))
-                MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
+                energyLoad(true)
             firstRun = false
         }
 
@@ -100,14 +99,23 @@ trait EnergyHandler extends Syncable
 
     override def onChunkUnload() {
         if (!getWorld.isRemote && Loader.isModLoaded("IC2"))
-            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+            energyLoad(false)
         super.onChunkUnload()
     }
 
     override def invalidate() {
         if (!getWorld.isRemote && Loader.isModLoaded("IC2"))
-            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+            energyLoad(false)
         super.invalidate()
+    }
+
+    @Optional.Method(modid = "IC2")
+    def energyLoad(load : Boolean) : Unit = {
+        if(load)
+            MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
+        else
+            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
+
     }
 
     /**
@@ -300,7 +308,7 @@ trait EnergyHandler extends Syncable
             case 3 => 512
             case 4 => 2048
             case 5 => 8192
-            case _ => 128
+            case _ => 32
         }
     }
 
