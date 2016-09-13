@@ -33,7 +33,7 @@ import scala.collection.mutable.ArrayBuffer
   * This class will handle drawing all slots and the background of the GUI. It will even center the title for you and translate it
   */
 
-abstract class GuiBase[T <: Container](val inventory : T, width : Int, height: Int, name : String)
+abstract class GuiBase[T <: Container](var inventory : T, width : Int, height: Int, name : String)
         extends GuiContainer(inventory) {
     this.xSize = width
     this.ySize = height
