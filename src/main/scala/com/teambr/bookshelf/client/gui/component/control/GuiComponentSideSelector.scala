@@ -36,7 +36,7 @@ import org.lwjgl.opengl.GL11
 abstract class GuiComponentSideSelector(x : Int, y : Int, scale : Double, var blockState : IBlockState, tile : TileEntity, highlightSelectedSides : Boolean = true, renderTile : Boolean = true) extends
         BaseComponent(x, y) {
 
-    val diameter = MathHelper.ceiling_double_int(scale * Math.sqrt(3))
+    val diameter = MathHelper.ceil(scale * Math.sqrt(3))
 
     var toggleableSidesController : ToggleableSidesController = null
 

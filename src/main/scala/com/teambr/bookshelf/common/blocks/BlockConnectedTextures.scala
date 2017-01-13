@@ -168,7 +168,7 @@ trait BlockConnectedTextures extends Block with CreatesTextures with ILoadAction
     }
 
     override def getExtendedState(state: IBlockState, world: IBlockAccess, pos: BlockPos): IBlockState = {
-        new ConnectedTexturesState(pos, Minecraft.getMinecraft.theWorld,
+        new ConnectedTexturesState(pos, Minecraft.getMinecraft.world,
             state.getBlock.asInstanceOf[BlockConnectedTextures], state.getBlock)
     }
 

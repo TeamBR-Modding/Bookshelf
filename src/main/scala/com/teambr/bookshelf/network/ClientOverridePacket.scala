@@ -29,18 +29,18 @@ class ClientOverridePacket extends IMessage with IMessageHandler[ClientOverrideP
 
     override def fromBytes(buffer : ByteBuf): Unit = {
         blockPosition = BlockPos.fromLong(buffer.readLong())
-        tag = new PacketBuffer(buffer).readNBTTagCompoundFromBuffer
+        tag = new PacketBuffer(buffer).readCompoundTag()
     }
 
     override def toBytes(buffer : ByteBuf): Unit = {
         buffer.writeLong(blockPosition.toLong)
-        new PacketBuffer(buffer).writeNBTTagCompoundToBuffer(tag)
+        new PacketBuffer(buffer).writeCompoundTag(tag)
     }
 
     def onMessage(message: ClientOverridePacket, ctx: MessageContext) : IMessage = {
         if (ctx.side.isServer) {
             if (message.tag != null) {
-                val world: World = ctx.getServerHandler.playerEntity.worldObj
+                val world: World = ctx.getServerHandler.playerEntity.world
                 if (world.getTileEntity(message.blockPosition) != null) {
                     world.getTileEntity(message.blockPosition).readFromNBT(message.tag)
                     world.notifyBlockUpdate(message.blockPosition, world.getBlockState(message.blockPosition), world.getBlockState(message.blockPosition), 3)

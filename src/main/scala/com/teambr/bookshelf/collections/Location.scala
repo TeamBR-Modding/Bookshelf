@@ -59,9 +59,9 @@ class Location extends NBTSavable {
      */
     def this(xPos: Double, yPos: Double, zPos: Double) {
         this()
-        x = MathHelper.floor_double(xPos)
-        y = MathHelper.floor_double(yPos)
-        z = MathHelper.floor_double(zPos)
+        x = MathHelper.floor(xPos)
+        y = MathHelper.floor(yPos)
+        z = MathHelper.floor(zPos)
     }
 
     /**

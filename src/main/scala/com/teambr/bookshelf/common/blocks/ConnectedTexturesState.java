@@ -48,7 +48,7 @@ public class ConnectedTexturesState implements IBlockState {
     }
 
     @Override
-    public Collection<IProperty<?>> getPropertyNames() {
+    public Collection<IProperty<?>> getPropertyKeys() {
         return null;
     }
 
@@ -88,7 +88,7 @@ public class ConnectedTexturesState implements IBlockState {
     }
 
     @Override
-    public boolean func_189884_a(Entity p_189884_1_) {
+    public boolean canEntitySpawn(Entity entityIn) {
         return false;
     }
 

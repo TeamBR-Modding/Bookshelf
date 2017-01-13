@@ -242,7 +242,7 @@ object InventoryUtils {
             }
 
             f = f / inv.getSizeInventory.toFloat
-            MathHelper.floor_float(f * 14.0F) + (if (i > 0) 1 else 0)
+            MathHelper.floor(f * 14.0F) + (if (i > 0) 1 else 0)
         }
     }
 }

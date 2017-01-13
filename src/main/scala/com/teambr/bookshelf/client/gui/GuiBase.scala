@@ -222,9 +222,9 @@ abstract class GuiBase[T <: Container](var inventory : T, width : Int, height: I
                     RenderUtils.restoreColor()
                 case slot : Slot =>
                     if(isLargeSlot(slot))
-                        this.drawTexturedModalRect(slot.xDisplayPosition - 5, slot.yDisplayPosition - 5, 0, 38, 26, 26)
+                        this.drawTexturedModalRect(slot.xPos - 5, slot.yPos - 5, 0, 38, 26, 26)
                     else
-                        this.drawTexturedModalRect(slot.xDisplayPosition - 1, slot.yDisplayPosition - 1, 0, 20, 18, 18)
+                        this.drawTexturedModalRect(slot.xPos - 1, slot.yPos - 1, 0, 20, 18, 18)
                 case _ => //Not a slot. Somehow...
             }
         }

@@ -3,12 +3,13 @@ package com.teambr.bookshelf.common.blocks.traits
 import com.teambr.bookshelf.common.blocks.properties.Properties
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockStateContainer, IBlockState}
-import net.minecraft.block.{ Block, BlockPistonBase }
+import net.minecraft.block.{Block, BlockPistonBase}
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.{ EnumFacing }
-import net.minecraft.world.{ IBlockAccess, World }
-import net.minecraftforge.common.property.{ IExtendedBlockState, ExtendedBlockState, IUnlistedProperty }
+import net.minecraft.util.EnumFacing
+import net.minecraft.world.{IBlockAccess, World}
+import net.minecraftforge.common.property.{ExtendedBlockState, IExtendedBlockState, IUnlistedProperty}
 
 /**
  * This file was created for Bookshelf
@@ -25,8 +26,8 @@ trait SixWayRotation extends Block with FourWayRotation {
     /**
      * Called when the block is placed, we check which way the player is facing and put our value as the opposite of that
      */
-    override def onBlockPlaced(world: World, blockPos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState = {
-        this.getDefaultState.withProperty(Properties.SIX_WAY, BlockPistonBase.getFacingFromEntity(blockPos, placer))
+    override def onBlockPlacedBy(world: World, pos : BlockPos, state : IBlockState, placer : EntityLivingBase, stack : ItemStack) : Unit = {
+        world.setBlockState(pos, getDefaultState.withProperty(Properties.SIX_WAY, BlockPistonBase.getFacingFromEntity(pos, placer)))
     }
 
     /**

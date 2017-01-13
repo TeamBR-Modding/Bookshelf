@@ -71,7 +71,7 @@ trait KeepInventory extends DropsItems {
             itemEntity.motionX = random.nextGaussian * factor
             itemEntity.motionY = random.nextGaussian * factor + 0.2F
             itemEntity.motionZ = random.nextGaussian * factor
-            world.spawnEntityInWorld(itemEntity)
+            world.spawnEntity(itemEntity)
 
             stack.stackSize = 0
         }

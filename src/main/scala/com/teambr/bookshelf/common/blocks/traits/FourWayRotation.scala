@@ -5,6 +5,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockStateContainer, IBlockState}
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.{BlockPos, MathHelper}
 import net.minecraft.world.{IBlockAccess, World}
@@ -25,10 +26,10 @@ trait FourWayRotation extends Block {
     /**
      * Called when the block is placed, we check which way the player is facing and put our value as the opposite of that
      */
-    override def onBlockPlaced(world : World, blockPos : BlockPos, facing : EnumFacing, hitX : Float, hitY : Float, hitZ : Float, meta : Int, placer : EntityLivingBase) : IBlockState = {
-        val playerFacingDirection = if (placer == null) 0 else MathHelper.floor_double((placer.rotationYaw / 90.0F) + 0.5D) & 3
+    override def onBlockPlacedBy(world: World, pos : BlockPos, state : IBlockState, placer : EntityLivingBase, stack : ItemStack) : Unit = {
+        val playerFacingDirection = if (placer == null) 0 else MathHelper.floor((placer.rotationYaw / 90.0F) + 0.5D) & 3
         val enumFacing = EnumFacing.getHorizontal(playerFacingDirection).getOpposite
-        this.getDefaultState.withProperty(Properties.FOUR_WAY, enumFacing)
+        world.setBlockState(pos, getDefaultState.withProperty(Properties.FOUR_WAY, enumFacing))
     }
 
     /**
