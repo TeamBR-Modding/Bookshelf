@@ -20,7 +20,7 @@ public class NotificationTickHandler {
     public void renderTick(TickEvent.RenderTickEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
 
-        if (mc.world != null) {
+        if (mc.theWorld != null) {
             if(guiNotification == null)
                 guiNotification = new GuiNotification(mc);
             guiNotification.update();

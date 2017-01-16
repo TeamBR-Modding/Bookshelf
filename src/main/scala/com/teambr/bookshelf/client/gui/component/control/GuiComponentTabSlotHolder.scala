@@ -28,11 +28,11 @@ class GuiComponentTabSlotHolder(x : Int, y : Int, width : Int, height : Int, tab
       */
     override def render(guiLeft: Int, guiTop: Int, mouseX: Int, mouseY: Int): Unit = {
         if(tab.areChildrenActive) {
-            slot.xPos = slotX
-            slot.yPos = slotY
+            slot.xDisplayPosition = slotX
+            slot.yDisplayPosition = slotY
         } else {
-            slot.xPos = -10000
-            slot.yPos = -10000
+            slot.xDisplayPosition = -10000
+            slot.yDisplayPosition = -10000
         }
     }
 

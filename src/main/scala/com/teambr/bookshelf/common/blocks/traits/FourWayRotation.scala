@@ -27,7 +27,7 @@ trait FourWayRotation extends Block {
      * Called when the block is placed, we check which way the player is facing and put our value as the opposite of that
      */
     override def onBlockPlacedBy(world: World, pos : BlockPos, state : IBlockState, placer : EntityLivingBase, stack : ItemStack) : Unit = {
-        val playerFacingDirection = if (placer == null) 0 else MathHelper.floor((placer.rotationYaw / 90.0F) + 0.5D) & 3
+        val playerFacingDirection = if (placer == null) 0 else MathHelper.floor_double((placer.rotationYaw / 90.0F) + 0.5D) & 3
         val enumFacing = EnumFacing.getHorizontal(playerFacingDirection).getOpposite
         world.setBlockState(pos, getDefaultState.withProperty(Properties.FOUR_WAY, enumFacing))
     }

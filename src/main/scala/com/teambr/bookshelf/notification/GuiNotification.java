@@ -97,7 +97,7 @@ public class GuiNotification extends Gui {
 
     public void update()
     {
-        if (this.notification != null && this.timeOpen != 0L && Minecraft.getMinecraft().player != null)
+        if (this.notification != null && this.timeOpen != 0L && Minecraft.getMinecraft().thePlayer != null)
         {
             double d0 = (double)(Minecraft.getSystemTime() - this.timeOpen) / this.duration;
 

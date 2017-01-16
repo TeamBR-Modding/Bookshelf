@@ -48,7 +48,7 @@ public class ConnectedTexturesState implements IBlockState {
     }
 
     @Override
-    public Collection<IProperty<?>> getPropertyKeys() {
+    public Collection<IProperty<?>> getPropertyNames() {
         return null;
     }
 

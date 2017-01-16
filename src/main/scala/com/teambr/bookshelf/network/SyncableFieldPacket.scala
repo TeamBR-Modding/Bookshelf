@@ -48,30 +48,30 @@ class SyncableFieldPacket extends IMessage with IMessageHandler[SyncableFieldPac
 
     override def onMessage(message: SyncableFieldPacket, ctx: MessageContext): IMessage = {
         if(ctx.side.isServer) {
-            if(ctx.getServerHandler.playerEntity.world.getTileEntity(message.blockPosition) == null)
+            if(ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition) == null)
                 return null
-            if(!ctx.getServerHandler.playerEntity.world.getTileEntity(message.blockPosition).isInstanceOf[Syncable])
+            if(!ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition).isInstanceOf[Syncable])
                 return null
 
             if(message.returnValue)
                 PacketManager.net.sendToAllAround(new SyncableFieldPacket(false, message.id,
-                    ctx.getServerHandler.playerEntity.world.getTileEntity(message.blockPosition)
+                    ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition)
                             .asInstanceOf[Syncable].getVariable(message.id), message.blockPosition),
-                    new TargetPoint(ctx.getServerHandler.playerEntity.world.provider.getDimension,
+                    new TargetPoint(ctx.getServerHandler.playerEntity.worldObj.provider.getDimension,
                         message.blockPosition.getX, message.blockPosition.getY, message.blockPosition.getZ, 25))
             else
-                ctx.getServerHandler.playerEntity.world.getTileEntity(message.blockPosition)
+                ctx.getServerHandler.playerEntity.worldObj.getTileEntity(message.blockPosition)
                         .asInstanceOf[Syncable].setVariable(message.id, message.value)
         } else {
-            if(Minecraft.getMinecraft.world.getTileEntity(message.blockPosition) == null)
+            if(Minecraft.getMinecraft.theWorld.getTileEntity(message.blockPosition) == null)
                 return null
-            if(!Minecraft.getMinecraft.world.getTileEntity(message.blockPosition).isInstanceOf[Syncable])
+            if(!Minecraft.getMinecraft.theWorld.getTileEntity(message.blockPosition).isInstanceOf[Syncable])
                 return null
 
             if(message.returnValue)
                 PacketManager.net.sendToServer(new SyncableFieldPacket(false, message.id, message.value, message.blockPosition))
             else
-                Minecraft.getMinecraft.world.getTileEntity(message.blockPosition)
+                Minecraft.getMinecraft.theWorld.getTileEntity(message.blockPosition)
                         .asInstanceOf[Syncable].setVariable(message.id, message.value)
         }
         null

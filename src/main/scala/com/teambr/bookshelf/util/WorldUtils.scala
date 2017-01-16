@@ -108,7 +108,7 @@ object WorldUtils {
             itemEntity.motionX = random.nextGaussian * factor
             itemEntity.motionY = random.nextGaussian * factor + 0.2F
             itemEntity.motionZ = random.nextGaussian * factor
-            world.spawnEntity(itemEntity)
+            world.spawnEntityInWorld(itemEntity)
 
             stack.stackSize = 0
         }
