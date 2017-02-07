@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.network
 
-import com.teambr.bookshelf.common.tiles.traits.Syncable
 import io.netty.buffer.ByteBuf
 import net.minecraft.client.Minecraft
 import net.minecraft.util.math.BlockPos

@@ -1,8 +1,7 @@
 package com.teambr.bookshelf.common.container
 
 import com.teambr.bookshelf.common.container.slots.IPhantomSlot
-import com.teambr.bookshelf.common.tiles.traits.Inventory
-import com.teambr.bookshelf.util.InventoryUtils
+import com.teambr.bookshelf.common.tiles.Inventory
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{ClickType, Container, IInventory, Slot}
 import net.minecraft.item.ItemStack

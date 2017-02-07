@@ -3,7 +3,6 @@ package com.teambr.bookshelf.util
 import java.awt.Color
 
 import com.teambr.bookshelf.client.shapes.{DrawableShape, TexturedCylinder, TexturedSphere}
-import com.teambr.bookshelf.lib.Reference
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.{TextureAtlasSprite, TextureMap}
 import net.minecraft.client.renderer.vertex.{DefaultVertexFormats, VertexFormat, VertexFormatElement}

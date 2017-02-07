@@ -1,8 +1,6 @@
-package com.teambr.bookshelf.common.tiles.traits
+package com.teambr.bookshelf.common.tiles
 
 import java.util
-
-import com.teambr.bookshelf.common.container.InventoryCallback
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack

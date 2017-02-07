@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.helper
 
-import com.teambr.bookshelf.lib.Reference
 import org.apache.logging.log4j.{Level, LogManager}
 
 /**

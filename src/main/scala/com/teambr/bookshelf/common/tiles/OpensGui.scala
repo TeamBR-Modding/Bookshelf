@@ -1,6 +1,5 @@
-package com.teambr.bookshelf.common.tiles.traits
+package com.teambr.bookshelf.common.tiles
 
-import com.teambr.bookshelf.Bookshelf
 import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.player.EntityPlayer

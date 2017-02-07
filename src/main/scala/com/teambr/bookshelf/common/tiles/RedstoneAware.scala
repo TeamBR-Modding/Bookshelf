@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.tiles.traits
+package com.teambr.bookshelf.common.tiles
 
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.BlockPos

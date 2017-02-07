@@ -1,10 +1,10 @@
 package com.teambr.bookshelf.util
 
-import com.teambr.bookshelf.common.tiles.traits.Inventory
+import com.teambr.bookshelf.common.tiles.Inventory
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.{EnumFacing}
+import net.minecraft.util.EnumFacing
 import net.minecraft.world.World
 
 import scala.util.Random

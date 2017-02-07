@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.collections;
 
-import com.teambr.bookshelf.common.tiles.traits.InventorySided;
+import com.teambr.bookshelf.common.tiles.InventorySided;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.IItemHandlerModifiable;

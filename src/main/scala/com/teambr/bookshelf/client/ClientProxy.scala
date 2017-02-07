@@ -1,8 +1,6 @@
 package com.teambr.bookshelf.client
 
 import java.io.File
-
-import com.teambr.bookshelf.Bookshelf
 import com.teambr.bookshelf.client.models.BakedConnectedTextures
 import com.teambr.bookshelf.common.CommonProxy
 import com.teambr.bookshelf.helper.KeyInputHelper

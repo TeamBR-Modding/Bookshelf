@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.tiles.traits
+package com.teambr.bookshelf.common.tiles
 
 import cofh.api.energy.{IEnergyHandler, IEnergyProvider, IEnergyReceiver}
 import com.teambr.bookshelf.energy.implementations.EnergyBank

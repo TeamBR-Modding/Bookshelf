@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.tiles.traits
+package com.teambr.bookshelf.common.tiles
 
 import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}

@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import com.teambr.bookshelf.common.tiles.traits.Inventory
+import com.teambr.bookshelf.common.tiles.Inventory
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.item.EntityItem
