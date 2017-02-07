@@ -11,7 +11,7 @@ public class PacketManager {
     public static SimpleNetworkWrapper net;
 
     public static void initPackets() {
-        net = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MODID().toUpperCase());
+        net = NetworkRegistry.INSTANCE.newSimpleChannel(Reference.MOD_ID.toUpperCase());
         registerMessage(ClientOverridePacket.class, ClientOverridePacket.class);
         registerMessage(SyncableFieldPacket.class, SyncableFieldPacket.class);
     }

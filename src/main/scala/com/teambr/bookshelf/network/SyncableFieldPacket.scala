@@ -1,10 +1,11 @@
 package com.teambr.bookshelf.network
 
+import com.teambr.bookshelf.common.tiles.Syncable
 import io.netty.buffer.ByteBuf
 import net.minecraft.client.Minecraft
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint
-import net.minecraftforge.fml.common.network.simpleimpl.{MessageContext, IMessageHandler, IMessage}
+import net.minecraftforge.fml.common.network.simpleimpl.{IMessage, IMessageHandler, MessageContext}
 
 /**
   * This file was created for Bookshelf

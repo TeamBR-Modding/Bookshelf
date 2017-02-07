@@ -169,10 +169,10 @@ trait EnergyHandler extends Syncable
       * @param id The field id
       * @return The value on the server, now set to ourselves
       */
-    override def getVariable(id : Int) : Double = {
+    override def getVariable(id : Int) : java.lang.Double = {
         id match {
-            case UPDATE_ENERGY_ID => energyStorage.getCurrentStored
-            case UPDATE_DIFFERENCE_ID => currentDifference
+            case UPDATE_ENERGY_ID => energyStorage.getCurrentStored.asInstanceOf[java.lang.Double]
+            case UPDATE_DIFFERENCE_ID => currentDifference.asInstanceOf[java.lang.Double]
             case _ => 0.0
         }
     }

@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
+import net.minecraft.client.renderer.vertex.{DefaultVertexFormats, VertexFormat, VertexFormatElement}
 import net.minecraft.init.SoundEvents
 import net.minecraftforge.fluids.FluidTank
 import org.lwjgl.opengl.GL11
@@ -65,7 +66,12 @@ object GuiHelper {
     private def drawIconWithCut(icon: TextureAtlasSprite, x: Int, y: Int, width: Int, height: Int, cut: Int) {
         val tess = Tessellator.getInstance()
         val renderer = tess.getBuffer
-        renderer.begin(GL11.GL_QUADS, RenderUtils.POSITION_TEX_NORMALF)
+        val POSITION_TEX_NORMALF = new VertexFormat
+        val NORMAL_3F = new VertexFormatElement(0, VertexFormatElement.EnumType.FLOAT, VertexFormatElement.EnumUsage.NORMAL, 3)
+        POSITION_TEX_NORMALF.addElement(DefaultVertexFormats.POSITION_3F)
+        POSITION_TEX_NORMALF.addElement(DefaultVertexFormats.TEX_2F)
+        POSITION_TEX_NORMALF.addElement(NORMAL_3F)
+        renderer.begin(GL11.GL_QUADS, POSITION_TEX_NORMALF)
         renderer.pos(x, y + height, 0).tex(icon.getMinU, icon.getInterpolatedV(height)).normal(0, -1, 0).endVertex()
         renderer.pos(x + width, y + height, 0).tex(icon.getInterpolatedU(width), icon.getInterpolatedV(height)).normal(0, -1, 0).endVertex()
         renderer.pos(x + width, y + cut, 0).tex(icon.getInterpolatedU(width), icon.getInterpolatedV(cut)).normal(0, -1, 0).endVertex()

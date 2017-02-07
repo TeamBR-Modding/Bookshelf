@@ -2,7 +2,7 @@ package com.teambr.bookshelf.client.gui.component.control
 
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.{RenderHelper, GlStateManager}
+import net.minecraft.client.renderer.{GlStateManager, RenderHelper}
 import net.minecraft.item.ItemStack
 
 /**

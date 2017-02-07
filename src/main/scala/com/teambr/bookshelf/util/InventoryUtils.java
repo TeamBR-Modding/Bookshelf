@@ -55,7 +55,7 @@ public class InventoryUtils {
      * @param stackTwo The second stack
      * @return Can stacks merge
      */
-    public static boolean canStackMerge(ItemStack stackOne, ItemStack stackTwo) {
+    public static boolean canStacksMerge(ItemStack stackOne, ItemStack stackTwo) {
         return !(stackOne == null || stackTwo == null) && stackOne.isItemEqual(stackTwo) && ItemStack.areItemStackTagsEqual(stackOne, stackTwo);
     }
 

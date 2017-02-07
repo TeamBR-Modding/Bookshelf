@@ -26,7 +26,7 @@ class CommonProxy {
      * Called on init
      */
     def init(event : FMLInitializationEvent) = {
-        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaDataProvider.callbackRegisterServer")
+        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaModPlugin.registerServerCallback")
 
         val itemIterator = Item.REGISTRY.iterator()
         while(itemIterator.hasNext) {

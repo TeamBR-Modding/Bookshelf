@@ -6,7 +6,7 @@ import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.util.ResourceLocation
-import net.minecraftforge.fml.relauncher.{SideOnly, Side}
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 import org.lwjgl.opengl.GL11
 
 /**
@@ -38,8 +38,8 @@ class NinePatchRenderer {
     /**
      * Partial Rendering Code
      *
-     * This can be overwritten in a new instance of the class to disable certain parts from rendering or to give them a
-     * different behavior. One instance would be for a tab, you can prevent the left edge from rendering in that way
+     * This can be overwritten in a new INSTANCE of the class to disable certain parts from rendering or to give them a
+     * different behavior. One INSTANCE would be for a tab, you can prevent the left edge from rendering in that way
      */
 
     //Corners

@@ -5,7 +5,7 @@ import java.lang.IllegalStateException
 import com.google.common.base.Preconditions
 import com.teambr.bookshelf.util.RenderUtils
 import org.lwjgl.input.Mouse
-import org.lwjgl.util.vector.{Vector3f, Matrix4f}
+import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 
 /**
   * This file was created for Bookshelf

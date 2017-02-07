@@ -2,7 +2,7 @@ package com.teambr.bookshelf.client.gui.component.display
 
 import java.awt.Color
 
-import com.teambr.bookshelf.util.RenderUtils
+import com.teambr.bookshelf.util.{ColorUtils, RenderUtils}
 import org.lwjgl.opengl.GL11
 
 import scala.collection.mutable.ArrayBuffer

@@ -69,7 +69,7 @@ minecraft {
     version = config.minecraft_version + "-" + config.forge_version
 
     replace "@VERSION@", config.mod_version
-    replaceIn "Reference.scala"
+    replaceIn "Reference.java"
 
     runDir = "eclipse"
 

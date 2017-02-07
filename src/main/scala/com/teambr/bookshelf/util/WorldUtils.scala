@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.util
 
-import com.teambr.bookshelf.common.tiles.Inventory
 import net.minecraft.entity.item.EntityItem
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
@@ -64,22 +63,6 @@ object WorldUtils {
     def dropStack(world: World, stacks: java.util.List[ItemStack], pos: BlockPos): Unit = {
         for(stack <- stacks.toArray())
             dropStack(world, stack.asInstanceOf[ItemStack], pos)
-    }
-
-    /**
-      * Drops each ItemStack in an inventory into the world
-      *
-      * @param world Instance of ``World
-      * @param inventory ``Inventory of ``ItemStack to Drop
-      * @param pos ``BlockPos to drop them from
-      */
-    def dropStack(world: World, inventory: Inventory, pos: BlockPos): Unit = {
-        for(i <- 0 until inventory.getSizeInventory) {
-            if (inventory.getStackInSlot(i) != null) {
-                dropStack(world, inventory.getStackInSlot(i), pos)
-                inventory.setStackInSlot(i, null)
-            }
-        }
     }
 
     /**

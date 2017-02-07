@@ -1,6 +1,8 @@
 package com.teambr.bookshelf.manager
 
 import java.io.File
+
+import com.teambr.bookshelf.lib.Reference
 import net.minecraftforge.common.config.Configuration
 
 /**

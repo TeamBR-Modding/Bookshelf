@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.client.renderer.{GlStateManager, Tessellator}
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.math.{BlockPos, MathHelper}
-import net.minecraft.util.{EnumFacing}
+import net.minecraft.util.EnumFacing
 import org.lwjgl.input.{Keyboard, Mouse}
 import org.lwjgl.opengl.GL11
 

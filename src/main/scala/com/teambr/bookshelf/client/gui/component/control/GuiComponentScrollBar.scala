@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.client.gui.component.control
 
-import com.teambr.bookshelf.client.gui.component.{NinePatchRenderer, BaseComponent}
+import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
 import com.teambr.bookshelf.util.RenderUtils
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.GL11

@@ -1,17 +1,10 @@
 package com.teambr.bookshelf.client
 
-import java.io.File
-import com.teambr.bookshelf.client.models.BakedConnectedTextures
 import com.teambr.bookshelf.common.CommonProxy
-import com.teambr.bookshelf.helper.KeyInputHelper
 import com.teambr.bookshelf.loadables.ILoadActionProvider
-import com.teambr.bookshelf.manager.ConfigManager
-import com.teambr.bookshelf.notification.{NotificationKeyBinding, NotificationTickHandler}
 import net.minecraft.block.Block
 import net.minecraft.item.Item
-import net.minecraftforge.client.model.ModelLoader
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.common.config.Configuration
 import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLInterModComms, FMLPostInitializationEvent, FMLPreInitializationEvent}
 
 /**
@@ -29,30 +22,16 @@ class ClientProxy extends CommonProxy {
     /**
       * Called on preInit
       */
-    override def preInit(event : FMLPreInitializationEvent) = {
-        MinecraftForge.EVENT_BUS.register(new NotificationTickHandler())
-
-        if(ConfigManager.debug) {
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(Bookshelf.blockTest), 0,
-                BakedConnectedTextures.MODEL_RESOURCE_LOCATION_NORMAL)
-        }
-
-        Bookshelf.notificationConfig = new Configuration(new File(Bookshelf.configFolderLocation + "/NotificationsSettings" + ".cfg"))
-        Bookshelf.notificationXPos = Bookshelf.notificationConfig.getInt("notification xpos", "notifications", 1, 0, 2, "0: Left\n1: Center\n2: Right")
-        Bookshelf.notificationConfig.save()
-    }
+    override def preInit(event : FMLPreInitializationEvent) = {}
 
     /**
       * Called on init
       */
     override def init(event : FMLInitializationEvent) = {
-        NotificationKeyBinding.init()
-        MinecraftForge.EVENT_BUS.register(new KeyInputHelper())
-
         MinecraftForge.EVENT_BUS.register(new ModelFactory)
         MinecraftForge.EVENT_BUS.register(TextureManager)
 
-        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaDataProvider.callbackRegisterClient")
+        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaModPlugin.registerClientCallback")
 
         val itemIterator = Item.REGISTRY.iterator()
         while(itemIterator.hasNext) {

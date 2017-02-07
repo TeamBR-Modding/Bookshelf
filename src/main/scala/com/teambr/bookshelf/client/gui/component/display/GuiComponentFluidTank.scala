@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.client.gui.component.display
 
-import com.teambr.bookshelf.client.gui.component.{NinePatchRenderer, BaseComponent}
+import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
 import com.teambr.bookshelf.helper.GuiHelper
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraftforge.fluids.FluidTank

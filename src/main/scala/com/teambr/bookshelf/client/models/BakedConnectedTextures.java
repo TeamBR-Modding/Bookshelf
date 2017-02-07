@@ -43,7 +43,7 @@ public class BakedConnectedTextures implements IBakedModel, IPerspectiveAwareMod
 
     // The model resource location, reflect items to this if you want it to use this model, no need to register the model itself
     public static final ModelResourceLocation MODEL_RESOURCE_LOCATION_NORMAL =
-            new ModelResourceLocation(new ResourceLocation(Reference.MODID(), "connectedTextures"), "normal");
+            new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "connectedTextures"), "normal");
 
     // The face bakery
     protected static final FaceBakery faceBakery = new FaceBakery();

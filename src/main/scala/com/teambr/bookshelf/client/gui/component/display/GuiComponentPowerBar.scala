@@ -2,7 +2,7 @@ package com.teambr.bookshelf.client.gui.component.display
 
 import java.awt.Color
 
-import com.teambr.bookshelf.client.gui.component.{NinePatchRenderer, BaseComponent}
+import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
 import com.teambr.bookshelf.util.RenderUtils
 import org.lwjgl.opengl.GL11
 

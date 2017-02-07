@@ -37,7 +37,7 @@ public class BakedDynItem implements IBakedModel, IPerspectiveAwareModel {
 
     // The model resource location, reflect items to this if you want it to use this model, no need to register the model itself
     public static final ModelResourceLocation MODEL_RESOURCE_LOCATION =
-            new ModelResourceLocation(new ResourceLocation(Reference.MODID(), "dynItem"), "inventory");
+            new ModelResourceLocation(new ResourceLocation(Reference.MOD_ID, "dynItem"), "inventory");
 
     // Holds a list of cached models, prevents the need to keep making them over and over
     protected static final THashMap<List<String>, BakedDynItem> modelCache = new THashMap<>();

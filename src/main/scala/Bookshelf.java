@@ -32,13 +32,13 @@ import java.io.File;
 public class Bookshelf {
 
     /**
-     * Public instance of this mod
+     * Public INSTANCE of this mod
      */
     @Mod.Instance
-    public static Bookshelf instance;
+    public static Bookshelf INSTANCE;
 
     /**
-     * The instance of the proxy
+     * The INSTANCE of the proxy
      */
     @SidedProxy(clientSide = "com.teambr.bookshelf.client.ClientProxy",
                 serverSide = "com.teambr.bookshelf.common.CommonProxy")
@@ -61,7 +61,7 @@ public class Bookshelf {
         proxy.preInit(event);
 
         // Register GUI Handler
-        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiManager());
+        NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new GuiManager());
     }
 
     @Mod.EventHandler

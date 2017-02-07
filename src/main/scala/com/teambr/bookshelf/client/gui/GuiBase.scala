@@ -29,7 +29,7 @@ import scala.collection.mutable.ArrayBuffer
   *
   * This is the base GUI class. All GUIs should extend this as it handles many things for you.
   *
-  * For instance, you can add tabs, use any of our components, and you don't have to render any slots or make a background!
+  * For INSTANCE, you can add tabs, use any of our components, and you don't have to render any slots or make a background!
   * This class will handle drawing all slots and the background of the GUI. It will even center the title for you and translate it
   */
 

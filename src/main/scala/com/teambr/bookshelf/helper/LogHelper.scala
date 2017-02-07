@@ -1,5 +1,6 @@
 package com.teambr.bookshelf.helper
 
+import com.teambr.bookshelf.lib.Reference
 import org.apache.logging.log4j.{Level, LogManager}
 
 /**
@@ -13,7 +14,7 @@ import org.apache.logging.log4j.{Level, LogManager}
  * @since August 04, 2015
  */
 object LogHelper {
-    val logger = LogManager.getLogger(Reference.MODID)
+    val logger = LogManager.getLogger(Reference.MOD_ID)
     
     def log(level: Level, toPrint: AnyRef) : Unit = logger.log(level, toPrint.toString)
 

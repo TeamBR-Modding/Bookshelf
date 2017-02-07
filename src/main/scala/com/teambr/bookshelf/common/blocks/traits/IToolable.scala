@@ -1,19 +1,15 @@
 package com.teambr.bookshelf.common.blocks.traits
 
-import com.teambr.bookshelf.traits.NBTSavable
 import com.teambr.bookshelf.util.WorldUtils
 import net.minecraft.block.Block
-import net.minecraft.block.state.{BlockStateContainer, IBlockState}
+import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.item.EntityItem
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
 import net.minecraft.world.World
-import net.minecraftforge.event.AttachCapabilitiesEvent.TileEntity
 
 /**
   * This file was created for Lux et Umbra
@@ -41,7 +37,7 @@ trait IToolable extends Block {
 
     /**
       * Called when a wrench clicks on this block
-      * @param stack The stack clicking on this block, an instance of IToolWrench
+      * @param stack The stack clicking on this block, an INSTANCE of IToolWrench
       * @param playerIn The player clicking
       * @param worldIn The world
       * @param pos The block pos (us)

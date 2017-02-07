@@ -1,11 +1,11 @@
 package com.teambr.bookshelf.common.container
 
 import com.teambr.bookshelf.common.container.slots.IPhantomSlot
-import com.teambr.bookshelf.common.tiles.Inventory
+import com.teambr.bookshelf.util.InventoryUtils
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.{ClickType, Container, IInventory, Slot}
 import net.minecraft.item.ItemStack
-import net.minecraftforge.items.SlotItemHandler
+import net.minecraftforge.items.{IItemHandler, SlotItemHandler}
 
 /**
  * This file was created for Bookshelf
@@ -17,26 +17,12 @@ import net.minecraftforge.items.SlotItemHandler
  * @author Paul Davis pauljoda
  * @since August 04, 2015
  */
-abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inventory) extends Container {
+abstract class BaseContainer(val playerInventory: IInventory, val inventory: IItemHandler) extends Container {
 
-    /**
-      * A restricted slot, will check what the tile will accept before using
-      */
-    protected class RestrictedSlot(inventory: Inventory, slot: Int, x: Int, y: Int) extends SlotItemHandler(inventory, slot, x, y) {
-        val inventoryIndex = slot
-        override def isItemValid(itemstack: ItemStack): Boolean = inventory.isItemValidForSlot(inventoryIndex, itemstack)
-        override def getItemStackLimit(stack : ItemStack) : Int = inventory.getInventoryStackLimit
-        override def putStack(stack : ItemStack) : Unit = {
-            inventory.setInventorySlotContents(getSlotIndex, stack)
-            onSlotChanged()
-        }
-        override def canTakeStack(player : EntityPlayer) : Boolean = true
-    }
-    
     val inventorySize = getInventorySizeNotPlayer
 
     //Sometimes we have two inventories that aren't the players
-    def getInventorySizeNotPlayer : Int = inventory.getSizeInventory
+    def getInventorySizeNotPlayer : Int = inventory.getSlots
 
     /**
       * Adds an inventory grid to the container
@@ -50,7 +36,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
         var slotId = 0
         for(y <- 0 until height) {
             for(x <- 0 until width) {
-                addSlotToContainer(new RestrictedSlot(inventory, slotId, xOffset + x * 18, yOffset + y * 18))
+                addSlotToContainer(new SlotItemHandler(inventory, slotId, xOffset + x * 18, yOffset + y * 18))
                 slotId += 1
             }
         }
@@ -80,7 +66,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
     def addInventoryLine(xOffset: Int, yOffset: Int, start: Int, count: Int, margin: Int) : Unit = {
         var slotId = start
         for(x <- 0 until count) {
-            addSlotToContainer(new RestrictedSlot(inventory, slotId, xOffset + x * (18 + margin), yOffset))
+            addSlotToContainer(new SlotItemHandler(inventory, slotId, xOffset + x * (18 + margin), yOffset))
             slotId += 1
         }
     }
@@ -115,7 +101,7 @@ abstract class BaseContainer(val playerInventory: IInventory, val inventory: Inv
         }
     }
     
-    override def canInteractWith(entityPlayer: EntityPlayer): Boolean = inventory.isUseableByPlayer(entityPlayer)
+    override def canInteractWith(entityPlayer: EntityPlayer): Boolean = true
 
     override def slotClick(slotNumber : Int, mouseButton : Int, modifier : ClickType, player : EntityPlayer) : ItemStack = {
         val slot = if (slotNumber < 0) null else this.inventorySlots.get(slotNumber)

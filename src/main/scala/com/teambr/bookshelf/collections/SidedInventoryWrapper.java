@@ -52,8 +52,7 @@ public class SidedInventoryWrapper implements IItemHandlerModifiable {
     }
 
     @Override
-    public int getSlots()
-    {
+    public int getSlots() {
         return inv.getSlotsForFace(side).length;
     }
 
@@ -65,68 +64,20 @@ public class SidedInventoryWrapper implements IItemHandlerModifiable {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-
-        if (stack == null)
-            return null;
-
         int slot1 = getSlot(inv, slot, side);
 
         if (slot1 == -1)
+            return null;
+
+        if (!inv.canInsertItem(slot1, stack, side))
             return stack;
-
-        if (!inv.isItemValidForSlot(slot1, stack) || !inv.canInsertItem(slot1, stack, side))
-            return stack;
-
-        ItemStack stackInSlot = inv.getStackInSlot(slot1);
-
-        int m;
-        if (stackInSlot != null) {
-            if (!ItemHandlerHelper.canItemStacksStack(stack, stackInSlot))
-                return stack;
-
-            m = Math.min(stack.getMaxStackSize(), inv.getInventoryStackLimit()) - stackInSlot.stackSize;
-
-            if (stack.stackSize <= m) {
-                if (!simulate) {
-                    ItemStack copy = stack.copy();
-                    copy.stackSize += stackInSlot.stackSize;
-                    inv.setInventorySlotContents(slot1, copy);
-                }
-
-                return null;
-            } else {
-                if (!simulate) {
-                    ItemStack copy = stack.splitStack(m);
-                    copy.stackSize += stackInSlot.stackSize;
-                    inv.setInventorySlotContents(slot1, copy);
-                    return stack;
-                } else {
-                    stack.stackSize -= m;
-                    return stack;
-                }
-            }
-        } else {
-            m = Math.min(stack.getMaxStackSize(), inv.getInventoryStackLimit());
-            if (m < stack.stackSize) {
-                if (!simulate) {
-                    inv.setInventorySlotContents(slot1, stack.splitStack(m));
-                    return stack;
-                } else {
-                    stack.stackSize -= m;
-                    return stack;
-                }
-            } else {
-                if (!simulate)
-                    inv.setInventorySlotContents(slot1, stack);
-                return null;
-            }
-        }
+        else
+            return inv.insertItem(slot, stack, simulate);
     }
 
     @Override
-    public void setStackInSlot(int slot, ItemStack stack)
-    {
-        inv.setInventorySlotContents(slot, stack);
+    public void setStackInSlot(int slot, ItemStack stack) {
+        inv.inventoryContents.set(slot, stack);
     }
 
     @Override
@@ -156,8 +107,7 @@ public class SidedInventoryWrapper implements IItemHandlerModifiable {
                 return copy;
             }
         } else {
-            int m = Math.min(stackInSlot.stackSize, amount);
-            return inv.decrStackSize(slot1, m);
+            return inv.extractItem(slot1, amount, simulate);
         }
     }
 }

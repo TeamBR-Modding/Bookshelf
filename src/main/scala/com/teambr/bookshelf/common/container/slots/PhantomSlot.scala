@@ -1,9 +1,7 @@
 package com.teambr.bookshelf.common.container.slots
 
-import com.teambr.bookshelf.common.tiles.Inventory
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.{IInventory, Slot}
-import net.minecraftforge.items.SlotItemHandler
+import net.minecraftforge.items.{IItemHandler, SlotItemHandler}
 
 /**
   * This file was created for Bookshelf
@@ -15,7 +13,7 @@ import net.minecraftforge.items.SlotItemHandler
   * @author Paul Davis <pauljoda>
   * @since 1/21/2016
   */
-class PhantomSlot(inventory : Inventory, index : Int, posX : Int, posY : Int) extends
+class PhantomSlot(inventory : IItemHandler, index : Int, posX : Int, posY : Int) extends
     SlotItemHandler(inventory, index, posX, posY) with IPhantomSlot {
     //Can this slot change?
     override def canAdjust: Boolean = true
