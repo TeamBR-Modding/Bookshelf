@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.events
 
-import com.teambr.bookshelf.traits.HasToolTip
+import com.teambr.bookshelf.common.HasToolTip
 import net.minecraft.block.Block
 import net.minecraftforge.event.entity.player.ItemTooltipEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent

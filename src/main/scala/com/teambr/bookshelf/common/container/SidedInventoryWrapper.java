@@ -1,10 +1,9 @@
-package com.teambr.bookshelf.collections;
+package com.teambr.bookshelf.common.container;
 
 import com.teambr.bookshelf.common.tiles.InventorySided;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 /**
  * This file was created for NeoTech

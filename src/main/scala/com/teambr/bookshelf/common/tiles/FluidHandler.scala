@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.common.tiles
 
-import com.teambr.bookshelf.traits.NBTSavable
 import net.minecraft.nbt.{NBTTagCompound, NBTTagList}
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
@@ -22,7 +21,7 @@ import scala.collection.mutable.ArrayBuffer
   * @author Paul Davis <pauljoda>
   * @since 2/4/2016
   */
-trait FluidHandler extends TileEntity with IFluidHandler with NBTSavable {
+trait FluidHandler extends TileEntity with IFluidHandler{
 
     /**
       * The tanks themselves

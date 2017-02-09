@@ -3,7 +3,6 @@ package com.teambr.bookshelf.energy.implementations;
 import com.teambr.bookshelf.energy.IEnergyHolder;
 import com.teambr.bookshelf.energy.IEnergyProvider;
 import com.teambr.bookshelf.energy.IEnergyReceiver;
-import com.teambr.bookshelf.traits.NBTSavable;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
@@ -16,7 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
  * @author Paul Davis <pauljoda>
  * @since 9/2/2016
  */
-public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiver, NBTSavable {
+public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiver {
 
     protected int currentStored;
     protected int maxStored;
@@ -187,7 +186,7 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
 
 
     /*******************************************************************************************************************
-     * NBTSavable                                                                                                      *
+     * NBT                                                                                                    *
      *******************************************************************************************************************/
 
     public static final String CURRENT_ENERGY = "CurrentEnergy";
@@ -200,7 +199,6 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * @param tag The incoming tag
      * @return The written tag
      */
-    @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         // Write storage values
         tag.setInteger(CURRENT_ENERGY, currentStored);
@@ -216,7 +214,6 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      * Read from the tag
      * @param tag The written tag
      */
-    @Override
     public void readFromNBT(NBTTagCompound tag) {
         // Read Storage Values
         currentStored = tag.getInteger(CURRENT_ENERGY);

@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.traits
+package com.teambr.bookshelf.common
 
 /**
  * This file was created for Bookshelf
