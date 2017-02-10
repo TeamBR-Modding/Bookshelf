@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.items.traits
+package com.teambr.bookshelf.common.items
 
 import cofh.api.energy.IEnergyContainerItem
 import net.minecraft.entity.Entity

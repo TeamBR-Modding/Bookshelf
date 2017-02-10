@@ -17,7 +17,7 @@ public class JsonUtils {
             writer.close();
             return true;
         } catch (IOException e) {
-            LogHelper.severe("Failed to write to: " + path);
+            LogHelper.logger.warn("Failed to write to: " + path);
             return false;
         }
     }
@@ -28,7 +28,7 @@ public class JsonUtils {
             Gson gson = new Gson();
             return gson.fromJson(reader, type.getType());
         } catch (FileNotFoundException e) {
-            LogHelper.severe("Could not find file: " + path);
+            LogHelper.logger.warn("Could not find file: " + path);
             return null;
         }
     }

@@ -1,6 +1,6 @@
-package com.teambr.bookshelf.common.blocks.traits
+package com.teambr.bookshelf.common.blocks
 
-import com.teambr.bookshelf.common.blocks.properties.Properties
+import Properties
 import net.minecraft.block.Block
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockStateContainer, IBlockState}

@@ -1,10 +1,6 @@
 package com.teambr.bookshelf.client
 
 import com.teambr.bookshelf.common.CommonProxy
-import com.teambr.bookshelf.loadables.ILoadActionProvider
-import net.minecraft.block.Block
-import net.minecraft.item.Item
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.event.{FMLInitializationEvent, FMLInterModComms, FMLPostInitializationEvent, FMLPreInitializationEvent}
 
 /**
@@ -28,30 +24,7 @@ class ClientProxy extends CommonProxy {
       * Called on init
       */
     override def init(event : FMLInitializationEvent) = {
-        MinecraftForge.EVENT_BUS.register(new ModelFactory)
-        MinecraftForge.EVENT_BUS.register(TextureManager)
-
         FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaModPlugin.registerClientCallback")
-
-        val itemIterator = Item.REGISTRY.iterator()
-        while(itemIterator.hasNext) {
-            val item = itemIterator.next()
-            item match {
-                case provider: ILoadActionProvider =>
-                    provider.performLoadAction(event, isClient = true)
-                case _ =>
-            }
-        }
-
-        val blockIterator = Block.REGISTRY.iterator()
-        while(blockIterator.hasNext) {
-            val block = blockIterator.next()
-            block match {
-                case provider: ILoadActionProvider =>
-                    provider.performLoadAction(event, isClient = true)
-                case _ =>
-            }
-        }
     }
 
     /**

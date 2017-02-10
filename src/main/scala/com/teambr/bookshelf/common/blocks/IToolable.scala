@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.blocks.traits
+package com.teambr.bookshelf.common.blocks
 
 import com.teambr.bookshelf.util.WorldUtils
 import net.minecraft.block.Block

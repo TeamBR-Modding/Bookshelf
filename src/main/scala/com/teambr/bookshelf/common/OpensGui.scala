@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.tiles
+package com.teambr.bookshelf.common
 
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World

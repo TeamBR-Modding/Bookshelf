@@ -1,4 +1,4 @@
-package com.teambr.bookshelf.common.blocks.properties
+package com.teambr.bookshelf.common.blocks
 
 import java.util
 

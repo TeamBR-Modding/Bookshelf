@@ -1,13 +1,13 @@
-package com.teambr.bookshelf.common.blocks.traits
+package com.teambr.bookshelf.common.blocks
 
-import com.teambr.bookshelf.common.blocks.properties.Properties
+import Properties
 import net.minecraft.block.properties.IProperty
 import net.minecraft.block.state.{BlockStateContainer, IBlockState}
 import net.minecraft.block.{Block, BlockPistonBase}
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
-import net.minecraft.util.math.BlockPos
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{IBlockAccess, World}
 import net.minecraftforge.common.property.{ExtendedBlockState, IExtendedBlockState, IUnlistedProperty}
 

@@ -1,6 +1,6 @@
-package com.teambr.bookshelf.common.items.traits
+package com.teambr.bookshelf.common.items
 
-import com.teambr.bookshelf.common.blocks.traits.IToolable
+import com.teambr.bookshelf.common.blocks.IToolable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.util.math.BlockPos

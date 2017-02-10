@@ -107,7 +107,7 @@ public class VersionChecker implements Runnable {
     @Override
     public void run() {
         int tries = 0;
-        LogHelper.info(I18n.translateToLocal(modID + ".versioncheck.start"));
+        LogHelper.logger.info(I18n.translateToLocal(modID + ".versioncheck.start"));
         try {
             while (tries < numRetry) {
                 checkVersion();
@@ -124,16 +124,16 @@ public class VersionChecker implements Runnable {
         }
         switch (result) {
             case CURRENT:
-                LogHelper.info(I18n.translateToLocal(modID + ".versioncheck.current"));
+                LogHelper.logger.info(I18n.translateToLocal(modID + ".versioncheck.current"));
                 break;
             case OUTDATED:
-                LogHelper.warning(I18n.translateToLocal(modID + ".versioncheck.outdated"));
+                LogHelper.logger.warn(I18n.translateToLocal(modID + ".versioncheck.outdated"));
                 break;
             case MC_VERSION_NOT_FOUND:
-                LogHelper.warning(I18n.translateToLocal(modID + ".versioncheck.mcversion"));
+                LogHelper.logger.warn(I18n.translateToLocal(modID + ".versioncheck.mcversion"));
                 break;
             default:
-                LogHelper.severe(I18n.translateToLocal(modID + ".versioncheck.error"));
+                LogHelper.logger.warn(I18n.translateToLocal(modID + ".versioncheck.error"));
         }
     }
 
