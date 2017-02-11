@@ -1,11 +1,15 @@
 package com.teambr.bookshelf.util;
 
+import com.teambr.bookshelf.common.blocks.IToolable;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -19,6 +23,10 @@ import java.util.List;
  * @since 2/7/2017
  */
 public class WorldUtils {
+
+    /*******************************************************************************************************************
+     * World Methods                                                                                                   *
+     *******************************************************************************************************************/
 
     /**
      * Returns the direction to the left of this. This is the direction it is facing turned left
@@ -66,6 +74,10 @@ public class WorldUtils {
         }
     }
 
+    /*******************************************************************************************************************
+     * Spawning Methods                                                                                                *
+     *******************************************************************************************************************/
+
     /**
      * Drops and Array of ItemStacks into the world
      *
@@ -104,6 +116,51 @@ public class WorldUtils {
             world.spawnEntityInWorld(itemEntity);
 
             stack.stackSize = 0;
+        }
+    }
+
+    /*******************************************************************************************************************
+     * IToolable Helpers                                                                                               *
+     *******************************************************************************************************************/
+
+    /**
+     * Breaks the block and saves the NBT to the tag, calls getStackDropped to drop (just item)
+     * @param world The world
+     * @param pos The block pos
+     * @param block The block object
+     * @return True if successful
+     */
+    public static boolean breakBlockSavingNBT(World world, BlockPos pos, @Nonnull IToolable block) {
+        if(world.isRemote) return false;
+        if(world.getTileEntity(pos) != null) {
+            TileEntity savableTile = world.getTileEntity(pos);
+            NBTTagCompound tag = savableTile.writeToNBT(new NBTTagCompound());
+            ItemStack stack = block.getStackDroppedByWrench(world, pos);
+            stack.setTagCompound(tag);
+            dropStack(world, stack, pos);
+            world.removeTileEntity(pos); // Cancel drop logic
+            world.setBlockToAir(pos);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Call this after onBlockPlacedBy to write saved data to the stack if present
+     * @param world The world
+     * @param pos The block position
+     * @param stack The stack that had the tag
+     */
+    public static void writeStackNBTToBlock(World world, BlockPos pos, ItemStack stack) {
+        if(stack.hasTagCompound()) {
+            if(world.getTileEntity(pos) != null) {
+                TileEntity tile = world.getTileEntity(pos);
+                NBTTagCompound tag = stack.getTagCompound();
+                tag.setInteger("x", pos.getX()); // Add back MC tags
+                tag.setInteger("y", pos.getY());
+                tag.setInteger("z", pos.getZ());
+                tile.readFromNBT(tag);
+            }
         }
     }
 }
