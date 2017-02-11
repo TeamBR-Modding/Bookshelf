@@ -45,6 +45,15 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
      */
     protected abstract int getInitialSize();
 
+    /**
+     * Used to define if an item is valid for a slot
+     *
+     * @param index The slot id
+     * @param stack The stack to check
+     * @return True if you can put this there
+     */
+    protected abstract boolean isItemValidForSlot(int index, ItemStack stack);
+
     /*******************************************************************************************************************
      * InventoryHandler                                                                                                *
      *******************************************************************************************************************/
@@ -276,7 +285,7 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (stack == null || stack.stackSize == 0)
+        if (stack == null || stack.stackSize == 0 || !isItemValidForSlot(slot, stack))
             return null;
 
         validateSlotIndex(slot);
