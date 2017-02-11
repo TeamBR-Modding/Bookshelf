@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -116,6 +117,20 @@ public class WorldUtils {
             world.spawnEntityInWorld(itemEntity);
 
             stack.stackSize = 0;
+        }
+    }
+
+    /**
+     * Helper method to drop items in an inventory, used on break mostly
+     * @param itemHandler The itemhandler
+     * @param world The world
+     * @param pos The block pos
+     */
+    public static void dropStacksInInventory(IItemHandler itemHandler, World world, BlockPos pos) {
+        for(int slot = 0; slot < itemHandler.getSlots(); slot++) {
+            ItemStack stack = itemHandler.getStackInSlot(slot);
+            if(stack != null)
+                dropStack(world, stack, pos);
         }
     }
 
