@@ -124,6 +124,7 @@ public abstract class FluidHandler extends UpdatingTile implements IFluidHandler
      */
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+        super.writeToNBT(compound);
         int id = 0;
         compound.setInteger(SIZE_NBT_TAG, tanks.length);
         NBTTagList tagList = new NBTTagList();
@@ -147,6 +148,7 @@ public abstract class FluidHandler extends UpdatingTile implements IFluidHandler
      */
     @Override
     public void readFromNBT(NBTTagCompound compound) {
+        super.readFromNBT(compound);
         NBTTagList tagList = compound.getTagList(TANKS_NBT_TAG, 10);
         int size = compound.getInteger(SIZE_NBT_TAG);
         if(size != tanks.length && compound.hasKey(SIZE_NBT_TAG)) tanks = new FluidTank[size];

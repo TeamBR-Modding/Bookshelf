@@ -11,6 +11,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -27,8 +28,10 @@ import java.util.Stack;
 public abstract class InventoryHandler extends Syncable implements IItemHandlerModifiable {
 
     // Variables
-    private List<IInventoryCallback> callBacks;
-    public Stack<ItemStack> inventoryContents;
+    // A list to hold all callback objects
+    private List<IInventoryCallback> callBacks = new ArrayList<>();
+    // List of Inventory contents
+    public Stack<ItemStack> inventoryContents = new Stack<>();
 
     public InventoryHandler() {
         inventoryContents.setSize(getInitialSize());
