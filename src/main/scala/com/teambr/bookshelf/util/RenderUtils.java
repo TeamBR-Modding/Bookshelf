@@ -167,7 +167,7 @@ public class RenderUtils {
      * @param u1 Max U
      * @param v1 Max V
      */
-    public void renderCubeWithTexture(double x1, double y1, double z1, double x2, double y2, double z2,
+    public static void renderCubeWithTexture(double x1, double y1, double z1, double x2, double y2, double z2,
                                  double u, double v, double u1, double v1) {
         VertexBuffer tes = Tessellator.getInstance().getBuffer();
 
