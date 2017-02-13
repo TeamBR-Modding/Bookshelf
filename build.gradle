@@ -60,7 +60,7 @@ if (build == null || build == '') {
     version = "${config.minecraft_version}-${config.mod_version}-B" + System.getenv("BUILD_NUMBER")
 }
 group= "com.teambr.bookshelf" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "com.teambr.bookshelf.Bookshelf-API"
+archivesBaseName = "Bookshelf-API"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -174,16 +174,16 @@ uploadArchives {
                 pom.project {
                     name project.archivesBaseName
                     packaging 'jar'
-                    description 'com.teambr.bookshelf.Bookshelf'
-                    url 'https://github.com/TeamBR-Modding/com.teambr.bookshelf.Bookshelf'
+                    description 'Bookshelf'
+                    url 'https://github.com/TeamBR-Modding/Bookshelf'
                     scm {
-                        url 'https://github.com/TeamBR-Modding/com.teambr.bookshelf.Bookshelf'
-                        connection 'scm:git:git@github.com/TeamBR-Modding/com.teambr.bookshelf.Bookshelf.git'
-                        developerConnection 'scm:git:git@github.com/TeamBR-Modding/com.teambr.bookshelf.Bookshelf.git'
+                        url 'https://github.com/TeamBR-Modding/Bookshelf'
+                        connection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
+                        developerConnection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
                     }
                     issueManagement {
                         system 'github'
-                        url 'https://github.com/TeamBR-Modding/com.teambr.bookshelf.Bookshelf/issues'
+                        url 'https://github.com/TeamBR-Modding/Bookshelf/issues'
                     }
                     licenses {
                         license {

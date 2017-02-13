@@ -1,7 +1,7 @@
 [
 {
   "modid": "bookshelfapi",
-  "name": "com.teambr.bookshelf.Bookshelf",
+  "name": "Bookshelf",
   "description": "Library of useful functions used by TeamBR",
   "version": "${version}",
   "mcversion": "${mcversion}",

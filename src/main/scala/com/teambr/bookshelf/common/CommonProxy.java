@@ -6,9 +6,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * This file was created for com.teambr.bookshelf.Bookshelf - Java
+ * This file was created for Bookshelf - Java
  * <p>
- * com.teambr.bookshelf.Bookshelf - Java is licensed under the
+ * Bookshelf - Java is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *

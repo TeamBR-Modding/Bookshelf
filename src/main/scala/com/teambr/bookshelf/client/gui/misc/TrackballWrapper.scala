@@ -4,9 +4,9 @@ import org.lwjgl.input.Mouse
 import org.lwjgl.util.vector.Matrix4f
 
 /**
-  * This file was created for com.teambr.bookshelf.Bookshelf
+  * This file was created for Bookshelf
   *
-  * com.teambr.bookshelf.Bookshelf is licensed under the
+  * Bookshelf is licensed under the
   * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
   * http://creativecommons.org/licenses/by-nc-sa/4.0/
   *

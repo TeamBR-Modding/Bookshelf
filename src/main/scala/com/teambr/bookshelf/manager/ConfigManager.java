@@ -6,9 +6,9 @@ import net.minecraftforge.common.config.Configuration;
 import java.io.File;
 
 /**
- * This file was created for com.teambr.bookshelf.Bookshelf - Java
+ * This file was created for Bookshelf - Java
  * <p>
- * com.teambr.bookshelf.Bookshelf - Java is licensed under the
+ * Bookshelf - Java is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
@@ -31,7 +31,7 @@ public class ConfigManager {
      * @param configFolderLocation The location for the config folder
      */
     public static void init(String configFolderLocation) {
-        config = new Configuration(new File(configFolderLocation + File.separator + "com.teambr.bookshelf.Bookshelf.cfg"));
+        config = new Configuration(new File(configFolderLocation + File.separator + "Bookshelf.cfg"));
         config.load();
 
         debug = config.get(Reference.DEBUG, "Enable Debug Mode?", false).getBoolean();
