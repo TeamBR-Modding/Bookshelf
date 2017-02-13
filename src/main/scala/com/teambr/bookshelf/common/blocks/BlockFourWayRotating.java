@@ -15,9 +15,9 @@ import net.minecraft.world.World;
 import java.util.Arrays;
 
 /**
- * This file was created for Bookshelf - Java
+ * This file was created for com.teambr.bookshelf.Bookshelf - Java
  * <p>
- * Bookshelf - Java is licensed under the
+ * com.teambr.bookshelf.Bookshelf - Java is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *

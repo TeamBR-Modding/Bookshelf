@@ -1,9 +1,9 @@
 package com.teambr.bookshelf.lib;
 
 /**
- * This file was created for Bookshelf - Java
+ * This file was created for com.teambr.bookshelf.Bookshelf - Java
  * <p>
- * Bookshelf - Java is licensed under the
+ * com.teambr.bookshelf.Bookshelf - Java is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
@@ -14,7 +14,7 @@ public class Reference {
 
     // Mod information
     public static final String MOD_ID       = "bookshelfapi";
-    public static final String MOD_NAME     = "Bookshelf API";
+    public static final String MOD_NAME     = "com.teambr.bookshelf.Bookshelf API";
     public static final String VERSION      = "5.0.0";
     public static final String DEPENDENCIES = "required-after:Forge@[2.18.3.2202,)";
 

@@ -3,9 +3,9 @@ package com.teambr.bookshelf.common.container.slots
 import java.awt.Color
 
 /**
-  * This file was created for Bookshelf
+  * This file was created for com.teambr.bookshelf.Bookshelf
  *
- * Bookshelf is licensed under the
+ * com.teambr.bookshelf.Bookshelf is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
