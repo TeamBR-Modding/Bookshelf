@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.manager;
 
 import com.teambr.bookshelf.events.ToolTipEvent;
+import com.teambr.bookshelf.util.TimeUtils;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
@@ -20,6 +21,7 @@ public class EventManager {
      */
     public static void init() {
         registerEvent(new ToolTipEvent());
+        registerEvent(new TimeUtils());
     }
 
     /**
