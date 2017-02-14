@@ -3,10 +3,11 @@ package com.teambr.bookshelf.client.gui.component.control;
 import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.util.ClientUtils;
-import com.teambr.bookshelf.util.RenderUtils;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.GlStateManager;
+import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import javax.annotation.Nullable;
 
 /**
  * This file was created for Bookshelf
@@ -16,32 +17,30 @@ import java.awt.*;
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
  *
  * @author Paul Davis - pauljoda
- * @since 2/12/2017
+ * @since 2/13/2017
  */
-public abstract class GuiComponentCheckBox extends BaseComponent {
+public abstract class GuiComponentTextBox extends BaseComponent {
     // Variables
-    protected int u, v;
-    protected boolean selcted;
-    protected String label;
+    protected int width, height;
+    protected GuiTextField textField;
 
     /**
-     * Main constructor for check boxes
-     *
-     * IMPORTANT: You must put the selected texture directly to the right of this one in the texture for it to work
-     *
-     * @param parent The parent
+     * Creates the text box
+     * @param parent The parent gui
      * @param x The x pos
      * @param y The y pos
-     * @param u The texture u pos
-     * @param v The texture v pos
-     * @param text The text to display to the right
+     * @param boxWidth The text box width
+     * @param boxHeight The text box height, usually 16
+     * @param defaultLabel The default label, will translate, can be null
      */
-    public GuiComponentCheckBox(GuiBase<?> parent, int x, int y, int u, int v, boolean initialValue, String text) {
+    public GuiComponentTextBox(GuiBase<?> parent, int x, int y, int boxWidth, int boxHeight, @Nullable String defaultLabel) {
         super(parent, x, y);
-        this.u = u;
-        this.v = v;
-        selcted = initialValue;
-        label = ClientUtils.translate(text);
+        this.width = boxWidth;
+        this.height = boxHeight;
+
+        textField = new GuiTextField(0, fontRenderer, x, y, width, height);
+        if(defaultLabel != null)
+            textField.setText(ClientUtils.translate(defaultLabel));
     }
 
     /*******************************************************************************************************************
@@ -49,11 +48,10 @@ public abstract class GuiComponentCheckBox extends BaseComponent {
      *******************************************************************************************************************/
 
     /**
-     * Called when there is a change in state, use this to set the value on what this controls
-     *
-     * @param value The current value of this component
+     * Called when the value in the text box changes
+     * @param value The current value
      */
-    protected abstract void setValue(boolean value);
+    protected abstract void fieldUpdated(String value);
 
     /*******************************************************************************************************************
      * BaseComponent                                                                                                   *
@@ -61,18 +59,32 @@ public abstract class GuiComponentCheckBox extends BaseComponent {
 
     /**
      * Called when the mouse is pressed
-     *
      * @param x Mouse X Position
      * @param y Mouse Y Position
      * @param button Mouse Button
      */
     @Override
     public void mouseDown(int x, int y, int button) {
-        if(x > xPos && x < xPos + 10 && y > yPos && y < yPos + 10) {
-            selcted = !selcted;
-            setValue(selcted);
+        textField.mouseClicked(x, y, button);
+        if(button == 1  && textField.isFocused()) {
+            textField.setText("");
+            fieldUpdated(textField.getText());
         }
     }
+
+    /**
+     * Used when a key is pressed
+     * @param letter The letter
+     * @param keyCode The code
+     */
+    @Override
+    public void keyTyped(char letter, int keyCode) {
+        if(textField.isFocused()) {
+            textField.textboxKeyTyped(letter, keyCode);
+            fieldUpdated(textField.getText());
+        }
+    }
+
 
     /**
      * Called to render the component
@@ -80,10 +92,9 @@ public abstract class GuiComponentCheckBox extends BaseComponent {
     @Override
     public void render(int guiLeft, int guiTop, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();
-        GlStateManager.translate(xPos, yPos, 0);
-        GlStateManager.disableLighting();
-        drawTexturedModalRect(0, 0, selcted ? u + 10 : u, v, 10, 10);
-        GlStateManager.enableLighting();
+        textField.drawTextBox();
+        GlStateManager.disableAlpha();
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
         GlStateManager.popMatrix();
     }
 
@@ -92,12 +103,7 @@ public abstract class GuiComponentCheckBox extends BaseComponent {
      */
     @Override
     public void renderOverlay(int guiLeft, int guiTop, int mouseX, int mouseY) {
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(xPos + 10, yPos, 0);
-        RenderUtils.setColor(Color.darkGray);//Minecraft doesn't play nice with GL, so we will just set our own color
-        fontRenderer.drawString(label, 0, 0, Color.darkGray.getRGB());
-        RenderUtils.restoreColor();
-        GlStateManager.popMatrix();
+        // NO OP
     }
 
     /**
@@ -107,7 +113,7 @@ public abstract class GuiComponentCheckBox extends BaseComponent {
      */
     @Override
     public int getWidth() {
-        return 10 + fontRenderer.getStringWidth(label);
+        return width;
     }
 
     /**
@@ -117,34 +123,18 @@ public abstract class GuiComponentCheckBox extends BaseComponent {
      */
     @Override
     public int getHeight() {
-        return 10;
+        return height;
     }
 
     /*******************************************************************************************************************
      * Accessors/Mutators                                                                                              *
      *******************************************************************************************************************/
 
-    public int getU() {
-        return u;
+    public GuiTextField getTextField() {
+        return textField;
     }
 
-    public void setU(int u) {
-        this.u = u;
-    }
-
-    public int getV() {
-        return v;
-    }
-
-    public void setV(int v) {
-        this.v = v;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
+    public void setTextField(GuiTextField textField) {
+        this.textField = textField;
     }
 }

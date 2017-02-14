@@ -3,7 +3,6 @@ package com.teambr.bookshelf.client.gui.component.display
 import java.awt.Color
 
 import com.teambr.bookshelf.client.gui.GuiBase
-import com.teambr.bookshelf.client.gui.component.control.GuiComponentTabSlotHolder
 import com.teambr.bookshelf.client.gui.component.{BaseComponent, NinePatchRenderer}
 import com.teambr.bookshelf.util.RenderUtils
 import net.minecraft.client.Minecraft
