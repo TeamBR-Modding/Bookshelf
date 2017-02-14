@@ -41,22 +41,7 @@ public class GuiReverseTab extends GuiTab {
      */
     public GuiReverseTab(GuiBase<?> parent, int x, int y, int u, int v, int exWidth, int exHeight, @Nullable ItemStack displayStack) {
         super(parent, x, y, u, v, exWidth, exHeight, displayStack);
-        tabRenderer = new NinePatchRenderer(u, v, 8, parent.textureLocation) {
-            @Override
-            protected void renderTopRightCorner(Gui gui, int width) {
-                // No Op
-            }
-
-            @Override
-            protected void renderBottomRightCorner(Gui gui, int width, int height) {
-                // No Op
-            }
-
-            @Override
-            protected void renderRightEdge(Gui gui, int width, int height) {
-                // No Op
-            }
-        };
+        tabRenderer = new NinePatchRenderer(u, v, 8, parent.textureLocation);
     }
 
     /*******************************************************************************************************************

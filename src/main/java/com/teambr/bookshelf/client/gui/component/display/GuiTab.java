@@ -64,22 +64,7 @@ public class GuiTab extends BaseComponent {
         this.expandedHeight = exHeight;
         this.stack = displayStack;
 
-        tabRenderer = new NinePatchRenderer(u - 8, v - 8, 8, parent.textureLocation) {
-            @Override
-            protected void renderTopLeftCorner(Gui gui) {
-                // No Op
-            }
-
-            @Override
-            protected void renderBottomLeftCorner(Gui gui, int height) {
-                // No Op
-            }
-
-            @Override
-            protected void renderLeftEdge(Gui gui, int height) {
-                // No Op
-            }
-        };
+        tabRenderer = new NinePatchRenderer(u, v, 8, parent.textureLocation);
     }
 
     /**
