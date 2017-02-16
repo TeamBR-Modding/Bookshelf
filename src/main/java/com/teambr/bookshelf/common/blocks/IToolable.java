@@ -9,6 +9,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 /**
  * This file was created for Bookshelf - Java
  * <p>
@@ -27,6 +29,7 @@ public interface IToolable {
      * @param pos The position of the block
      * @return The stack to drop in the world
      */
+    @Nonnull
     ItemStack getStackDroppedByWrench(World world, BlockPos pos);
 
     /**
