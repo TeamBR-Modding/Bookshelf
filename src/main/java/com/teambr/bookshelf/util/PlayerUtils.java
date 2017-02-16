@@ -23,7 +23,7 @@ public class PlayerUtils {
      * @param item The item to check
      * @return True if either hand contains the item
      */
-    public static boolean isPlaylerHoldingEither(EntityPlayer player, Item item) {
+    public static boolean isPlayerHoldingEither(EntityPlayer player, Item item) {
         return !(player == null || item == null || player.getHeldEquipment() == null) &&
                 ((player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == item) ||
                         (player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() == item));
