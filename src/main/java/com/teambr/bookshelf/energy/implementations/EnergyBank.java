@@ -186,13 +186,13 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
 
 
     /*******************************************************************************************************************
-     * NBT                                                                                                    *
+     * NBT                                                                                                             *
      *******************************************************************************************************************/
 
-    public static final String CURRENT_ENERGY = "CurrentEnergy";
-    public static final String MAX_ENERGY     = "MaxEnergy";
-    public static final String MAX_INSERT     = "MaxInsert";
-    public static final String MAX_EXTRACT    = "MaxExtract";
+    protected static final String ENERGY_NBT_TAG             = "Energy";
+    protected static final String ENERGY_CAPACITY_NBT_TAG    = "EnergyCapacity";
+    protected static final String ENERGY_MAX_RECIEVE_NBT_TAG = "MaxRecieve";
+    protected static final String ENERGY_MAX_EXTRACT_NBT_TAG = "MaxExtract";
 
     /**
      * Save to tag
@@ -201,12 +201,12 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      */
     public NBTTagCompound writeToNBT(NBTTagCompound tag) {
         // Write storage values
-        tag.setInteger(CURRENT_ENERGY, currentStored);
-        tag.setInteger(MAX_ENERGY,     maxStored);
+        tag.setInteger(ENERGY_NBT_TAG, currentStored);
+        tag.setInteger(ENERGY_CAPACITY_NBT_TAG,     maxStored);
 
         // IO values
-        tag.setInteger(MAX_INSERT,     maxInsert);
-        tag.setInteger(MAX_EXTRACT,    maxExtract);
+        tag.setInteger(ENERGY_MAX_RECIEVE_NBT_TAG,     maxInsert);
+        tag.setInteger(ENERGY_MAX_EXTRACT_NBT_TAG,     maxExtract);
         return tag;
     }
 
@@ -216,11 +216,11 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
      */
     public void readFromNBT(NBTTagCompound tag) {
         // Read Storage Values
-        currentStored = tag.getInteger(CURRENT_ENERGY);
-        maxStored     = tag.getInteger(MAX_ENERGY);
+        currentStored = tag.getInteger(ENERGY_NBT_TAG);
+        maxStored     = tag.getInteger(ENERGY_CAPACITY_NBT_TAG);
 
         // Read IO values
-        maxInsert     = tag.getInteger(MAX_INSERT);
-        maxExtract   = tag.getInteger(MAX_EXTRACT);
+        maxInsert     = tag.getInteger(ENERGY_MAX_RECIEVE_NBT_TAG);
+        maxExtract    = tag.getInteger(ENERGY_MAX_EXTRACT_NBT_TAG);
     }
 }
