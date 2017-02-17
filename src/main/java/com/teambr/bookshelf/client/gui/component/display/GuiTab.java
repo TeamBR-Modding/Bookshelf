@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,6 +65,7 @@ public class GuiTab extends BaseComponent {
         this.expandedHeight = exHeight;
         this.stack = displayStack;
 
+        children = new ArrayList<>();
         tabRenderer = new NinePatchRenderer(u, v, 8, parent.textureLocation);
     }
 
