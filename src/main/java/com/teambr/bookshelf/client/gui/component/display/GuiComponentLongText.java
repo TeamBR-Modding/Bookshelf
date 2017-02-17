@@ -76,7 +76,8 @@ public class GuiComponentLongText extends BaseComponent {
 
                 lines.add(trimmed);
 
-                string = string.replace(trimmed, "");
+                string = string.substring(trimmed.length());
+
                 if(string.charAt(0) == '\n') // Clear leading new lines
                     string = string.replaceFirst("\n", "");
                 if(string.charAt(0) == ' ') // Clear leading spaces
