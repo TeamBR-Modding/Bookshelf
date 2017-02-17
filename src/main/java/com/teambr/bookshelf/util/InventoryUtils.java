@@ -99,6 +99,10 @@ public class InventoryUtils {
      */
     public static boolean moveItemInto(Object source, int fromSlot, Object target, int intoSlot,
                                        int maxAmount, EnumFacing dir, boolean doMove, boolean checkSidedSource, boolean checkSidedTarget) {
+        // Null Checks
+        if(source == null || target == null)
+            return false;
+
         // Object to hold source
         IItemHandler fromInventory;
 
