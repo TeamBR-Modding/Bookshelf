@@ -70,17 +70,20 @@ public abstract class GuiComponentTextureAnimated extends GuiComponentTexture {
 
         switch (animationDirection) {
             case RIGHT:
-                drawTexturedModalRect(0, 0, u, v, getCurrentProgress(width), height);
+                int progressRight = Math.min(width, getCurrentProgress(width));
+                drawTexturedModalRect(0, 0, u, v, progressRight, height);
                 break;
             case DOWN:
-                drawTexturedModalRect(0, 0, u, v, width, getCurrentProgress(height));
+                int progressDown = Math.min(height, getCurrentProgress(height));
+                drawTexturedModalRect(0, 0, u, v, width, progressDown);
                 break;
             case LEFT:
-                drawTexturedModalRect(-width + getCurrentProgress(width), 0, u, v, getCurrentProgress(width), height);
+                int progressLeft = Math.min(width, getCurrentProgress(width));
+                drawTexturedModalRect(-width + progressLeft, 0, u, v, progressLeft, height);
                 break;
             case UP:
-                drawTexturedModalRect(0, height - getCurrentProgress(height), u,
-                        v + height - getCurrentProgress(height), width, getCurrentProgress(height));
+                int progressUp = Math.min(height, getCurrentProgress(height));
+                drawTexturedModalRect(0, height - progressUp, u, v + height - progressUp, width, progressUp);
                 break;
         }
         GlStateManager.popMatrix();
