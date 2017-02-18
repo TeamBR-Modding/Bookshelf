@@ -37,11 +37,11 @@ public abstract class GuiComponentItemStackButton extends GuiComponentButton {
         super.renderOverlay(guiLeft, guiTop, mouseX, mouseY);
         GlStateManager.pushMatrix();
         GlStateManager.pushAttrib();
-        GlStateManager.translate(xPos + 2, yPos + 2, 1);
+        GlStateManager.translate(xPos, yPos, 1);
 
         RenderHelper.enableGUIStandardItemLighting();
 
-        Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(displayStack, 0, 0);
+        Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(displayStack, (width / 2) - 8, (height / 2) - 8);
 
         RenderHelper.disableStandardItemLighting();
 
