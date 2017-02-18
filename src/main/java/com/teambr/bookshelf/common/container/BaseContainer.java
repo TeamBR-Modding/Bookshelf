@@ -215,50 +215,6 @@ public abstract class BaseContainer extends ContainerGeneric {
         slot.putStack(phantomStack);
     }
 
-    /**
-     * Safely merges itemstack
-     */
-    protected boolean mergeItemStackSafe(ItemStack stackToMerge, int start, int stop, boolean reverse) {
-        boolean inventoryChanged = false;
-        int delta = reverse ? -1 : 1;
-        List<Slot> slots = inventorySlots;
-
-        // Try to stack stuff
-        if(stackToMerge.isStackable()) {
-            int slotId = reverse ? stop - 1 : start;
-            while (stackToMerge.stackSize > 0 && ((!reverse && slotId < stop) || (reverse && slotId >= start))) {
-                Slot slot = slots.get(slotId);
-                if(slot.isItemValid(stackToMerge) && !(slot instanceof IPhantomSlot)) {
-                    ItemStack stackInSlot = slot.getStack();
-                    if(InventoryUtils.tryMergeStacks(stackToMerge, stackInSlot)) {
-                        slot.onSlotChanged();
-                        inventoryChanged = true;
-                    }
-                }
-                slotId += delta;
-            }
-        }
-
-        // Put into a slot
-        if(stackToMerge.stackSize > 0) {
-            int slotId = reverse ? stop - 1 : start;
-            while((!reverse && slotId < start) || (reverse && slotId >= start)) {
-                Slot slot = slots.get(slotId);
-                if(slot.isItemValid(stackToMerge) && !(slot instanceof IPhantomSlot)) {
-                    ItemStack stackInSlot = slot.getStack();
-                    if(stackInSlot != null) {
-                        slot.putStack(stackToMerge.copy());
-                        slot.onSlotChanged();
-                        stackToMerge.stackSize = 0;
-                        return true;
-                    }
-                }
-                slotId += delta;
-            }
-        }
-        return inventoryChanged;
-    }
-
     /*******************************************************************************************************************
      * Container                                                                                                       *
      *******************************************************************************************************************/
@@ -296,9 +252,9 @@ public abstract class BaseContainer extends ContainerGeneric {
             ItemStack copy = itemToTransfer.copy();
 
             if(index < getInventorySizeNotPlayer()) {
-                if (!mergeItemStackSafe(itemToTransfer, getInventorySizeNotPlayer(), inventorySlots.size(), true))
+                if (!mergeItemStack(itemToTransfer, getInventorySizeNotPlayer(), inventorySlots.size(), true))
                     return null;
-            } else if(!mergeItemStackSafe(itemToTransfer, 0, getInventorySizeNotPlayer(), true))
+            } else if(!mergeItemStack(itemToTransfer, 0, getInventorySizeNotPlayer(), true))
                 return null;
 
             if(itemToTransfer.stackSize == 0)
