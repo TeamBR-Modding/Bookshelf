@@ -79,7 +79,7 @@ public class SyncableFieldPacket implements IMessage, IMessageHandler<SyncableFi
 
             if(world.getTileEntity(message.blockPosition) == null)
                 return null;
-            else if(!(world.getTileEntity(blockPosition) instanceof Syncable))
+            else if(!(world.getTileEntity(message.blockPosition) instanceof Syncable))
                 return null;
 
             if(message.returnValue)

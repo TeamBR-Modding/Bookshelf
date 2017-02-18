@@ -54,8 +54,8 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
         this.name = title;
         this.textureLocation = texture;
 
-        rightTabs = new GuiTabCollection(this, xSize);
-        leftTabs = new GuiTabCollection(this, 0);
+        rightTabs = new GuiTabCollection(this, xSize + 1);
+        leftTabs = new GuiTabCollection(this, -1);
 
         titleComponent = new GuiComponentText(this,
                 xSize / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(ClientUtils.translate(name)) / 2,
@@ -112,7 +112,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         components.forEach((baseComponent -> {
-            if(baseComponent.isMouseOver(mouseX * guiLeft, mouseY * guiTop)) {
+            if(baseComponent.isMouseOver(mouseX - guiLeft, mouseY - guiTop)) {
                 baseComponent.mouseDown(mouseX - guiLeft, mouseY - guiTop, mouseButton);
             }
         }));
@@ -129,7 +129,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
     protected void mouseReleased(int mouseX, int mouseY, int state) {
         super.mouseReleased(mouseX, mouseY, state);
         components.forEach((baseComponent -> {
-            if(baseComponent.isMouseOver(mouseX * guiLeft, mouseY * guiTop)) {
+            if(baseComponent.isMouseOver(mouseX - guiLeft, mouseY - guiTop)) {
                 baseComponent.mouseUp(mouseX - guiLeft, mouseY - guiTop, state);
             }
         }));
@@ -147,7 +147,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
         super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
         components.forEach((baseComponent -> {
-            if(baseComponent.isMouseOver(mouseX * guiLeft, mouseY * guiTop)) {
+            if(baseComponent.isMouseOver(mouseX - guiLeft, mouseY - guiTop)) {
                 baseComponent.mouseDrag(mouseX - guiLeft, mouseY - guiTop, clickedMouseButton, timeSinceLastClick);
             }
         }));
@@ -216,7 +216,7 @@ public abstract class GuiBase<T extends Container> extends GuiContainer {
         GlStateManager.translate(guiLeft, guiTop, 0);
 
         RenderUtils.bindTexture(textureLocation);
-        drawTexturedModalRect(0, 0, 0, 0, xSize, ySize);
+        drawTexturedModalRect(0, 0, 0, 0, xSize + 1, ySize + 1);
 
         components.forEach((baseComponent -> {
             RenderUtils.prepareRenderState();

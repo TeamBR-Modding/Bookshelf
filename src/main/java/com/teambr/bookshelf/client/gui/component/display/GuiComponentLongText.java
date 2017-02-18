@@ -68,7 +68,7 @@ public class GuiComponentLongText extends BaseComponent {
 
                 int lastSpace = trimmed.lastIndexOf(" "); // Ensure full words
                 if(lastSpace != -1)
-                    trimmed = text.substring(0, lastSpace);
+                    trimmed = trimmed.substring(0, lastSpace);
 
                 int newLine = trimmed.indexOf("\n"); // Break for new lines
                 if(newLine != -1)
@@ -76,8 +76,7 @@ public class GuiComponentLongText extends BaseComponent {
 
                 lines.add(trimmed);
 
-                if(string.length() != trimmed.length())
-                    string = string.substring(trimmed.length());
+                string = string.substring(trimmed.length());
 
                 if(string.charAt(0) == '\n') // Clear leading new lines
                     string = string.replaceFirst("\n", "");
@@ -157,8 +156,10 @@ public class GuiComponentLongText extends BaseComponent {
     public void render(int guiLeft, int guiTop, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(xPos, yPos, 0);
+        RenderUtils.bindTexture(parent.textureLocation);
+
         drawTexturedModalRect(width - 15, 0, u, v, 15, 8);
-        drawTexturedModalRect(width - 15, height - 7, u, u + 8, 15, 8);
+        drawTexturedModalRect(width - 15, height - 7, u, v + 8, 15, 8);
         GlStateManager.popMatrix();
     }
 
@@ -177,8 +178,8 @@ public class GuiComponentLongText extends BaseComponent {
 
         int yPos = -9;
         int actualY = 0;
-        GlStateManager.scale(textScale / 100, textScale / 100, textScale / 100);
-        for(int x = 0; x < lines.size(); x++) {
+        GlStateManager.scale(textScale / 100F, textScale / 100F, textScale / 100F);
+        for(int x = currentLine; x < lines.size(); x++) {
             if(actualY + ((textScale * 9) / 100) > height)
                 break;
             RenderUtils.restoreColor();

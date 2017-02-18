@@ -174,6 +174,7 @@ public class GuiTabCollection extends BaseComponent {
             RenderUtils.prepareRenderState();
             GlStateManager.translate(tab.getXPos(), tab.getYPos(), 0);
             tab.render(0, 0, mouseX - tab.getXPos(), mouseY - tab.getYPos());
+            tab.moveSlots();
             RenderUtils.restoreRenderState();
             RenderUtils.restoreColor();
             GlStateManager.popMatrix();
@@ -253,14 +254,21 @@ public class GuiTabCollection extends BaseComponent {
                         if(!tab.mouseDownActivated(
                                 (tab instanceof GuiReverseTab) ? mouseX + tab.expandedWidth - 5 : mouseX - parent.getXSize() + 5,
                                 mouseY - (i * 24) - 2, button)) {
-                            if(activeTab != tab) {
+                            if(activeTab != null &&
+                                    activeTab != tab) {
                                 if(activeTab != null)
                                     activeTab.setActive(false);
                                 activeTab = tab;
                                 activeTab.setActive(true);
-                            } else if(tab.isMouseOver(mouseX, mouseY)) {
-                                tab.setActive(false);
+                                return;
+                            } else if(activeTab == tab && tab.areChildrenActive()) {
+                                activeTab.setActive(false);
                                 activeTab = null;
+                                return;
+                            } else {
+                                activeTab = tab;
+                                activeTab.setActive(true);
+                                return;
                             }
                         }
                     } else

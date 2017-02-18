@@ -61,9 +61,9 @@ public class GuiReverseTab extends GuiTab {
 
         // Move size
         if(currentWidth != targetWidth)
-            dWidth += (targetWidth - dWidth) / 4;
+            dWidth += (targetWidth - dWidth);
         if(currentHeight != targetHeight)
-            dHeight += (targetHeight - dHeight) / 4;
+            dHeight += (targetHeight - dHeight);
 
         // Set size
         currentWidth  = dWidth;

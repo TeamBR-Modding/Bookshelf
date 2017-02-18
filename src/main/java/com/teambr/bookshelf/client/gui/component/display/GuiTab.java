@@ -89,6 +89,16 @@ public class GuiTab extends BaseComponent {
     }
 
     /**
+     * Moves the slots if need be
+     */
+    public void moveSlots() {
+        children.forEach((component -> {
+            if(component instanceof GuiComponentTabSlotHolder)
+                ((GuiComponentTabSlotHolder)component).moveSlots(areChildrenActive());
+        }));
+    }
+
+    /**
      * Called when the mouse is pressed
      *
      * We are broken this out as GuiTabCollection will pass down
@@ -98,6 +108,8 @@ public class GuiTab extends BaseComponent {
      * @param button Mouse Button
      */
     public boolean mouseDownActivated(int x, int y, int button) {
+        if(this.mouseEventListener != null)
+            this.mouseEventListener.onMouseDown(this, x, y, button);
         if(areChildrenActive()) {
             for(BaseComponent component : children){
                 if(component.isMouseOver(x, y)) {
@@ -207,9 +219,9 @@ public class GuiTab extends BaseComponent {
 
         // Move size
         if(currentWidth != targetWidth)
-            dWidth += (targetWidth - dWidth) / 4;
+            dWidth += (targetWidth - dWidth);
         if(currentHeight != targetHeight)
-            dHeight += (targetHeight - dHeight) / 4;
+            dHeight += (targetHeight - dHeight);
 
         // Set size
         currentWidth  = dWidth;

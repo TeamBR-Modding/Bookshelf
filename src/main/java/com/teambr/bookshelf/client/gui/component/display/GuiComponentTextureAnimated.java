@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.client.gui.component.display;
 
 import com.teambr.bookshelf.client.gui.GuiBase;
+import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.renderer.GlStateManager;
 
 /**
@@ -65,6 +66,8 @@ public abstract class GuiComponentTextureAnimated extends GuiComponentTexture {
     public void render(int guiLeft, int guiTop, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(xPos, yPos, 0);
+        RenderUtils.bindTexture(parent.textureLocation);
+
         switch (animationDirection) {
             case RIGHT:
                 drawTexturedModalRect(0, 0, u, v, getCurrentProgress(width), height);
@@ -76,7 +79,8 @@ public abstract class GuiComponentTextureAnimated extends GuiComponentTexture {
                 drawTexturedModalRect(-width + getCurrentProgress(width), 0, u, v, getCurrentProgress(width), height);
                 break;
             case UP:
-                drawTexturedModalRect(0, -height + getCurrentProgress(height), u, v, width, getCurrentProgress(height));
+                drawTexturedModalRect(0, height - getCurrentProgress(height), u,
+                        v + height - getCurrentProgress(height), width, getCurrentProgress(height));
                 break;
         }
         GlStateManager.popMatrix();

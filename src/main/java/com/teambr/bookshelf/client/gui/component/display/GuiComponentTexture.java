@@ -2,6 +2,7 @@ package com.teambr.bookshelf.client.gui.component.display;
 
 import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.BaseComponent;
+import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.renderer.GlStateManager;
 
 /**
@@ -46,6 +47,7 @@ public class GuiComponentTexture extends BaseComponent {
     public void render(int guiLeft, int guiTop, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(xPos, yPos, 0);
+        RenderUtils.bindTexture(parent.textureLocation);
         drawTexturedModalRect(0, 0, u, v, width, height);
         GlStateManager.popMatrix();
     }

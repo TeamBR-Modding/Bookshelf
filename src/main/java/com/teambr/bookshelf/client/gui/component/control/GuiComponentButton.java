@@ -122,6 +122,7 @@ public abstract class GuiComponentButton extends BaseComponent {
     public void render(int guiLeft, int guiTop, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();
         RenderUtils.prepareRenderState();
+        RenderUtils.bindTexture(parent.textureLocation);
         GlStateManager.translate(xPos, yPos, 0);
         drawTexturedModalRect(0, 0, u, isOver ? v + height : v, width, height);
         RenderUtils.restoreRenderState();

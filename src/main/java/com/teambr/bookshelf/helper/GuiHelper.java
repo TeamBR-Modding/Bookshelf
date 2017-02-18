@@ -105,12 +105,12 @@ public class GuiHelper {
             double timesW = Math.floor(maxWidth / 16);
             int cutW = 16;
 
-            for(int j = 0; j < timesW; j++) {
+            for(int j = 0; j <= timesW; j++) {
                 if(j == timesW)
                     cutW = maxWidth % 16;
                 if(level >= 16) {
                     double times = Math.floor(level / 16);
-                    for(int i = 1; i < times; i++) {
+                    for(int i = 1; i <= times; i++) {
                         drawIconWithCut(icon, x + (j * 16), y - (16 * i), cutW, 16, 0);
                     }
                     int cut = level % 16;

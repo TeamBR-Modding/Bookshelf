@@ -58,8 +58,13 @@ public class GuiComponentColoredZone extends BaseComponent {
     public void render(int guiLeft, int guiTop, int mouseX, int mouseY) {
         color = getDynamicColor();
         GlStateManager.pushMatrix();
+        GlStateManager.disableLighting();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GlStateManager.enableBlend();
-        GlStateManager.translate(xPos, yPos, 0);
+        GlStateManager.enableAlpha();
+        GlStateManager.disableDepth();
+        GlStateManager.disableTexture2D();
+        GlStateManager.translate(xPos, yPos, 10);
         RenderUtils.setColor(color);
         GL11.glBegin(GL11.GL_QUADS);
         GL11.glVertex3d(0, 0, 0);
@@ -67,8 +72,9 @@ public class GuiComponentColoredZone extends BaseComponent {
         GL11.glVertex3d(width, height, 0);
         GL11.glVertex3d(width, 0, 0);
         GL11.glEnd();
-        RenderUtils.restoreColor();
         GlStateManager.disableBlend();
+        GlStateManager.enableDepth();
+        GlStateManager.enableTexture2D();
         GlStateManager.popMatrix();
     }
 

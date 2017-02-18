@@ -57,7 +57,7 @@ public class GuiComponentFluidTank extends BaseComponent {
     public void renderOverlay(int guiLeft, int guiTop, int mouseX, int mouseY) {
         GlStateManager.pushMatrix();
         GlStateManager.translate(xPos, yPos, 0);
-        GuiHelper.renderFluid(tank, 0, 0, height, width);
+        GuiHelper.renderFluid(tank, 0, height, height, width);
         RenderUtils.bindTexture(parent.textureLocation);
         GlStateManager.popMatrix();
     }

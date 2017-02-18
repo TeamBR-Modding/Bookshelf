@@ -223,6 +223,7 @@ public abstract class BaseContainer extends ContainerGeneric {
         int delta = reverse ? -1 : 1;
         List<Slot> slots = inventorySlots;
 
+        // Try to stack stuff
         if(stackToMerge.isStackable()) {
             int slotId = reverse ? stop - 1 : start;
             while (stackToMerge.stackSize > 0 && ((!reverse && slotId < stop) || (reverse && slotId >= start))) {
@@ -238,6 +239,7 @@ public abstract class BaseContainer extends ContainerGeneric {
             }
         }
 
+        // Put into a slot
         if(stackToMerge.stackSize > 0) {
             int slotId = reverse ? stop - 1 : start;
             while((!reverse && slotId < start) || (reverse && slotId >= start)) {
@@ -293,10 +295,10 @@ public abstract class BaseContainer extends ContainerGeneric {
             ItemStack itemToTransfer = slot.getStack();
             ItemStack copy = itemToTransfer.copy();
 
-            if(index < inventorySize)
-                if(!mergeItemStackSafe(itemToTransfer, 0, inventorySize, true))
+            if(index < getInventorySizeNotPlayer()) {
+                if (!mergeItemStackSafe(itemToTransfer, getInventorySizeNotPlayer(), inventorySlots.size(), true))
                     return null;
-            else if(!mergeItemStackSafe(itemToTransfer, 0, inventorySize, false))
+            } else if(!mergeItemStackSafe(itemToTransfer, 0, getInventorySizeNotPlayer(), true))
                 return null;
 
             if(itemToTransfer.stackSize == 0)

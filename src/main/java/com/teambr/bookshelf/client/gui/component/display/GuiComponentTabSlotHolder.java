@@ -19,6 +19,7 @@ public class GuiComponentTabSlotHolder extends BaseComponent {
     protected int shownX, shownY;
     protected GuiTab parentTab;
     protected GuiComponentTexture slotTexture;
+    public boolean doRender;
 
     /**
      * Creates an object that will move the physical slot when should render
@@ -39,14 +40,13 @@ public class GuiComponentTabSlotHolder extends BaseComponent {
         slotTexture = new GuiComponentTexture(parent, x - 1, y - 1, u, v, 18, 18);
     }
 
-
     /**
-     * Called to render the component
+     * Called by parent tab to move around
+     * @param doRender Do the render
      */
-    @Override
-    public void render(int guiLeft, int guiTop, int mouseX, int mouseY) {
-        if(parentTab.isActive) {
-            slotTexture.render(guiLeft, guiTop, mouseX, mouseY);
+    public void moveSlots(boolean doRender) {
+        this.doRender = doRender;
+        if(doRender) {
             heldSlot.xDisplayPosition = shownX;
             heldSlot.yDisplayPosition = shownY;
         } else {
@@ -56,11 +56,21 @@ public class GuiComponentTabSlotHolder extends BaseComponent {
     }
 
     /**
+     * Called to render the component
+     */
+    @Override
+    public void render(int guiLeft, int guiTop, int mouseX, int mouseY) {
+        if(doRender) {
+            slotTexture.render(guiLeft, guiTop, mouseX, mouseY);
+        }
+    }
+
+    /**
      * Called after base render, is already translated to guiLeft and guiTop, just move offset
      */
     @Override
     public void renderOverlay(int guiLeft, int guiTop, int mouseX, int mouseY) {
-         // No op
+        // No op
     }
 
     /**
