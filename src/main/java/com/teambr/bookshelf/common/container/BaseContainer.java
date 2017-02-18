@@ -254,7 +254,7 @@ public abstract class BaseContainer extends ContainerGeneric {
             if(index < getInventorySizeNotPlayer()) {
                 if (!mergeItemStack(itemToTransfer, getInventorySizeNotPlayer(), inventorySlots.size(), true))
                     return null;
-            } else if(!mergeItemStack(itemToTransfer, 0, getInventorySizeNotPlayer(), true))
+            } else if(!mergeItemStack(itemToTransfer, 0, getInventorySizeNotPlayer(), false))
                 return null;
 
             if(itemToTransfer.stackSize == 0)

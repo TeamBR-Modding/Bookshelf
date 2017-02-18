@@ -152,13 +152,14 @@ public abstract class GuiComponentSideSelector extends BaseComponent {
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(xPos + width / 2, yPos + height / 2, (float) diameter);
-        GlStateManager.scale(scale, - scale, scale);
+        GlStateManager.scale(scale, -scale, scale);
         trackball.update(mouseX - width, -(mouseY - height));
 
-        if(tile != null && renderTile)
-            TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, -0.5, -0.5, -0.5, 0.0F);
         if(blockState != null)
             drawBlock();
+
+        if(tile != null && renderTile)
+            TileEntityRendererDispatcher.instance.renderTileEntityAt(tile, -0.5F, -0.5F, -0.5F, 0.0F);
 
         SidePicker picker = new SidePicker(0.5);
 
