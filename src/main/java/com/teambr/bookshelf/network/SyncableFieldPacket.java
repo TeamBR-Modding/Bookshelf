@@ -93,6 +93,9 @@ public class SyncableFieldPacket implements IMessage, IMessageHandler<SyncableFi
         } else {
             World world = Minecraft.getMinecraft().theWorld;
 
+            if(world == null || message.blockPosition == null)
+                return null;
+
             if(world.getTileEntity(message.blockPosition) == null)
                 return null;
             else if(!(world.getTileEntity(message.blockPosition) instanceof Syncable))
