@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 
 /**
  * This file was created for Bookshelf
- * <p>
+ *
  * Bookshelf is licensed under the
  * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
  * http://creativecommons.org/licenses/by-nc-sa/4.0/
