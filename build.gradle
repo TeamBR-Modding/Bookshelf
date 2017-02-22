@@ -36,7 +36,6 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-apply plugin: 'scala'
 apply plugin: 'maven'
 
 ext.configFile = file "build.properties"
@@ -59,6 +58,7 @@ if (build == null || build == '') {
 } else {
     version = "${config.minecraft_version}-${config.mod_version}-B" + System.getenv("BUILD_NUMBER")
 }
+
 group= "com.teambr.bookshelf" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Bookshelf-API"
 
@@ -224,4 +224,3 @@ curseforge  {
         addGameVersion '1.10.2'
     }
 }
-

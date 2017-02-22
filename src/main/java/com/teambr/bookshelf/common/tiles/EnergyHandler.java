@@ -142,22 +142,22 @@ public abstract class EnergyHandler extends Syncable implements
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        if(capability == TeslaCapabilities.CAPABILITY_PRODUCER && isProvider())
+       /* if(capability == TeslaCapabilities.CAPABILITY_PRODUCER && isProvider())
             return true;
         else if(capability == TeslaCapabilities.CAPABILITY_CONSUMER && isReceiver())
             return true;
-        else if(capability == TeslaCapabilities.CAPABILITY_HOLDER || capability == CapabilityEnergy.ENERGY)
+        else */if(/*capability == TeslaCapabilities.CAPABILITY_HOLDER || */capability == CapabilityEnergy.ENERGY)
             return true;
         return false;
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-        if(capability == TeslaCapabilities.CAPABILITY_PRODUCER && isProvider())
+       /* if(capability == TeslaCapabilities.CAPABILITY_PRODUCER && isProvider())
             return (T) this;
         else if(capability == TeslaCapabilities.CAPABILITY_CONSUMER && isReceiver())
             return (T) this;
-        else if(capability == TeslaCapabilities.CAPABILITY_HOLDER || capability == CapabilityEnergy.ENERGY)
+        else */if(/*capability == TeslaCapabilities.CAPABILITY_HOLDER || */capability == CapabilityEnergy.ENERGY)
             return (T) this;
         return null;
     }
