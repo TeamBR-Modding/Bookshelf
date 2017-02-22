@@ -13,12 +13,14 @@ import ic2.api.energy.tile.IEnergySink;
 import ic2.api.energy.tile.IEnergySource;
 import ic2.api.tile.IEnergyStorage;
 import net.darkhax.tesla.api.ITeslaConsumer;
+import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
 import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
@@ -48,6 +50,13 @@ public abstract class EnergyHandler extends Syncable implements
         net.minecraftforge.energy.IEnergyStorage,
         IEnergyStorage, IEnergySource, IEnergySink,
         ITeslaConsumer, ITeslaProducer {
+
+    @CapabilityInject(ITeslaConsumer.class)
+    public static Capability<?> CAPABILITY_CONSUMER = null;
+    @CapabilityInject(ITeslaProducer.class)
+    public static Capability<?> CAPABILITY_PRODUCER = null;
+    @CapabilityInject(ITeslaHolder.class)
+    public static Capability<?> CAPABILITY_HOLDER = null;
 
     // Sync Values
     public static final int UPDATE_ENERGY_ID     = 1000;
@@ -142,22 +151,24 @@ public abstract class EnergyHandler extends Syncable implements
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-       /* if(capability == TeslaCapabilities.CAPABILITY_PRODUCER && isProvider())
+        if(capability == null)
+            return false;
+        if(capability == CAPABILITY_PRODUCER && isProvider())
             return true;
-        else if(capability == TeslaCapabilities.CAPABILITY_CONSUMER && isReceiver())
+        else if(capability == CAPABILITY_CONSUMER && isReceiver())
             return true;
-        else */if(/*capability == TeslaCapabilities.CAPABILITY_HOLDER || */capability == CapabilityEnergy.ENERGY)
+        else if(capability == CAPABILITY_HOLDER || capability == CapabilityEnergy.ENERGY)
             return true;
         return false;
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-       /* if(capability == TeslaCapabilities.CAPABILITY_PRODUCER && isProvider())
+        if(capability == CAPABILITY_PRODUCER && isProvider())
             return (T) this;
-        else if(capability == TeslaCapabilities.CAPABILITY_CONSUMER && isReceiver())
+        else if(capability == CAPABILITY_CONSUMER && isReceiver())
             return (T) this;
-        else */if(/*capability == TeslaCapabilities.CAPABILITY_HOLDER || */capability == CapabilityEnergy.ENERGY)
+        else if(capability == CAPABILITY_HOLDER || capability == CapabilityEnergy.ENERGY)
             return (T) this;
         return null;
     }
