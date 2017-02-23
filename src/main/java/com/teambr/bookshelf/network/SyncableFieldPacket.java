@@ -1,8 +1,11 @@
 package com.teambr.bookshelf.network;
 
-import com.teambr.bookshelf.Bookshelf;
+import com.teambr.bookshelf.common.tiles.Syncable;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -68,12 +71,42 @@ public class SyncableFieldPacket implements IMessage, IMessageHandler<SyncableFi
      * IMessageHandler                                                                                                 *
      *******************************************************************************************************************/
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public IMessage onMessage(SyncableFieldPacket message, MessageContext ctx) {
-        if(ctx.side.isServer())
-            return Bookshelf.proxy.doSyncableMessage(message.returnValue, message.id, message.value,
-                    message.blockPosition, ctx.getServerHandler().playerEntity.worldObj);
-         else
-            return Bookshelf.proxy.doSyncableMessage(message.returnValue, message.id, message.value, message.blockPosition, null);
+        if(ctx.side.isServer()) {
+            World world = ctx.getServerHandler().playerEntity.worldObj;
+
+            if(world.getTileEntity(message.blockPosition) == null)
+                return null;
+            else if(!(world.getTileEntity(message.blockPosition) instanceof Syncable))
+                return null;
+
+            if(message.returnValue)
+                PacketManager.net.sendToAllAround(new SyncableFieldPacket(false, message.id,
+                        ((Syncable)world.getTileEntity(message.blockPosition)).getVariable(message.id), message.blockPosition),
+                        new NetworkRegistry.TargetPoint(world.provider.getDimension(),
+                                message.blockPosition.getX(), message.blockPosition.getY(), message.blockPosition.getZ(), 25));
+            else {
+                ((Syncable)world.getTileEntity(message.blockPosition)).setVariable(message.id, message.value);
+            }
+        } else {
+            World world = Minecraft.getMinecraft().theWorld;
+
+            if(world == null || message.blockPosition == null)
+                return null;
+
+            if(world.getTileEntity(message.blockPosition) == null)
+                return null;
+            else if(!(world.getTileEntity(message.blockPosition) instanceof Syncable))
+                return null;
+
+            if(message.returnValue)
+                PacketManager.net.sendToServer(new SyncableFieldPacket(false, message.id,
+                        ((Syncable)world.getTileEntity(message.blockPosition)).getVariable(message.id), message.blockPosition));
+            else
+                ((Syncable)world.getTileEntity(message.blockPosition)).setVariable(message.id, message.value);
+        }
+        return null;
     }
 }
