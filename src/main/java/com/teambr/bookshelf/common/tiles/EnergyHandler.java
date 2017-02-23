@@ -41,8 +41,8 @@ import net.minecraftforge.fml.common.Optional;
         @Optional.Interface(iface = "ic2.api.tile.IEnergyStorage", modid = "IC2"),
         @Optional.Interface(iface = "ic2.api.energy.tile.IEnergySource", modid = "IC2"),
         @Optional.Interface(iface = "ic2.api.energy.tile.IEnergySink", modid = "IC2"),
-        @Optional.Interface(iface = "net.darkax.tesla.api.ITeslaConsumer", modid = "tesla"),
-        @Optional.Interface(iface = "net.darkax.tesla.api.ITeslaProducer", modid = "tesla")
+        @Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaConsumer", modid = "tesla"),
+        @Optional.Interface(iface = "net.darkhax.tesla.api.ITeslaProducer", modid = "tesla")
 })
 public abstract class EnergyHandler extends Syncable implements
         IEnergyHandler, IEnergyReceiver, IEnergyProvider,
