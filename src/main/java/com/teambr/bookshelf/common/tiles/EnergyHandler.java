@@ -15,7 +15,6 @@ import ic2.api.tile.IEnergyStorage;
 import net.darkhax.tesla.api.ITeslaConsumer;
 import net.darkhax.tesla.api.ITeslaHolder;
 import net.darkhax.tesla.api.ITeslaProducer;
-import net.darkhax.tesla.capability.TeslaCapabilities;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.MinecraftForge;
@@ -299,6 +298,7 @@ public abstract class EnergyHandler extends Syncable implements
      * @return The amount of power that the consumer accepts.
      */
     @Override
+    @Optional.Method(modid = "tesla")
     public long givePower(long power, boolean simulated) {
         long returnValue = energyStorage.providePower((int) power, !simulated);
         sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored());
@@ -314,6 +314,7 @@ public abstract class EnergyHandler extends Syncable implements
      * @return The amount of power that the Tesla Producer will give.
      */
     @Override
+    @Optional.Method(modid = "tesla")
     public long takePower(long power, boolean simulated) {
         long returnValue = energyStorage.receivePower((int) power, !simulated);
         sendValueToClient(UPDATE_ENERGY_ID, energyStorage.getCurrentStored());
