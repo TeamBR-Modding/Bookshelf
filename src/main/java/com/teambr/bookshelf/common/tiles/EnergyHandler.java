@@ -50,12 +50,12 @@ public abstract class EnergyHandler extends Syncable implements
         IEnergyStorage, IEnergySource, IEnergySink,
         ITeslaConsumer, ITeslaProducer {
 
-    @CapabilityInject(ITeslaConsumer.class)
+    /*@CapabilityInject(ITeslaConsumer.class)
     public static Capability<?> CAPABILITY_CONSUMER = null;
     @CapabilityInject(ITeslaProducer.class)
     public static Capability<?> CAPABILITY_PRODUCER = null;
     @CapabilityInject(ITeslaHolder.class)
-    public static Capability<?> CAPABILITY_HOLDER = null;
+    public static Capability<?> CAPABILITY_HOLDER = null;*/
 
     // Sync Values
     public static final int UPDATE_ENERGY_ID     = 1000;
