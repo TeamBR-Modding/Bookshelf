@@ -50,12 +50,12 @@ public abstract class EnergyHandler extends Syncable implements
         IEnergyStorage, IEnergySource, IEnergySink,
         ITeslaConsumer, ITeslaProducer {
 
-    /*@CapabilityInject(ITeslaConsumer.class)
+    @CapabilityInject(ITeslaConsumer.class)
     public static Capability<?> CAPABILITY_CONSUMER = null;
     @CapabilityInject(ITeslaProducer.class)
     public static Capability<?> CAPABILITY_PRODUCER = null;
     @CapabilityInject(ITeslaHolder.class)
-    public static Capability<?> CAPABILITY_HOLDER = null;*/
+    public static Capability<?> CAPABILITY_HOLDER = null;
 
     // Sync Values
     public static final int UPDATE_ENERGY_ID     = 1000;
@@ -150,24 +150,24 @@ public abstract class EnergyHandler extends Syncable implements
 
     @Override
     public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-        /*if(capability == null)
+        if(capability == null)
             return false;
         if(capability == CAPABILITY_PRODUCER && isProvider())
             return true;
         else if(capability == CAPABILITY_CONSUMER && isReceiver())
             return true;
-        else */if(/*capability == CAPABILITY_HOLDER || */capability == CapabilityEnergy.ENERGY)
+        else if(capability == CAPABILITY_HOLDER || capability == CapabilityEnergy.ENERGY)
             return true;
         return false;
     }
 
     @Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-       /* if(capability == CAPABILITY_PRODUCER && isProvider())
+        if(capability == CAPABILITY_PRODUCER && isProvider())
             return (T) this;
         else if(capability == CAPABILITY_CONSUMER && isReceiver())
             return (T) this;
-        else */if(/*capability == CAPABILITY_HOLDER || */capability == CapabilityEnergy.ENERGY)
+        else if(capability == CAPABILITY_HOLDER || capability == CapabilityEnergy.ENERGY)
             return (T) this;
         return null;
     }
