@@ -27,12 +27,13 @@ public interface IRedstoneAware {
      * @return True if has power
      */
     default boolean isPowered() {
-        return isPoweringTo(getWorld(),  getPos().offset(EnumFacing.UP),    EnumFacing.DOWN)  ||
-                isPoweringTo(getWorld(), getPos().offset(EnumFacing.DOWN),  EnumFacing.UP)    ||
-                isPoweringTo(getWorld(), getPos().offset(EnumFacing.NORTH), EnumFacing.SOUTH) ||
-                isPoweringTo(getWorld(), getPos().offset(EnumFacing.SOUTH), EnumFacing.NORTH) ||
-                isPoweringTo(getWorld(), getPos().offset(EnumFacing.EAST),  EnumFacing.WEST)  ||
-                isPoweringTo(getWorld(), getPos().offset(EnumFacing.WEST),  EnumFacing.EAST);
+        return !(getWorld() == null || getPos() == null) &&
+                (isPoweringTo(getWorld(), getPos().offset(EnumFacing.UP), EnumFacing.DOWN) ||
+                        isPoweringTo(getWorld(), getPos().offset(EnumFacing.DOWN), EnumFacing.UP) ||
+                        isPoweringTo(getWorld(), getPos().offset(EnumFacing.NORTH), EnumFacing.SOUTH) ||
+                        isPoweringTo(getWorld(), getPos().offset(EnumFacing.SOUTH), EnumFacing.NORTH) ||
+                        isPoweringTo(getWorld(), getPos().offset(EnumFacing.EAST), EnumFacing.WEST) ||
+                        isPoweringTo(getWorld(), getPos().offset(EnumFacing.WEST), EnumFacing.EAST));
     }
 
     /**
@@ -44,6 +45,6 @@ public interface IRedstoneAware {
      * @return True if is providing
      */
     default boolean isPoweringTo(World world, BlockPos blockPos, EnumFacing side) {
-        return world.getBlockState(blockPos).getWeakPower(world, blockPos, side) > 0;
+        return getWorld() != null && world.getBlockState(blockPos).getWeakPower(world, blockPos, side) > 0;
     }
 }
