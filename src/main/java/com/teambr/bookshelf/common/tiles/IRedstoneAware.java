@@ -14,6 +14,7 @@ import net.minecraft.world.World;
  * @author Paul Davis - pauljoda
  * @since 2/10/2017
  */
+@Deprecated
 public interface IRedstoneAware {
 
     // Kinda cheaty
