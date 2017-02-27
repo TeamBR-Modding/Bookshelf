@@ -101,9 +101,9 @@ public class WorldUtils {
      */
     public static void dropStack(World world, ItemStack stack, BlockPos pos) {
         if(stack != null && stack.stackSize > 0) {
-            float rx = world.rand.nextFloat() * 0.8F + 1.0F;
-            float ry = world.rand.nextFloat() * 0.8F + 1.0F;
-            float rz = world.rand.nextFloat() * 0.8F + 1.0F;
+            float rx = world.rand.nextFloat() * 0.8F;
+            float ry = world.rand.nextFloat() * 0.8F;
+            float rz = world.rand.nextFloat() * 0.8F;
 
             EntityItem itemEntity = new EntityItem(world,
                     pos.getX() + rx, pos.getY() + ry, pos.getZ() + rz,
