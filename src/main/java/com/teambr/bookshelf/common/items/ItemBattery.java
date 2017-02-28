@@ -52,22 +52,6 @@ public abstract class ItemBattery extends Item implements IEnergyContainerItem {
     protected abstract void setDefaultTags(ItemStack stack);
 
     /*******************************************************************************************************************
-     * ItemBattery                                                                                                     *
-     *******************************************************************************************************************/
-
-    /**
-     * Used to update the item damage based on current energy stored
-     * @param stack The stack
-     */
-    protected void updateDamage(ItemStack stack) {
-        int r = getEnergyStored(stack) / getMaxEnergyStored(stack);
-        int result = 16 - Math.round(r * 16);
-        if(r < 1 && result == 0)
-            result = 1;
-        stack.setItemDamage(result);
-    }
-
-    /*******************************************************************************************************************
      * Item                                                                                                            *
      *******************************************************************************************************************/
 
@@ -80,7 +64,6 @@ public abstract class ItemBattery extends Item implements IEnergyContainerItem {
     @Override
     public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
         setDefaultTags(stack);
-        updateDamage(stack);
     }
 
     /**
@@ -125,7 +108,6 @@ public abstract class ItemBattery extends Item implements IEnergyContainerItem {
         if(!simulate) {
             energyStored += energyReceived;
             stack.getTagCompound().setInteger(ENERGY_NBT_TAG, energyStored);
-            updateDamage(stack);
         }
 
         return energyReceived;
@@ -156,7 +138,6 @@ public abstract class ItemBattery extends Item implements IEnergyContainerItem {
         if(!simulate) {
             energyStored -= energyExtracted;
             stack.getTagCompound().setInteger(ENERGY_NBT_TAG, energyStored);
-            updateDamage(stack);
         }
 
         return energyExtracted;
