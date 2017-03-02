@@ -27,11 +27,6 @@ repositories {
         name 'DVS1 Maven FS'
         url "http://dvs1.progwml6.com/files/maven"
     }
-
-    maven {
-        name 'Player Maven FS'
-        url 'http://maven.ic2.player.to/'
-    }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -141,8 +136,6 @@ dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
     deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.JEI_version}"
     compile "mcp.mobius.waila:Waila:${config.WAILA_version}:dev"
-    compile "net.darkhax.tesla:Tesla:${config.TESLA_version}"
-    deobfCompile "net.industrial-craft:industrialcraft-2:${config.IC2_version}:dev"
 }
 
 repositories {
