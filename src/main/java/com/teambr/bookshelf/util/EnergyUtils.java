@@ -1,6 +1,7 @@
 package com.teambr.bookshelf.util;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import com.teambr.bookshelf.energy.implementations.EnergyBank;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -13,6 +14,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +53,9 @@ public class EnergyUtils {
         // Converts into the right prefix
         final char unitType = "KMGTPE".charAt(exp - 1);
         // Returns string with energy trimmed below the 1000, and adding the energy unit
-        return String.format("%.1f %sE", energy / Math.pow(1000, exp), unitType);
+        DecimalFormat format = new DecimalFormat("#.#");
+        format.setRoundingMode(RoundingMode.FLOOR);
+        return format.format(energy / Math.pow(1000, exp)) + " " + unitType + "E";
     }
 
     /**
@@ -149,11 +154,34 @@ public class EnergyUtils {
     public static void addToolTipInfo(ItemStack stack, List<String> toolTip) {
         if(stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
             IEnergyStorage energyStorage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-            toolTip.add(ChatFormatting.YELLOW + ClientUtils.translate("bookshelfapi.energy.energyStored"));
-            toolTip.add("  " + getEnergyDisplay(energyStorage.getEnergyStored()) + " / " + getEnergyDisplay(energyStorage.getMaxEnergyStored()));
-            if(!ClientUtils.isShiftPressed()) {
+            addToolTipInfo(energyStorage, toolTip, -1, -1);
+        }
+    }
+
+    /**
+     * Adds the energy storage info
+     * @param energyStorage  The energy storage object
+     * @param toolTip        The list to add to
+     * @param insert         The max insert, -1 to skip
+     * @param extract        The max extract, -1 to skip
+     */
+    @SideOnly(Side.CLIENT)
+    public static void addToolTipInfo(IEnergyStorage energyStorage, List<String> toolTip, int insert, int extract) {
+        toolTip.add(ChatFormatting.GOLD + ClientUtils.translate("bookshelfapi.energy.energyStored"));
+        toolTip.add("  " + EnergyUtils.getEnergyDisplay(energyStorage.getEnergyStored()) + " / " +
+                EnergyUtils.getEnergyDisplay(energyStorage.getMaxEnergyStored()));
+        if(!ClientUtils.isShiftPressed()) {
+            toolTip.add("");
+            toolTip.add(ChatFormatting.GRAY + "" + ChatFormatting.ITALIC + ClientUtils.translate("bookshelfapi.text.shiftInfo"));
+        } else {
+            if(insert > -1) {
                 toolTip.add("");
-                toolTip.add(ChatFormatting.ITALIC + ClientUtils.translate("bookshelfapi.text.shiftInfo"));
+                toolTip.add(ChatFormatting.GREEN + ClientUtils.translate("bookshelfapi.energy.energyIn"));
+                toolTip.add("  " + EnergyUtils.getEnergyDisplay(insert));
+            }
+            if(extract > -1) {
+                toolTip.add(ChatFormatting.DARK_RED + ClientUtils.translate("bookshelfapi.energy.energyOut"));
+                toolTip.add("  " + EnergyUtils.getEnergyDisplay(extract));
             }
         }
     }

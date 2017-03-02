@@ -191,8 +191,8 @@ public class EnergyBank implements IEnergyHolder, IEnergyProvider, IEnergyReceiv
 
     public static final String ENERGY_NBT_TAG             = "Energy";
     public static final String ENERGY_CAPACITY_NBT_TAG    = "EnergyCapacity";
-    public static final String ENERGY_MAX_RECIEVE_NBT_TAG = "MaxRecieve";
-    public static final String ENERGY_MAX_EXTRACT_NBT_TAG = "MaxExtract";
+    protected static final String ENERGY_MAX_RECIEVE_NBT_TAG = "MaxRecieve";
+    protected static final String ENERGY_MAX_EXTRACT_NBT_TAG = "MaxExtract";
 
     /**
      * Save to tag
