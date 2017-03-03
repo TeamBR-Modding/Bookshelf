@@ -361,6 +361,6 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
      */
     @Override
     public int getSlotLimit(int slot) {
-        return getSlotLimit(slot);
+        return 64;
     }
 }
