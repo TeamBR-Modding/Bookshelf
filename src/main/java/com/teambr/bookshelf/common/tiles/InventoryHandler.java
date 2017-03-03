@@ -352,4 +352,15 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
             return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
         }
     }
+
+    /**
+     * Retrieves the maximum stack size allowed to exist in the given slot.
+     *
+     * @param slot Slot to query.
+     * @return The maximum stack size allowed in the slot.
+     */
+    @Override
+    public int getSlotLimit(int slot) {
+        return getSlotLimit(slot);
+    }
 }
