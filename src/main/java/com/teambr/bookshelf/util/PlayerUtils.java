@@ -25,8 +25,8 @@ public class PlayerUtils {
      */
     public static boolean isPlayerHoldingEither(EntityPlayer player, Item item) {
         return !(player == null || item == null || player.getHeldEquipment() == null) &&
-                ((player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == item) ||
-                        (player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() == item));
+                ((!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem() == item) ||
+                        (!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() == item));
     }
 
     /**
@@ -35,10 +35,10 @@ public class PlayerUtils {
      * @return What hand its in
      */
     public static EnumHand getHandStackIsIn(EntityPlayer player, ItemStack stack) {
-        if(player == null || stack == null)
+        if(player == null || stack.isEmpty())
             return EnumHand.MAIN_HAND;
 
-        if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().equals(stack))
+        if(!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().equals(stack))
             return EnumHand.MAIN_HAND;
         else
             return EnumHand.OFF_HAND;

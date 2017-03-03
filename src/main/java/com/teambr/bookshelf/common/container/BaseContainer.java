@@ -140,20 +140,20 @@ public abstract class BaseContainer extends ContainerGeneric {
 
         if(mouseButton == 2) {
             if(((IPhantomSlot)slot).canAdjust())
-                slot.putStack(null);
+                slot.putStack(ItemStack.EMPTY);
         } else if(mouseButton == 0 || mouseButton == 1) {
             InventoryPlayer playerInv = player.inventory;
             slot.onSlotChanged();
             ItemStack stackSlot = slot.getStack();
             ItemStack stackHeld = playerInv.getItemStack();
 
-            if(stackSlot != null)
+            if(!stackSlot.isEmpty())
                 stack = stackSlot.copy();
 
-            if(stackSlot == null) {
-                if(stackHeld != null && slot.isItemValid(stackHeld))
+            if(stackSlot.isEmpty()) {
+                if(!stackHeld.isEmpty() && slot.isItemValid(stackHeld))
                     fillPhantomSlot(slot, stackHeld, mouseButton, modifier);
-            } else if(stackHeld == null) {
+            } else if(stackHeld.isEmpty()) {
                 adjustPhantomSlot(slot, mouseButton, modifier);
                 slot.onTake(player, playerInv.getItemStack());
             } else if(slot.isItemValid(stackHeld)) {
@@ -190,7 +190,7 @@ public abstract class BaseContainer extends ContainerGeneric {
         stackSlot.setCount(stackSize);
 
         if(stackSlot.getCount() <= 0)
-            slot.putStack(null);
+            slot.putStack(ItemStack.EMPTY);
     }
 
     /**
@@ -258,7 +258,7 @@ public abstract class BaseContainer extends ContainerGeneric {
                 return null;
 
             if(itemToTransfer.getCount() == 0)
-                slot.putStack(null);
+                slot.putStack(ItemStack.EMPTY);
             else
                 slot.onSlotChanged();
 

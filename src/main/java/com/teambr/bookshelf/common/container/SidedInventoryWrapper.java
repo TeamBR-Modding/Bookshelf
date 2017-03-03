@@ -58,7 +58,7 @@ public class SidedInventoryWrapper implements IItemHandlerModifiable {
     @Override
     public ItemStack getStackInSlot(int slot) {
         int i = getSlot(inv, slot, side);
-        return i == -1 ? null : inv.getStackInSlot(i);
+        return i == -1 ? ItemStack.EMPTY : inv.getStackInSlot(i);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class SidedInventoryWrapper implements IItemHandlerModifiable {
         int slot1 = getSlot(inv, slot, side);
 
         if (slot1 == -1)
-            return null;
+            return ItemStack.EMPTY;
 
         if (!inv.canInsertItem(slot1, stack, side))
             return stack;
@@ -82,20 +82,20 @@ public class SidedInventoryWrapper implements IItemHandlerModifiable {
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (amount == 0)
-            return null;
+            return ItemStack.EMPTY;
 
         int slot1 = getSlot(inv, slot, side);
 
         if (slot1 == -1)
-            return null;
+            return ItemStack.EMPTY;
 
         ItemStack stackInSlot = inv.getStackInSlot(slot1);
 
-        if (stackInSlot == null)
-            return null;
+        if (stackInSlot.isEmpty())
+            return ItemStack.EMPTY;
 
         if (!inv.canExtractItem(slot1, stackInSlot, side))
-            return null;
+            return ItemStack.EMPTY;
 
         if (simulate) {
             if (stackInSlot.getCount() < amount) {

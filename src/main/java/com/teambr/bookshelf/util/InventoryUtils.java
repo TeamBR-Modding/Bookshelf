@@ -39,7 +39,7 @@ public class InventoryUtils {
         float f = 0.0F;
         for(int j = 0; j < inventory.getSlots(); j++) {
             ItemStack stack = inventory.getStackInSlot(j);
-            if(stack != null) {
+            if(!stack.isEmpty()) {
                 f += stack.getCount() / stack.getMaxStackSize();
                 i += 1;
             }
@@ -56,7 +56,7 @@ public class InventoryUtils {
      * @return Can stacks merge
      */
     public static boolean canStacksMerge(ItemStack stackOne, ItemStack stackTwo) {
-        return !(stackOne == null || stackTwo == null) && stackOne.isItemEqual(stackTwo) && ItemStack.areItemStackTagsEqual(stackOne, stackTwo);
+        return !(stackOne.isEmpty() || stackTwo.isEmpty()) && stackOne.isItemEqual(stackTwo) && ItemStack.areItemStackTagsEqual(stackOne, stackTwo);
     }
 
     /**
@@ -66,7 +66,7 @@ public class InventoryUtils {
      * @return True if merged at all
      */
     public static boolean tryMergeStacks(ItemStack stackToMerge, ItemStack stackInSlot) {
-        if(stackInSlot == null || !stackInSlot.isItemEqual(stackToMerge) || !ItemStack.areItemStackTagsEqual(stackToMerge, stackInSlot))
+        if(stackInSlot.isEmpty() || !stackInSlot.isItemEqual(stackToMerge) || !ItemStack.areItemStackTagsEqual(stackToMerge, stackInSlot))
             return false;
 
         int newStackSize = stackInSlot.getCount() + stackToMerge.getCount();
@@ -178,13 +178,13 @@ public class InventoryUtils {
         for (Integer fromSlot1 : fromSlots) { // Cycle fromInventory
             if (fromInventory.getStackInSlot(fromSlot1) != null) { // If we have something
                 ItemStack fromStack = fromInventory.extractItem(fromSlot1, maxAmount, true); // Simulate to get stack
-                if (fromStack != null) { // Make sure we got something
+                if (!fromStack.isEmpty()) { // Make sure we got something
                     for (Integer toSlot : toSlots) { // Cycle to inventory
                         int slotID = toSlot; // Grab slot
                         ItemStack movedStack = targetInventory.insertItem(slotID, fromStack.copy(), !doMove); // Try insert
                         if (!ItemStack.areItemStacksEqual(fromStack, movedStack)) { // If a change was made to the stack
                             fromInventory.extractItem(fromSlot1,
-                                    (movedStack != null) ? fromStack.getCount() - movedStack.getCount() : maxAmount,
+                                    (!movedStack.isEmpty()) ? fromStack.getCount() - movedStack.getCount() : maxAmount,
                                     !doMove); // Extract from original
                             return true; // Exit
                         }
