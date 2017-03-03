@@ -40,13 +40,13 @@ public class InventoryUtils {
         for(int j = 0; j < inventory.getSlots(); j++) {
             ItemStack stack = inventory.getStackInSlot(j);
             if(stack != null) {
-                f += stack.stackSize / stack.getMaxStackSize();
+                f += stack.getCount() / stack.getMaxStackSize();
                 i += 1;
             }
         }
 
         f = f / inventory.getSlots();
-        return MathHelper.floor_float(f * 14F) + i > 0 ? 1 : 0;
+        return MathHelper.floor(f * 14F) + i > 0 ? 1 : 0;
     }
 
     /**
@@ -69,16 +69,16 @@ public class InventoryUtils {
         if(stackInSlot == null || !stackInSlot.isItemEqual(stackToMerge) || !ItemStack.areItemStackTagsEqual(stackToMerge, stackInSlot))
             return false;
 
-        int newStackSize = stackInSlot.stackSize + stackToMerge.stackSize;
+        int newStackSize = stackInSlot.getCount() + stackToMerge.getCount();
         int maxStackSize = stackToMerge.getMaxStackSize();
 
         if(newStackSize <= maxStackSize) {
-            stackToMerge.stackSize = 0;
-            stackInSlot.stackSize = newStackSize;
+            stackToMerge.setCount(0);
+            stackInSlot.setCount(newStackSize);
             return true;
-        } else if(stackInSlot.stackSize < maxStackSize) {
-            stackToMerge.stackSize -= maxStackSize - stackInSlot.stackSize;
-            stackInSlot.stackSize = maxStackSize;
+        } else if(stackInSlot.getCount() < maxStackSize) {
+            stackToMerge.setCount(stackToMerge.getCount() - maxStackSize - stackInSlot.getCount());
+            stackInSlot.setCount(maxStackSize);
             return true;
         } else
             return false;
@@ -184,7 +184,7 @@ public class InventoryUtils {
                         ItemStack movedStack = targetInventory.insertItem(slotID, fromStack.copy(), !doMove); // Try insert
                         if (!ItemStack.areItemStacksEqual(fromStack, movedStack)) { // If a change was made to the stack
                             fromInventory.extractItem(fromSlot1,
-                                    (movedStack != null) ? fromStack.stackSize - movedStack.stackSize : maxAmount,
+                                    (movedStack != null) ? fromStack.getCount() - movedStack.getCount() : maxAmount,
                                     !doMove); // Extract from original
                             return true; // Exit
                         }

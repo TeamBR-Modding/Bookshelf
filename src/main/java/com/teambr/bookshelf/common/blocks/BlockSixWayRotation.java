@@ -53,7 +53,7 @@ public class BlockSixWayRotation extends Block {
      */
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        worldIn.setBlockState(pos, getDefaultState().withProperty(SIX_WAY, BlockPistonBase.getFacingFromEntity(pos, placer)));
+        worldIn.setBlockState(pos, getDefaultState().withProperty(SIX_WAY, EnumFacing.getDirectionFromEntityLiving(pos, placer)));
     }
 
     /*******************************************************************************************************************

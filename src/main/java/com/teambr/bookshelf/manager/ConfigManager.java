@@ -22,10 +22,6 @@ public class ConfigManager {
     // Debug
     public static boolean debug;
 
-    // Energy
-    public static int euMultiplier;
-    public static int ic2Tier;
-
     /**
      * Loads the config
      * @param configFolderLocation The location for the config folder
@@ -35,10 +31,6 @@ public class ConfigManager {
         config.load();
 
         debug = config.get(Reference.DEBUG, "Enable Debug Mode?", false).getBoolean();
-
-        euMultiplier = config.get(Reference.ENERGY, "how many EU per energy unit (RF)", 4).getInt();
-        ic2Tier      = config.get(Reference.ENERGY, "IC2 Tier for machines: 1 = LV, 2 = MV, 3 = MHV, 4 = HV, 5 = EV etc",
-                1).getInt();
 
         config.save();
     }

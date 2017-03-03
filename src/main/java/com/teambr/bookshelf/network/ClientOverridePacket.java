@@ -51,7 +51,7 @@ public class ClientOverridePacket implements IMessage, IMessageHandler<ClientOve
     public void fromBytes(ByteBuf buf) {
         blockPosition = BlockPos.fromLong(buf.readLong());
         try {
-            tag = new PacketBuffer(buf).readNBTTagCompoundFromBuffer();
+            tag = new PacketBuffer(buf).readCompoundTag();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +60,7 @@ public class ClientOverridePacket implements IMessage, IMessageHandler<ClientOve
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeLong(blockPosition.toLong());
-        new PacketBuffer(buf).writeNBTTagCompoundToBuffer(tag);
+        new PacketBuffer(buf).writeCompoundTag(tag);
     }
 
     /*******************************************************************************************************************
@@ -71,7 +71,7 @@ public class ClientOverridePacket implements IMessage, IMessageHandler<ClientOve
     public IMessage onMessage(ClientOverridePacket message, MessageContext ctx) {
         if(ctx.side.isServer()) {
             if(message.tag != null) {
-                World world = ctx.getServerHandler().playerEntity.worldObj;
+                World world = ctx.getServerHandler().playerEntity.world;
                 if(world.getTileEntity(message.blockPosition) != null) {
                     world.getTileEntity(message.blockPosition).setPos(message.blockPosition);
                     world.getTileEntity(message.blockPosition).readFromNBT(message.tag);

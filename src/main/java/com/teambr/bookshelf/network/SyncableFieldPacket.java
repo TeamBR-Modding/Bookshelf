@@ -77,7 +77,7 @@ public class SyncableFieldPacket implements IMessage, IMessageHandler<SyncableFi
     @Override
     public IMessage onMessage(SyncableFieldPacket message, MessageContext ctx) {
         if(ctx.side.isServer()) {
-            World world = ctx.getServerHandler().playerEntity.worldObj;
+            World world = ctx.getServerHandler().playerEntity.world;
 
             if(world.getTileEntity(message.blockPosition) == null)
                 return null;
@@ -100,7 +100,7 @@ public class SyncableFieldPacket implements IMessage, IMessageHandler<SyncableFi
 
     @SideOnly(Side.CLIENT)
     private void onClient(SyncableFieldPacket message, MessageContext ctx) {
-        World world = Minecraft.getMinecraft().theWorld;
+        World world = Minecraft.getMinecraft().world;
 
         if(world == null || message.blockPosition == null)
             return;

@@ -155,7 +155,7 @@ public abstract class BaseContainer extends ContainerGeneric {
                     fillPhantomSlot(slot, stackHeld, mouseButton, modifier);
             } else if(stackHeld == null) {
                 adjustPhantomSlot(slot, mouseButton, modifier);
-                slot.onPickupFromSlot(player, playerInv.getItemStack());
+                slot.onTake(player, playerInv.getItemStack());
             } else if(slot.isItemValid(stackHeld)) {
                 if(InventoryUtils.canStacksMerge(stackSlot, stackHeld))
                     adjustPhantomSlot(slot, mouseButton, modifier);
@@ -180,16 +180,16 @@ public abstract class BaseContainer extends ContainerGeneric {
         ItemStack stackSlot = slot.getStack();
         int stackSize = 0;
         if(modifier == ClickType.QUICK_MOVE)
-            stackSize = (mouseButton == 0) ? (stackSlot.stackSize + 1) / 2 : stackSlot.stackSize * 2;
+            stackSize = (mouseButton == 0) ? (stackSlot.getCount() + 1) / 2 : stackSlot.getCount() * 2;
         else
-            stackSize =  (mouseButton == 0) ? stackSlot.stackSize - 1 : stackSlot.stackSize + 1;
+            stackSize =  (mouseButton == 0) ? stackSlot.getCount() - 1 : stackSlot.getCount() + 1;
 
         if(stackSize > slot.getSlotStackLimit())
             stackSize = slot.getSlotStackLimit();
 
-        stackSlot.stackSize = stackSize;
+        stackSlot.setCount(stackSize);
 
-        if(stackSlot.stackSize <= 0)
+        if(stackSlot.getCount() <= 0)
             slot.putStack(null);
     }
 
@@ -204,13 +204,13 @@ public abstract class BaseContainer extends ContainerGeneric {
         if(!((IPhantomSlot)slot).canAdjust())
             return;
 
-        int stackSize = (mouseButton == 0) ? stackHeld.stackSize : 1;
+        int stackSize = (mouseButton == 0) ? stackHeld.getCount() : 1;
 
         if(stackSize > slot.getSlotStackLimit())
             stackSize = slot.getSlotStackLimit();
 
         ItemStack phantomStack = stackHeld.copy();
-        phantomStack.stackSize = stackSize;
+        phantomStack.setCount(stackSize);
 
         slot.putStack(phantomStack);
     }
@@ -257,12 +257,12 @@ public abstract class BaseContainer extends ContainerGeneric {
             } else if(!mergeItemStack(itemToTransfer, 0, getInventorySizeNotPlayer(), false))
                 return null;
 
-            if(itemToTransfer.stackSize == 0)
+            if(itemToTransfer.getCount() == 0)
                 slot.putStack(null);
             else
                 slot.onSlotChanged();
 
-            if(itemToTransfer.stackSize != copy.stackSize)
+            if(itemToTransfer.getCount() != copy.getCount())
                 return copy;
         }
         return null;

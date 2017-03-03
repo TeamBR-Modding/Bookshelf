@@ -47,11 +47,11 @@ public class GuiComponentTabSlotHolder extends BaseComponent {
     public void moveSlots(boolean doRender) {
         this.doRender = doRender;
         if(doRender) {
-            heldSlot.xDisplayPosition = shownX;
-            heldSlot.yDisplayPosition = shownY;
+            heldSlot.xPos = shownX;
+            heldSlot.yPos = shownY;
         } else {
-            heldSlot.yDisplayPosition = -10000;
-            heldSlot.xDisplayPosition = -10000;
+            heldSlot.xPos = -10000;
+            heldSlot.yPos = -10000;
         }
     }
 

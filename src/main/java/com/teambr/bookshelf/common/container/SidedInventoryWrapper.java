@@ -98,15 +98,26 @@ public class SidedInventoryWrapper implements IItemHandlerModifiable {
             return null;
 
         if (simulate) {
-            if (stackInSlot.stackSize < amount) {
+            if (stackInSlot.getCount() < amount) {
                 return stackInSlot.copy();
             } else {
                 ItemStack copy = stackInSlot.copy();
-                copy.stackSize = amount;
+                copy.setCount(amount);
                 return copy;
             }
         } else {
             return inv.extractItem(slot1, amount, simulate);
         }
+    }
+
+    /**
+     * Retrieves the maximum stack size allowed to exist in the given slot.
+     *
+     * @param slot Slot to query.
+     * @return The maximum stack size allowed in the slot.
+     */
+    @Override
+    public int getSlotLimit(int slot) {
+        return inv.getSlotLimit(slot);
     }
 }

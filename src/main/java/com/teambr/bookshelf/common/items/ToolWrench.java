@@ -23,24 +23,14 @@ import net.minecraft.world.World;
 public class ToolWrench extends Item {
 
     /**
-     * Called when a block is clicked on with this tool
-     * @param stack The stack
-     * @param playerIn The player clicking
-     * @param worldIn The world
-     * @param pos Block Pos
-     * @param hand The hand
-     * @param facing Block face
-     * @param hitX X hit
-     * @param hitY Y hit
-     * @param hitZ Z hit
-     * @return Result
+     * Called when a Block is right-clicked with this Item
      */
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand,
+    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
                                       EnumFacing facing, float hitX, float hitY, float hitZ) {
         if(worldIn.getBlockState(pos).getBlock() instanceof IToolable) {
             IToolable toolableBlock = (IToolable) worldIn.getBlockState(pos).getBlock();
-            return toolableBlock.onWrench(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+            return toolableBlock.onWrench(player.getHeldItem(hand), player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
         } else
             return EnumActionResult.PASS;
     }

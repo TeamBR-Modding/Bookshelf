@@ -100,7 +100,7 @@ public class WorldUtils {
      * @param pos BlockPos to drop them from
      */
     public static void dropStack(World world, ItemStack stack, BlockPos pos) {
-        if(stack != null && stack.stackSize > 0) {
+        if(stack != null && stack.getCount() > 0) {
             float rx = world.rand.nextFloat() * 0.8F;
             float ry = world.rand.nextFloat() * 0.8F;
             float rz = world.rand.nextFloat() * 0.8F;
@@ -114,9 +114,9 @@ public class WorldUtils {
             itemEntity.motionX = world.rand.nextGaussian() * factor;
             itemEntity.motionY = world.rand.nextGaussian() * factor + 0.2F;
             itemEntity.motionZ = world.rand.nextGaussian() * factor;
-            world.spawnEntityInWorld(itemEntity);
+            world.spawnEntity(itemEntity);
 
-            stack.stackSize = 0;
+            stack.setCount(0);
         }
     }
 

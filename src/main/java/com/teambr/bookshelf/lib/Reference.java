@@ -16,9 +16,8 @@ public class Reference {
     public static final String MOD_ID       = "bookshelfapi";
     public static final String MOD_NAME     = "Bookshelf API";
     public static final String VERSION      = "5.0.0";
-    public static final String DEPENDENCIES = "required-after:Forge@[2.18.3.2202,)";
+    public static final String DEPENDENCIES = "required-after:forge@[13.19.1.2189,)";
 
     // Config Categories
     public static final String DEBUG        = "Debug Mode";
-    public static final String ENERGY       = "Energy Options";
 }

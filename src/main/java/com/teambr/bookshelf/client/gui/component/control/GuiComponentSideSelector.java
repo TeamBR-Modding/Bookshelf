@@ -71,7 +71,7 @@ public abstract class GuiComponentSideSelector extends BaseComponent {
         this.highListSelectedSides = doHighlights;
         this.renderTile = doRenderTile;
 
-        this.diameter = MathHelper.ceiling_double_int(scale * Math.sqrt(3));
+        this.diameter = MathHelper.ceil(scale * Math.sqrt(3));
         trackball = new TrackballWrapper(1, 40);
     }
 
@@ -310,7 +310,7 @@ public abstract class GuiComponentSideSelector extends BaseComponent {
 
     public void setScale(double scale) {
         this.scale = scale;
-        this.diameter = MathHelper.ceiling_double_int(scale * Math.sqrt(3));
+        this.diameter = MathHelper.ceil(scale * Math.sqrt(3));
     }
 
     public IBlockState getBlockState() {

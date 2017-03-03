@@ -228,7 +228,7 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
             NBTTagCompound stackTag = tagList.getCompoundTagAt(i);
             int slot = stackTag.getByte("Slot:" + inventoryName);
             if(slot >= 0 && slot < inventoryContents.size())
-                inventoryContents.set(slot, ItemStack.loadItemStackFromNBT(stackTag));
+                inventoryContents.set(slot, new ItemStack(stackTag));
         }
     }
 
@@ -288,7 +288,7 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (stack == null || stack.stackSize == 0 || !isItemValidForSlot(slot, stack))
+        if (stack == null || stack.getCount() == 0 || !isItemValidForSlot(slot, stack))
             return null;
 
         validateSlotIndex(slot);
@@ -301,25 +301,26 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
             if (!ItemHandlerHelper.canItemStacksStack(stack, existing))
                 return stack;
 
-            limit -= existing.stackSize;
+            limit -= existing.getCount();
         }
 
         if (limit <= 0)
             return stack;
 
-        boolean reachedLimit = stack.stackSize > limit;
+        boolean reachedLimit = stack.getCount() > limit;
 
         if (!simulate) {
             if (existing == null) {
                 this.inventoryContents.set(slot, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
             }
             else {
-                existing.stackSize += reachedLimit ? limit : stack.stackSize;
+                existing.setCount(existing.getCount() + (reachedLimit ? limit : stack.getCount()));
             }
             onInventoryChanged(slot);
         }
 
-        return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.stackSize - limit) : null;    }
+        return reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - limit) : null;
+    }
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
@@ -335,7 +336,7 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
 
         int toExtract = Math.min(amount, existing.getMaxStackSize());
 
-        if (existing.stackSize <= toExtract) {
+        if (existing.getCount() <= toExtract) {
             if (!simulate) {
                 this.inventoryContents.set(slot, null);
                 onInventoryChanged(slot);
@@ -344,7 +345,7 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
         }
         else {
             if (!simulate) {
-                this.inventoryContents.set(slot, ItemHandlerHelper.copyStackWithSize(existing, existing.stackSize - toExtract));
+                this.inventoryContents.set(slot, ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract));
                 onInventoryChanged(slot);
             }
 
