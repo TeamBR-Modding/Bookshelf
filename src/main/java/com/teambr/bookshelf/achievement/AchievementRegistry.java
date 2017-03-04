@@ -26,7 +26,7 @@ public class AchievementRegistry {
     private  HashMap<String, AchievementList> achievements;
 
     public AchievementRegistry() {
-        achievements = new HashMap<String, AchievementList>();
+        achievements = new HashMap<>();
     }
 
     /**

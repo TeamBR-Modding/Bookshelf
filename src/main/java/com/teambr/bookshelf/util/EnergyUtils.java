@@ -1,7 +1,6 @@
 package com.teambr.bookshelf.util;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import com.teambr.bookshelf.energy.implementations.EnergyBank;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -90,7 +89,7 @@ public class EnergyUtils {
      */
     public static <T> List<T> getConnectedCapabilities (Capability<T> capability, World world, BlockPos pos) {
 
-        final List<T> capabilities = new ArrayList<T>();
+        final List<T> capabilities = new ArrayList<>();
 
         for (final EnumFacing side : EnumFacing.values()) {
 

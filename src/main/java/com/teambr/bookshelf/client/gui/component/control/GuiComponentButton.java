@@ -5,7 +5,6 @@ import com.teambr.bookshelf.client.gui.component.BaseComponent;
 import com.teambr.bookshelf.helper.GuiHelper;
 import com.teambr.bookshelf.util.ClientUtils;
 import com.teambr.bookshelf.util.RenderUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
 import javax.annotation.Nullable;

@@ -1,11 +1,9 @@
 package com.teambr.bookshelf.events;
 
-import com.google.common.eventbus.Subscribe;
 import com.teambr.bookshelf.common.ICraftingListener;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 

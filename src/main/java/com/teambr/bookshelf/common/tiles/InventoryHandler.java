@@ -71,9 +71,7 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
      * @param slot The slot that changed
      */
     protected void onInventoryChanged(int slot) {
-        callBacks.forEach((IInventoryCallback callback) -> {
-            callback.onInventoryChanged(this, slot);
-        });
+        callBacks.forEach((IInventoryCallback callback) -> callback.onInventoryChanged(this, slot));
     }
 
     /**

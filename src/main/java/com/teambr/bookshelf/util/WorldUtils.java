@@ -87,9 +87,7 @@ public class WorldUtils {
      * @param pos BlockPos to drop them from
      */
     public static void dropStacks(World world, List<ItemStack> stacks, BlockPos pos) {
-        stacks.forEach((ItemStack stack) -> {
-            dropStack(world, stack, pos);
-        });
+        stacks.forEach((ItemStack stack) -> dropStack(world, stack, pos));
     }
 
     /**

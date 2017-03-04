@@ -3,7 +3,6 @@ package com.teambr.bookshelf.client.gui.component.display;
 import com.teambr.bookshelf.client.gui.GuiBase;
 import com.teambr.bookshelf.client.gui.component.NinePatchRenderer;
 import com.teambr.bookshelf.util.RenderUtils;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;

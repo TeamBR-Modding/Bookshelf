@@ -2,8 +2,6 @@ package com.teambr.bookshelf.common;
 
 import net.minecraft.item.ItemStack;
 
-import java.util.List;
-
 /**
  * This file was created for NeoTech
  *

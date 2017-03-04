@@ -1,7 +1,11 @@
 package com.teambr.bookshelf.common;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -14,11 +18,13 @@ import java.util.List;
  * @author Paul Davis - pauljoda
  * @since 2/9/2017
  */
-public interface IHasToolTip {
+public interface IToolTipProvider {
 
     /**
      * Used to get the tip to display
      * @return The tip to display
      */
-    List<String> getToolTip(ItemStack stack) ;
+    @Nullable
+    @SideOnly(Side.CLIENT)
+    List<String> getToolTip(@Nonnull ItemStack stack) ;
 }

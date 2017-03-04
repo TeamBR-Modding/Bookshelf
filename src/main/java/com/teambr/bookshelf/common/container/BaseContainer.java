@@ -12,7 +12,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * This file was created for Bookshelf
@@ -227,7 +226,6 @@ public abstract class BaseContainer extends ContainerGeneric {
      * @param player The player
      * @return The stack
      */
-    @Nullable
     @Override
     public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
         Slot slot = (slotId < 0) ? null : inventorySlots.get(slotId);
@@ -241,7 +239,6 @@ public abstract class BaseContainer extends ContainerGeneric {
     /**
      * Take a stack from the specified inventory slot.
      */
-    @Nullable
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
         if(index < 0 || index > inventorySlots.size())
@@ -253,18 +250,18 @@ public abstract class BaseContainer extends ContainerGeneric {
 
             if(index < getInventorySizeNotPlayer()) {
                 if (!mergeItemStack(itemToTransfer, getInventorySizeNotPlayer(), inventorySlots.size(), true))
-                    return null;
+                    return ItemStack.EMPTY;
             } else if(!mergeItemStack(itemToTransfer, 0, getInventorySizeNotPlayer(), false))
-                return null;
+                return ItemStack.EMPTY;
 
-            if(itemToTransfer.getCount() == 0)
-                slot.putStack(ItemStack.EMPTY);
+            /*if(itemToTransfer.getCount() == 0)
+                slot.putStack(ItemStack.EMPTY);*/
             else
                 slot.onSlotChanged();
 
             if(itemToTransfer.getCount() != copy.getCount())
                 return copy;
         }
-        return null;
+        return ItemStack.EMPTY;
     }
 }

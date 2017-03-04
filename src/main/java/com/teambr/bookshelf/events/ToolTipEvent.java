@@ -1,9 +1,11 @@
 package com.teambr.bookshelf.events;
 
-import com.teambr.bookshelf.common.IHasToolTip;
+import com.teambr.bookshelf.common.IToolTipProvider;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.List;
 
 /**
  * This file was created for Bookshelf - Java
@@ -18,15 +20,19 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ToolTipEvent {
     @SubscribeEvent
     public void onToolTip(ItemTooltipEvent event) {
-        IHasToolTip itemWithTip = null;
+        IToolTipProvider itemWithTip = null;
 
-        if(Block.getBlockFromItem(event.getItemStack().getItem()) instanceof IHasToolTip)
-            itemWithTip = (IHasToolTip) Block.getBlockFromItem(event.getItemStack().getItem());
-        else if(event.getItemStack().getItem() instanceof IHasToolTip)
-            itemWithTip = (IHasToolTip) event.getItemStack().getItem();
+        if(Block.getBlockFromItem(event.getItemStack().getItem()) instanceof IToolTipProvider)
+            itemWithTip = (IToolTipProvider) Block.getBlockFromItem(event.getItemStack().getItem());
+        else if(event.getItemStack().getItem() instanceof IToolTipProvider)
+            itemWithTip = (IToolTipProvider) event.getItemStack().getItem();
 
-        if(itemWithTip != null)
-            for(String tip : itemWithTip.getToolTip(event.getItemStack()))
-                event.getToolTip().add(tip);
+
+        if(itemWithTip != null) {
+            List<String> tipList = itemWithTip.getToolTip(event.getItemStack());
+            if(tipList != null)
+                for (String tip : tipList)
+                    event.getToolTip().add(tip);
+        }
     }
 }

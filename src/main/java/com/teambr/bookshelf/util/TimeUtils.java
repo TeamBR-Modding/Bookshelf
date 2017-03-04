@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.util;
 
-import com.google.common.eventbus.Subscribe;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
