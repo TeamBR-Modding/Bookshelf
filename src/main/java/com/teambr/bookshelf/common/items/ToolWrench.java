@@ -9,6 +9,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 /**
  * This file was created for Bookshelf - Java
  *
@@ -24,6 +26,7 @@ public class ToolWrench extends Item {
     /**
      * Called when a Block is right-clicked with this Item
      */
+    @Nonnull
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
                                       EnumFacing facing, float hitX, float hitY, float hitZ) {
