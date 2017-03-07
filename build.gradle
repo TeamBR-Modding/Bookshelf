@@ -45,8 +45,6 @@ configFile.withReader {
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 }
-String httpuser = "${project.ext['httpuser']}"
-String httppass = "${httppass}"
 
 String build = "${project.ext['build.vcs.number.Bookshelf_HttpsGithubComTeamBRModdingBookshelfGitRefsHeadsMaster']}"
 if (build == null || build == '') {
@@ -157,7 +155,7 @@ uploadArchives {
             configuration = configurations.deployerJars
             //repository(url: System.properties['URL']) {
             repository(url: System.properties['URL']) {
-                authentication(userName: httpuser, password: httppass)
+                authentication(userName: System.getenv['httpuser'], password: System.properties['httppass'])
             }
 
             pom {
