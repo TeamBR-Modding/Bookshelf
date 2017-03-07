@@ -46,12 +46,11 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-String build = System.getenv("BUILD_NUMBER")
-
+String build = "${project.ext['build.vcs.number.NeoTech_HttpsGithubComTeamBRModdingNeoTechGitRefsHeadsMaster']}"
 if (build == null || build == '') {
     version = "${config.minecraft_version}-${config.mod_version}"
 } else {
-    version = "${config.minecraft_version}-${config.mod_version}-B" + System.getenv("BUILD_NUMBER")
+    version = "${config.minecraft_version}-${config.mod_version}-" + build.substring(0,7)
 }
 
 group= "com.teambr.bookshelf" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
