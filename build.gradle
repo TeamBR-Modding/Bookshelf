@@ -155,7 +155,7 @@ uploadArchives {
             configuration = configurations.deployerJars
             //repository(url: System.properties['URL']) {
             repository(url: System.properties['URL']) {
-                authentication(userName: System.getenv['httpuser'], password: System.properties['httppass'])
+                authentication(userName: System.properties['httpuser'], password: System.properties['httppass'])
             }
 
             pom {
