@@ -45,7 +45,7 @@ configFile.withReader {
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 }
-String httpuser = "${httpuser}"
+
 String build = "${project.ext['build.vcs.number.Bookshelf_HttpsGithubComTeamBRModdingBookshelfGitRefsHeadsMaster']}"
 if (build == null || build == '') {
     version = "${config.minecraft_version}-${config.mod_version}"
@@ -156,7 +156,7 @@ uploadArchives {
         mavenDeployer {
             configuration = configurations.deployerJars
             //repository(url: System.properties['URL']) {
-            repository(url: System.properties['URL']) {
+            repository(url: System.properties['url']) {
                 authentication(userName: System.properties['httpuser'], password: System.properties['httppass'])
             }
 
