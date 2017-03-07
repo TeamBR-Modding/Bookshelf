@@ -1,4 +1,4 @@
-Bookshelf API [![Build Status](http://teambrmodding.com:8080/job/Bookshelf%20API%201.8.9/badge/icon)](http://teambrmodding.com:8080/job/Bookshelf%20API%201.8.9/)
+Bookshelf API <a href='http://teambrmodding.com:8111/viewType.html?buildTypeId=Bookshelf_Build&tab=buildTypeStatusDiv&branch_Bookshelf=master'><img src="http://teambrmodding.com:8111/app/rest/builds/buildType:(id:Bookshelf_Build)/statusIcon"/></a><a href='https://minecraft.curseforge.com/projects/bookshelf-api-library'><img src='http://cf.way2muchnoise.eu/full_bookshelf-api-library_downloads.svg'><img src='http://cf.way2muchnoise.eu/versions/bookshelf-api-library_latest.svg'></a>
 ======
 
 Library of useful functions used by TeamBR
