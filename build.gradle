@@ -45,7 +45,7 @@ configFile.withReader {
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 }
-String httpuser = "${httpuser}"
+String httpuser = "${project.ext['httpuser']}"
 String httppass = "${httppass}"
 
 String build = "${project.ext['build.vcs.number.Bookshelf_HttpsGithubComTeamBRModdingBookshelfGitRefsHeadsMaster']}"
