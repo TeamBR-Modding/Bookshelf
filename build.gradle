@@ -46,7 +46,10 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-String build = "${project.ext['build.vcs.number.Bookshelf_HttpsGithubComTeamBRModdingBookshelfGitRefsHeadsMaster']}"
+String build = ""
+if (project.hasProperty("teamcity")) {
+    build = "${project.ext['build.vcs.number.NeoTech_HttpsGithubComTeamBRModdingNeoTechGitRefsHeadsMaster']}"
+}
 if (build == null || build == '') {
     version = "${config.minecraft_version}-${config.mod_version}"
 } else {
