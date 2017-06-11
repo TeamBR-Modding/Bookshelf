@@ -1,8 +1,8 @@
 package com.teambr.bookshelf.achievement;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.stats.Achievement;
-import net.minecraftforge.common.AchievementPage;
+//import net.minecraft.stats.Achievement;
+//import net.minecraftforge.common.AchievementPage;
 
 import java.util.HashMap;
 
@@ -34,7 +34,7 @@ public class AchievementRegistry {
      * @param list The list we are adding
      */
     public void putAchievementList(AchievementList list) {
-        achievements.put(list.getName(), list);
+        //achievements.put(list.getName(), list);
     }
 
     /**
@@ -42,9 +42,9 @@ public class AchievementRegistry {
      * @param name The name (mod name)
      * @param achievements The achievements to display
      */
-    public void registerModAchievements(String name, Achievement... achievements) {
-        AchievementPage modpage = new AchievementPage(name, achievements);
-        AchievementPage.registerAchievementPage(modpage);
+    public void registerModAchievements(String name, Object... achievements) {
+//        AchievementPage modpage = new AchievementPage(name, achievements);
+//        AchievementPage.registerAchievementPage(modpage);
     }
 
     /**
@@ -54,11 +54,11 @@ public class AchievementRegistry {
      * @param player The player triggering
      */
     public void triggerAchievement(String modName, String achievementName, EntityPlayer player) {
-        for(Achievement achieve : achievements.get(modName).getAchievements()) {
-            if(achieve.statId.equals(achievementName)) {
-                player.addStat(achieve, 1);
-                return;
-            }
-        }
+//        for(Achievement achieve : achievements.get(modName).getAchievements()) {
+//            if(achieve.statId.equals(achievementName)) {
+//                player.addStat(achieve, 1);
+//                return;
+//            }
+//        }
     }
 }

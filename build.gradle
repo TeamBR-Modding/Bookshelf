@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
@@ -40,23 +40,23 @@ if (file('APIToken').exists()) {
     APIToken = new File('APIToken').text
 }
 
-configFile.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    project.ext.config = new ConfigSlurper().parse prop
-}
+//configFile.withReader {
+//    def prop = new Properties()
+//    prop.load(it)
+//    project.ext.config = new ConfigSlurper().parse prop
+//}
 
 String build = ""
 if (project.hasProperty("teamcity")) {
     build = "${project.ext['build.vcs.number.Bookshelf_HttpsGithubComTeamBRModdingBookshelfGitRefsHeadsMaster']}"
 }
 if (build == null || build == '') {
-    version = "${config.minecraft_version}-${config.mod_version}"
+    version = "${project.minecraft_version}-${project.mod_version}"
 } else {
-    version = "${config.minecraft_version}-${config.mod_version}-" + build.substring(0,7)
+    version = "${project.minecraft_version}-${project.mod_version}-" + build.substring(0,7)
 }
 
-println "Test is ${httpuser}"
+//println "Test is ${httpuser}"
 
 group= "com.teambr.bookshelf" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Bookshelf-API"
@@ -65,14 +65,14 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 minecraft {
-    version = config.minecraft_version + "-" + config.forge_version
+    version = project.minecraft_version + "-" + project.forge_version
 
-    replace "@VERSION@", config.mod_version
+    replace "@VERSION@", project.mod_version
     replaceIn "Reference.java"
 
     runDir = "eclipse"
 
-    mappings = "${config.MAPPINGS}"
+    mappings = "${project.MAPPINGS}"
     makeObfSourceJar = false
 }
 
@@ -138,8 +138,8 @@ configurations {
 
 dependencies {
     deployerJars "org.apache.maven.wagon:wagon-ftp:2.2"
-    deobfCompile "mezz.jei:jei_${config.minecraft_version}:${config.JEI_version}"
-    compile "mcp.mobius.waila:Waila:${config.WAILA_version}:dev"
+    //deobfCompile "mezz.jei:jei_${project.minecraft_version}:${project.JEI_version}"
+    //compile "mcp.mobius.waila:Waila:${project.WAILA_version}:dev"
 }
 
 repositories {
@@ -154,62 +154,62 @@ repositories {
     }
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            configuration = configurations.deployerJars
-            //repository(url: System.properties['URL']) {
-            repository(url: "${project.ext['url']}") {
-                authentication(userName: "${project.ext['httpuser']}", password: "${project.ext['httppass']}")
-            }
-
-            pom {
-                groupId = project.group
-                version = project.version
-                artifactId = project.archivesBaseName
-
-                pom.project {
-                    name project.archivesBaseName
-                    packaging 'jar'
-                    description 'Bookshelf'
-                    url 'https://github.com/TeamBR-Modding/Bookshelf'
-                    scm {
-                        url 'https://github.com/TeamBR-Modding/Bookshelf'
-                        connection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
-                        developerConnection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
-                    }
-                    issueManagement {
-                        system 'github'
-                        url 'https://github.com/TeamBR-Modding/Bookshelf/issues'
-                    }
-                    licenses {
-                        license {
-                            name 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License'
-                            url 'http://creativecommons.org/licenses/by-nc-sa/4.0/'
-                            distribution 'repo'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id 'Dyonovan'
-                            name 'Dyonovan'
-                            roles {
-                                role 'developer'
-                            }
-                        }
-                        developer {
-                            id 'pauljoda'
-                            name 'pauljoda'
-                            roles {
-                                role 'developer'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            configuration = configurations.deployerJars
+//            //repository(url: System.properties['URL']) {
+//            repository(url: "${project.ext['url']}") {
+//                authentication(userName: "${project.ext['httpuser']}", password: "${project.ext['httppass']}")
+//            }
+//
+//            pom {
+//                groupId = project.group
+//                version = project.version
+//                artifactId = project.archivesBaseName
+//
+//                pom.project {
+//                    name project.archivesBaseName
+//                    packaging 'jar'
+//                    description 'Bookshelf'
+//                    url 'https://github.com/TeamBR-Modding/Bookshelf'
+//                    scm {
+//                        url 'https://github.com/TeamBR-Modding/Bookshelf'
+//                        connection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
+//                        developerConnection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
+//                    }
+//                    issueManagement {
+//                        system 'github'
+//                        url 'https://github.com/TeamBR-Modding/Bookshelf/issues'
+//                    }
+//                    licenses {
+//                        license {
+//                            name 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License'
+//                            url 'http://creativecommons.org/licenses/by-nc-sa/4.0/'
+//                            distribution 'repo'
+//                        }
+//                    }
+//                    developers {
+//                        developer {
+//                            id 'Dyonovan'
+//                            name 'Dyonovan'
+//                            roles {
+//                                role 'developer'
+//                            }
+//                        }
+//                        developer {
+//                            id 'pauljoda'
+//                            name 'pauljoda'
+//                            roles {
+//                                role 'developer'
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 
 curseforge  {
     apiKey = APIToken

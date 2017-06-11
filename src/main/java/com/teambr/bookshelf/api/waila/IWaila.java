@@ -1,6 +1,6 @@
 package com.teambr.bookshelf.api.waila;
 
-import mcp.mobius.waila.api.IWailaDataProvider;
+//import mcp.mobius.waila.api.IWailaDataProvider;
 
 /**
  * This file was created for Bookshelf - Java
@@ -14,4 +14,4 @@ import mcp.mobius.waila.api.IWailaDataProvider;
  * @author Paul Davis - pauljoda
  * @since 2/6/2017
  */
-public interface IWaila extends IWailaDataProvider { }
+//public interface IWaila extends IWailaDataProvider { }

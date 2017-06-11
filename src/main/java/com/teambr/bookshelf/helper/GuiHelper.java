@@ -3,9 +3,9 @@ package com.teambr.bookshelf.helper;
 import com.teambr.bookshelf.util.RenderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -69,7 +69,7 @@ public class GuiHelper {
      */
     public static void drawIconWithCut(TextureAtlasSprite icon, int x, int y, int width, int height, int cut) {
         Tessellator tess = Tessellator.getInstance();
-        VertexBuffer renderer = tess.getBuffer();
+        BufferBuilder renderer = tess.getBuffer();
 
         VertexFormat POSITION_TEXT_NORMAL_F = new VertexFormat();
         VertexFormatElement NORMAL_3F = new VertexFormatElement(0, EnumType.FLOAT, EnumUsage.NORMAL, 3);
