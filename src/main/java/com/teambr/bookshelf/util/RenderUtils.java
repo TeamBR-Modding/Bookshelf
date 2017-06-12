@@ -5,10 +5,10 @@ import com.teambr.bookshelf.client.shapes.TexturedCylinder;
 import com.teambr.bookshelf.client.shapes.TexturedSphere;
 import com.teambr.bookshelf.lib.Reference;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -169,7 +169,7 @@ public class RenderUtils {
      */
     public static void renderCubeWithTexture(double x1, double y1, double z1, double x2, double y2, double z2,
                                  double u, double v, double u1, double v1) {
-        VertexBuffer tes = Tessellator.getInstance().getBuffer();
+        BufferBuilder tes = Tessellator.getInstance().getBuffer();
 
         VertexFormat POSITION_TEX_NORMALF = new VertexFormat();
         VertexFormatElement NORMAL_3F =
