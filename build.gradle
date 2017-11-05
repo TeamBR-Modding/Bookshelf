@@ -56,8 +56,6 @@ if (build == null || build == '') {
     version = "${project.minecraft_version}-${project.mod_version}-" + build.substring(0,7)
 }
 
-//println "Test is ${httpuser}"
-
 group= "com.teambr.bookshelf" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Bookshelf-API"
 
@@ -108,19 +106,11 @@ task devJar(type: Jar, dependsOn: 'classes') {
     classifier = 'dev'
 }
 
-//task myJavadocs(type: Javadoc) {
-//    source = sourceSets.main.allJava
-//}
-
 task javadocJar(type: Zip, dependsOn: javadoc) {
     from 'build/docs/javadoc'
     classifier = 'javadoc'
 }
 
-/*task sourceJarScala(type: Jar, dependsOn: "sourceMainScala") {
-    from 'build/sources/scala'
-    classifier = 'sources'
-}*/
 task sourceJarScala(type: Jar, dependsOn: "classes") {
     from sourceSets.main.allSource
     classifier = 'sources'
@@ -154,62 +144,64 @@ repositories {
     }
 }
 
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            configuration = configurations.deployerJars
-//            //repository(url: System.properties['URL']) {
-//            repository(url: "${project.ext['url']}") {
-//                authentication(userName: "${project.ext['httpuser']}", password: "${project.ext['httppass']}")
-//            }
-//
-//            pom {
-//                groupId = project.group
-//                version = project.version
-//                artifactId = project.archivesBaseName
-//
-//                pom.project {
-//                    name project.archivesBaseName
-//                    packaging 'jar'
-//                    description 'Bookshelf'
-//                    url 'https://github.com/TeamBR-Modding/Bookshelf'
-//                    scm {
-//                        url 'https://github.com/TeamBR-Modding/Bookshelf'
-//                        connection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
-//                        developerConnection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
-//                    }
-//                    issueManagement {
-//                        system 'github'
-//                        url 'https://github.com/TeamBR-Modding/Bookshelf/issues'
-//                    }
-//                    licenses {
-//                        license {
-//                            name 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License'
-//                            url 'http://creativecommons.org/licenses/by-nc-sa/4.0/'
-//                            distribution 'repo'
-//                        }
-//                    }
-//                    developers {
-//                        developer {
-//                            id 'Dyonovan'
-//                            name 'Dyonovan'
-//                            roles {
-//                                role 'developer'
-//                            }
-//                        }
-//                        developer {
-//                            id 'pauljoda'
-//                            name 'pauljoda'
-//                            roles {
-//                                role 'developer'
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+uploadArchives {
+  if (project.hasProperty('username') && project.hasProperty('password')) {
+    repositories {
+        mavenDeployer {
+            configuration = configurations.deployerJars
+            //repository(url: System.properties['URL']) {
+              repository(url: "ftp://dyonovan.com/srv/http/maven2") {
+                      authentication(userName: "${username}", password: "${password}")
+                  }
+
+            pom {
+                groupId = project.group
+                version = project.version
+                artifactId = project.archivesBaseName
+
+                pom.project {
+                    name project.archivesBaseName
+                    packaging 'jar'
+                    description 'Bookshelf'
+                    url 'https://github.com/TeamBR-Modding/Bookshelf'
+                    scm {
+                        url 'https://github.com/TeamBR-Modding/Bookshelf'
+                        connection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
+                        developerConnection 'scm:git:git@github.com/TeamBR-Modding/Bookshelf.git'
+                    }
+                    issueManagement {
+                        system 'github'
+                        url 'https://github.com/TeamBR-Modding/Bookshelf/issues'
+                    }
+                    licenses {
+                        license {
+                            name 'Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License'
+                            url 'http://creativecommons.org/licenses/by-nc-sa/4.0/'
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'Dyonovan'
+                            name 'Dyonovan'
+                            roles {
+                                role 'developer'
+                            }
+                        }
+                        developer {
+                            id 'pauljoda'
+                            name 'pauljoda'
+                            roles {
+                                role 'developer'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  }
+}
 
 curseforge  {
     apiKey = APIToken
