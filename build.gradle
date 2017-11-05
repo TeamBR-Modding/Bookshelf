@@ -48,7 +48,7 @@ if (file('APIToken').exists()) {
 
 String build = ""
 ///if (project.hasProperty("teamcity")) {
-    build = "${project.ext['build.counter']}"
+    build = "${project.ext['%build.counter%']}"
 
 if (build == null || build == '') {
     version = "${project.minecraft_version}-${project.mod_version}"
