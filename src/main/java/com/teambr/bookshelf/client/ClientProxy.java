@@ -2,7 +2,6 @@ package com.teambr.bookshelf.client;
 
 import com.teambr.bookshelf.common.CommonProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -22,19 +21,23 @@ public class ClientProxy extends CommonProxy {
      * Called on preInit
      */
     @Override
-    public void preInit(FMLPreInitializationEvent event) {}
+    public void preInit(FMLPreInitializationEvent event) {
+        super.preInit(event);
+    }
 
     /**
      * Called on init
      */
     @Override
     public void init(FMLInitializationEvent event) {
-        FMLInterModComms.sendMessage("Waila", "register", "com.teambr.bookshelf.api.waila.WailaModPlugin.registerClientCallback");
+        super.init(event);
     }
 
     /**
      * Called on postInit
      */
     @Override
-    public void postInit(FMLPostInitializationEvent event) {}
+    public void postInit(FMLPostInitializationEvent event) {
+        super.postInit(event);
+    }
 }

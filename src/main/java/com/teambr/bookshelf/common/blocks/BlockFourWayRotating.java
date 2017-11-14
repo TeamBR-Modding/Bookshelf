@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.common.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -24,7 +23,7 @@ import java.util.Arrays;
  * @author Paul Davis - pauljoda
  * @since 2/9/2017
  */
-public class BlockFourWayRotating extends Block {
+public class BlockFourWayRotating extends RegistrableBlock {
 
     // Instance of the property for rotation
     public static PropertyDirection FOUR_WAY =

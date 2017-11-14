@@ -2,7 +2,6 @@ package com.teambr.bookshelf.common.items;
 
 import com.teambr.bookshelf.common.blocks.IToolable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -21,7 +20,7 @@ import javax.annotation.Nonnull;
  * @author Paul Davis - pauljoda
  * @since 2/9/2017
  */
-public class ToolWrench extends Item {
+public class ToolWrench extends RegistrableItem {
 
     /**
      * Called when a Block is right-clicked with this Item

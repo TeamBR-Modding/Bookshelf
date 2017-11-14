@@ -1,6 +1,5 @@
 package com.teambr.bookshelf.common.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -23,7 +22,7 @@ import java.util.Arrays;
  * @author Paul Davis - pauljoda
  * @since 2/9/2017
  */
-public class BlockSixWayRotation extends Block {
+public class BlockSixWayRotation extends RegistrableBlock {
 
     // Instance of the property for rotation
     public static PropertyDirection SIX_WAY =
