@@ -1,8 +1,8 @@
 package com.teambr.bookshelf.common;
 
-import com.teambr.bookshelf.annotation.BookBlock;
-import com.teambr.bookshelf.annotation.BookItem;
 import com.teambr.bookshelf.annotation.IRegistrable;
+import com.teambr.bookshelf.annotation.RegisteringBlock;
+import com.teambr.bookshelf.annotation.RegisteringItem;
 import com.teambr.bookshelf.common.events.RegistrationEvents;
 import com.teambr.bookshelf.util.AnnotationUtils;
 import net.minecraftforge.common.MinecraftForge;
@@ -52,7 +52,7 @@ public class CommonProxy {
 
 
     private void findBookBlocks(FMLPreInitializationEvent event) {
-        AnnotationUtils.getAnnotatedClasses(event.getAsmData(), BookBlock.class).stream().filter(IRegistrable.class::isAssignableFrom).forEach(aClass -> {
+        AnnotationUtils.getAnnotatedClasses(event.getAsmData(), RegisteringBlock.class).stream().filter(IRegistrable.class::isAssignableFrom).forEach(aClass -> {
             try {
                 BLOCKS.add((IRegistrable) aClass.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
@@ -63,7 +63,7 @@ public class CommonProxy {
     }
 
     private void findBookItems(FMLPreInitializationEvent event) {
-        AnnotationUtils.getAnnotatedClasses(event.getAsmData(), BookItem.class).stream().filter(IRegistrable.class::isAssignableFrom).forEach(aClass -> {
+        AnnotationUtils.getAnnotatedClasses(event.getAsmData(), RegisteringItem.class).stream().filter(IRegistrable.class::isAssignableFrom).forEach(aClass -> {
             try {
                 ITEMS.add((IRegistrable) aClass.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
