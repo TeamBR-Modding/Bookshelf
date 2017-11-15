@@ -127,7 +127,8 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
         if (!heldStack.hasTagCompound()) {
             heldStack.setTagCompound(new NBTTagCompound());
             writeToNBT(heldStack.getTagCompound());
-        }
+        } else
+            readFromNBT(heldStack.getTagCompound());
     }
 
     /**
@@ -186,6 +187,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
      **/
     @Override
     public int getSlots() {
+        checkStackTag();
         return inventoryContents.size();
     }
 
@@ -211,6 +213,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
     @Override
     @Nonnull
     public ItemStack getStackInSlot(int slot) {
+        checkStackTag();
         if (!isValidSlot(slot))
             return ItemStack.EMPTY;
         return inventoryContents.get(slot);
@@ -230,6 +233,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
     @Nonnull
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+        checkStackTag();
         if (stack == null || stack.getCount() == 0 || !isItemValidForSlot(slot, stack))
             return ItemStack.EMPTY;
 
@@ -277,6 +281,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
     @Nonnull
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        checkStackTag();
         if (amount == 0)
             return ItemStack.EMPTY;
 
