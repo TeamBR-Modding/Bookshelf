@@ -48,12 +48,12 @@ if (file('APIToken').exists()) {
 
 String build = ""
 if (project.hasProperty("teamcity")) {
-    build = "${project.ext['Build Number']}"
+    build = "${project.ext['build.vcs.number.Bookshelf_HttpsGithubComTeamBRModdingBookshelfRefsHeadsMaster']}"
 }
 if (build == null || build == '') {
     version = "${project.minecraft_version}-${project.mod_version}"
 } else {
-    version = "${project.minecraft_version}-${project.mod_version}-" + build
+    version = "${project.minecraft_version}-${project.mod_version}-" + build.substring(0,7)
 }
 
 group= "com.teambr.bookshelf" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
