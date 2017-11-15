@@ -236,7 +236,7 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
             return stack;
 
         if(stack.isEmpty() || !isValidSlot(slot))
-            return ItemStack.EMPTY;
+            return stack;
 
         ItemStack existing = this.inventoryContents.get(slot);
 
