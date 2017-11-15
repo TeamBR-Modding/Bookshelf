@@ -135,7 +135,7 @@ public abstract class BaseContainer extends ContainerGeneric {
      * @return The stack
      */
     private ItemStack slotClickPhantom(Slot slot, int mouseButton, ClickType modifier, EntityPlayer player) {
-        ItemStack stack = null;
+        ItemStack stack = ItemStack.EMPTY;
 
         if(mouseButton == 2) {
             if(((IPhantomSlot)slot).canAdjust())
