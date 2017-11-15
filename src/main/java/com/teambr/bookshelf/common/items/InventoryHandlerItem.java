@@ -39,10 +39,12 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
 
     /**
      * Creates a handler with given stack
+     *
      * @param stack Stack to attach to
      */
-    public InventoryHandlerItem(ItemStack stack) {
+    public InventoryHandlerItem(ItemStack stack, NBTTagCompound compound) {
         heldStack = stack;
+        readFromNBT(compound);
         checkStackTag();
     }
 
@@ -72,6 +74,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
 
     /**
      * Add a callback to this inventory
+     *
      * @param iInventoryCallback The callback you wish to add
      * @return This object, to enable chaining
      */
@@ -96,10 +99,10 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
      * @param inventory The inventory to copy from
      */
     public void copyFrom(IItemHandler inventory) {
-        for(int i = 0; i < inventory.getSlots(); i++) {
-            if(i < inventoryContents.size()) {
+        for (int i = 0; i < inventory.getSlots(); i++) {
+            if (i < inventoryContents.size()) {
                 ItemStack stack = inventory.getStackInSlot(i);
-                if(!stack.isEmpty())
+                if (!stack.isEmpty())
                     inventoryContents.set(i, stack.copy());
                 else
                     inventoryContents.set(i, ItemStack.EMPTY);
@@ -109,6 +112,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
 
     /**
      * Makes sure this slot is within our range
+     *
      * @param slot Which slot
      */
     protected boolean isValidSlot(int slot) {
@@ -120,7 +124,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
      */
     protected void checkStackTag() {
         // Give the stack a tag
-        if(!heldStack.hasTagCompound()) {
+        if (!heldStack.hasTagCompound()) {
             heldStack.setTagCompound(new NBTTagCompound());
             writeToNBT(heldStack.getTagCompound());
         }
@@ -142,7 +146,8 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
      * @param compound The tag to read from
      */
     public void readFromNBT(NBTTagCompound compound) {
-        ItemStackHelper.loadAllItems(compound, inventoryContents);
+        if (compound != null)
+            ItemStackHelper.loadAllItems(compound, inventoryContents);
     }
 
     /*******************************************************************************************************************
@@ -158,11 +163,11 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
      * @param slot  Slot to modify
      * @param stack ItemStack to set slot to (may be null)
      * @throws RuntimeException if the handler is called in a way that the handler
-     * was not expecting.
+     *                          was not expecting.
      **/
     @Override
     public void setStackInSlot(int slot, ItemStack stack) {
-        if(!isValidSlot(slot))
+        if (!isValidSlot(slot))
             return;
         if (ItemStack.areItemStacksEqual(this.inventoryContents.get(slot), stack))
             return;
@@ -186,13 +191,13 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
 
     /**
      * Returns the ItemStack in a given slot.
-     *
+     * <p>
      * The result's stack size may be greater than the itemstacks max size.
-     *
+     * <p>
      * If the result is null, then the slot is empty.
      * If the result is not null but the stack size is zero, then it represents
      * an empty slot that will only accept* a specific itemstack.
-     *
+     * <p>
      * <p/>
      * IMPORTANT: This ItemStack MUST NOT be modified. This method is not for
      * altering an inventories contents. Any implementers who are able to detect
@@ -206,7 +211,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
     @Override
     @Nonnull
     public ItemStack getStackInSlot(int slot) {
-        if(!isValidSlot(slot))
+        if (!isValidSlot(slot))
             return ItemStack.EMPTY;
         return inventoryContents.get(slot);
     }
@@ -220,7 +225,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
      * @param stack    ItemStack to insert.
      * @param simulate If true, the insertion is only simulated
      * @return The remaining ItemStack that was not inserted (if the entire stack is accepted, then return null).
-     *         May be the same as the input ItemStack if unchanged, otherwise a new ItemStack.
+     * May be the same as the input ItemStack if unchanged, otherwise a new ItemStack.
      **/
     @Nonnull
     @Override
@@ -228,7 +233,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
         if (stack == null || stack.getCount() == 0 || !isItemValidForSlot(slot, stack))
             return ItemStack.EMPTY;
 
-        if(!isValidSlot(slot))
+        if (!isValidSlot(slot))
             return ItemStack.EMPTY;
 
         ItemStack existing = this.inventoryContents.get(slot);
@@ -250,8 +255,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
         if (!simulate) {
             if (existing.isEmpty()) {
                 this.inventoryContents.set(slot, reachedLimit ? ItemHandlerHelper.copyStackWithSize(stack, limit) : stack);
-            }
-            else {
+            } else {
                 existing.setCount(existing.getCount() + (reachedLimit ? limit : stack.getCount()));
             }
             onInventoryChanged(slot);
@@ -276,7 +280,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
         if (amount == 0)
             return ItemStack.EMPTY;
 
-        if(!isValidSlot(slot))
+        if (!isValidSlot(slot))
             return ItemStack.EMPTY;
         ItemStack existing = this.inventoryContents.get(slot);
 
@@ -291,8 +295,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
                 onInventoryChanged(slot);
             }
             return existing;
-        }
-        else {
+        } else {
             if (!simulate) {
                 this.inventoryContents.set(slot, ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract));
                 onInventoryChanged(slot);
@@ -351,7 +354,7 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
     @Nullable
     @Override
     public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             return (T) this;
         return null;
     }
