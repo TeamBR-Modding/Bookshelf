@@ -9,6 +9,12 @@ import java.util.stream.Collectors;
 
 public class AnnotationUtils {
 
+    /**
+     * Gets list of classes with annotation
+     * @param data The data
+     * @param annotationClass The class to find
+     * @return A list of classes
+     */
     public static List<Class> getAnnotatedClasses(ASMDataTable data, Class<? extends Annotation> annotationClass) {
         return data.getAll(annotationClass.getCanonicalName()).stream().map(data1 -> {
             try {

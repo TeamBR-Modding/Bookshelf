@@ -1,27 +1,32 @@
 package com.teambr.bookshelf.annotation;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public interface IRegistrable {
+/**
+ * This file was created for Bookshelf
+ *
+ * Bookshelf - Java is licensed under the
+ * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License:
+ * http://creativecommons.org/licenses/by-nc-sa/4.0/
+ *
+ * @author Buuz135 + Paul Davis
+ * @since 11/14/2019
+ */
+public interface IRegistrable<T extends IForgeRegistryEntry<T>> {
 
     /**
-     * Registers a block to the ForgeRegistry
+     * Registers an object to the ForgeRegistry
      *
-     * @param block The Block Forge Registry
+     * @param registry The Block Forge Registry
      */
-    void registerBlock(IForgeRegistry<Block> block);
-
-    /**
-     * Registers an item to the ForgeRegistry
-     *
-     * @param item The Item Forge Registry
-     */
-    void registerItem(IForgeRegistry<Item> item);
+    void registerObject(IForgeRegistry<T> registry);
 
     /**
      * Register the renderers for the block/item
      */
+    @SideOnly(Side.CLIENT)
     void registerRender();
 }

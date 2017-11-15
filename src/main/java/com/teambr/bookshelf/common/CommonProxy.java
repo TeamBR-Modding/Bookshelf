@@ -3,8 +3,10 @@ package com.teambr.bookshelf.common;
 import com.teambr.bookshelf.annotation.IRegistrable;
 import com.teambr.bookshelf.annotation.RegisteringBlock;
 import com.teambr.bookshelf.annotation.RegisteringItem;
-import com.teambr.bookshelf.common.events.RegistrationEvents;
+import com.teambr.bookshelf.events.RegistrationEvents;
 import com.teambr.bookshelf.util.AnnotationUtils;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
@@ -26,8 +28,8 @@ import java.util.List;
  */
 public class CommonProxy {
 
-    public static final List<IRegistrable> BLOCKS = new ArrayList<>();
-    public static final List<IRegistrable> ITEMS = new ArrayList<>();
+    public static final List<Block> BLOCKS = new ArrayList<>();
+    public static final List<Item>  ITEMS  = new ArrayList<>();
 
     /**
      * Called on preInit
@@ -54,22 +56,22 @@ public class CommonProxy {
     private void findBookBlocks(FMLPreInitializationEvent event) {
         AnnotationUtils.getAnnotatedClasses(event.getAsmData(), RegisteringBlock.class).stream().filter(IRegistrable.class::isAssignableFrom).forEach(aClass -> {
             try {
-                BLOCKS.add((IRegistrable) aClass.newInstance());
+                BLOCKS.add((Block) aClass.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         });
-        event.getModLog().info("Found " + BLOCKS.size() + " BookBlocks");
+        event.getModLog().info("Found " + BLOCKS.size() + " RegisteringBlocks");
     }
 
     private void findBookItems(FMLPreInitializationEvent event) {
         AnnotationUtils.getAnnotatedClasses(event.getAsmData(), RegisteringItem.class).stream().filter(IRegistrable.class::isAssignableFrom).forEach(aClass -> {
             try {
-                ITEMS.add((IRegistrable) aClass.newInstance());
+                ITEMS.add((Item) aClass.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
         });
-        event.getModLog().info("Found " + ITEMS.size() + " BookItems");
+        event.getModLog().info("Found " + ITEMS.size() + " RegisteringItems");
     }
 }
