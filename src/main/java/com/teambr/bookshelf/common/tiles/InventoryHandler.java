@@ -232,10 +232,10 @@ public abstract class InventoryHandler extends Syncable implements IItemHandlerM
     @Nonnull
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (stack == null || stack.getCount() == 0 || !isItemValidForSlot(slot, stack))
-            return ItemStack.EMPTY;
+        if (!isItemValidForSlot(slot, stack))
+            return stack;
 
-        if(!isValidSlot(slot))
+        if(stack.isEmpty() || !isValidSlot(slot))
             return ItemStack.EMPTY;
 
         ItemStack existing = this.inventoryContents.get(slot);

@@ -234,10 +234,10 @@ public abstract class InventoryHandlerItem implements IItemHandlerModifiable, IC
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
         checkStackTag();
-        if (stack == null || stack.getCount() == 0 || !isItemValidForSlot(slot, stack))
-            return ItemStack.EMPTY;
+        if (isItemValidForSlot(slot, stack))
+            return stack;
 
-        if (!isValidSlot(slot))
+        if (stack.isEmpty() || !isValidSlot(slot))
             return ItemStack.EMPTY;
 
         ItemStack existing = this.inventoryContents.get(slot);
